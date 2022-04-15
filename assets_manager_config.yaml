@@ -1,0 +1,15 @@
+name: AssetsManager Config
+description: A Config to create a better experience with plugin
+
+
+# Input assets directory
+assets_folder: assets
+
+# Output config
+folder_output: constants
+post_fix: 
+pubspec_strategy: folder
+
+# Output assets config
+name_assets_class: Assets
+name_assets_file: assets_manager

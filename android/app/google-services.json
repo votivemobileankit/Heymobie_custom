@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "375847001828",
+    "project_id": "heymobiecustomer",
+    "storage_bucket": "heymobiecustomer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375847001828:android:af2ec9afcf44c24ddb56f1",
+        "android_client_info": {
+          "package_name": "com.heymobie.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375847001828-j5b1ak0qg8mpjmnl566e4mnnb0oqc3qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.heymobie.customer",
+            "certificate_hash": "2060e60300af6c0f3f1b12396b5c5539fdcd3584"
+          }
+        },
+        {
+          "client_id": "375847001828-di97mh1a7er58r6fquno0sup68pao43t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAjge0GhZFOYtJPiKV5YqWdQrwv103ZTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375847001828-di97mh1a7er58r6fquno0sup68pao43t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "375847001828-52mbut6ga0mijm9cp3cqufuhj5knek71.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.heymobiecustomer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

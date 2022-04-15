@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/mac/ankitProject/Heymobie_customer/build/location/intermediates/res/merged/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/db9b5627651d044173a575bdd98bf726/jetified-play-services-base-16.0.1/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/mac/ankitProject/Heymobie_customer/build/location/intermediates/res/merged/release/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/db9b5627651d044173a575bdd98bf726/jetified-play-services-base-16.0.1/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/Users/mac/ankitProject/Heymobie_customer/build/location/intermediates/res/merged/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/db9b5627651d044173a575bdd98bf726/jetified-play-services-base-16.0.1/res/color/common_google_signin_btn_text_dark.xml"
+    }
+]

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="39c9cab6-5320-467b-b7e1-866b6a7aff3c" name="Default Changelist" comment="1.related product model&#10;2.Driver multiple diffrent marker was shown" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1zUab3WNfZgxsVwl9SUleLuzNSp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/images/general/3.0x" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/android/app" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images/general/3.0x" />
+      <recent name="$PROJECT_DIR$/assets/images/general/2.0x" />
+      <recent name="$PROJECT_DIR$/assets/images/general/1.5x" />
+      <recent name="$PROJECT_DIR$/assets/images/general" />
+      <recent name="$PROJECT_DIR$/lib/home/screen" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="39c9cab6-5320-467b-b7e1-866b6a7aff3c" name="Default Changelist" comment="" />
+      <created>1634205188354</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634205188354</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Notification list add">
+      <created>1634391355711</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1634391355711</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Button change color&#10;Android map working">
+      <created>1634644560643</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634644560648</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add properties in android  for notification">
+      <created>1634808327396</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634808327396</updated>
+    </task>
+    <task id="LOCAL-00004" summary="home driver list merchant name add">
+      <created>1634910139398</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634910139398</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add notification code">
+      <created>1635514944790</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1635514944790</updated>
+    </task>
+    <task id="LOCAL-00006" summary="2 nov 2021">
+      <created>1635853957654</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1635853957654</updated>
+    </task>
+    <task id="LOCAL-00007" summary="assetmanager commit">
+      <created>1636348250748</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1636348250748</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Search issue in product list">
+      <created>1637329802576</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1637329802576</updated>
+    </task>
+    <task id="LOCAL-00009" summary="change password back button not working">
+      <created>1637732856809</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1637732856809</updated>
+    </task>
+    <task id="LOCAL-00010" summary="1.related product model&#10;2.Driver multiple diffrent marker was shown">
+      <created>1641365772898</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1641365772898</updated>
+    </task>
+    <task id="LOCAL-00011" summary="image copy upload on server">
+      <created>1642252353804</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1642252353804</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Commit unversioned files">
+      <created>1650001319710</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1650001319710</updated>
+    </task>
+    <task id="LOCAL-00013" summary="new">
+      <created>1650002276016</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1650002276016</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Notification list add" />
+    <MESSAGE value="Button change color&#10;Android map working" />
+    <MESSAGE value="Add properties in android  for notification" />
+    <MESSAGE value="home driver list merchant name add" />
+    <MESSAGE value="Add notification code" />
+    <MESSAGE value="2 nov 2021" />
+    <MESSAGE value="assetmanager commit" />
+    <MESSAGE value="Search issue in product list" />
+    <MESSAGE value="change password back button not working" />
+    <MESSAGE value="1.related product model&#10;2.Driver multiple diffrent marker was shown" />
+    <MESSAGE value="image copy upload on server" />
+    <MESSAGE value="Commit unversioned files" />
+    <MESSAGE value="new" />
+    <option name="LAST_COMMIT_MESSAGE" value="new" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="557" height="466" key="DebuggerActiveHint" timestamp="1648890411672">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state width="557" height="466" key="DebuggerActiveHint/35.23.1331.745@35.23.1331.745" timestamp="1648890411672" />
+    <state x="547" y="299" key="Github.ShareDialog" timestamp="1650002945053">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="547" y="299" key="Github.ShareDialog/35.23.1331.745@35.23.1331.745" timestamp="1650002945053" />
+    <state x="277" y="107" key="Github.UntrackedFilesDialog" timestamp="1650001246993">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="277" y="107" key="Github.UntrackedFilesDialog/35.23.1331.745@35.23.1331.745" timestamp="1650001246993" />
+    <state width="1289" height="125" key="GridCell.Tab.0.bottom" timestamp="1649944248655">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state width="1289" height="125" key="GridCell.Tab.0.bottom/35.23.1331.745@35.23.1331.745" timestamp="1649944248655" />
+    <state width="1289" height="125" key="GridCell.Tab.0.center" timestamp="1649944248655">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state width="1289" height="125" key="GridCell.Tab.0.center/35.23.1331.745@35.23.1331.745" timestamp="1649944248655" />
+    <state width="1289" height="125" key="GridCell.Tab.0.left" timestamp="1649944248655">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state width="1289" height="125" key="GridCell.Tab.0.left/35.23.1331.745@35.23.1331.745" timestamp="1649944248655" />
+    <state width="1289" height="125" key="GridCell.Tab.0.right" timestamp="1649944248655">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state width="1289" height="125" key="GridCell.Tab.0.right/35.23.1331.745@35.23.1331.745" timestamp="1649944248655" />
+    <state x="209" y="34" key="SettingsEditor" timestamp="1650000339484">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="209" y="34" key="SettingsEditor/35.23.1331.745@35.23.1331.745" timestamp="1650000339484" />
+    <state x="300" y="135" key="Vcs.Push.Dialog.v2" timestamp="1650002281869">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="300" y="135" key="Vcs.Push.Dialog.v2/35.23.1331.745@35.23.1331.745" timestamp="1650002281869" />
+    <state x="135" y="123" width="1131" height="545" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1650002642052">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="135" y="123" width="1131" height="545" key="com.intellij.history.integration.ui.views.FileHistoryDialog/35.23.1331.745@35.23.1331.745" timestamp="1650002642052" />
+    <state x="470" y="136" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1650002222204">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="470" y="136" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/35.23.1331.745@35.23.1331.745" timestamp="1650002222204" />
+    <state x="365" y="81" width="675" height="629" key="new project wizard" timestamp="1648724234432">
+      <screen x="35" y="23" width="1331" height="745" />
+    </state>
+    <state x="365" y="81" width="675" height="629" key="new project wizard/35.23.1331.745@35.23.1331.745" timestamp="1648724234432" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/networking/network_api_provider.dart</url>
+          <line>118</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/networking/network_api_provider.dart</url>
+          <line>116</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/networking/network_api_provider.dart</url>
+          <line>124</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/networking/network_api_provider.dart</url>
+          <line>128</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/networking/network_api_provider.dart</url>
+          <line>126</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

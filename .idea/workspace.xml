@@ -13,7 +13,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39c9cab6-5320-467b-b7e1-866b6a7aff3c" name="Default Changelist" comment="1.related product model&#10;2.Driver multiple diffrent marker was shown" />
+    <list default="true" id="39c9cab6-5320-467b-b7e1-866b6a7aff3c" name="Default Changelist" comment="1.related product model&#10;2.Driver multiple diffrent marker was shown">
+      <change afterPath="$PROJECT_DIR$/android/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +165,21 @@
       <option name="project" value="LOCAL" />
       <updated>1650002276016</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="New commit1">
+      <created>1650003723601</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1650003723601</updated>
+    </task>
+    <task id="LOCAL-00015" summary="New commit2">
+      <created>1650003758316</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1650003758316</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -190,21 +208,23 @@
     <MESSAGE value="image copy upload on server" />
     <MESSAGE value="Commit unversioned files" />
     <MESSAGE value="new" />
-    <option name="LAST_COMMIT_MESSAGE" value="new" />
+    <MESSAGE value="New commit1" />
+    <MESSAGE value="New commit2" />
+    <option name="LAST_COMMIT_MESSAGE" value="New commit2" />
   </component>
   <component name="WindowStateProjectService">
     <state width="557" height="466" key="DebuggerActiveHint" timestamp="1648890411672">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
     <state width="557" height="466" key="DebuggerActiveHint/35.23.1331.745@35.23.1331.745" timestamp="1648890411672" />
-    <state x="547" y="299" key="Github.ShareDialog" timestamp="1650002945053">
+    <state x="547" y="299" key="Github.ShareDialog" timestamp="1650003242654">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
-    <state x="547" y="299" key="Github.ShareDialog/35.23.1331.745@35.23.1331.745" timestamp="1650002945053" />
-    <state x="277" y="107" key="Github.UntrackedFilesDialog" timestamp="1650001246993">
+    <state x="547" y="299" key="Github.ShareDialog/35.23.1331.745@35.23.1331.745" timestamp="1650003242654" />
+    <state x="277" y="107" key="Github.UntrackedFilesDialog" timestamp="1650003369247">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
-    <state x="277" y="107" key="Github.UntrackedFilesDialog/35.23.1331.745@35.23.1331.745" timestamp="1650001246993" />
+    <state x="277" y="107" key="Github.UntrackedFilesDialog/35.23.1331.745@35.23.1331.745" timestamp="1650003369247" />
     <state width="1289" height="125" key="GridCell.Tab.0.bottom" timestamp="1649944248655">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
@@ -225,18 +245,18 @@
       <screen x="35" y="23" width="1331" height="745" />
     </state>
     <state x="209" y="34" key="SettingsEditor/35.23.1331.745@35.23.1331.745" timestamp="1650000339484" />
-    <state x="300" y="135" key="Vcs.Push.Dialog.v2" timestamp="1650002281869">
+    <state x="300" y="135" key="Vcs.Push.Dialog.v2" timestamp="1650003760514">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
-    <state x="300" y="135" key="Vcs.Push.Dialog.v2/35.23.1331.745@35.23.1331.745" timestamp="1650002281869" />
+    <state x="300" y="135" key="Vcs.Push.Dialog.v2/35.23.1331.745@35.23.1331.745" timestamp="1650003760514" />
     <state x="135" y="123" width="1131" height="545" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1650002642052">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
     <state x="135" y="123" width="1131" height="545" key="com.intellij.history.integration.ui.views.FileHistoryDialog/35.23.1331.745@35.23.1331.745" timestamp="1650002642052" />
-    <state x="470" y="136" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1650002222204">
+    <state x="470" y="136" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1650003838902">
       <screen x="35" y="23" width="1331" height="745" />
     </state>
-    <state x="470" y="136" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/35.23.1331.745@35.23.1331.745" timestamp="1650002222204" />
+    <state x="470" y="136" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/35.23.1331.745@35.23.1331.745" timestamp="1650003838902" />
     <state x="365" y="81" width="675" height="629" key="new project wizard" timestamp="1648724234432">
       <screen x="35" y="23" width="1331" height="745" />
     </state>

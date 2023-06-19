@@ -5,8 +5,7 @@ import 'a_widget_extensions.dart';
 class ALoadingAnimation extends StatelessWidget {
   final bool useLighterBlackOverlay;
 
-  const ALoadingAnimation({Key key, this.useLighterBlackOverlay = false})
-      : super(key: key);
+  const ALoadingAnimation({ this.useLighterBlackOverlay = false});
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(

@@ -1,14 +1,14 @@
 class FilterListModel {
-  String message;
-  int status;
-  Data1 data;
+ late String message;
+ late int status;
+  late Data1 data;
 
-  FilterListModel({this.message, this.status, this.data});
+  FilterListModel({required this.message,required this.status,required this.data});
 
   FilterListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? new Data1.fromJson(json['data']) : null;
+    data = (json['data'] != null ? new Data1.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,12 +23,12 @@ class FilterListModel {
 }
 
 class Data1 {
-  List<Subcategories> subcategories;
-  List<Weights> weights;
-  List<Brands> brands;
-  List<Types> types;
+ late List<Subcategories> subcategories;
+ late List<Weights> weights;
+ late List<Brands> brands;
+ late List<Types> types;
 
-  Data1({this.subcategories, this.weights, this.brands, this.types});
+  Data1({required this.subcategories,required this.weights,required this.brands,required this.types});
 
   Data1.fromJson(Map<String, dynamic> json) {
     if (json['subcategories'] != null) {
@@ -77,10 +77,10 @@ class Data1 {
 }
 
 class Subcategories {
-  String id;
-  String subcategory;
+ late String id;
+ late String subcategory;
 
-  Subcategories({this.id, this.subcategory});
+  Subcategories({required this.id,required this.subcategory});
 
   Subcategories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -96,10 +96,10 @@ class Subcategories {
 }
 
 class Weights {
-  String id;
-  String weight;
+ late String id;
+late  String weight;
 
-  Weights({this.id, this.weight});
+  Weights({required this.id,required this.weight});
 
   Weights.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -115,10 +115,10 @@ class Weights {
 }
 
 class Brands {
-  String id;
-  String brand;
+ late String id;
+ late String brand;
 
-  Brands({this.id, this.brand});
+  Brands({required this.id,required this.brand});
 
   Brands.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -134,10 +134,10 @@ class Brands {
 }
 
 class Types {
-  String id;
-  String type;
+ late String id;
+late  String type;
 
-  Types({this.id, this.type});
+  Types({required this.id, required this.type});
 
   Types.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -26,8 +26,8 @@ class AMaterialRoute extends MaterialPageRoute {
   }
 
   AMaterialRoute({
-    @required WidgetBuilder builder,
-    @required RouteSettings settings,
+    required WidgetBuilder builder,
+    required RouteSettings settings,
     bool maintainState = true,
     bool fullscreenDialog = true,
   }) : super(

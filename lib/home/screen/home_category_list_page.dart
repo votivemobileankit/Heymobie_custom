@@ -31,8 +31,8 @@ const double _kMenuImageHeightSize = 70.0;
 const double _kCommonIconHeight = 20.0;
 
 //List<String> categoryList = [];
-List<CategoryListModel> _categoryList;
-DriverList _driverDetail;
+List<CategoryListModel>? _categoryList;
+DriverList? _driverDetail;
 
 class HomeCategoryMainPage extends StatefulWidget {
   @override
@@ -41,8 +41,8 @@ class HomeCategoryMainPage extends StatefulWidget {
 
 class _HomeCategoryMainPageState extends State<HomeCategoryMainPage> {
   String _cartCountValue = "0";
-  GetIt locator1;
-  CallsAndMessagesService _service;
+  GetIt? locator1;
+  CallsAndMessagesService? _service;
 
   @override
   void initState() {
@@ -56,15 +56,15 @@ class _HomeCategoryMainPageState extends State<HomeCategoryMainPage> {
     }
     locator1 = GetIt.instance;
     setupLocator();
-    _service = locator1<CallsAndMessagesService>();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    _service = locator1!<CallsAndMessagesService>();
+   // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     // categoryStaticList();
     super.initState();
   }
 
   void setupLocator() {
-    locator1.reset();
-    locator1.registerSingleton(CallsAndMessagesService());
+    locator1!.reset();
+    locator1!.registerSingleton(CallsAndMessagesService());
   }
 
   Future<void> _callNumber(String phoneNumber) async {
@@ -98,7 +98,7 @@ class _HomeCategoryMainPageState extends State<HomeCategoryMainPage> {
 
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           print("print in listener ");
           if (state is HomeFromCategoryCartPageState) {
@@ -192,7 +192,7 @@ class _HomeCategoryMainPageState extends State<HomeCategoryMainPage> {
                               Scaffold.of(context).openEndDrawer();
                             },
                             child: _DriverDetail(
-                                _driverDetail, _callNumber, locator1),
+                                _driverDetail!, _callNumber, locator1!),
                           ),
                         AVerticalSpace(15.0.scale()),
                         Text(
@@ -205,7 +205,7 @@ class _HomeCategoryMainPageState extends State<HomeCategoryMainPage> {
                             .leftPadding(_kCommonPadding.scale())
                             .rightPadding(_kCommonPadding.scale()),
                         AVerticalSpace(15.0.scale()),
-                        if (_categoryList != null && _categoryList.length > 0)
+                        if (_categoryList != null && _categoryList!.length > 0)
                           _GridLayout(showHideProgress),
                         AVerticalSpace(15.0.scale()),
                       ],
@@ -252,12 +252,12 @@ class CallsAndMessagesService {
 }
 
 class _DriverDetail extends StatelessWidget {
-  double initialRat = 3;
-  DriverList driverDetail;
-  Function callNumber;
+late  double initialRat = 3;
+late  DriverList driverDetail;
+ late Function callNumber;
 
-  CallsAndMessagesService service;
-  GetIt locator1;
+ late CallsAndMessagesService service;
+ late GetIt locator1;
 
   _DriverDetail(this.driverDetail, this.callNumber, this.locator1);
 
@@ -309,7 +309,7 @@ class _DriverDetail extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
                   imageUrl:
-                      UserRepository.getProfileUrl() + driverDetail.profileImg1,
+                     "${UserRepository.getProfileUrl()! + driverDetail.profileImg1}",
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                 ),
@@ -354,16 +354,16 @@ class _DriverDetail extends StatelessWidget {
                       },
                     ),
                     Text(
-                      '$initialRat (${_driverDetail.ratingCount})',
+                      '$initialRat (${_driverDetail!.ratingCount})',
                       style: textStyleCustomColor(
                           12.0.scale(), kColorTextFieldText),
                     )
                   ],
                 ),
                 AVerticalSpace(5.0.scale()),
-                if (_driverDetail.marketArea != null)
+                if (_driverDetail!.marketArea != null)
                   Text(
-                    _driverDetail.marketArea,
+                    _driverDetail!.marketArea,
                     style: textStyleBoldCustomColor(
                         12.0.scale(), kColorTextFieldText),
                   ).leftPadding(5.0.scale()),
@@ -391,10 +391,10 @@ class _DriverDetail extends StatelessWidget {
                           height: 15.0.scale(),
                         ),
                         AHorizontalSpace(5.0.scale()),
-                        if (_driverDetail.mobNo != null)
+                        if (_driverDetail!.mobNo != null)
                           GestureDetector(
                             child: Text(
-                              _driverDetail.mobNo,
+                              _driverDetail!.mobNo,
                               style: textStyleBoldCustomColor(
                                   12.0.scale(), kColorTextFieldText),
                             ),
@@ -403,7 +403,7 @@ class _DriverDetail extends StatelessWidget {
                               print("tap");
                               // launch("tel:${_driverDetail.mobNo}");
                               //set the number here
-                              _callNumber(_driverDetail.mobNo);
+                              _callNumber(_driverDetail!.mobNo);
                             },
                           )
                       ],
@@ -436,43 +436,43 @@ class __BannerWidgetState extends State<_BannerWidget> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Stack(children: [
-      CarouselSlider(
-        options: CarouselOptions(
-            height: 200.0,
-            autoPlay: true,
-            enlargeCenterPage: false,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _current = index;
-              });
-            }),
-        carouselController: _controller,
-        items: [1, 2].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Image.network(
-                    "https://news.artnet.com/app/news-upload/2016/04/Lemon-Kush-oakland-museum.jpg",
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      );
-                    },
-                  ));
-            },
-          );
-        }).toList(),
-      ),
+      // CarouselSlider(
+      //   options: CarouselOptions(
+      //       height: 200.0,
+      //       autoPlay: true,
+      //       enlargeCenterPage: false,
+      //       onPageChanged: (index, reason) {
+      //         setState(() {
+      //           _current = index;
+      //         });
+      //       }),
+      //   carouselController: _controller,
+      //   items: [1, 2].map((i) {
+      //     return Builder(
+      //       builder: (BuildContext context) {
+      //         return Container(
+      //             width: MediaQuery.of(context).size.width,
+      //             margin: EdgeInsets.symmetric(horizontal: 5.0),
+      //             child: Image.network(
+      //               "https://news.artnet.com/app/news-upload/2016/04/Lemon-Kush-oakland-museum.jpg",
+      //               fit: BoxFit.cover,
+      //               loadingBuilder: (BuildContext context, Widget child,
+      //                   ImageChunkEvent loadingProgress) {
+      //                 if (loadingProgress == null) return child;
+      //                 return Center(
+      //                   child: CircularProgressIndicator(
+      //                     value: loadingProgress.expectedTotalBytes != null
+      //                         ? loadingProgress.cumulativeBytesLoaded /
+      //                             loadingProgress.expectedTotalBytes
+      //                         : null,
+      //                   ),
+      //                 );
+      //               },
+      //             ));
+      //       },
+      //     );
+      //   }).toList(),
+      // ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [1, 2].asMap().entries.map((entry) {
@@ -523,9 +523,9 @@ class __BannerWidgetState extends State<_BannerWidget> {
 // }
 
 class _GridLayout extends StatefulWidget {
-  Function showHideProgress;
+ late Function showHideProgress;
 
-  _GridLayout(void Function(bool show) showHideProgress) {
+  _GridLayout( Function showHideProgress) {
     this.showHideProgress = showHideProgress;
   }
 
@@ -540,17 +540,19 @@ class __GridLayoutState extends State<_GridLayout> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return GoogleGrid(
+
       gap: 16,
       padding: const EdgeInsets.all(16),
+
       children: [
-        for (int i = 0; i < _categoryList.length; i++)
+        for (int i = 0; i < _categoryList!.length; i++)
           GestureDetector(
             onTap: () {
               print("demo${i}");
               widget.showHideProgress(true);
               BlocProvider.of<HomeBloc>(context).add(
-                  HomeEventCatgoryDetailClick(_categoryList[i], _driverDetail,
-                      _categoryList[i].category_id));
+                  HomeEventCatgoryDetailClick(_categoryList![i], _driverDetail!,
+                      _categoryList![i].category_id));
               //BlocProvider.of<SideNavigatBloc>(context).add(event)
             },
             child: Container(
@@ -578,14 +580,14 @@ class __GridLayoutState extends State<_GridLayout> {
                     child: CachedNetworkImage(
                       width: 70.0.scale(),
                       height: 70.0.scale(),
-                      imageUrl: _categoryList[i].cat_image,
+                      imageUrl: _categoryList![i].cat_image,
                       fit: BoxFit.fill,
                       errorWidget: (context, url, error) =>
                           new Icon(Icons.error),
                     ),
                   ).align(Alignment.center),
                   Text(
-                    _categoryList[i].category,
+                    _categoryList![i].category,
                     textAlign: TextAlign.center,
                     style: textStyleBoldCustomColor(
                         _kCommonTexFieldFontSize.scale(), KColorCommonText),

@@ -5,7 +5,7 @@ class VDBlocObserver extends BlocObserver {
 
 
   @override
-  void onEvent(Bloc bloc, Object event) {
+  void onEvent(Bloc bloc, Object? event) {
     // TODO: implement onEvent
     super.onEvent(bloc, event);
   }

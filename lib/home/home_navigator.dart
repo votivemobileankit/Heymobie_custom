@@ -21,14 +21,14 @@ class HomeNavigator extends StatefulWidget {
 
   final UserRepository userRepository;
 
-  const HomeNavigator({Key key, this.userRepository}) : super(key: key);
+  const HomeNavigator({ required this.userRepository}) ;
 
   @override
   _HomeNavigatorState createState() => _HomeNavigatorState();
 }
 
 class _HomeNavigatorState extends State<HomeNavigator> {
-  _HomeRouter _router;
+  late _HomeRouter _router;
 
   @override
   void initState() {
@@ -88,9 +88,9 @@ class _HomeNavigatorState extends State<HomeNavigator> {
 class _HomeRouter {
   final HomeBloc homeBloc;
 
-  _HomeRouter({this.homeBloc});
+  _HomeRouter({required this.homeBloc});
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case HomeNavigator.homeDriverMainPage:
         return getDriverListPageRoute(settings);

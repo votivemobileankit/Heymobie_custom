@@ -18,16 +18,16 @@ class AHeaderSearchWidget extends StatelessWidget {
   final VoidCallback btnBackOnPressed;
 
   const AHeaderSearchWidget({
-    Key key,
-    @required this.backBtnVisibility,
+
+    required this.backBtnVisibility,
     this.strBackbuttonName = 'ic_red_btn_back.png',
-    @required this.strBtnRightImageName,
+    required this.strBtnRightImageName,
     this.headerText = "",
     this.rightEditButtonVisibility = false,
-    @required this.btnSearchOnPressed,
-    @required this.btnFilterOnPressed,
-    @required this.btnBackOnPressed,
-  }) : super(key: key);
+    required this.btnSearchOnPressed,
+    required this.btnFilterOnPressed,
+    required this.btnBackOnPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 class GoogleGrid extends StatelessWidget {
   const GoogleGrid({
-    Key key,
+
     this.columnCount = 2,
-    @required this.children,
-    this.gap,
-    this.padding,
-    this.margin,
+    required this.children,
+    required this.gap,
+    required this.padding,
+
     this.expanded = false,
     this.rowMainAxisAlignment = MainAxisAlignment.start,
     this.rowCrossAxisAlignment = CrossAxisAlignment.center,
-  }) : super(key: key);
+  }) ;
 
   final int columnCount;
   final List<Widget> children;
   final double gap;
   final EdgeInsets padding;
-  final EdgeInsets margin;
+
   final bool expanded;
   final MainAxisAlignment rowMainAxisAlignment;
   final CrossAxisAlignment rowCrossAxisAlignment;
@@ -26,7 +26,7 @@ class GoogleGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: padding,
-      margin: margin,
+
       child: Column(children: _createRows()),
     );
   }

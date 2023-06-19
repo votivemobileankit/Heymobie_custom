@@ -15,11 +15,11 @@ const double _kBtnBorderShape = 8.0;
 const double _kMarginTop1 = 16.0;
 
 void showDeleteDialog({
-  @required BuildContext context,
-  @required VoidCallback btnyesPressed,
-  @required VoidCallback btnClosePressed,
-  @required String titleTxt,
-  @required String descripTxt,
+  required BuildContext context,
+ required VoidCallback btnyesPressed,
+  required VoidCallback btnClosePressed,
+  required String titleTxt,
+  required String descripTxt,
 }) {
   showDialog(
       context: context,
@@ -38,13 +38,13 @@ void showDeleteDialog({
 }
 
 Dialog _getDailogAbort({
-  @required BuildContext context,
-  @required String titleText,
-  @required String descText,
-  @required String btn2TitleText,
-  @required String btn1TitleText,
-  @required VoidCallback btnYesPressed,
-  @required VoidCallback btnClosePressed,
+  required BuildContext context,
+  required String titleText,
+  required String descText,
+  required String btn2TitleText,
+  required String btn1TitleText,
+  required VoidCallback btnYesPressed,
+  required VoidCallback btnClosePressed,
 }) {
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -93,6 +93,11 @@ Dialog _getDailogAbort({
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ARoundedCustomButton(
+
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
+
               btnBorderShape: _kBtnBorderShape.scale(),
               btnBgColor: kColorBtnBgQuinary,
               btnTextColor: kColorTextFieldText,
@@ -107,6 +112,10 @@ Dialog _getDailogAbort({
               btnElevation: 0,
             ),
             ARoundedCustomButton(
+
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBorderShape: _kBtnBorderShape.scale(),
               btnBgColor: kColorBtnBgQuinary,
               btnTextColor: Colors.white,

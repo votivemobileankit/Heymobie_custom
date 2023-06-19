@@ -18,16 +18,16 @@ class AHeaderWidget extends StatelessWidget {
   final VoidCallback btnBackOnPressed;
 
   const AHeaderWidget({
-    Key key,
-    @required this.backBtnVisibility,
+
+    required this.backBtnVisibility,
     this.strBackbuttonName = 'ic_red_btn_back.png',
-    @required this.strBtnRightImageName,
+    required this.strBtnRightImageName,
     this.headerText = "",
     this.headerSigninText = "",
     this.rightEditButtonVisibility = false,
-    @required this.btnEditOnPressed,
-    @required this.btnBackOnPressed,
-  }) : super(key: key);
+    required this.btnEditOnPressed,
+    required this.btnBackOnPressed,
+  }) ;
 
   @override
   Widget build(BuildContext context) {

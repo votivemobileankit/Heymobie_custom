@@ -23,18 +23,18 @@ const double _kHeightTextFieldGender = 55.0;
 const double _kTextCustRegistrationFontSize = 18.0;
 const double _kTextBirthdateField = 327.0;
 
-TextEditingController _textFiledUserName;
-TextEditingController _textFiledLastName;
-TextEditingController _textFiledPhone;
-TextEditingController _textFiledEmail;
-TextEditingController _textFiledAddress;
-TextEditingController _textFiledCity;
-TextEditingController _textFiledZipCode;
-TextEditingController _textFiledZipPassword;
+late TextEditingController _textFiledUserName;
+late TextEditingController _textFiledLastName;
+late TextEditingController _textFiledPhone;
+late TextEditingController _textFiledEmail;
+late TextEditingController _textFiledAddress;
+late TextEditingController _textFiledCity;
+late TextEditingController _textFiledZipCode;
+late TextEditingController _textFiledZipPassword;
 String strState = "State";
-String _deviceType;
-String _osName;
-String _deviceToken;
+late String _deviceType;
+late String _osName;
+late String _deviceToken;
 
 class SignupPage extends StatefulWidget {
   @override
@@ -46,17 +46,17 @@ class _SignupPageState extends State<SignupPage> {
   String _dateStrServer = "";
   DateTime _date = new DateTime.now();
   TimeOfDay _time = new TimeOfDay.now();
-  List<StatesList> stateArrayList;
-  File _userImage;
-  File _licenseImage;
-  File _mariyunaImage;
+  late List<StatesList> stateArrayList;
+  late  File _userImage;
+  late File _licenseImage;
+  late File _mariyunaImage;
   String strPathProfile = "";
   String strPathLicenseFront = "Select license image copy front";
   String strPathLicenseBack = "Select license image copy back";
   String strPathMarijuanaId = "Select Marijuana id";
   String strServerPathMarijuana = "";
 
-  String type;
+  late String type;
   String customerType = "Recreational Customer";
 
   // Future<Null> _selectedDate(BuildContext context) async {
@@ -169,16 +169,16 @@ class _SignupPageState extends State<SignupPage> {
 
     setState(() {
       if (type == "UserProfile") {
-        _userImage = File(pickedFile.path);
+        _userImage = File(pickedFile!.path);
         strPathProfile = pickedFile.path;
       } else if (type == "LicenseFront") {
-        strPathLicenseFront = pickedFile.path;
+        strPathLicenseFront = pickedFile!.path;
         _licenseImage = File(pickedFile.path);
       } else if (type == "MarijuanaId") {
-        strPathMarijuanaId = pickedFile.path;
+        strPathMarijuanaId = pickedFile!.path;
         _mariyunaImage = File(pickedFile.path);
       } else {
-        strPathLicenseBack = pickedFile.path;
+        strPathLicenseBack = pickedFile!.path;
       }
       print(pickedFile.path);
     });
@@ -241,7 +241,7 @@ class _SignupPageState extends State<SignupPage> {
           return Future<bool>.value(false);
         },
         child: BlocListener<HomeBloc, HomeState>(
-          listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+          listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
           listener: (context, state) {
             if (state is LoginPageState) {
               Navigator.of(context).pop(true);
@@ -267,6 +267,13 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               children: [
                 AHeaderWidget(
+                  btnEditOnPressed: () {
+
+                  },
+                  strBtnRightImageName: "",
+                  headerSigninText: "",
+                  headerText: "",
+                  rightEditButtonVisibility: false,
                   strBackbuttonName: 'ic_red_btn_back.png',
                   backBtnVisibility: true,
                   btnBackOnPressed: () {
@@ -463,6 +470,9 @@ class _SignupPageState extends State<SignupPage> {
                             _kHeightTextFieldGender.scale())),
                     AVerticalSpace(_kVerticalSpaceBetweenTextField.scale()),
                     ARoundedButton(
+                      btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                      btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                      btnFontWeight: FontWeight.normal,
                       btnBgColor: kColorAppBgColor,
                       btnTextColor: Colors.white,
                       btnOnPressed: () {
@@ -603,9 +613,9 @@ class __BuyRentWidgetState1State extends State<__BuyRentWidgetState1> {
                   child: Text(item.strType),
                 );
               }).toList(),
-              onChanged: (CustomerType value) {
+              onChanged: (CustomerType? value) {
                 setState(() {
-                  _strCustomerType = value.strType;
+                  _strCustomerType = value!.strType;
                   widget.searchData(_strCustomerType);
                 });
               },
@@ -895,9 +905,9 @@ class __StateListWidgetState extends State<_StateListWidget> {
                   child: Text(item.name),
                 );
               }).toList(),
-              onChanged: (StatesList value) {
+              onChanged: (StatesList? value) {
                 setState(() {
-                  print(value.name);
+                  print(value!.name);
                   strState = value.name;
                 });
               },

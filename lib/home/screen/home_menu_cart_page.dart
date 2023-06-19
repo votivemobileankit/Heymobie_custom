@@ -17,12 +17,12 @@ class HomeMenuCartPage extends StatefulWidget {
 }
 
 class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
-  List<ItemsCart> _productList;
+  late List<ItemsCart> _productList;
   TextEditingController _textFiledUserComment = TextEditingController();
-  DriverList _driverDetail;
-  ProductListMenu productListModel;
-  String strScreen;
-  DataCart _cartDataModel;
+  late DriverList _driverDetail;
+  late ProductListMenu productListModel;
+  late String strScreen;
+  late DataCart _cartDataModel;
 
   void showHideProgress(bool show) {
     BlocProvider.of<SideNavigatBloc>(context)
@@ -70,7 +70,48 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
           exciseTax: homeState.vendor.exciseTax,
           lng: homeState.vendor.lng,
           salesTax: homeState.vendor.salesTax,
-          vendorType: homeState.vendor.vendorType);
+          vendorType: homeState.vendor.vendorType,
+      createdAt: "",
+        devicetype: "",
+        distance: "",
+        driverLicense: "",
+        forgetpassRequest: "",
+        forgetpassRequestStatus: "",
+        licenseBack: "",
+        licenseExpiry: "",
+
+          licenseFront: "",
+        licensePlate: "",
+        loginStatus: "",
+        mailingAddress: "",
+        make: "",
+        map_icon: "",
+        model: "",
+        otp: "",
+        password: "",
+        permitExpiry: "",
+        permitNumber: "",
+        permitType: "",
+        planExpiry: "",
+        planId: "",
+        planPurchased: "",
+        profileImg2: "",
+        profileImg3: "",
+        profileImg4: "",
+        rememberToken: "",
+        service: "",
+        serviceRadius: "",
+        ssn: "",
+        stripeId: "",
+        suburb: "",
+        txnId: "",
+        type_of_merchant: "",
+        uniqueId: "",
+        updatedAt: "",
+        views: "",
+        walletAmount: "",
+        year: ""
+      );
       _cartDataModel = homeState.cartDataModel;
     } else if (homeState is HomeFromCategoryCartPageState) {
       strScreen = "CategoryPage";
@@ -99,7 +140,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           print(state.toString());
           if (state is HomeCartPageState) {
@@ -140,7 +181,47 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                     exciseTax: state.vendor.exciseTax,
                     lng: state.vendor.lng,
                     salesTax: state.vendor.salesTax,
-                    vendorType: state.vendor.vendorType);
+                    vendorType: state.vendor.vendorType,
+                year: "",
+                walletAmount: "",
+                views: "",
+                updatedAt: "",
+                uniqueId: "",
+                type_of_merchant: "",
+                txnId: "",
+                suburb: "",
+                stripeId: "",
+                ssn: "",
+                 serviceRadius: "",
+                service: "",
+                rememberToken: "",
+                profileImg4: "",
+                profileImg3: "",
+                profileImg2: "",
+                planPurchased: "",
+                planId: "",
+                planExpiry: "",
+                permitType: "",
+                permitNumber: "",
+                permitExpiry: "",
+                password: "",
+                otp: "",
+                model: "",
+                map_icon: "",
+                make: "",
+                mailingAddress: "",
+                loginStatus: "",
+                licensePlate: "",
+                licenseFront: "",
+                licenseExpiry: "",
+                licenseBack: "",
+                forgetpassRequestStatus: "",
+                forgetpassRequest: "",
+                driverLicense: "",
+                distance: "",
+                  devicetype: "",
+                  createdAt: ""
+                );
               }
 
               _cartDataModel = state.cartDataModel;
@@ -224,6 +305,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               AHeaderWidget(
+
                 strBackbuttonName: 'ic_red_btn_back.png',
                 backBtnVisibility: true,
                 btnBackOnPressed: () {
@@ -245,7 +327,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                   }
                 },
                 strBtnRightImageName: 'ic_search_logo.png',
-                rightEditButtonVisibility: false,
+                rightEditButtonVisibility: false, btnEditOnPressed: () {  },
               ),
               Column(
                 mainAxisSize: MainAxisSize.max,
@@ -296,6 +378,9 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                               ),
                               AVerticalSpace(10.0.scale()),
                               ARoundedButton(
+                                btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                                btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                                btnFontWeight: FontWeight.normal,
                                 btnBgColor: kColorCommonButton,
                                 btnTextColor: Colors.white,
                                 btnOnPressed: () {

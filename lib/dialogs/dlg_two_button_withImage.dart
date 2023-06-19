@@ -16,12 +16,12 @@ const double _kBtnBorderShape = 16.0;
 const double _kMarginTop1 = 16.0;
 
 void thankYouDialog(
-    {@required BuildContext context,
-    @required String titleText,
-    @required descText,
-    @required String btnTitleText,
-    @required VoidCallback btnHome,
-    @required VoidCallback btnOrderHistory}) {
+    {required BuildContext context,
+    required String titleText,
+    required descText,
+    required String btnTitleText,
+    required VoidCallback btnHome,
+    required VoidCallback btnOrderHistory}) {
   showDialog(
       context: context,
       barrierColor: Colors.black26,
@@ -83,12 +83,12 @@ void thankYouDialog(
 // }
 
 Dialog _getTwoButtonDialog(
-    {@required BuildContext context,
-    @required String titleText,
-    @required descText,
-    @required String btnTitleText,
-    @required VoidCallback btnHome,
-    @required VoidCallback btnOrderHistory}) {
+    {required BuildContext context,
+    required String titleText,
+    required descText,
+    required String btnTitleText,
+    required VoidCallback btnHome,
+    required VoidCallback btnOrderHistory}) {
   return Dialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kBorderRadiusDialog.scale())),
@@ -145,6 +145,9 @@ Dialog _getTwoButtonDialog(
             //   btnElevation: 1,
             // ),
             ARoundedCustomButton(
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBorderShape: _kBtnBorderShape.scale(),
               btnBgColor: kColorCommonButtonBackGround,
               btnTextColor: kColorAppBgColor,

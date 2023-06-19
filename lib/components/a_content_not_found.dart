@@ -17,12 +17,11 @@ class AContentNotFoundWidget extends StatelessWidget {
   final String message;
 
   const AContentNotFoundWidget(
-      {Key key,
-      @required this.imagePath,
+      {
+      required this.imagePath,
       this.Isvisible = false,
       this.title = "",
-      this.message = ""})
-      : super(key: key);
+      this.message = ""});
 
   @override
   Widget build(BuildContext context) {

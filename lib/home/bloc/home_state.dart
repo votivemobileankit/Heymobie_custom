@@ -230,9 +230,9 @@ class HomeSettingPageState extends HomeState {
 }
 
 class HomeCategoryListPageState extends HomeState {
-  List<CategoryListModel> categoryListArray;
-  DriverList driverDetail;
-  String updatedCartCount;
+  late List<CategoryListModel> categoryListArray;
+  late DriverList driverDetail;
+  late String updatedCartCount;
 
   HomeCategoryListPageState(this.categoryListArray, this.driverDetail);
 
@@ -301,9 +301,9 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
   ProductListDriver driverProductList;
   String screen;
   Vendor driverDetail;
-  List<RatingReviewData> ratingReviewList;
-  List<RelatedProductList> relatedProductList;
-  List<AddonProductList> addOnProductList;
+   List<RatingReviewData>? ratingReviewList;
+   List<RelatedProductList>? relatedProductList;
+   List<AddonProductList>? addOnProductList;
 
   HomeFromDriverProductListDetailsPageState(
       this.driverProductList,
@@ -318,9 +318,9 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
         driverProductList,
         driverDetail,
         screen,
-        ratingReviewList,
-        relatedProductList,
-        addOnProductList
+        ratingReviewList!,
+        relatedProductList!,
+        addOnProductList!
       ];
 }
 
@@ -478,8 +478,8 @@ class HomeEventDataNotFoundState extends HomeState {
 }
 
 class HomeEventMessageShowState extends HomeState {
-  final String message;
-  String updatedCartCount;
+  late final String message;
+  late String updatedCartCount;
 
   HomeEventMessageShowState(this.message);
 
@@ -488,9 +488,9 @@ class HomeEventMessageShowState extends HomeState {
 }
 
 class HomeEventAfterDeleteMessageShowState extends HomeState {
-  final String message;
-  String updatedCartCount;
-  List<ItemsCart> cartDataListArray;
+  String message;
+
+  late List<ItemsCart> cartDataListArray;
 
   HomeEventAfterDeleteMessageShowState(this.message, this.cartDataListArray);
 

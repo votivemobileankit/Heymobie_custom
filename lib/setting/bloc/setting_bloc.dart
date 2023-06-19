@@ -8,62 +8,47 @@ import 'package:grambunny_customer/utils/utils.dart';
 import '../setting.dart';
 
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
-  UserRepository _userRepository;
+  UserRepository? _userRepository;
 
-  SettingBloc({UserRepository userRepository}) : super(SettingInitial()) {
+  SettingBloc({required UserRepository userRepository}) : super(SettingInitial()) {
     _userRepository = userRepository;
+
+    on<SettingEventCallSettingApi>(mapSettingEventCallSettingApi);
+    on<SettingEventBackBtnClick>(mapSettingEventBackBtnClick);
+    on<SettingEventResetInitialState>(mapSettingEventResetInitialState);
+    on<SettingEventUpdateNotification>(mapSettingEventUpdateNotificationState);
+    on<SettingNotificationListApiCall>(mapSettingNotificationListApiCall);
+    on<SettingNotificationButtonClick>(mapSettingNotificationButtonClick);
+    on<NotificationListItemClick>(mapNotificationListItemClick);
+    on<SettingEventNotificationStateReset>(mapSettingEventNotificationStateReset);
+
+
+
+
+
   }
 
-  @override
-  Stream<SettingState> mapEventToState(
-    SettingEvent event,
-  ) async* {
-    switch (event.runtimeType) {
-      case SettingEventCallSettingApi:
-        yield* mapSettingEventCallSettingApi();
-        break;
-      case SettingEventBackBtnClick:
-        yield* mapSettingEventBackBtnClick();
-        break;
-      case SettingEventResetInitialState:
-        yield* mapSettingEventResetInitialState();
-        break;
-      case SettingEventUpdateNotification:
-        yield* mapSettingEventUpdateNotificationState(event);
-        break;
-      case SettingNotificationListApiCall:
-        yield* mapSettingNotificationListApiCall(event);
-        break;
-      case SettingNotificationButtonClick:
-        yield* mapSettingNotificationButtonClick(event);
-        break;
-      case NotificationListItemClick:
-        yield* mapNotificationListItemClick(event);
-        break;
-      case SettingEventNotificationStateReset:
-        yield* mapSettingEventNotificationStateReset(event);
-        break;
-    }
+
+
+ mapSettingEventNotificationStateReset(
+      SettingEventNotificationStateReset event,Emitter<SettingState> emitter) async {
+   emitter (SettingNotificationListPageState());
   }
 
-  Stream<SettingState> mapSettingEventNotificationStateReset(
-      SettingEventNotificationStateReset event) async* {
-    yield SettingNotificationListPageState();
-  }
-
-  Stream<SettingState> mapNotificationListItemClick(
-      NotificationListItemClick event) async* {
+ mapNotificationListItemClick(
+      NotificationListItemClick event,Emitter<SettingState> emitter) async {
     NetworkApiCallState<bool> apiCallState =
-        await _userRepository.getOrderDetail(event.order_id, event.vendorId);
+        await _userRepository!.getOrderDetail(event.order_id, event.vendorId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       print("Complete state");
-      _userRepository.ScreenName =
+      _userRepository!.ScreenName =
           ScreenNavigation.OrderHistoryDetailPageScreen;
       if (apiCallState.statusValue == "1") {
-        yield SettingNotificationDetailPageState(
-            _userRepository.getOrderDetailData(),
-            _userRepository.getOrderDetailMenuItem(),
-            _userRepository.getVendorDetailData());
+        emitter( SettingNotificationDetailPageState(
+            _userRepository!.getOrderDetailData()!,
+            _userRepository
+                !.getOrderDetailMenuItem()!,
+            _userRepository!.getVendorDetailData()!));
       } else {
         //yield OrderDetailLoadingErrorState(apiCallState.message);
       }
@@ -73,94 +58,94 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     }
   }
 
-  Stream<SettingState> mapSettingNotificationButtonClick(
-      SettingNotificationButtonClick event) async* {
-    yield SettingNotificationListPageState();
+   mapSettingNotificationButtonClick(
+      SettingNotificationButtonClick event,Emitter<SettingState> emitter) async {
+     emitter (SettingNotificationListPageState());
   }
 
-  Stream<SettingState> mapSettingNotificationListApiCall(
-      SettingNotificationListApiCall event) async* {
+ mapSettingNotificationListApiCall(
+      SettingNotificationListApiCall event,Emitter<SettingState> emitter) async {
     NetworkApiCallState<bool> apiCallState =
-        await _userRepository.getNotificationListApiCall(event.pageCount);
+        await _userRepository!.getNotificationListApiCall(event.pageCount);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
-        yield SettingNotificationDataListState(
-            _userRepository.getNotificationDataList(), event.isRefresh);
+        emitter (SettingNotificationDataListState(
+            _userRepository!.getNotificationDataList()!, event.isRefresh));
       } else {
-        yield SettingErrorState(apiCallState.message);
+        emitter (SettingErrorState(apiCallState.message!));
       }
     } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
       if (apiCallState.message == "Unknown Error") {
-        yield SettingErrorState("Something went wrong");
+        emitter (SettingErrorState("Something went wrong"));
       } else {
-        yield SettingErrorState("Something went wrong");
+        emitter (SettingErrorState("Something went wrong"));
       }
     }
   }
 
-  Stream<SettingState> mapSettingEventUpdateNotificationState(
-      SettingEventUpdateNotification event) async* {
+   mapSettingEventUpdateNotificationState(
+      SettingEventUpdateNotification event,Emitter<SettingState> emitter) async {
     NetworkApiCallState<bool> apiCallState =
-        await _userRepository.getSettingUpdateApi(
+        await _userRepository!.getSettingUpdateApi(
             event.emailStatus, event.pushNotiStatus, event.smsStatus);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         NetworkApiCallState<bool> apiCallState =
-            await _userRepository.getUserDetailApi();
+            await _userRepository!.getUserDetailApi();
 
-        yield SettingUpdateUserSettingState(
-            _userRepository.getUserDetailInfo());
+        emitter( SettingUpdateUserSettingState(
+            _userRepository!.getUserDetailInfo()!));
       } else {
-        yield SettingErrorState(apiCallState.message);
+        emitter( SettingErrorState(apiCallState.message!));
       }
     } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
       if (apiCallState.message == "Unknown Error") {
-        yield SettingErrorState("Something went wrong");
+        emitter(SettingErrorState("Something went wrong"));
       } else {
-        yield SettingErrorState("Something went wrong");
+        emitter( SettingErrorState("Something went wrong"));
       }
     }
   }
 
-  Stream<SettingState> mapSettingEventResetInitialState() async* {
-    yield SettingInitial();
+   mapSettingEventResetInitialState(SettingEventResetInitialState event,Emitter<SettingState> emitter) async {
+    emitter( SettingInitial());
   }
 
-  Stream<SettingState> mapSettingEventBackBtnClick() async* {
+  mapSettingEventBackBtnClick(SettingEventBackBtnClick event,Emitter<SettingState> emitter) async {
     print(state.toString());
     if (state is SettingGetUserSettingDataState) {
       print("profile back");
-      yield SettingNavigateToHomePageState();
+      emitter( SettingNavigateToHomePageState());
     } else if (state is SettingUpdateUserSettingState) {
-      yield SettingNavigateToHomePageState();
+      emitter( SettingNavigateToHomePageState());
     } else if (state is SettingNotificationDataListState) {
-      yield SettingUpdateUserSettingState(_userRepository.getUserDetailInfo());
+      emitter( SettingUpdateUserSettingState(_userRepository!.getUserDetailInfo()!));
     } else if (state is SettingNotificationDetailPageState) {
-      yield SettingNotificationDataListState(
-          _userRepository.getNotificationDataList(), "0");
+      emitter( SettingNotificationDataListState(
+          _userRepository!.getNotificationDataList()!, "0"));
     } else if (state is SettingNotificationListPageState) {
-      yield SettingUpdateUserSettingState(_userRepository.getUserDetailInfo());
+      emitter( SettingUpdateUserSettingState(_userRepository!.getUserDetailInfo()!));
     }
   }
 
-  Stream<SettingState> mapSettingEventCallSettingApi() async* {
+  mapSettingEventCallSettingApi(SettingEventCallSettingApi event,Emitter<SettingState> emitter) async {
     //_userRepository.ScreenName = HomeMainPageScreen;
     NetworkApiCallState<bool> apiCallState =
-        await _userRepository.getUserDetailApi();
+        await _userRepository!.getUserDetailApi();
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         print("demo name");
-        yield SettingGetUserSettingDataState(
-            _userRepository.getUserDetailInfo());
+        emitter( SettingGetUserSettingDataState(
+            _userRepository!.getUserDetailInfo()!));
       } else {
-        yield SettingErrorState(apiCallState.message);
+        emitter( SettingErrorState(apiCallState.message!));
       }
     } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
       if (apiCallState.message == "Unknown Error") {
-        yield SettingErrorState("Something went wrong");
+        emitter( SettingErrorState("Something went wrong"));
       } else {
-        yield SettingErrorState("Something went wrong");
+        emitter( SettingErrorState("Something went wrong"));
       }
     }
   }

@@ -14,15 +14,14 @@ class LoginNavigator extends StatefulWidget {
   static const String otpPage = '/otpPage';
   final UserRepository userRepository;
 
-  const LoginNavigator({Key key, @required this.userRepository})
-      : super(key: key);
+  const LoginNavigator({ required this.userRepository});
 
   @override
   _LoginNavigatorState createState() => _LoginNavigatorState();
 }
 
 class _LoginNavigatorState extends State<LoginNavigator> {
-  _LoginRouter _router;
+  _LoginRouter? _router;
 
   @override
   void initState() {
@@ -37,38 +36,38 @@ class _LoginNavigatorState extends State<LoginNavigator> {
         onWillPop: () {
           print("in Login ${widget.userRepository.ScreenName}");
           if (widget.userRepository.ScreenName == ScreenNavigation.SignUpPage) {
-            _router._loginBloc.add(LoginEventBackBtnClicked());
+            _router!._loginBloc.add(LoginEventBackBtnClicked());
             return Future<bool>.value(false);
           } else if (widget.userRepository.ScreenName ==
               ScreenNavigation.ForgetPwdPage) {
-            _router._loginBloc.add(LoginEventBackBtnClicked());
+            _router!._loginBloc.add(LoginEventBackBtnClicked());
 
             return Future<bool>.value(false);
           } else {
-            // return Future<bool>.value(true);
+             return Future<bool>.value(true);
           }
         },
         child: Navigator(
           initialRoute: LoginNavigator.ageAskPage,
-          onGenerateRoute: _router.onGenerateRoute,
+          onGenerateRoute: _router!.onGenerateRoute,
         ));
   }
 
   @override
   void dispose() {
-    _router.dispose();
+    _router!.dispose();
     super.dispose();
   }
 }
 
 class _LoginRouter {
-  LoginBloc _loginBloc;
+ late LoginBloc _loginBloc;
 
   _LoginRouter(UserRepository userRepository) {
     _loginBloc = LoginBloc(userRepository);
   }
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case LoginNavigator.ageAskPage:
         return MaterialPageRoute(

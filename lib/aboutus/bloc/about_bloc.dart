@@ -4,9 +4,9 @@ import 'package:grambunny_customer/aboutus/aboutus.dart';
 import 'package:grambunny_customer/hm_root/hm_root.dart';
 
 class AboutBloc extends Bloc<AboutEvent, AboutState> {
-  UserRepository _userRepository;
+ late UserRepository _userRepository;
 
-  AboutBloc({UserRepository userRepository}) : super(AboutInitial()) {
+  AboutBloc({required UserRepository userRepository}) : super(AboutInitial()) {
     _userRepository = userRepository;
   }
 

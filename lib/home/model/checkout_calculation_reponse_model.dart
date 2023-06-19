@@ -1,15 +1,15 @@
 class CheckOutResponseModel {
-  String message;
-  int status;
-  DataResponse data;
+ late String message;
+late  int status;
+ late DataResponse data;
 
-  CheckOutResponseModel({this.message, this.status, this.data});
+  CheckOutResponseModel({required this.message,required this.status,required this.data});
 
   CheckOutResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
     data =
-        json['data'] != null ? new DataResponse.fromJson(json['data']) : null;
+        (json['data'] != null ? new DataResponse.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,22 +24,22 @@ class CheckOutResponseModel {
 }
 
 class DataResponse {
-  String salesTax;
-  String exciseTax;
-  String cityTax;
-  String deliveryFee;
-  String subtotal;
-  String grandtotal;
-  String couponAmount;
+ late String salesTax;
+ late String exciseTax;
+ late String cityTax;
+ late  String deliveryFee;
+ late  String subtotal;
+ late  String grandtotal;
+ late  String couponAmount;
 
   DataResponse(
-      {this.salesTax,
-      this.exciseTax,
-      this.cityTax,
-      this.deliveryFee,
-      this.subtotal,
-      this.grandtotal,
-      this.couponAmount});
+      {required this.salesTax,
+        required  this.exciseTax,
+        required  this.cityTax,
+        required  this.deliveryFee,
+        required  this.subtotal,
+        required  this.grandtotal,
+        required  this.couponAmount});
 
   DataResponse.fromJson(Map<String, dynamic> json) {
     salesTax = json['sales_tax'];

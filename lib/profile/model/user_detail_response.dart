@@ -1,42 +1,42 @@
 class UserInfoData {
-  String id;
-  String token;
-  String name;
-  String lname;
-  String email;
-  String profileImage;
-  String userMob;
-  String userAddress;
-  String userCity;
-  String userStates;
-  String userZipcode;
-  String userLat;
-  String userLong;
-  String avgRating;
-  String ratingCount;
-  String userStatus;
-  String devicetype;
-  String devicetoken;
-  String dob;
+late  String id;
+late String token;
+late String name;
+late  String lname;
+late String email;
+late String profileImage;
+late String userMob;
+late String userAddress;
+late String userCity;
+late  String userStates;
+late String userZipcode;
+late String userLat;
+late String userLong;
+late String avgRating;
+late String ratingCount;
+late  String userStatus;
+late String devicetype;
+late String devicetoken;
+late String dob;
 
   UserInfoData(
-      {this.id,
-      this.token,
-      this.name,
-      this.lname,
-      this.email,
-      this.profileImage,
-      this.userMob,
-      this.userAddress,
-      this.userCity,
-      this.userStates,
-      this.userZipcode,
-      this.userLat,
-      this.userLong,
-      this.avgRating,
-      this.ratingCount,
-      this.userStatus,
-      this.devicetype,
-      this.devicetoken,
-      this.dob});
+      {required this.id,
+        required this.token,
+        required this.name,
+        required  this.lname,
+        required this.email,
+        required  this.profileImage,
+        required  this.userMob,
+        required this.userAddress,
+        required this.userCity,
+        required this.userStates,
+        required this.userZipcode,
+        required this.userLat,
+        required this.userLong,
+        required this.avgRating,
+        required  this.ratingCount,
+        required this.userStatus,
+        required this.devicetype,
+        required this.devicetoken,
+        required this.dob});
 }

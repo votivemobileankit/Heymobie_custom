@@ -17,7 +17,7 @@ import '../../utils/utils.dart';
 import '../side_navigation.dart';
 
 class SideNavigationHomeTab extends StatefulWidget {
-  final UserRepository userRepository;
+  final UserRepository? userRepository;
 
   SideNavigationHomeTab({this.userRepository});
 
@@ -26,20 +26,20 @@ class SideNavigationHomeTab extends StatefulWidget {
 }
 
 class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
-  SideNavigationTab _selectedTab;
-  bool _showLoadingAnimation;
-  ProfileBloc profileBloc;
-  HomeBloc homeBloc;
-  SettingBloc settingBloc;
-  AboutBloc aboutusBloc;
-  PrivacyPolicyBloc privacyPolicyBloc;
-  OrderHistoryBloc orderHistoryBloc;
-  BlocProvider<ProfileBloc> profileProvider;
-  BlocProvider<HomeBloc> homeProvider;
-  BlocProvider<OrderHistoryBloc> orderHistoryProvider;
-  BlocProvider<SettingBloc> settingProvider;
-  BlocProvider<AboutBloc> aboutUsProvider;
-  BlocProvider<PrivacyPolicyBloc> privacyPolicyProvider;
+ late SideNavigationTab _selectedTab;
+ late bool _showLoadingAnimation;
+ late ProfileBloc profileBloc;
+ late  HomeBloc homeBloc;
+ late  SettingBloc settingBloc;
+ late  AboutBloc aboutusBloc;
+ late PrivacyPolicyBloc privacyPolicyBloc;
+ late  OrderHistoryBloc orderHistoryBloc;
+ late  BlocProvider<ProfileBloc> profileProvider;
+ late BlocProvider<HomeBloc> homeProvider;
+ late BlocProvider<OrderHistoryBloc> orderHistoryProvider;
+ late  BlocProvider<SettingBloc> settingProvider;
+ late BlocProvider<AboutBloc> aboutUsProvider;
+ late BlocProvider<PrivacyPolicyBloc> privacyPolicyProvider;
 
   @override
   void initState() {
@@ -47,40 +47,40 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
     print("Initialize Sidenavigation");
     _selectedTab = (BlocProvider.of<SideNavigatBloc>(context).state
             as SideNavigationDefaultState)
-        .selectedTab;
+        .selectedTab!;
     _showLoadingAnimation = (BlocProvider.of<SideNavigatBloc>(context).state
             as SideNavigationDefaultState)
         .showLoadingAnimation;
-    profileBloc = new ProfileBloc(userRepository: widget.userRepository);
-    homeBloc = new HomeBloc(userRepository: widget.userRepository);
-    settingBloc = new SettingBloc(userRepository: widget.userRepository);
+    profileBloc = new ProfileBloc(userRepository: widget.userRepository!);
+    homeBloc = new HomeBloc(userRepository: widget.userRepository!);
+    settingBloc = new SettingBloc(userRepository: widget.userRepository!);
     orderHistoryBloc =
-        new OrderHistoryBloc(userRepository: widget.userRepository);
-    aboutusBloc = new AboutBloc(userRepository: widget.userRepository);
+        new OrderHistoryBloc(userRepository: widget.userRepository!);
+    aboutusBloc = new AboutBloc(userRepository: widget.userRepository!);
     privacyPolicyBloc =
-        new PrivacyPolicyBloc(userRepository: widget.userRepository);
+        new PrivacyPolicyBloc(userRepository: widget.userRepository!);
     initializeProviders();
   }
 
   void initializeProviders() {
     print("Initialize provider");
     profileProvider =
-        BlocProvider.value(value: profileBloc, child: ProfileNavigator());
+        BlocProvider.value(value: profileBloc, child: ProfileNavigator(userRepository: widget.userRepository!));
     homeProvider = BlocProvider.value(
         value: homeBloc,
-        child: HomeNavigator(userRepository: widget.userRepository));
+        child: HomeNavigator(userRepository: widget.userRepository!));
     orderHistoryProvider = BlocProvider.value(
         value: orderHistoryBloc,
-        child: OrderHistoryNavigator(userRepository: widget.userRepository));
+        child: OrderHistoryNavigator(userRepository: widget.userRepository!));
     settingProvider = BlocProvider.value(
         value: settingBloc,
-        child: SettingNavigator(userRepository: widget.userRepository));
+        child: SettingNavigator(userRepository: widget.userRepository!));
     aboutUsProvider = BlocProvider.value(
         value: aboutusBloc,
-        child: AboutUsNavigator(userRepository: widget.userRepository));
+        child: AboutUsNavigator(userRepository: widget.userRepository!));
     privacyPolicyProvider = BlocProvider.value(
         value: privacyPolicyBloc,
-        child: PrivacyPolicyNavigator(userRepository: widget.userRepository));
+        child: PrivacyPolicyNavigator(userRepository: widget.userRepository!));
   }
 
   void onTabTapped(int index) {
@@ -109,12 +109,12 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
           print("in homepage");
           if (state.isBackOrderHistory) {
             print("in homepage back to history");
-            if (widget.userRepository.ScreenName ==
+            if (widget.userRepository!.ScreenName ==
                 ScreenNavigation.OrderHistoryDetailPageScreen) {
               orderHistoryBloc.add(OrderEventBackBtnClicked());
               BlocProvider.of<HmRootBloc>(context)
                   .add(HmRootEventBackButtonOrderHistoryReset());
-            } else if (widget.userRepository.ScreenName ==
+            } else if (widget.userRepository!.ScreenName ==
                 ScreenNavigation.OrderHistoryPageScreen) {
               orderHistoryBloc.add(OrderEventBackBtnClicked());
               BlocProvider.of<HmRootBloc>(context)
@@ -122,7 +122,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
             }
           } else if (state.isBackProfile) {
             print("in homepage back from profile");
-            if (widget.userRepository.ScreenName ==
+            if (widget.userRepository!.ScreenName ==
                 ScreenNavigation.ProfileMainPageScreen) {
               //  profileBloc.add(ProfileEventProfileReset());
               profileBloc.add(ProfileEventBackBtnClick());
@@ -143,8 +143,8 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                 .add(HmRootEventSettingScreenUnSelectFromRoot());
           }
           if (state.isPushNotificationSending) {
-            String orderId = widget.userRepository.notifyOrderId;
-            String driverId = widget.userRepository.notifyDriverId;
+            String orderId = widget.userRepository!.notifyOrderId;
+            String driverId = widget.userRepository!.notifyDriverId;
             BlocProvider.of<SideNavigatBloc>(context).add(
                 SideNavigationEventGoToOrderDetailPage(
                     true, orderId, driverId));
@@ -155,7 +155,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
       child: BlocConsumer<SideNavigatBloc, SideNavigatState>(
         listener: (context, state) {
           setState(() {
-            _selectedTab = (state as SideNavigationDefaultState).selectedTab;
+            _selectedTab = (state as SideNavigationDefaultState).selectedTab!;
             _showLoadingAnimation =
                 (state as SideNavigationDefaultState).showLoadingAnimation;
             if (_selectedTab == SideNavigationTab.HOME) {}
@@ -173,7 +173,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                 print("========Goto Detail page");
                 orderHistoryBloc.add(
                     OrderHistoryEventNavigateFromNoticationToOrderDetail(
-                        state.orderId, state.driverId));
+                        state.orderId!, state.driverId!));
               }
             }
 
@@ -235,7 +235,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                 AVerticalSpace(5.0.scale()),
                                 InkWell(
                                   onTap: () {
-                                    widget.userRepository.ScreenName =
+                                    widget.userRepository!.ScreenName =
                                         ScreenNavigation.ProfileMainPageScreen;
                                     Navigator.pop(context);
                                     onTabTapped(2);
@@ -271,7 +271,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                         18.0.scale(), kColorAppBgColor),
                                   ).align(Alignment.centerLeft),
                                   onTap: () {
-                                    widget.userRepository.ScreenName =
+                                    widget.userRepository!.ScreenName =
                                         ScreenNavigation.OrderHistoryPageScreen;
                                     Navigator.pop(context);
 

@@ -6,7 +6,7 @@ bool isEnteredDateValid(String dayText, String monthText, String yearText) {
   day = day == 0 ? 1 : day;
   month = month == 0 ? 1 : month;
   String dateStr = getFormattedStrForDate(day, month, year);
-  DateTime parsedDate = DateTime.tryParse(dateStr);
+  DateTime? parsedDate = DateTime.tryParse(dateStr);
   if (parsedDate != null) {
     String parsedDateStr = getFormattedStrForDate(
         parsedDate.day, parsedDate.month, parsedDate.year);

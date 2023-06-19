@@ -1,15 +1,15 @@
 class VendorLocationModel {
-  String message;
-  int status;
-  Location location;
+ late String message;
+ late int status;
+ late Location location;
 
-  VendorLocationModel({this.message, this.status, this.location});
+  VendorLocationModel({required this.message,required this.status,required this.location});
 
   VendorLocationModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
     location =
-        json['data'] != null ? new Location.fromJson(json['data']) : null;
+        (json['data'] != null ? new Location.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,9 +24,9 @@ class VendorLocationModel {
 }
 
 class Location {
-  List<VendorLatlng> vendorLatlng;
+ late List<VendorLatlng> vendorLatlng;
 
-  Location({this.vendorLatlng});
+  Location({required this.vendorLatlng});
 
   Location.fromJson(Map<String, dynamic> json) {
     if (json['vendor_latlng'] != null) {
@@ -47,10 +47,10 @@ class Location {
 }
 
 class VendorLatlng {
-  String lat;
-  String lng;
+ late String lat;
+ late String lng;
 
-  VendorLatlng({this.lat, this.lng});
+  VendorLatlng({required this.lat, required this.lng});
 
   VendorLatlng.fromJson(Map<String, dynamic> json) {
     lat = json['lat'];

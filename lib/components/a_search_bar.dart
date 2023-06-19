@@ -39,16 +39,16 @@ class ASearchBarWidget extends StatefulWidget {
   final Function() onBack;
 
   const ASearchBarWidget({
-    @required Key key,
-    @required this.borderColor,
-    @required this.bgColor,
-    @required this.cursorColor,
-   @required this.hintStr,
-    @required this.textStyle,
-    @required this.hintStyle,
-    @required this.onSearch,
-    @required this.onTextChange,
-    @required this.onBack,
+    required Key key,
+    required this.borderColor,
+    required this.bgColor,
+    required this.cursorColor,
+   required this.hintStr,
+    required this.textStyle,
+    required this.hintStyle,
+    required this.onSearch,
+    required this.onTextChange,
+    required this.onBack,
   }) : super(key: key);
 
   @override

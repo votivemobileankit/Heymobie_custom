@@ -1,16 +1,16 @@
 class CouponCodeListModel {
-  String flatRate;
-  String parcent;
-  String message;
-  int status;
-  List<Couponlist> couponlist;
+ late String flatRate;
+ late String parcent;
+ late String message;
+ late int status;
+ late List<Couponlist> couponlist;
 
   CouponCodeListModel(
-      {this.flatRate,
-      this.parcent,
-      this.message,
-      this.status,
-      this.couponlist});
+      {required this.flatRate,
+        required this.parcent,
+        required this.message,
+        required this.status,
+        required  this.couponlist});
 
   CouponCodeListModel.fromJson(Map<String, dynamic> json) {
     flatRate = json['flat_rate'];
@@ -39,36 +39,36 @@ class CouponCodeListModel {
 }
 
 class Couponlist {
-  String id;
-  String vendorId;
-  String name;
-  String coupon;
-  String discount;
-  String amount;
-  String applyMinAmount;
-  String status;
-  String createdAt;
-  String validTill;
-  String perUser;
-  String usageLimit;
-  String description;
-  String updatedAt;
+ late String id;
+ late String vendorId;
+ late String name;
+ late  String coupon;
+ late String discount;
+ late String amount;
+ late String applyMinAmount;
+ late String status;
+ late String createdAt;
+ late  String validTill;
+ late String perUser;
+ late  String usageLimit;
+ late String description;
+ late String updatedAt;
 
   Couponlist(
-      {this.id,
-      this.vendorId,
-      this.name,
-      this.coupon,
-      this.discount,
-      this.amount,
-      this.applyMinAmount,
-      this.status,
-      this.createdAt,
-      this.validTill,
-      this.perUser,
-      this.usageLimit,
-      this.description,
-      this.updatedAt});
+      {required this.id,
+        required this.vendorId,
+        required this.name,
+        required this.coupon,
+        required this.discount,
+        required  this.amount,
+        required  this.applyMinAmount,
+        required   this.status,
+        required  this.createdAt,
+        required  this.validTill,
+        required  this.perUser,
+        required  this.usageLimit,
+        required this.description,
+        required   this.updatedAt});
 
   Couponlist.fromJson(Map<String, dynamic> json) {
     id = json['id'];

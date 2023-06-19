@@ -38,14 +38,14 @@ class HomeCheckOutPage extends StatefulWidget {
 }
 
 class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
-  TextEditingController _textFiledAddressaprtment;
-  TextEditingController _textFiledCity;
+ late TextEditingController _textFiledAddressaprtment;
+ late TextEditingController _textFiledCity;
 
-  TextEditingController _textFiledZip;
-  TextEditingController _textFiledMobile;
-  String strPaymentType = '';
-  String strState = '';
-  String strApartment = '';
+ late TextEditingController _textFiledZip;
+ late TextEditingController _textFiledMobile;
+ late String strPaymentType = '';
+ late String strState = '';
+ late String strApartment = '';
   String strCity = '';
   String strZipCode = '';
   String strMobile = '';
@@ -63,17 +63,17 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
   bool _isCodSelect = false;
   bool _isCouponApplied = false;
   bool _isCreditSelect = false;
-  String _strScreen;
-  DriverList _driverDetail;
-  ProductListMenu _productListModel;
+ late String _strScreen;
+ late DriverList _driverDetail;
+ late ProductListMenu _productListModel;
   bool showPerformance = false;
-  List<Couponlist> couponArrayList;
-  DataResponse _checkOutCalculation;
+ late List<Couponlist> couponArrayList;
+ late DataResponse _checkOutCalculation;
   bool oneTimeCall = true;
-  List<StatesList> _stateArrayList;
-  String _osName;
-  String _deviceType;
-  String _vendorId;
+ late List<StatesList> _stateArrayList;
+ late String _osName;
+ late String _deviceType;
+ late  String _vendorId;
 
   onSettingCallback() {
     setState(() {
@@ -81,7 +81,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
     });
   }
 
-  ScrollController scrollController;
+ late ScrollController scrollController;
 
   ///The controller of sliding up panel
   SlidingUpPanelController panelController = SlidingUpPanelController();
@@ -91,7 +91,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
         .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
   }
 
-  CreditCardValidator _ccValidator;
+ late CreditCardValidator _ccValidator;
 
   @override
   void initState() {
@@ -185,7 +185,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is HomeMenuItemDetailsPageState) {
           Navigator.of(context).pop();
@@ -266,7 +266,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
               btnOrderHistory: () {
                 BlocProvider.of<SideNavigatBloc>(context)
                     .add(SideNavigationEventGoToOrderHistoryList(true));
-              });
+              }, titleText: '', descText: "",btnTitleText: "");
         } else if (state is HomeCheckOutOrderErrorState) {
           showHideProgress(false);
           showSnackBar(state.message, context);
@@ -299,7 +299,8 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                   }
                 },
                 strBtnRightImageName: 'ic_search_logo.png',
-                rightEditButtonVisibility: false,
+                rightEditButtonVisibility: false, btnEditOnPressed: () {  },
+
               ),
               Column(
                 children: [
@@ -662,6 +663,9 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                     ),
                                   ),
                                   ARoundedButton(
+                                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                                    btnFontWeight: FontWeight.normal,
                                     btnBgColor: kColorCommonButton,
                                     btnTextColor: Colors.white,
                                     btnOnPressed: () {
@@ -741,7 +745,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                                   deviceType: _deviceType,
                                                   osName: _osName));
                                         } else {
-                                          if (formKey.currentState.validate()) {
+                                          if (formKey.currentState!.validate()) {
                                             print("PaymentSuccess");
 
                                             strApartment =
@@ -814,7 +818,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                     ],
                   )
                 ],
-              ).scroll().expand()
+              ).expand()
             ],
           ).widgetBgColor(Colors.white)),
     ).lightStatusBarText().pageBgColor(kColorAppBgColor);
@@ -1142,6 +1146,9 @@ class _CouponCodeRowItemListModelNewState
               ],
             ),
             ARoundedButton(
+             btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBgColor: kColorCommonButtonBackGround,
               btnTextColor: kColorCommonButton,
               btnOnPressed: () {

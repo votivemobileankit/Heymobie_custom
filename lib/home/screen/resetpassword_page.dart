@@ -19,9 +19,9 @@ class ResetPasswordPage extends StatefulWidget {
   _ResetPageState createState() => _ResetPageState();
 }
 
-TextEditingController _textFiledPassword;
-TextEditingController _textFiledConfirmPassword;
-String email;
+late TextEditingController _textFiledPassword;
+late TextEditingController _textFiledConfirmPassword;
+late String email;
 
 class _ResetPageState extends State<ResetPasswordPage> {
   @override
@@ -47,7 +47,7 @@ class _ResetPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is ResetPasswordApiLoadingCompleteState) {
           showHideProgress(false);
@@ -72,9 +72,10 @@ class _ResetPageState extends State<ResetPasswordPage> {
             Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                AHeaderWidget(
-                  backBtnVisibility: false,
-                ),
+                // AHeaderWidget(
+                //
+                //   backBtnVisibility: false,
+                // ),
                 Column(
                   children: [
                     AVerticalSpace(_kVerticalSpaceAfterHeartLogo.scale()),
@@ -125,6 +126,9 @@ class _ResetPageState extends State<ResetPasswordPage> {
                     ),
                     AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                     ARoundedButton(
+                      btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                      btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                      btnFontWeight: FontWeight.normal,
                       btnBgColor: kColorAppBgColor,
                       btnTextColor: Colors.white,
                       btnOnPressed: () {

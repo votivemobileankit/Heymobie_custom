@@ -40,29 +40,29 @@ class CustomContainer extends StatelessWidget {
   final Duration duration;
 
   const CustomContainer({
-    Key key,
-    @required this.child,
-    @required this.border,
+
+    required this.child,
+    required this.border,
     this.color = Colors.transparent,
     this.borderRadius = 0.0,
     this.elevation = 0.0,
-    @required this.rippleColor,
+    required this.rippleColor,
     this.shadowColor = Colors.black12,
-    @required this.onTap,
-    @required this.onDoubleTap,
-    @required this.onLongPress,
-    @required this.height,
-    @required this.width,
-    @required this.margin,
-    @required this.customBorders,
-    @required this.alignment,
-    @required this.boxShadows,
+    required this.onTap,
+    required this.onDoubleTap,
+    required this.onLongPress,
+    required this.height,
+    required this.width,
+    required this.margin,
+    required this.customBorders,
+    required this.alignment,
+    required this.boxShadows,
     this.animate = false,
     this.duration = const Duration(milliseconds: 200),
     this.boxShape = BoxShape.rectangle,
     this.shadowDirection = ShadowDirection.bottomRight,
     this.padding = const EdgeInsets.all(0),
-  }) : super(key: key);
+  }) ;
 
   static const double WRAP = -1;
   static const double EXPAND = -2;

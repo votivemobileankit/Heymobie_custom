@@ -20,8 +20,8 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
-  String email;
-  String from;
+  late String email;
+  late String from;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _OtpPageState extends State<OtpPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is HomeInitial) {
           Navigator.of(context).pushNamed(HomeNavigator.homeDriverMainPage);
@@ -124,6 +124,9 @@ class _OtpPageState extends State<OtpPage> {
                 ),
                 AVerticalSpace(_kVerticalSpaceBeforeEnterCodeText.scale()),
                 ARoundedButton(
+                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorAppBgColor,
                   btnTextColor: Colors.white,
                   btnOnPressed: () {
@@ -137,7 +140,7 @@ class _OtpPageState extends State<OtpPage> {
                   btnFontSize: kFontSizeBtnLarge.scale(),
                 ),
               ]),
-            ]).scroll(),
+            ]),
           ),
         ],
       )).widgetBgColor(Colors.white),

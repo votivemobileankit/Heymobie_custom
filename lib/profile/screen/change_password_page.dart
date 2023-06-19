@@ -18,10 +18,10 @@ class ChangePasswordPage extends StatefulWidget {
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
 
-TextEditingController _textFiledOldPassword;
-TextEditingController _textFiledNewPassword;
-TextEditingController _textFiledConfirmPassword;
-String userid;
+late TextEditingController _textFiledOldPassword;
+late TextEditingController _textFiledNewPassword;
+late TextEditingController _textFiledConfirmPassword;
+late String userid;
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
@@ -43,7 +43,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<ProfileBloc, ProfileState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is ChangePasswordApiCompleteState) {
           showHideProgress(false);
@@ -67,6 +67,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             AHeaderWidget(
+              headerSigninText: "",
+              headerText: "",
+              btnEditOnPressed: () {
+
+              },
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
@@ -145,6 +150,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                 ARoundedButton(
+                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorCommonButton,
                   btnTextColor: Colors.white,
                   btnOnPressed: () {

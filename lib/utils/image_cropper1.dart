@@ -33,9 +33,9 @@ class ImageCropper {
     int height,
     int width,
   ) async {
-    img.Image baseSizeImage = img.decodeImage(data);
+    img.Image? baseSizeImage = img.decodeImage(data);
     img.Image resizeImage =
-        img.copyResize(baseSizeImage, height: height, width: width);
+        img.copyResize(baseSizeImage!, height: height, width: width);
     ui.Codec codec = await ui.instantiateImageCodec(img.encodePng(resizeImage));
     ui.FrameInfo frameInfo = await codec.getNextFrame();
     return frameInfo.image;
@@ -52,7 +52,7 @@ class ImageCropper {
     final recordedPicture = pictureRecorder.endRecording();
     ui.Image img = await recordedPicture.toImage(image.width, image.height);
     final byteData = await img.toByteData(format: ui.ImageByteFormat.png);
-    final buffer = byteData.buffer.asUint8List();
+    final buffer = byteData!.buffer.asUint8List();
 
     return BitmapDescriptor.fromBytes(buffer);
   }

@@ -13,16 +13,16 @@ class SettingNavigator extends StatefulWidget {
   final UserRepository userRepository;
 
   SettingNavigator({
-    Key key,
-    @required this.userRepository,
-  }) : super(key: key);
+
+    required this.userRepository,
+  }) ;
 
   @override
   _SettingNavigatorState createState() => _SettingNavigatorState();
 }
 
 class _SettingNavigatorState extends State<SettingNavigator> {
-  _SettingRouter _router;
+  late _SettingRouter _router;
 
   @override
   void initState() {
@@ -55,11 +55,11 @@ class _SettingNavigatorState extends State<SettingNavigator> {
 }
 
 class _SettingRouter {
-  final SettingBloc settingBloc;
+late  final SettingBloc settingBloc;
 
-  _SettingRouter({this.settingBloc});
+  _SettingRouter({required this.settingBloc});
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SettingNavigator.settingPage:
         return getSettingMainPageRoute(settings);

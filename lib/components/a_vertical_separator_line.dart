@@ -6,11 +6,11 @@ class AVerticalSeparatorLine extends StatelessWidget {
   final double height;
 
   const AVerticalSeparatorLine(
-      {Key key,
-      @required this.width,
-      @required this.height,
-      @required this.color})
-      : super(key: key);
+      {
+      required this.width,
+      required this.height,
+      required this.color})
+      ;
 
   @override
   Widget build(BuildContext context) {

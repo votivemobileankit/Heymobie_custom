@@ -13,8 +13,8 @@ class ARoundedButton extends StatelessWidget {
   final double btnHeight;
   final double btnWidth;
   final VoidCallback btnOnPressed;
-  final IconData btnIconData;
-  final Color btnIconColor;
+
+
   final double btnIconSize;
   final double btnElevation;
   final FontWeight btnFontWeight;
@@ -22,23 +22,23 @@ class ARoundedButton extends StatelessWidget {
   final Color btnDisabledTextColor;
 
   const ARoundedButton({
-    @required Key key,
-    @required this.btnBgColor,
-    @required this.btnTextColor,
-    @required this.btnText,
-    @required this.btnFontSize,
-    @required this.btnHeight,
-    @required this.btnOnPressed,
+
+    required this.btnBgColor,
+    required this.btnTextColor,
+    required this.btnText,
+    required this.btnFontSize,
+    required this.btnHeight,
+    required this.btnOnPressed,
     this.btnWidth = double.infinity,
-    @required this.btnBorderSideColor,
-    @required this.btnIconData,
-    @required this.btnIconColor,
+    required this.btnBorderSideColor,
+
+
     this.btnIconSize = 24,
     this.btnElevation = 2,
     this.btnFontWeight = FontWeight.normal,
-    @required this.btnDisabledColor,
-    @required this.btnDisabledTextColor,
-  }) : super(key: key);
+    required this.btnDisabledColor,
+    required this.btnDisabledTextColor,
+  }) ;
 
   @override
   Widget build(BuildContext context) {
@@ -58,22 +58,8 @@ class ARoundedButton extends StatelessWidget {
       //     fontWeight: btnFontWeight),
     );
 
-    return (btnIconData != null
-            ? ElevatedButton.icon(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  backgroundColor: MaterialStateProperty.all(btnBgColor),
-                  shape: MaterialStateProperty.all(shape),
-                ),
-                onPressed: btnOnPressed,
-                label: text,
-                icon: Icon(
-                  btnIconData,
-                  color: btnIconColor,
-                  size: btnIconSize,
-                ),
-              )
-            : ElevatedButton(
+    return
+             ElevatedButton(
                 style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all(Colors.transparent),
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -96,7 +82,7 @@ class ARoundedButton extends StatelessWidget {
                 ),
                 onPressed: btnOnPressed,
                 child: text,
-              ))
+              )
         .size(btnWidth, btnHeight);
   }
 }

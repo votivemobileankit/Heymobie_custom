@@ -11,9 +11,9 @@ const double _kBtnWidth = 135.0;
 const double _kSpaceBetweenButtons = 20;
 
 void showFbPhotoPermissionErrorDialog({
-  @required BuildContext context,
-  @required VoidCallback btn1OnPressed,
-  @required VoidCallback btn2OnPressed,
+  required BuildContext context,
+  required VoidCallback btn1OnPressed,
+  required VoidCallback btn2OnPressed,
 }) {
   showTwoButtonDialog(
       context: context,
@@ -26,13 +26,13 @@ void showFbPhotoPermissionErrorDialog({
 }
 
 void showTwoButtonDialog({
-  @required BuildContext context,
-  @required String titleText,
-  @required descText,
-  @required String btn1TitleText,
-  @required VoidCallback btn1OnPressed,
-  @required String btn2TitleText,
-  @required VoidCallback btn2OnPressed,
+  required BuildContext context,
+  required String titleText,
+  required descText,
+  required String btn1TitleText,
+  required VoidCallback btn1OnPressed,
+  required String btn2TitleText,
+  required VoidCallback btn2OnPressed,
 }) {
   showDialog(
     context: context,
@@ -53,13 +53,12 @@ void showTwoButtonDialog({
 }
 
 Dialog _getTwoButtonDialog(
-    {@required BuildContext context,
-    @required String titleText,
-    @required descText,
-    @required String btn1TitleText,
-    @required VoidCallback btn1OnPressed,
-    @required String btn2TitleText,
-    @required VoidCallback btn2OnPressed}) {
+    {required BuildContext context,
+    required String titleText,
+    required descText,
+    required String btn1TitleText, required VoidCallback btn1OnPressed,
+    required String btn2TitleText,
+    required VoidCallback btn2OnPressed}) {
   return Dialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kBorderRadiusDialog.scale())),
@@ -86,6 +85,9 @@ Dialog _getTwoButtonDialog(
         Column(
           children: [
             ARoundedButton(
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBgColor: kColorBtnBgQuinary,
               btnTextColor: kColorTextFieldText,
               btnFontSize: kFontSizeBtnLarge.scale(),
@@ -100,6 +102,9 @@ Dialog _getTwoButtonDialog(
             ),
             AVerticalSpace(_kSpaceBetweenButtons.scale()),
             ARoundedButton(
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBgColor: kColorBtnBgQuinary,
               btnTextColor: kColorTextFieldText,
               btnFontSize: kFontSizeBtnLarge.scale(),

@@ -31,8 +31,8 @@ const double _kClosedTextFontSize = 20.0;
 const double _kAddtoCartDialogRadius = 20.0;
 const double _kMenuitemNameTextFontSize = 20.0;
 const double _kSearchWidgetHeight = 60.0;
-String _driverId, _categoryId;
-CategoryListModel _categoryListModel;
+late String _driverId, _categoryId;
+late CategoryListModel _categoryListModel;
 
 class ProductMenuListPage extends StatefulWidget {
   @override
@@ -41,22 +41,22 @@ class ProductMenuListPage extends StatefulWidget {
 
 class _ProductMenuListPageState extends State<ProductMenuListPage>
     with TickerProviderStateMixin {
-  List<ProductListMenu> _productList;
-  List<ProductListMenu> _productListSearch;
-  DriverList _driverDetail;
+  late List<ProductListMenu> _productList;
+  late  List<ProductListMenu> _productListSearch;
+  late  DriverList _driverDetail;
 
   // FilterListModel _filterListModel;
   // List<Subcategories> _subcategories;
   // List<Weights> _weights;
   // List<Brands> _brands;
   // List<Types> _types;
-  TabController primaryTC;
-  GoogleMapController _cameraController;
-  bool isListView = true;
-  double currentLat, currentLong;
-  Set<Marker> _markers = {};
-  BitmapDescriptor pinLocationIcon;
-  CustomInfoWindowController _customInfoWindowController;
+  late TabController primaryTC;
+  late  GoogleMapController _cameraController;
+  late bool isListView = true;
+  late  double currentLat, currentLong;
+  late  Set<Marker> _markers = {};
+  late  BitmapDescriptor pinLocationIcon;
+  late CustomInfoWindowController _customInfoWindowController;
   String _cartCountValue = "0";
   bool innerBoxScrolled = false;
   int _activeTabIndex = 0;
@@ -75,11 +75,11 @@ class _ProductMenuListPageState extends State<ProductMenuListPage>
   }
 
   TextEditingController searchTextController = TextEditingController();
-  FocusNode focusNode1;
+  late FocusNode focusNode1;
 
   @override
   void initState() {
-    print("=========  " + UserRepository.getProfileUrl());
+    print("=========  " + UserRepository.getProfileUrl()!);
     focusNode1 = FocusNode();
     _customInfoWindowController = CustomInfoWindowController();
     primaryTC = new TabController(length: 1, vsync: this);
@@ -129,7 +129,7 @@ class _ProductMenuListPageState extends State<ProductMenuListPage>
 
     var pinnedHeaderHeight = statusBarHeight + kToolbarHeight;
     return BlocListener<HomeBloc, HomeState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           if (state is HomeCategoryListPageState) {
             print("call state");
@@ -481,7 +481,7 @@ class _DriverDetailWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
                   imageUrl:
-                      UserRepository.getProfileUrl() + driverDetail.profileImg1,
+                      UserRepository.getProfileUrl()! + driverDetail.profileImg1,
                   fit: BoxFit.cover,
                   placeholder: (context, url) {
                     return Image(
@@ -643,7 +643,7 @@ class _TabProductMenu extends StatefulWidget {
 
 class __TabProductMenuState extends State<_TabProductMenu> {
   // TextEditingController searchTextController = TextEditingController();
-  ScrollController controller;
+  ScrollController? controller;
 
   @override
   void initState() {
@@ -652,8 +652,8 @@ class __TabProductMenuState extends State<_TabProductMenu> {
   }
 
   void _scrollListener() {
-    print(controller.position.extentAfter);
-    if (controller.position.extentAfter < 500) {
+    print(controller!.position.extentAfter);
+    if (controller!.position.extentAfter < 500) {
       // setState(() {
       //   items.addAll(new List.generate(42, (index) => 'Inserted $index'));
       // });
@@ -1017,10 +1017,10 @@ class _MapWidget extends StatefulWidget {
 
 class __MapWidgetState extends State<_MapWidget> {
   // Function markerCenterPointCall;
-  BitmapDescriptor pinLocationIcon;
+ late BitmapDescriptor pinLocationIcon;
   Set<Marker> markers = {};
 
-  GoogleMapController cameraController;
+ late GoogleMapController cameraController;
 
   CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(33.974514956322324, -117.77841125765117),
@@ -1054,7 +1054,7 @@ class __MapWidgetState extends State<_MapWidget> {
     setState(() {
       pinPosition = LatLng(lat, lon);
       _kGooglePlex = CameraPosition(
-          target: pinPosition,
+          target: pinPosition!,
           zoom: /*_selectedButton == FindBookingLink.CLINICS ? 13.0 :*/ 15);
       CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
 
@@ -1093,17 +1093,17 @@ class __MapWidgetState extends State<_MapWidget> {
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  List<Subcategories> subcategories;
-  List<Weights> weights;
-  List<Brands> brands;
-  List<Types> types;
-  Function showHideProgress;
-  DriverList driverDetail;
+  late List<Subcategories> subcategories;
+  late List<Weights> weights;
+  late List<Brands> brands;
+  late List<Types> types;
+  late  Function showHideProgress;
+  late  DriverList driverDetail;
 
-  int activeTabIndex;
-  bool returnValue = false;
-  FocusNode focusNode1;
-  TextEditingController searchTextController;
+  late int activeTabIndex;
+  late bool returnValue = false;
+  late FocusNode focusNode1;
+  late TextEditingController searchTextController;
 
   _SliverAppBarDelegate(this._tabBar, this.activeTabIndex, this.driverDetail,
       this.focusNode1, this.searchTextController);

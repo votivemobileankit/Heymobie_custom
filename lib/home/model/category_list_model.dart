@@ -1,11 +1,11 @@
 import 'dart:core';
 
 class CategoryListModel {
-  final String category_id;
-  final String category;
-  final String cat_image;
-  final String status;
+ late final String category_id;
+ late final String category;
+late  final String cat_image;
+late  final String status;
 
   CategoryListModel(
-      {this.category_id, this.category, this.cat_image, this.status});
+      {required this.category_id,required this.category,required this.cat_image,required this.status});
 }

@@ -14,7 +14,7 @@ const String _keyUserComment = "_keyUserComment";
 final sharedPrefs = HerbariumCustSharedPreference();
 
 class HerbariumCustSharedPreference {
-  static SharedPreferences _sharedPrefs;
+  static SharedPreferences? _sharedPrefs;
 
   init() async {
     if (_sharedPrefs == null) {

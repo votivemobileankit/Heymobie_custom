@@ -21,7 +21,7 @@ import 'services/services.dart';
 import 'side_navigation/side_navigation_navigator.dart';
 import 'theme/ft_theme_data.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+//FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 const double _kFlavourButtonHeight = 30.0;
 
 void initializeCommon() {
@@ -37,72 +37,72 @@ void initializeCommon() {
         HmRootBloc rootBloc = HmRootBloc(
           userRepository: userRepository,
         );
-        Firebase.initializeApp().then((_) {
-          flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-          var initializationSettingsAndroid =
-              AndroidInitializationSettings('@mipmap/ic_launcher');
-          const IOSInitializationSettings initializationSettingsIOS =
-              IOSInitializationSettings(
-                  requestSoundPermission: true,
-                  requestBadgePermission: false,
-                  requestAlertPermission: true,
-                  onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+        // Firebase.initializeApp().then((_) {
+        //   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+        //   var initializationSettingsAndroid =
+        //       AndroidInitializationSettings('@mipmap/ic_launcher');
+        //   const IOSInitializationSettings initializationSettingsIOS =
+        //       IOSInitializationSettings(
+        //           requestSoundPermission: true,
+        //           requestBadgePermission: false,
+        //           requestAlertPermission: true,
+        //           onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+        //
+        //   var initializationSettings = InitializationSettings(
+        //       android: initializationSettingsAndroid,
+        //       iOS: initializationSettingsIOS);
+        //   flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        //       onSelectNotification: onSelectNotification);
+        //
+        //   FirebaseMessaging.instance.getInitialMessage().then((event) {
+        //     if (event != null) {
+        //       Map<String, dynamic> notificationDetailsMap = event.data;
+        //       print('on messge Initial id${notificationDetailsMap["id"]}');
+        //       print('on messge Initial  tag ${notificationDetailsMap["tag"]}');
+        //       print('on messge vId ${notificationDetailsMap["vid"]}');
+        //       // userRepository.currentDeeplink = "notification";
+        //       // userRepository.targetId = targetId;
+        //       // userRepository.type = notificationDetailsMap["type"];
+        //       // userRepository.external_link =
+        //       //     notificationDetailsMap["external_link"];
+        //       // if (userRepository.loginCheck()) {
+        //       //   rootBloc.add(VDRootEventPushReceived());
+        //       // }
+        //     }
+        //   });
+        //   FirebaseMessaging.onMessage.listen((event) {
+        //     //   St        print(event.notification.body);
+        //     Map<String, dynamic> notificationDetailsMap = event.data;
+        //     print('on messge Id ${notificationDetailsMap["id"]}');
+        //     print('on messge tag ${notificationDetailsMap["tag"]}');
+        //     print('on messge vId ${notificationDetailsMap["vid"]}');
+        //     print(event.notification.title);
+        //     showNotification(
+        //         event.notification.title, event.notification.title);
+        //   });
+        //
+        //   FirebaseMessaging.onMessageOpenedApp.listen((event) {
+        //     print(event.notification.body);
+        //     Map<String, dynamic> notificationDetailsMap = event.data;
+        //     print('on messge Opened id${notificationDetailsMap["id"]}');
+        //     print('on messge Opened tag${notificationDetailsMap["tag"]}');
+        //     print('on messge vId ${notificationDetailsMap["vid"]}');
+        //     // userRepository.currentDeeplink = "Notification";
+        //     if (sharedPrefs.isLogin == true) {
+        //       userRepository.notifyDriverId = notificationDetailsMap["vid"];
+        //       userRepository.notifyOrderId = notificationDetailsMap["id"];
+        //
+        //       rootBloc.add(HmRootEventPushReceived());
+        //     }
+        //   });
+        //   FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+        //     Map<String, dynamic> notificationDetailsMap = event.data;
+        //     print('on messge Opened id${notificationDetailsMap["id"]}');
+        //     print('on messge Opened tag${notificationDetailsMap["tag"]}');
+        //     print('on messge vId ${notificationDetailsMap["vid"]}');
+        //   });
 
-          var initializationSettings = InitializationSettings(
-              android: initializationSettingsAndroid,
-              iOS: initializationSettingsIOS);
-          flutterLocalNotificationsPlugin.initialize(initializationSettings,
-              onSelectNotification: onSelectNotification);
-
-          FirebaseMessaging.instance.getInitialMessage().then((event) {
-            if (event != null) {
-              Map<String, dynamic> notificationDetailsMap = event.data;
-              print('on messge Initial id${notificationDetailsMap["id"]}');
-              print('on messge Initial  tag ${notificationDetailsMap["tag"]}');
-              print('on messge vId ${notificationDetailsMap["vid"]}');
-              // userRepository.currentDeeplink = "notification";
-              // userRepository.targetId = targetId;
-              // userRepository.type = notificationDetailsMap["type"];
-              // userRepository.external_link =
-              //     notificationDetailsMap["external_link"];
-              // if (userRepository.loginCheck()) {
-              //   rootBloc.add(VDRootEventPushReceived());
-              // }
-            }
-          });
-          FirebaseMessaging.onMessage.listen((event) {
-            //   St        print(event.notification.body);
-            Map<String, dynamic> notificationDetailsMap = event.data;
-            print('on messge Id ${notificationDetailsMap["id"]}');
-            print('on messge tag ${notificationDetailsMap["tag"]}');
-            print('on messge vId ${notificationDetailsMap["vid"]}');
-            print(event.notification.title);
-            showNotification(
-                event.notification.title, event.notification.title);
-          });
-
-          FirebaseMessaging.onMessageOpenedApp.listen((event) {
-            print(event.notification.body);
-            Map<String, dynamic> notificationDetailsMap = event.data;
-            print('on messge Opened id${notificationDetailsMap["id"]}');
-            print('on messge Opened tag${notificationDetailsMap["tag"]}');
-            print('on messge vId ${notificationDetailsMap["vid"]}');
-            // userRepository.currentDeeplink = "Notification";
-            if (sharedPrefs.isLogin == true) {
-              userRepository.notifyDriverId = notificationDetailsMap["vid"];
-              userRepository.notifyOrderId = notificationDetailsMap["id"];
-
-              rootBloc.add(HmRootEventPushReceived());
-            }
-          });
-          FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-            Map<String, dynamic> notificationDetailsMap = event.data;
-            print('on messge Opened id${notificationDetailsMap["id"]}');
-            print('on messge Opened tag${notificationDetailsMap["tag"]}');
-            print('on messge vId ${notificationDetailsMap["vid"]}');
-          });
-
-          userRepository.getToken();
+         //userRepository.getToken();
           runApp(
             BlocProvider.value(
               value: rootBloc,
@@ -112,51 +112,51 @@ void initializeCommon() {
               ),
             ),
           );
-        });
+        // });
       });
     });
   });
 }
 
-void showNotification(String title, String body) async {
-  await _demoNotification(title, body);
-}
+// void showNotification(String title, String body) async {
+//   await _demoNotification(title, body);
+// }
 
-Future<void> _demoNotification(String title, String body) async {
-  var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-      'channel_ID', 'channel name',
-      channelDescription: 'channel description',
-      importance: Importance.max,
-      playSound: true,
-      icon: '@mipmap/ic_launcher',
-      showProgress: true,
-      priority: Priority.high,
-      ticker: 'test ticker');
-
-  var iOSChannelSpecifics = IOSNotificationDetails(
-    subtitle: title,
-    presentSound: true,
-    presentAlert: true,
-    presentBadge: false,
-  );
-
-  var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics, iOS: iOSChannelSpecifics);
-
-  await flutterLocalNotificationsPlugin
-      .show(0, title, body, platformChannelSpecifics, payload: 'test');
-}
-
-Future onSelectNotification(String payload) async {
-  if (payload != null) {
-    print('notification payload: $payload');
-  }
-}
-
-Future onDidReceiveLocalNotification(
-    int id, String title, String body, String payload) async {
-  // display a dialog with the notification details, tap ok to go to another page
-}
+// Future<void> _demoNotification(String title, String body) async {
+//   var androidPlatformChannelSpecifics =   const AndroidNotificationDetails(
+//       'channel_ID', 'channel name',
+//       channelDescription: 'channel description',
+//       importance: Importance.max,
+//       playSound: true,
+//       icon: '@mipmap/ic_launcher',
+//       showProgress: true,
+//       priority: Priority.high,
+//       ticker: 'test ticker');
+//
+//   var iOSChannelSpecifics = IOSNotificationDetails(
+//     subtitle: title,
+//     presentSound: true,
+//     presentAlert: true,
+//     presentBadge: false,
+//   );
+//
+//   var platformChannelSpecifics = NotificationDetails(
+//       android: androidPlatformChannelSpecifics, iOS: iOSChannelSpecifics);
+//
+//   await flutterLocalNotificationsPlugin
+//       .show(0, title, body, platformChannelSpecifics, payload: 'test');
+// }
+//
+// Future onSelectNotification(String payload) async {
+//   if (payload != null) {
+//     print('notification payload: $payload');
+//   }
+// }
+//
+// Future onDidReceiveLocalNotification(
+//     int id, String title, String body, String payload) async {
+//   // display a dialog with the notification details, tap ok to go to another page
+// }
 
 bool initialTimeValue = false;
 
@@ -165,8 +165,7 @@ class App extends StatefulWidget {
 
   final HmRootBloc rootBloc;
 
-  const App({Key key, @required this.userRepository, @required this.rootBloc})
-      : super(key: key);
+  const App({ required this.userRepository, required this.rootBloc});
 
   @override
   _AppState createState() => _AppState();
@@ -217,8 +216,8 @@ class HomeWidget extends StatefulWidget {
   final HmRootBloc rootBloc;
 
   const HomeWidget(
-      {Key key, @required this.userRepository, @required this.rootBloc})
-      : super(key: key);
+      { required this.userRepository, required this.rootBloc})
+      ;
 
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
@@ -229,7 +228,7 @@ class _HomeWidgetState extends State<HomeWidget> with WidgetsBindingObserver {
   void initState() {
     //_FileLogger.read();
     // TODO: implement initState
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
@@ -314,7 +313,7 @@ class _HomeWidgetState extends State<HomeWidget> with WidgetsBindingObserver {
   }
 
   Widget getWidgetBlocRootState() {
-    Widget widgetForState;
+    Widget? widgetForState;
     HmRootState rootBlocState = BlocProvider.of<HmRootBloc>(context).state;
     print(rootBlocState.toString());
     switch (rootBlocState.runtimeType) {
@@ -332,7 +331,7 @@ class _HomeWidgetState extends State<HomeWidget> with WidgetsBindingObserver {
         );
         break;
     }
-    return widgetForState;
+    return widgetForState!;
   }
 
   @override

@@ -1,12 +1,12 @@
 class RelatedProductModel {
-  String message;
-  String imgUrl;
-  String productUrl;
-  int status;
-  RelatedProductData data;
+ late String message;
+ late String imgUrl;
+ late String productUrl;
+ late int status;
+ late RelatedProductData data;
 
   RelatedProductModel(
-      {this.message, this.imgUrl, this.productUrl, this.status, this.data});
+      {required this.message,required this.imgUrl,required this.productUrl,required this.status,required this.data});
 
   RelatedProductModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -14,7 +14,7 @@ class RelatedProductModel {
     productUrl = json['product_url'];
     status = json['status'];
     data =
-        json['data'] != null ? RelatedProductData.fromJson(json['data']) : null;
+        (json['data'] != null ? RelatedProductData.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,7 +23,7 @@ class RelatedProductModel {
     data['img_url'] = this.imgUrl;
     data['product_url'] = this.productUrl;
     data['status'] = this.status;
-    if (this.data != null) {
+    if (this.data != String) {
       data['data'] = this.data.toJson();
     }
     return data;
@@ -31,19 +31,19 @@ class RelatedProductModel {
 }
 
 class RelatedProductData {
-  List<RelatedProductList> relatedProductList;
-  List<AddonProductList> addonProductList;
+ late List<RelatedProductList> relatedProductList;
+ late  List<AddonProductList> addonProductList;
 
-  RelatedProductData({this.relatedProductList, this.addonProductList});
+  RelatedProductData({required this.relatedProductList,required this.addonProductList});
 
   RelatedProductData.fromJson(Map<String, dynamic> json) {
-    if (json['related_product_list'] != null) {
+    if (json['related_product_list'] != String) {
       relatedProductList = [];
       json['related_product_list'].forEach((v) {
         relatedProductList.add(new RelatedProductList.fromJson(v));
       });
     }
-    if (json['addon_product_list'] != null) {
+    if (json['addon_product_list'] != String) {
       addonProductList = [];
       json['addon_product_list'].forEach((v) {
         addonProductList.add(new AddonProductList.fromJson(v));
@@ -53,11 +53,11 @@ class RelatedProductData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.relatedProductList != null) {
+    if (this.relatedProductList != String) {
       data['related_product_list'] =
           this.relatedProductList.map((v) => v.toJson()).toList();
     }
-    if (this.addonProductList != null) {
+    if (this.addonProductList != String) {
       data['addon_product_list'] =
           this.addonProductList.map((v) => v.toJson()).toList();
     }
@@ -66,36 +66,36 @@ class RelatedProductData {
 }
 
 class AddonProductList {
-  int pid;
-  String productCode;
-  String stock;
-  String imageURL;
-  String slug;
-  String name;
-  String price;
-  String quantity;
-  String unit;
-  String description;
-  String vendorId;
-  String categoryId;
-  String subCategoryId;
-  int avgRating;
+late  int pid;
+late String productCode;
+late String stock;
+late String imageURL;
+late  String slug;
+late String name;
+late  String price;
+late String quantity;
+late  String unit;
+late  String description;
+late  String vendorId;
+late  String categoryId;
+late  String subCategoryId;
+late  int avgRating;
 
   AddonProductList(
-      {this.pid,
-      this.productCode,
-      this.stock,
-      this.imageURL,
-      this.slug,
-      this.name,
-      this.price,
-      this.quantity,
-      this.unit,
-      this.description,
-      this.vendorId,
-      this.categoryId,
-      this.subCategoryId,
-      this.avgRating});
+      {required this.pid,
+        required  this.productCode,
+        required this.stock,
+        required this.imageURL,
+        required this.slug,
+        required this.name,
+        required  this.price,
+        required this.quantity,
+        required this.unit,
+        required this.description,
+        required this.vendorId,
+        required this.categoryId,
+        required  this.subCategoryId,
+        required  this.avgRating});
 
   AddonProductList.fromJson(Map<String, dynamic> json) {
     pid = json['pid'];
@@ -135,194 +135,194 @@ class AddonProductList {
 }
 
 class RelatedProductList {
-  int id;
-  String vendorId;
-  String adminProductId;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  String avgRating;
-  String ratingCount;
-  String name;
-  String slug;
-  String description;
-  String price;
-  String quantity;
-  String unit;
-  String brands;
-  String types;
-  String potencyThc;
-  String potencyCbd;
-  String image;
-  String keyword;
-  String productCode;
-  String status;
-  String loginStatus;
-  String stock;
-  String popular;
-  String createdAt;
-  String updatedAt;
-  String uniqueId;
-  String username;
-  String lastName;
-  String businessName;
-  String email;
-  String mailingAddress;
-  String address;
-  String lat;
-  String lng;
-  Null address1;
-  Null suburb;
-  String state;
-  String city;
-  String zipcode;
-  String mobNo;
-  String vendorStatus;
-  Null vendorType;
-  Null walletAmount;
-  String deviceid;
-  String devicetype;
-  String password;
-  String marketArea;
-  String serviceRadius;
-  String driverLicense;
-  String licenseExpiry;
-  String licenseFront;
-  String licenseBack;
-  String ssn;
-  String dob;
-  String profileImg1;
-  Null profileImg2;
-  Null profileImg3;
-  Null profileImg4;
-  Null service;
-  String permitType;
-  String permitNumber;
-  String permitExpiry;
-  Null rememberToken;
-  Null otp;
-  Null forgetpassRequest;
-  Null forgetpassRequestStatus;
-  Null planId;
-  Null planPurchased;
-  Null planExpiry;
-  Null txnId;
-  Null stripeId;
-  String make;
-  String model;
-  String color;
-  String year;
-  String licensePlate;
-  String views;
-  String salesTax;
-  String exciseTax;
-  String cityTax;
-  String commissionRate;
-  String deliveryFee;
-  String vid;
-  String vendorname;
-  String vendorlastname;
-  String categoryname;
-  String imageURL;
-  String subcategoryname;
-  List<RelatedProductImages> images;
-  String totalprice;
-  RelatedProductVendor vendor;
+ late int id;
+ late String vendorId;
+ late String adminProductId;
+ late String type;
+ late String categoryId;
+ late  String subCategoryId;
+ late  String avgRating;
+ late  String ratingCount;
+ late String name;
+ late String slug;
+ late  String description;
+ late String price;
+ late String quantity;
+ late String unit;
+ late String brands;
+ late String types;
+ late  String potencyThc;
+ late String potencyCbd;
+ late  String image;
+ late  String keyword;
+ late String productCode;
+ late  String status;
+ late String loginStatus;
+ late String stock;
+ late String popular;
+ late String createdAt;
+ late String updatedAt;
+ late String uniqueId;
+ late String username;
+ late String lastName;
+ late  String businessName;
+ late String email;
+ late  String mailingAddress;
+ late  String address;
+ late String lat;
+ late  String lng;
+ late  String address1;
+ late String suburb;
+ late String state;
+ late  String city;
+ late  String zipcode;
+ late  String mobNo;
+ late  String vendorStatus;
+ late  String vendorType;
+ late  String walletAmount;
+ late  String deviceid;
+ late  String devicetype;
+ late  String password;
+ late  String marketArea;
+ late String serviceRadius;
+ late  String driverLicense;
+ late  String licenseExpiry;
+ late String licenseFront;
+ late String licenseBack;
+ late String ssn;
+ late String dob;
+ late  String profileImg1;
+ late  String profileImg2;
+ late  String profileImg3;
+ late String profileImg4;
+ late  String service;
+ late  String permitType;
+ late String permitNumber;
+ late String permitExpiry;
+ late String rememberToken;
+ late  String otp;
+ late  String forgetpassRequest;
+ late String forgetpassRequestStatus;
+ late String planId;
+ late String planPurchased;
+ late String planExpiry;
+ late  String txnId;
+ late String stripeId;
+ late  String make;
+ late String model;
+ late  String color;
+ late String year;
+ late String licensePlate;
+ late String views;
+ late String salesTax;
+ late String exciseTax;
+ late String cityTax;
+ late String commissionRate;
+ late String deliveryFee;
+ late  String vid;
+ late String vendorname;
+ late  String vendorlastname;
+ late  String categoryname;
+ late String imageURL;
+ late String subcategoryname;
+ late List<RelatedProductImages> images;
+ late String totalprice;
+ late  RelatedProductVendor vendor;
 
   RelatedProductList(
-      {this.id,
-      this.vendorId,
-      this.adminProductId,
-      this.type,
-      this.categoryId,
-      this.subCategoryId,
-      this.avgRating,
-      this.ratingCount,
-      this.name,
-      this.slug,
-      this.description,
-      this.price,
-      this.quantity,
-      this.unit,
-      this.brands,
-      this.types,
-      this.potencyThc,
-      this.potencyCbd,
-      this.image,
-      this.keyword,
-      this.productCode,
-      this.status,
-      this.loginStatus,
-      this.stock,
-      this.popular,
-      this.createdAt,
-      this.updatedAt,
-      this.uniqueId,
-      this.username,
-      this.lastName,
-      this.businessName,
-      this.email,
-      this.mailingAddress,
-      this.address,
-      this.lat,
-      this.lng,
-      this.address1,
-      this.suburb,
-      this.state,
-      this.city,
-      this.zipcode,
-      this.mobNo,
-      this.vendorStatus,
-      this.vendorType,
-      this.walletAmount,
-      this.deviceid,
-      this.devicetype,
-      this.password,
-      this.marketArea,
-      this.serviceRadius,
-      this.driverLicense,
-      this.licenseExpiry,
-      this.licenseFront,
-      this.licenseBack,
-      this.ssn,
-      this.dob,
-      this.profileImg1,
-      this.profileImg2,
-      this.profileImg3,
-      this.profileImg4,
-      this.service,
-      this.permitType,
-      this.permitNumber,
-      this.permitExpiry,
-      this.rememberToken,
-      this.otp,
-      this.forgetpassRequest,
-      this.forgetpassRequestStatus,
-      this.planId,
-      this.planPurchased,
-      this.planExpiry,
-      this.txnId,
-      this.stripeId,
-      this.make,
-      this.model,
-      this.color,
-      this.year,
-      this.licensePlate,
-      this.views,
-      this.salesTax,
-      this.exciseTax,
-      this.cityTax,
-      this.commissionRate,
-      this.deliveryFee,
-      this.vid,
-      this.vendorname,
-      this.vendorlastname,
-      this.categoryname,
-      this.imageURL,
-      this.subcategoryname,
-      this.images,
-      this.totalprice,
-      this.vendor});
+      {required this.id,
+        required this.vendorId,
+        required this.adminProductId,
+        required this.type,
+        required this.categoryId,
+        required this.subCategoryId,
+        required  this.avgRating,
+        required  this.ratingCount,
+        required  this.name,
+        required this.slug,
+        required this.description,
+        required  this.price,
+        required this.quantity,
+        required this.unit,
+        required  this.brands,
+        required   this.types,
+        required   this.potencyThc,
+        required  this.potencyCbd,
+        required  this.image,
+        required  this.keyword,
+        required  this.productCode,
+        required  this.status,
+        required   this.loginStatus,
+        required this.stock,
+        required  this.popular,
+        required  this.createdAt,
+        required  this.updatedAt,
+        required  this.uniqueId,
+        required  this.username,
+        required  this.lastName,
+        required  this.businessName,
+        required  this.email,
+        required  this.mailingAddress,
+        required  this.address,
+        required  this.lat,
+        required  this.lng,
+        required  this.address1,
+        required  this.suburb,
+        required  this.state,
+        required  this.city,
+        required  this.zipcode,
+        required  this.mobNo,
+        required   this.vendorStatus,
+        required   this.vendorType,
+        required   this.walletAmount,
+        required  this.deviceid,
+        required  this.devicetype,
+        required  this.password,
+        required  this.marketArea,
+        required  this.serviceRadius,
+        required   this.driverLicense,
+        required  this.licenseExpiry,
+        required  this.licenseFront,
+        required  this.licenseBack,
+        required  this.ssn,
+        required   this.dob,
+        required   this.profileImg1,
+        required  this.profileImg2,
+        required  this.profileImg3,
+        required  this.profileImg4,
+        required  this.service,
+        required  this.permitType,
+        required  this.permitNumber,
+        required this.permitExpiry,
+        required   this.rememberToken,
+        required  this.otp,
+        required   this.forgetpassRequest,
+        required   this.forgetpassRequestStatus,
+        required  this.planId,
+        required   this.planPurchased,
+        required   this.planExpiry,
+        required   this.txnId,
+        required  this.stripeId,
+        required  this.make,
+        required  this.model,
+        required   this.color,
+        required   this.year,
+        required  this.licensePlate,
+        required  this.views,
+        required  this.salesTax,
+        required  this.exciseTax,
+        required  this.cityTax,
+        required   this.commissionRate,
+        required   this.deliveryFee,
+        required   this.vid,
+        required  this.vendorname,
+        required  this.vendorlastname,
+        required   this.categoryname,
+        required  this.imageURL,
+        required  this.subcategoryname,
+        required  this.images,
+        required   this.totalprice,
+        required   this.vendor});
 
   RelatedProductList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -415,16 +415,16 @@ class RelatedProductList {
     categoryname = json['categoryname'];
     imageURL = json['ImageURL'];
     subcategoryname = json['subcategoryname'];
-    if (json['images'] != null) {
+    if (json['images'] != String) {
       images = [];
       json['images'].forEach((v) {
         images.add(new RelatedProductImages.fromJson(v));
       });
     }
     totalprice = json['totalprice'];
-    vendor = json['Vendor'] != null
+    vendor = (json['Vendor'] != null
         ? new RelatedProductVendor.fromJson(json['Vendor'])
-        : null;
+        : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -519,11 +519,11 @@ class RelatedProductList {
     data['categoryname'] = this.categoryname;
     data['ImageURL'] = this.imageURL;
     data['subcategoryname'] = this.subcategoryname;
-    if (this.images != null) {
+    if (this.images != String) {
       data['images'] = this.images.map((v) => v.toJson()).toList();
     }
     data['totalprice'] = this.totalprice;
-    if (this.vendor != null) {
+    if (this.vendor != String) {
       data['Vendor'] = this.vendor.toJson();
     }
     return data;
@@ -531,22 +531,22 @@ class RelatedProductList {
 }
 
 class RelatedProductImages {
-  String id;
-  String psId;
-  String name;
-  String thumb;
-  String createdAt;
-  String updatedAt;
-  String path;
+ late String id;
+ late String psId;
+ late String name;
+ late  String thumb;
+ late  String createdAt;
+ late  String updatedAt;
+ late String path;
 
   RelatedProductImages(
-      {this.id,
-      this.psId,
-      this.name,
-      this.thumb,
-      this.createdAt,
-      this.updatedAt,
-      this.path});
+      {required this.id,
+        required  this.psId,
+        required   this.name,
+        required   this.thumb,
+        required  this.createdAt,
+        required  this.updatedAt,
+        required  this.path});
 
   RelatedProductImages.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -572,160 +572,160 @@ class RelatedProductImages {
 }
 
 class RelatedProductVendor {
-  int vendorId;
-  String uniqueId;
-  String name;
-  String username;
-  String lastName;
-  String businessName;
-  String email;
-  String mailingAddress;
-  String address;
-  String avgRating;
-  String ratingCount;
-  String lat;
-  String lng;
-  Null address1;
-  Null suburb;
-  String state;
-  String city;
-  String zipcode;
-  String mobNo;
-  String vendorStatus;
-  String loginStatus;
-  Null vendorType;
-  Null walletAmount;
-  String deviceid;
-  String devicetype;
-  String marketArea;
-  String serviceRadius;
-  String driverLicense;
-  String licenseExpiry;
-  String licenseFront;
-  String licenseBack;
-  String ssn;
-  String dob;
-  String profileImg1;
-  Null profileImg2;
-  Null profileImg3;
-  Null profileImg4;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  Null service;
-  String permitType;
-  String permitNumber;
-  String permitExpiry;
-  String description;
-  Null otp;
-  Null forgetpassRequest;
-  Null forgetpassRequestStatus;
-  Null planId;
-  Null planPurchased;
-  Null planExpiry;
-  Null txnId;
-  String createdAt;
-  String updatedAt;
-  Null stripeId;
-  String make;
-  String model;
-  String color;
-  String year;
-  String licensePlate;
-  String views;
-  String salesTax;
-  String exciseTax;
-  String cityTax;
-  String commissionRate;
-  String deliveryFee;
-  String licensefrontURL;
-  String licensebackURL;
-  String profileURL;
-  String profile2URL;
-  String profile3URL;
-  String profile4URL;
-  RelatedProductMembership membership;
-  String fullname;
-  String category;
-  List<Null> subcategory;
+ late int vendorId;
+ late String uniqueId;
+ late String name;
+ late  String username;
+ late  String lastName;
+ late  String businessName;
+ late String email;
+ late  String mailingAddress;
+ late String address;
+ late String avgRating;
+ late String ratingCount;
+ late String lat;
+ late String lng;
+ late String address1;
+ late String suburb;
+ late String state;
+ late String city;
+ late String zipcode;
+ late String mobNo;
+ late String vendorStatus;
+ late String loginStatus;
+ late String vendorType;
+ late String walletAmount;
+ late String deviceid;
+ late String devicetype;
+ late String marketArea;
+ late String serviceRadius;
+ late String driverLicense;
+ late String licenseExpiry;
+ late String licenseFront;
+ late  String licenseBack;
+ late String ssn;
+ late  String dob;
+ late String profileImg1;
+ late String profileImg2;
+ late String profileImg3;
+ late String profileImg4;
+ late  String type;
+ late  String categoryId;
+ late  String subCategoryId;
+ late  String service;
+ late  String permitType;
+ late  String permitNumber;
+ late String permitExpiry;
+ late  String description;
+ late  String otp;
+ late String forgetpassRequest;
+ late  String forgetpassRequestStatus;
+ late String planId;
+ late String planPurchased;
+ late String planExpiry;
+ late  String txnId;
+ late String createdAt;
+ late String updatedAt;
+ late String stripeId;
+ late String make;
+ late String model;
+ late  String color;
+ late String year;
+ late String licensePlate;
+ late String views;
+ late String salesTax;
+ late String exciseTax;
+ late String cityTax;
+ late String commissionRate;
+ late String deliveryFee;
+ late String licensefrontURL;
+ late String licensebackURL;
+ late String profileURL;
+ late  String profile2URL;
+ late String profile3URL;
+ late String profile4URL;
+ late  RelatedProductMembership membership;
+ late  String fullname;
+ late String category;
+ late  List<String> subcategory;
 
   RelatedProductVendor(
-      {this.vendorId,
-      this.uniqueId,
-      this.name,
-      this.username,
-      this.lastName,
-      this.businessName,
-      this.email,
-      this.mailingAddress,
-      this.address,
-      this.avgRating,
-      this.ratingCount,
-      this.lat,
-      this.lng,
-      this.address1,
-      this.suburb,
-      this.state,
-      this.city,
-      this.zipcode,
-      this.mobNo,
-      this.vendorStatus,
-      this.loginStatus,
-      this.vendorType,
-      this.walletAmount,
-      this.deviceid,
-      this.devicetype,
-      this.marketArea,
-      this.serviceRadius,
-      this.driverLicense,
-      this.licenseExpiry,
-      this.licenseFront,
-      this.licenseBack,
-      this.ssn,
-      this.dob,
-      this.profileImg1,
-      this.profileImg2,
-      this.profileImg3,
-      this.profileImg4,
-      this.type,
-      this.categoryId,
-      this.subCategoryId,
-      this.service,
-      this.permitType,
-      this.permitNumber,
-      this.permitExpiry,
-      this.description,
-      this.otp,
-      this.forgetpassRequest,
-      this.forgetpassRequestStatus,
-      this.planId,
-      this.planPurchased,
-      this.planExpiry,
-      this.txnId,
-      this.createdAt,
-      this.updatedAt,
-      this.stripeId,
-      this.make,
-      this.model,
-      this.color,
-      this.year,
-      this.licensePlate,
-      this.views,
-      this.salesTax,
-      this.exciseTax,
-      this.cityTax,
-      this.commissionRate,
-      this.deliveryFee,
-      this.licensefrontURL,
-      this.licensebackURL,
-      this.profileURL,
-      this.profile2URL,
-      this.profile3URL,
-      this.profile4URL,
-      this.membership,
-      this.fullname,
-      this.category,
-      this.subcategory});
+      {required this.vendorId,
+        required  this.uniqueId,
+        required this.name,
+        required  this.username,
+        required  this.lastName,
+        required this.businessName,
+        required this.email,
+        required this.mailingAddress,
+        required  this.address,
+        required  this.avgRating,
+        required  this.ratingCount,
+        required  this.lat,
+        required   this.lng,
+        required   this.address1,
+        required   this.suburb,
+        required this.state,
+        required  this.city,
+        required  this.zipcode,
+        required  this.mobNo,
+        required  this.vendorStatus,
+        required  this.loginStatus,
+        required  this.vendorType,
+        required this.walletAmount,
+        required  this.deviceid,
+        required this.devicetype,
+        required  this.marketArea,
+        required  this.serviceRadius,
+        required  this.driverLicense,
+        required  this.licenseExpiry,
+        required  this.licenseFront,
+        required  this.licenseBack,
+        required   this.ssn,
+        required   this.dob,
+        required  this.profileImg1,
+        required   this.profileImg2,
+        required  this.profileImg3,
+        required  this.profileImg4,
+        required  this.type,
+        required  this.categoryId,
+        required   this.subCategoryId,
+        required  this.service,
+        required   this.permitType,
+        required  this.permitNumber,
+        required  this.permitExpiry,
+        required  this.description,
+        required  this.otp,
+        required  this.forgetpassRequest,
+        required  this.forgetpassRequestStatus,
+        required  this.planId,
+        required  this.planPurchased,
+        required   this.planExpiry,
+        required   this.txnId,
+        required  this.createdAt,
+        required   this.updatedAt,
+        required   this.stripeId,
+        required  this.make,
+        required   this.model,
+        required  this.color,
+        required  this.year,
+        required  this.licensePlate,
+        required   this.views,
+        required this.salesTax,
+        required  this.exciseTax,
+        required   this.cityTax,
+        required   this.commissionRate,
+        required  this.deliveryFee,
+        required   this.licensefrontURL,
+        required   this.licensebackURL,
+        required  this.profileURL,
+        required   this.profile2URL,
+        required  this.profile3URL,
+        required  this.profile4URL,
+        required  this.membership,
+        required  this.fullname,
+        required  this.category,
+        required  this.subcategory});
 
   RelatedProductVendor.fromJson(Map<String, dynamic> json) {
     vendorId = json['vendor_id'];
@@ -800,9 +800,9 @@ class RelatedProductVendor {
     profile2URL = json['profile2URL'];
     profile3URL = json['profile3URL'];
     profile4URL = json['profile4URL'];
-    membership = json['membership'] != null
+    membership = (json['membership'] != null
         ? new RelatedProductMembership.fromJson(json['membership'])
-        : null;
+        : null)!;
     fullname = json['fullname'];
     category = json['Category'];
   }
@@ -881,7 +881,7 @@ class RelatedProductVendor {
     data['profile2URL'] = this.profile2URL;
     data['profile3URL'] = this.profile3URL;
     data['profile4URL'] = this.profile4URL;
-    if (this.membership != null) {
+    if (this.membership != String) {
       data['membership'] = this.membership.toJson();
     }
     data['fullname'] = this.fullname;
@@ -892,10 +892,10 @@ class RelatedProductVendor {
 }
 
 class RelatedProductMembership {
-  int remainingDays;
-  int status;
+ late int remainingDays;
+ late int status;
 
-  RelatedProductMembership({this.remainingDays, this.status});
+  RelatedProductMembership({required this.remainingDays, required this.status});
 
   RelatedProductMembership.fromJson(Map<String, dynamic> json) {
     remainingDays = json['remainingDays'];

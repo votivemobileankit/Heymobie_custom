@@ -7,10 +7,10 @@ import '../side_navigation.dart';
 
 class SideNavigationNavigator extends StatefulWidget {
   static const String bottomNavigatorMainPage = '/bnMainPage';
-  final UserRepository userRepository;
+     UserRepository userRepository;
 
-  const SideNavigationNavigator({Key key, this.userRepository})
-      : super(key: key);
+   SideNavigationNavigator({required this.userRepository})
+     ;
 
   @override
   _SideNavigationNavigatorState createState() =>
@@ -18,7 +18,7 @@ class SideNavigationNavigator extends StatefulWidget {
 }
 
 class _SideNavigationNavigatorState extends State<SideNavigationNavigator> {
-  _SideNavigationRouter _router;
+  _SideNavigationRouter? _router;
 
   @override
   void initState() {
@@ -30,21 +30,21 @@ class _SideNavigationNavigatorState extends State<SideNavigationNavigator> {
   Widget build(BuildContext context) {
     return Navigator(
       initialRoute: SideNavigationNavigator.bottomNavigatorMainPage,
-      onGenerateRoute: _router.onGenerateRoute,
+      onGenerateRoute: _router!.onGenerateRoute,
     );
   }
 
   @override
   void dispose() {
-    _router.dispose();
+    _router!.dispose();
     super.dispose();
   }
 }
 
 class _SideNavigationRouter {
-  UserRepository userRepository;
+ late UserRepository userRepository;
 
-  SideNavigatBloc _bottomNavigationBloc;
+ late SideNavigatBloc _bottomNavigationBloc;
 
   _SideNavigationRouter(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -53,7 +53,7 @@ class _SideNavigationRouter {
         SideNavigatBloc(userRepository: this.userRepository);
   }
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     // aPrint(settings.name);
     switch (settings.name) {
       case SideNavigationNavigator.bottomNavigatorMainPage:

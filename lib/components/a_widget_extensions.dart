@@ -106,8 +106,8 @@ extension WidgetExtensions on Widget {
   }
 
   Widget shadow(
-      {@required BorderRadius borderRadius,
-      @required BoxShadow shadow,
+      {required BorderRadius borderRadius,
+      required BoxShadow shadow,
       Color bgColor = Colors.transparent}) {
     return Container(
       decoration: BoxDecoration(
@@ -120,10 +120,10 @@ extension WidgetExtensions on Widget {
   }
 
   Widget scroll(
-      {@required ScrollController controller, bool disableBounce = true}) {
+      { bool disableBounce = true}) {
     return SingleChildScrollView(
       child: this,
-      controller: controller,
+
       physics:
           disableBounce ? ClampingScrollPhysics() : BouncingScrollPhysics(),
     );
@@ -143,13 +143,13 @@ extension WidgetExtensions on Widget {
   }
 
   Widget circularBorder(
-      {@required double radius,
-      @required double borderWidth,
-      @required Color borderColor,
-      @required double shadowYOffset,
-      @required double shadowBlurRadius,
-      @required Color shadowColor,
-      @required Color bgColor}) {
+      {required double radius,
+      required double borderWidth,
+      required Color borderColor,
+      required double shadowYOffset,
+      required double shadowBlurRadius,
+      required Color shadowColor,
+      required Color bgColor}) {
     BoxShadow shadow;
     if (shadowColor != null) {
       shadow = BoxShadow(
@@ -164,14 +164,14 @@ extension WidgetExtensions on Widget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius),
             border: Border.all(width: borderWidth, color: borderColor),
-            boxShadow: shadow != null ? [shadow] : [],
+
             color: bgColor),
         child: this.align(Alignment.center));
   }
 
   Widget circularBackground({
-    @required double radius,
-    @required Color bgColor,
+    required double radius,
+    required Color bgColor,
   }) {
     return Container(
         width: radius * 2,
@@ -182,11 +182,11 @@ extension WidgetExtensions on Widget {
   }
 
   Widget circularBackgroundWithInnerShadow(
-      {@required double radius,
-      @required Color bgColor,
-      @required double shadowRadiusOffset,
-      @required Color shadowColor,
-      @required double blurRadius}) {
+      {required double radius,
+      required Color bgColor,
+      required double shadowRadiusOffset,
+      required Color shadowColor,
+      required double blurRadius}) {
     double shadowRadius = radius - shadowRadiusOffset;
     BoxShadow shadow = BoxShadow(
         color: shadowColor,

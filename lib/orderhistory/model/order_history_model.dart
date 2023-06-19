@@ -1,15 +1,15 @@
 class OrderHistoryModel {
-  int status;
-  String message;
-  Items items;
-  int totalpage;
+late  int status;
+late String message;
+late  Items items;
+late int totalpage;
 
-  OrderHistoryModel({this.status, this.message, this.items, this.totalpage});
+  OrderHistoryModel({required this.status,required this.message,required this.items,required this.totalpage});
 
   OrderHistoryModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    items = json['items'] != null ? new Items.fromJson(json['items']) : null;
+    items = (json['items'] != null ? new Items.fromJson(json['items']) : null)!;
     totalpage = json['totalpage'];
   }
 
@@ -26,32 +26,32 @@ class OrderHistoryModel {
 }
 
 class Items {
-  int currentPage;
-  List<HistoryList> data;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
-  String nextPageUrl;
-  String path;
-  int perPage;
-  Null prevPageUrl;
-  int to;
-  int total;
+ late int currentPage;
+ late List<HistoryList> data;
+ late  String firstPageUrl;
+ late int from;
+ late int lastPage;
+ late  String lastPageUrl;
+ late String nextPageUrl;
+ late String path;
+ late int perPage;
+ late  String prevPageUrl;
+ late int to;
+ late int total;
 
   Items(
-      {this.currentPage,
-      this.data,
-      this.firstPageUrl,
-      this.from,
-      this.lastPage,
-      this.lastPageUrl,
-      this.nextPageUrl,
-      this.path,
-      this.perPage,
-      this.prevPageUrl,
-      this.to,
-      this.total});
+      {required this.currentPage,
+        required this.data,
+        required this.firstPageUrl,
+        required  this.from,
+        required this.lastPage,
+        required this.lastPageUrl,
+        required this.nextPageUrl,
+        required this.path,
+        required  this.perPage,
+        required this.prevPageUrl,
+        required this.to,
+        required this.total});
 
   Items.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -94,30 +94,30 @@ class Items {
 }
 
 class HistoryList {
-  String orderId;
-  String id;
-  String status;
-  String paymentMethod;
-  String payStatus;
-  String createdAt;
-  String total;
-  String vendorId;
-  String username;
-  String name;
-  String lastName;
+late  String orderId;
+late String id;
+late String status;
+late String paymentMethod;
+late String payStatus;
+late String createdAt;
+late String total;
+late String vendorId;
+late String username;
+late String name;
+late  String lastName;
 
   HistoryList(
-      {this.orderId,
-      this.id,
-      this.status,
-      this.paymentMethod,
-      this.payStatus,
-      this.createdAt,
-      this.total,
-      this.vendorId,
-      this.username,
-      this.name,
-      this.lastName});
+      {required this.orderId,
+        required this.id,
+        required this.status,
+        required  this.paymentMethod,
+        required  this.payStatus,
+        required this.createdAt,
+        required  this.total,
+        required  this.vendorId,
+        required  this.username,
+        required  this.name,
+        required  this.lastName});
 
   HistoryList.fromJson(Map<String, dynamic> json) {
     orderId = json['order_id'];

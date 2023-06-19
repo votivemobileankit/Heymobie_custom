@@ -20,13 +20,13 @@ class OrderHistoryDetailsPage extends StatefulWidget {
 }
 
 class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
-  String orderId;
-  String vendorId;
-  String vendorName;
-  String vendorLastName;
-  List<OrderDetail> orderDetailData;
-  List<OrderItems> orderDetailMenuItem;
-  List<Vendor1> vendorDetailData;
+  late String orderId;
+  late String vendorId;
+  late String vendorName;
+  late String vendorLastName;
+  late List<OrderDetail> orderDetailData;
+  late List<OrderItems> orderDetailMenuItem;
+  late List<Vendor1> vendorDetailData;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -47,7 +47,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
     BlocProvider.of<OrderHistoryBloc>(context)
         .add(OrderHistoryEventForOrderDeatil(orderId, vendorId));
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState!.show());
     super.initState();
   }
 
@@ -71,7 +71,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
         onRefresh: _refresh,
         child: BlocListener<OrderHistoryBloc, OrderHistoryState>(
                 listenWhen: (prevState, curState) =>
-                    ModalRoute.of(context).isCurrent,
+                    ModalRoute.of(context)!.isCurrent,
                 listener: (context, state) {
                   if (state is OrderHistoryInitial) {
                     print("bloc call");
@@ -113,6 +113,9 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       AHeaderWidget(
+                        btnEditOnPressed: () {
+
+                        },
                         strBackbuttonName: 'ic_red_btn_back.png',
                         backBtnVisibility: true,
                         btnBackOnPressed: () {
@@ -396,7 +399,7 @@ class _DriverDetail extends StatelessWidget {
                       barrierDismissible: true,
                       builder: (context) {
                         return _getRatingReviewToMerchant(
-                            context1: context1, vendorDetail: vendorDetailData);
+                            context1, vendorDetailData);
                       },
                     );
                   },
@@ -475,15 +478,7 @@ const double _kAddtoCartDialogRadius = 20.0;
 const double _kCommonCartMediumFontSize = 14.0;
 const double _kCommonFontSize = 16.0;
 
-Dialog _getRatingReviewToMerchant({
-  @required BuildContext context1,
-  @required String titleText,
-  @required String btn1TitleText,
-  @required VoidCallback btn1OnPressed,
-  @required String btn2TitleText,
-  @required VoidCallback btn2OnPressed,
-  @required Vendor1 vendorDetail,
-}) {
+Dialog _getRatingReviewToMerchant(BuildContext context1, Vendor1 vendorDetail) {
   return Dialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_kAddtoCartDialogRadius.scale())),
@@ -568,6 +563,9 @@ class _AddRatingReview extends StatelessWidget {
           ).leftPadding(15.0.scale()).rightPadding(15.0.scale()),
           AVerticalSpace(15.0.scale()),
           ARoundedButton(
+            btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+            btnDisabledTextColor:Color(0xFFFFFFFF) ,
+            btnFontWeight: FontWeight.normal,
             btnBgColor: kColorCommonButtonBackGround,
             btnTextColor: kColorAppBgColor,
             btnText: "Submit Review",
@@ -588,7 +586,7 @@ class _AddRatingReview extends StatelessWidget {
             btnWidth: 150.0.scale(),
             btnFontSize: kFontSizeBtnLarge.scale(),
             btnElevation: 0,
-            btnBorderSideColor: kColorCommonButton,
+
           ),
         ],
       ),

@@ -1,17 +1,17 @@
 class OrderDetailResponseModel {
-  String profileUrl;
-  String message;
-  int status;
-  Data data;
+late  String profileUrl;
+late String message;
+late int status;
+late  Data data;
 
   OrderDetailResponseModel(
-      {this.profileUrl, this.message, this.status, this.data});
+      {required this.profileUrl,required this.message,required this.status,required this.data});
 
   OrderDetailResponseModel.fromJson(Map<String, dynamic> json) {
     profileUrl = json['profile_url'];
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = (json['data'] != null ? new Data.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -27,11 +27,11 @@ class OrderDetailResponseModel {
 }
 
 class Data {
-  List<OrderDetail> orderDetail;
-  List<OrderItems> orderItems;
-  List<Vendor1> vendor;
+late  List<OrderDetail> orderDetail;
+ late List<OrderItems> orderItems;
+ late List<Vendor1> vendor;
 
-  Data({this.orderDetail, this.orderItems, this.vendor});
+  Data({required this.orderDetail,required this.orderItems,required this.vendor});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['order_detail'] != null) {
@@ -70,104 +70,104 @@ class Data {
 }
 
 class OrderDetail {
-  String id;
-  String vendorId;
-  String userId;
-  String psId;
-  String psQty;
-  String orderId;
-  String address;
-  String addressp;
-  String addressd;
-  String city;
-  String cityp;
-  String cityd;
-  String mobileNo;
-  String email;
-  String instruction;
-  String cancelReason;
-  String status;
-  String returnReason;
-  String returnReasonMerchant;
-  String deliveryFee;
-  String deliveryTime;
-  String latitude;
-  String longitude;
-  String subTotal;
-  String total;
-  String serviceTax;
-  String exciseTax;
-  String cityTax;
-  String promoAmount;
-  String couponId;
-  String verificationCode;
-  String txnId;
-  String transactionTag;
-  String authorizationNum;
-  String tagged;
-  String receiptUrl;
-  String payStatus;
-  String paymentMethod;
-  String firstName;
-  String lastName;
-  String state;
-  String statep;
-  String stated;
-  String zip;
-  String zipp;
-  String zipd;
-  String createdAt;
-  String updatedAt;
+ late String id;
+ late String vendorId;
+ late  String userId;
+ late  String psId;
+ late  String psQty;
+ late  String orderId;
+ late  String address;
+ late String addressp;
+ late  String addressd;
+ late  String city;
+ late  String cityp;
+ late String cityd;
+ late String mobileNo;
+ late  String email;
+ late  String instruction;
+ late  String cancelReason;
+ late String status;
+ late String returnReason;
+ late String returnReasonMerchant;
+ late String deliveryFee;
+ late String deliveryTime;
+ late String latitude;
+ late String longitude;
+ late String subTotal;
+ late String total;
+ late String serviceTax;
+ late String exciseTax;
+ late String cityTax;
+ late String promoAmount;
+ late String couponId;
+ late String verificationCode;
+ late String txnId;
+ late String transactionTag;
+ late String authorizationNum;
+ late String tagged;
+ late  String receiptUrl;
+ late  String payStatus;
+ late String paymentMethod;
+ late String firstName;
+ late String lastName;
+ late  String state;
+ late String statep;
+ late String stated;
+ late String zip;
+ late String zipp;
+ late String zipd;
+ late String createdAt;
+ late String updatedAt;
 
   OrderDetail(
-      {this.id,
-      this.vendorId,
-      this.userId,
-      this.psId,
-      this.psQty,
-      this.orderId,
-      this.address,
-      this.addressp,
-      this.addressd,
-      this.city,
-      this.cityp,
-      this.cityd,
-      this.mobileNo,
-      this.email,
-      this.instruction,
-      this.cancelReason,
-      this.status,
-      this.returnReason,
-      this.returnReasonMerchant,
-      this.deliveryFee,
-      this.deliveryTime,
-      this.latitude,
-      this.longitude,
-      this.subTotal,
-      this.total,
-      this.serviceTax,
-      this.exciseTax,
-      this.cityTax,
-      this.promoAmount,
-      this.couponId,
-      this.verificationCode,
-      this.txnId,
-      this.transactionTag,
-      this.authorizationNum,
-      this.tagged,
-      this.receiptUrl,
-      this.payStatus,
-      this.paymentMethod,
-      this.firstName,
-      this.lastName,
-      this.state,
-      this.statep,
-      this.stated,
-      this.zip,
-      this.zipp,
-      this.zipd,
-      this.createdAt,
-      this.updatedAt});
+      {required this.id,
+        required this.vendorId,
+        required this.userId,
+        required this.psId,
+        required this.psQty,
+        required  this.orderId,
+        required  this.address,
+        required this.addressp,
+        required this.addressd,
+        required   this.city,
+        required  this.cityp,
+        required this.cityd,
+        required this.mobileNo,
+        required this.email,
+        required this.instruction,
+        required this.cancelReason,
+        required  this.status,
+        required  this.returnReason,
+        required  this.returnReasonMerchant,
+        required  this.deliveryFee,
+        required  this.deliveryTime,
+        required  this.latitude,
+        required   this.longitude,
+        required  this.subTotal,
+        required  this.total,
+        required   this.serviceTax,
+        required  this.exciseTax,
+        required this.cityTax,
+        required this.promoAmount,
+        required  this.couponId,
+        required  this.verificationCode,
+        required  this.txnId,
+        required  this.transactionTag,
+        required  this.authorizationNum,
+        required  this.tagged,
+        required  this.receiptUrl,
+        required  this.payStatus,
+        required   this.paymentMethod,
+        required  this.firstName,
+        required this.lastName,
+        required  this.state,
+        required this.statep,
+        required  this.stated,
+        required  this.zip,
+        required   this.zipp,
+        required this.zipd,
+        required  this.createdAt,
+        required  this.updatedAt});
 
   OrderDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -275,74 +275,74 @@ class OrderDetail {
 }
 
 class OrderItems {
-  int id;
-  String vendorId;
-  String adminProductId;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  String avgRating;
-  String ratingCount;
-  String name;
-  String slug;
-  String description;
-  String price;
-  String quantity;
-  String unit;
-  String brands;
-  String types;
-  String potencyThc;
-  String potencyCbd;
-  String image;
-  String keyword;
-  String productCode;
-  String status;
-  String loginStatus;
-  String stock;
-  String popular;
-  String createdAt;
-  String updatedAt;
-  String psQty;
-  String categoryname;
-  String imageURL;
-  String subcategoryname;
-  List<Images> images;
-  String totalprice;
+  late int id;
+  late String vendorId;
+  late String adminProductId;
+  late String type;
+  late String categoryId;
+  late  String subCategoryId;
+  late  String avgRating;
+  late String ratingCount;
+  late String name;
+  late String slug;
+  late String description;
+  late String price;
+  late  String quantity;
+  late String unit;
+  late String brands;
+  late String types;
+  late String potencyThc;
+  late String potencyCbd;
+  late String image;
+  late String keyword;
+  late String productCode;
+  late String status;
+  late  String loginStatus;
+  late String stock;
+  late String popular;
+  late String createdAt;
+  late String updatedAt;
+  late String psQty;
+  late String categoryname;
+  late String imageURL;
+  late String subcategoryname;
+  late List<Images> images;
+  late String totalprice;
 
   OrderItems(
-      {this.id,
-      this.vendorId,
-      this.adminProductId,
-      this.type,
-      this.categoryId,
-      this.subCategoryId,
-      this.avgRating,
-      this.ratingCount,
-      this.name,
-      this.slug,
-      this.description,
-      this.price,
-      this.quantity,
-      this.unit,
-      this.brands,
-      this.types,
-      this.potencyThc,
-      this.potencyCbd,
-      this.image,
-      this.keyword,
-      this.productCode,
-      this.status,
-      this.loginStatus,
-      this.stock,
-      this.popular,
-      this.createdAt,
-      this.updatedAt,
-      this.psQty,
-      this.categoryname,
-      this.imageURL,
-      this.subcategoryname,
-      this.images,
-      this.totalprice});
+      {required this.id,
+        required this.vendorId,
+        required this.adminProductId,
+        required this.type,
+        required  this.categoryId,
+        required  this.subCategoryId,
+        required  this.avgRating,
+        required  this.ratingCount,
+        required this.name,
+        required this.slug,
+        required this.description,
+        required  this.price,
+        required this.quantity,
+        required this.unit,
+        required  this.brands,
+        required  this.types,
+        required   this.potencyThc,
+        required  this.potencyCbd,
+        required this.image,
+        required  this.keyword,
+        required this.productCode,
+        required  this.status,
+        required  this.loginStatus,
+        required  this.stock,
+        required this.popular,
+        required this.createdAt,
+        required  this.updatedAt,
+        required  this.psQty,
+        required  this.categoryname,
+        required  this.imageURL,
+        required this.subcategoryname,
+        required this.images,
+        required this.totalprice});
 
   OrderItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -427,21 +427,21 @@ class OrderItems {
 }
 
 class Images {
-  String id;
-  String psId;
-  String name;
+late  String id;
+late String psId;
+late  String name;
 
-  String createdAt;
-  String updatedAt;
-  String path;
+late  String createdAt;
+late  String updatedAt;
+late  String path;
 
   Images(
-      {this.id,
-      this.psId,
-      this.name,
-      this.createdAt,
-      this.updatedAt,
-      this.path});
+      {required this.id,
+        required  this.psId,
+        required this.name,
+        required this.createdAt,
+        required   this.updatedAt,
+        required   this.path});
 
   Images.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -467,158 +467,158 @@ class Images {
 }
 
 class Vendor1 {
-  int vendorId;
-  String uniqueId;
-  String name;
-  String username;
-  String lastName;
-  String businessName;
-  String email;
-  String mailingAddress;
-  String address;
-  String avgRating;
-  String ratingCount;
-  String lat;
-  String lng;
-  String address1;
-  String suburb;
-  String state;
-  String city;
-  String zipcode;
-  String mobNo;
-  String vendorStatus;
-  String loginStatus;
-  String vendorType;
-  String walletAmount;
-  String deviceid;
-  String devicetype;
-  String marketArea;
-  String serviceRadius;
-  String driverLicense;
-  String licenseExpiry;
-  String licenseFront;
-  String licenseBack;
-  String ssn;
-  String dob;
-  String profileImg1;
-  String profileImg2;
-  String profileImg3;
-  String profileImg4;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  String service;
-  String permitType;
-  String permitNumber;
-  String permitExpiry;
-  String description;
-  String otp;
-  String forgetpassRequest;
-  String forgetpassRequestStatus;
-  String planId;
-  String planPurchased;
-  String planExpiry;
-  String txnId;
-  String createdAt;
-  String updatedAt;
-  String stripeId;
-  String make;
-  String model;
-  String color;
-  String year;
-  String licensePlate;
-  String views;
-  String salesTax;
-  String exciseTax;
-  String cityTax;
-  String commissionRate;
-  String deliveryFee;
-  String licensefrontURL;
-  String licensebackURL;
-  String profileURL;
-  String profile2URL;
-  String profile3URL;
-  String profile4URL;
-  Membership membership;
-  String fullname;
-  String category;
+ late int vendorId;
+ late String uniqueId;
+ late String name;
+ late String username;
+ late String lastName;
+ late String businessName;
+ late String email;
+ late String mailingAddress;
+ late String address;
+ late String avgRating;
+ late String ratingCount;
+ late String lat;
+ late  String lng;
+ late String address1;
+ late String suburb;
+ late String state;
+ late String city;
+ late String zipcode;
+ late String mobNo;
+ late String vendorStatus;
+ late String loginStatus;
+ late String vendorType;
+ late String walletAmount;
+ late String deviceid;
+ late String devicetype;
+ late  String marketArea;
+ late String serviceRadius;
+ late String driverLicense;
+ late  String licenseExpiry;
+ late  String licenseFront;
+ late String licenseBack;
+ late String ssn;
+ late String dob;
+ late String profileImg1;
+ late String profileImg2;
+ late String profileImg3;
+ late String profileImg4;
+ late String type;
+ late String categoryId;
+ late String subCategoryId;
+ late String service;
+ late String permitType;
+ late String permitNumber;
+ late String permitExpiry;
+ late String description;
+ late String otp;
+ late String forgetpassRequest;
+ late String forgetpassRequestStatus;
+ late String planId;
+ late String planPurchased;
+ late String planExpiry;
+ late String txnId;
+ late String createdAt;
+ late String updatedAt;
+ late String stripeId;
+ late String make;
+ late String model;
+ late String color;
+ late  String year;
+ late String licensePlate;
+ late String views;
+ late String salesTax;
+ late String exciseTax;
+ late String cityTax;
+ late String commissionRate;
+ late String deliveryFee;
+ late String licensefrontURL;
+ late String licensebackURL;
+ late String profileURL;
+ late String profile2URL;
+ late String profile3URL;
+ late String profile4URL;
+ late Membership membership;
+ late String fullname;
+ late  String category;
 
-  Vendor1({
+  Vendor1({required
     this.vendorId,
-    this.uniqueId,
-    this.name,
-    this.username,
-    this.lastName,
-    this.businessName,
-    this.email,
-    this.mailingAddress,
-    this.address,
-    this.avgRating,
-    this.ratingCount,
-    this.lat,
-    this.lng,
-    this.address1,
-    this.suburb,
-    this.state,
-    this.city,
-    this.zipcode,
-    this.mobNo,
-    this.vendorStatus,
-    this.loginStatus,
-    this.vendorType,
-    this.walletAmount,
-    this.deviceid,
-    this.devicetype,
-    this.marketArea,
-    this.serviceRadius,
-    this.driverLicense,
-    this.licenseExpiry,
-    this.licenseFront,
-    this.licenseBack,
-    this.ssn,
-    this.dob,
-    this.profileImg1,
-    this.profileImg2,
-    this.profileImg3,
-    this.profileImg4,
-    this.type,
-    this.categoryId,
-    this.subCategoryId,
-    this.service,
-    this.permitType,
-    this.permitNumber,
-    this.permitExpiry,
-    this.description,
-    this.otp,
-    this.forgetpassRequest,
-    this.forgetpassRequestStatus,
-    this.planId,
-    this.planPurchased,
-    this.planExpiry,
-    this.txnId,
-    this.createdAt,
-    this.updatedAt,
-    this.stripeId,
-    this.make,
-    this.model,
-    this.color,
-    this.year,
-    this.licensePlate,
-    this.views,
-    this.salesTax,
-    this.exciseTax,
-    this.cityTax,
-    this.commissionRate,
-    this.deliveryFee,
-    this.licensefrontURL,
-    this.licensebackURL,
-    this.profileURL,
-    this.profile2URL,
-    this.profile3URL,
-    this.profile4URL,
-    this.membership,
-    this.fullname,
-    this.category,
+    required this.uniqueId,
+    required this.name,
+    required  this.username,
+    required this.lastName,
+    required  this.businessName,
+    required this.email,
+    required  this.mailingAddress,
+    required this.address,
+    required  this.avgRating,
+    required  this.ratingCount,
+    required  this.lat,
+    required  this.lng,
+    required this.address1,
+    required this.suburb,
+    required this.state,
+    required this.city,
+    required  this.zipcode,
+    required  this.mobNo,
+    required  this.vendorStatus,
+    required  this.loginStatus,
+    required  this.vendorType,
+    required  this.walletAmount,
+    required this.deviceid,
+    required  this.devicetype,
+    required  this.marketArea,
+    required  this.serviceRadius,
+    required this.driverLicense,
+    required this.licenseExpiry,
+    required  this.licenseFront,
+    required this.licenseBack,
+    required  this.ssn,
+    required  this.dob,
+    required  this.profileImg1,
+    required this.profileImg2,
+    required this.profileImg3,
+    required this.profileImg4,
+    required  this.type,
+    required this.categoryId,
+    required this.subCategoryId,
+    required this.service,
+    required this.permitType,
+    required  this.permitNumber,
+    required this.permitExpiry,
+    required this.description,
+    required  this.otp,
+    required  this.forgetpassRequest,
+    required  this.forgetpassRequestStatus,
+    required  this.planId,
+    required  this.planPurchased,
+    required  this.planExpiry,
+    required  this.txnId,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.stripeId,
+    required this.make,
+    required this.model,
+    required this.color,
+    required this.year,
+    required this.licensePlate,
+    required  this.views,
+    required  this.salesTax,
+    required this.exciseTax,
+    required this.cityTax,
+    required this.commissionRate,
+    required this.deliveryFee,
+    required this.licensefrontURL,
+    required  this.licensebackURL,
+    required this.profileURL,
+    required this.profile2URL,
+    required this.profile3URL,
+    required this.profile4URL,
+    required this.membership,
+    required  this.fullname,
+    required this.category,
   });
 
   Vendor1.fromJson(Map<String, dynamic> json) {
@@ -694,9 +694,9 @@ class Vendor1 {
     profile2URL = json['profile2URL'];
     profile3URL = json['profile3URL'];
     profile4URL = json['profile4URL'];
-    membership = json['membership'] != null
+    membership = (json['membership'] != null
         ? new Membership.fromJson(json['membership'])
-        : null;
+        : null)!;
     fullname = json['fullname'];
     category = json['Category'];
   }
@@ -786,10 +786,10 @@ class Vendor1 {
 }
 
 class Membership {
-  int remainingDays;
-  int status;
+ late  int remainingDays;
+ late int status;
 
-  Membership({this.remainingDays, this.status});
+  Membership({required this.remainingDays, required this.status});
 
   Membership.fromJson(Map<String, dynamic> json) {
     remainingDays = json['remainingDays'];

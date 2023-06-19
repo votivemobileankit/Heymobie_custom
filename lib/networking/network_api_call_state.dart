@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 import '../utils/utils.dart';
 
 class NetworkApiCallState<T> extends Equatable {
-  final NetworkRequestStatus status;
-  final T data;
-  final String message;
-  final String statusValue;
-  final NetworkErrorType errorType;
+  final NetworkRequestStatus? status;
+  final T? data;
+  final String? message;
+  final String? statusValue;
+  final NetworkErrorType? errorType;
 
   NetworkApiCallState.loading(this.message, this.statusValue)
       : status = NetworkRequestStatus.LOADING,
@@ -32,5 +32,5 @@ class NetworkApiCallState<T> extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, statusValue, data, message, errorType];
+  List<Object> get props => [status!, statusValue!, data!, message!, errorType!];
 }

@@ -15,8 +15,8 @@ class NotificationListPage extends StatefulWidget {
 }
 
 class _NotificationListPageState extends State<NotificationListPage> {
-  List<Data> notificationList;
-  ScrollController _scrollController;
+ late List<Data> notificationList;
+ late ScrollController _scrollController;
   int pageCount = 1;
   bool isLoading = false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -71,7 +71,7 @@ class _NotificationListPageState extends State<NotificationListPage> {
         key: _refreshIndicatorKey,
         onRefresh: _refresh,
         child: BlocListener<SettingBloc, SettingState>(
-          listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+          listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
           listener: (context, state) {
             if (state is SettingNotificationDataListState) {
               showHideProgress(false);
@@ -107,6 +107,11 @@ class _NotificationListPageState extends State<NotificationListPage> {
             child: Column(
               children: [
                 AHeaderWidget(
+                  headerSigninText: "",
+                  headerText: "",
+                  btnEditOnPressed: () {
+
+                  },
                   strBackbuttonName: 'ic_red_btn_back.png',
                   backBtnVisibility: true,
                   btnBackOnPressed: () {

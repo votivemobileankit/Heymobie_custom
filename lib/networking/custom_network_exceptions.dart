@@ -4,12 +4,12 @@ import 'package:grambunny_customer/utils/utils.dart';
 class CustomNetworkException implements Exception {
   final message;
   final prefix;
-  final NetworkErrorType errorType;
+  final NetworkErrorType? errorType;
 
   CustomNetworkException([
     this.message,
     this.prefix,
-    this.errorType,
+     this.errorType,
   ]);
 
   String toString() {
@@ -24,7 +24,7 @@ class NoInternetNetworkException extends CustomNetworkException {
 }
 
 class FetchDataNetworkException extends CustomNetworkException {
-  FetchDataNetworkException([String message, NetworkErrorType errorType])
+  FetchDataNetworkException([String? message, NetworkErrorType? errorType])
       : super(message, "Error During Communication: ", errorType);
 }
 
@@ -39,6 +39,6 @@ class UnauthorisedNetworkException extends CustomNetworkException {
 }
 
 class InvalidInputNetworkException extends CustomNetworkException {
-  InvalidInputNetworkException([String message, NetworkErrorType errorType])
+  InvalidInputNetworkException([String? message, NetworkErrorType? errorType])
       : super(message, "Invalid Input: ", errorType);
 }

@@ -1,14 +1,14 @@
 class ProductListModel {
-  String message;
-  int status;
-  Data data;
+ late String message;
+ late int status;
+ late Data data;
 
-  ProductListModel({this.message, this.status, this.data});
+  ProductListModel({required this.message,required this.status, required this.data});
 
   ProductListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = (json['data'] != null ? new Data.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,9 +23,9 @@ class ProductListModel {
 }
 
 class Data {
-  List<ProductListMenu> productList;
+ late List<ProductListMenu> productList;
 
-  Data({this.productList});
+  Data({required this.productList});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['product_list'] != null) {
@@ -46,66 +46,66 @@ class Data {
 }
 
 class ProductListMenu {
-  int id;
-  String vendorId;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  String avgRating;
-  String ratingCount;
-  String name;
-  String slug;
-  String description;
-  String price;
-  String quantity;
-  String unit;
-  String brands;
-  String types;
-  String potencyThc;
-  String potencyCbd;
-  String image;
-  String keyword;
-  String productCode;
-  String status;
-  String loginStatus;
-  String stock;
-  String createdAt;
-  String updatedAt;
-  String categoryname;
-  String imageURL;
-  String subcategoryname;
-  List<Images1> images;
+ late int id;
+ late String vendorId;
+ late String type;
+ late String categoryId;
+ late String subCategoryId;
+ late String avgRating;
+ late  String ratingCount;
+ late String name;
+ late  String slug;
+ late  String description;
+ late  String price;
+ late String quantity;
+ late String unit;
+ late String brands;
+ late String types;
+ late String potencyThc;
+ late  String potencyCbd;
+ late String image;
+ late String keyword;
+ late String productCode;
+ late String status;
+ late String loginStatus;
+ late String stock;
+ late  String createdAt;
+ late String updatedAt;
+ late String categoryname;
+ late  String imageURL;
+ late  String subcategoryname;
+ late  List<Images1> images;
 
   ProductListMenu(
-      {this.id,
-      this.vendorId,
-      this.type,
-      this.categoryId,
-      this.subCategoryId,
-      this.avgRating,
-      this.ratingCount,
-      this.name,
-      this.slug,
-      this.description,
-      this.price,
-      this.quantity,
-      this.unit,
-      this.brands,
-      this.types,
-      this.potencyThc,
-      this.potencyCbd,
-      this.image,
-      this.keyword,
-      this.productCode,
-      this.status,
-      this.loginStatus,
-      this.stock,
-      this.createdAt,
-      this.updatedAt,
-      this.categoryname,
-      this.imageURL,
-      this.subcategoryname,
-      this.images});
+      {required this.id,
+        required  this.vendorId,
+        required  this.type,
+        required  this.categoryId,
+        required this.subCategoryId,
+        required this.avgRating,
+        required  this.ratingCount,
+        required  this.name,
+        required this.slug,
+        required this.description,
+        required  this.price,
+        required this.quantity,
+        required  this.unit,
+        required  this.brands,
+        required this.types,
+        required  this.potencyThc,
+        required  this.potencyCbd,
+        required this.image,
+        required  this.keyword,
+        required this.productCode,
+        required this.status,
+        required this.loginStatus,
+        required this.stock,
+        required this.createdAt,
+        required this.updatedAt,
+        required  this.categoryname,
+        required  this.imageURL,
+        required  this.subcategoryname,
+        required  this.images});
 
   ProductListMenu.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -182,22 +182,22 @@ class ProductListMenu {
 }
 
 class Images1 {
-  String id;
-  String psId;
-  String name;
-  String thumb;
-  String createdAt;
-  String updatedAt;
-  String path;
+ late String id;
+ late String psId;
+ late String name;
+ late String thumb;
+ late String createdAt;
+ late String updatedAt;
+ late String path;
 
   Images1(
-      {this.id,
-      this.psId,
-      this.name,
-      this.thumb,
-      this.createdAt,
-      this.updatedAt,
-      this.path});
+      {required this.id,
+        required  this.psId,
+        required this.name,
+        required this.thumb,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.path});
 
   Images1.fromJson(Map<String, dynamic> json) {
     id = json['id'];

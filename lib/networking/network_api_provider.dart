@@ -8,15 +8,15 @@ import 'package:http/http.dart' as http;
 import 'custom_network_exceptions.dart';
 
 class NetworkApiProvider {
-  String _baseUrl;
-  String accessToken;
+ late String _baseUrl;
+late  String accessToken;
 
   NetworkApiProvider(String baseUrl) {
     _baseUrl = baseUrl;
   }
 
   Future<dynamic> get(String url,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       var headers = <String, String>{
@@ -33,9 +33,7 @@ class NetworkApiProvider {
         Uri.parse(url),
         headers: headers,
       )
-          .timeout(Duration(seconds: 180), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 180));
       responseJson = _response(response);
     } on SocketException {
       throw NoInternetNetworkException();
@@ -44,7 +42,7 @@ class NetworkApiProvider {
   }
 
   Future<dynamic> getstaticContent(String url,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       String Username = "mild";
@@ -62,9 +60,7 @@ class NetworkApiProvider {
       print('headers = $headers');
       final response = await http
           .get(Uri.parse(url), headers: headers)
-          .timeout(Duration(seconds: 140), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 140));
       responseJson = _response(response);
     } on SocketException {
       throw NoInternetNetworkException();
@@ -73,7 +69,7 @@ class NetworkApiProvider {
   }
 
   Future<dynamic> delete(String url,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       var headers = <String, String>{
@@ -89,9 +85,7 @@ class NetworkApiProvider {
       print('headers = $headers');
       final response = await http
           .delete(Uri.parse(_baseUrl + url), headers: headers)
-          .timeout(Duration(seconds: 90), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 90));
       responseJson = _response(response);
     } on SocketException {
       throw NoInternetNetworkException();
@@ -100,7 +94,7 @@ class NetworkApiProvider {
   }
 
   Future<dynamic> post(String url, Map<String, dynamic> jsonMap,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       var headers = <String, String>{
@@ -118,9 +112,7 @@ class NetworkApiProvider {
       print('jsonMap = $jsonStr');
       final response = await http
           .post(Uri.parse(url), headers: headers, body: jsonEncode(jsonMap))
-          .timeout(const Duration(seconds: 60), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(const Duration(seconds: 60));
 
       responseJson = _response(response);
     } on SocketException {
@@ -131,7 +123,7 @@ class NetworkApiProvider {
 
   Future<dynamic> postProfileMultipartImage(String url, String fileUserPath,
       String paramName, Map<String, dynamic> jsonMap,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       print(url);
@@ -157,9 +149,7 @@ class NetworkApiProvider {
       final streamedResponse = await request.send();
 
       final response = await http.Response.fromStream(streamedResponse)
-          .timeout(Duration(seconds: 120), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 120));
       print(response.body);
       responseJson = await _response(response);
     } on SocketException {
@@ -169,7 +159,7 @@ class NetworkApiProvider {
   }
 
   Future<dynamic> postWithUrl(String url, Map<String, dynamic> jsonMap,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       var headers = <String, String>{
@@ -189,9 +179,7 @@ class NetworkApiProvider {
       print('jsonMap = $jsonStr');
       final response = await http
           .post(Uri.parse(url), headers: headers, body: jsonEncode(jsonMap))
-          .timeout(Duration(seconds: 120), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 120));
       responseJson = _response(response);
     } on SocketException {
       throw NoInternetNetworkException();
@@ -200,7 +188,7 @@ class NetworkApiProvider {
   }
 
   Future<dynamic> patch(String url, Map<String, dynamic> jsonMap,
-      [bool addToken = false, Map<String, String> additionalHeaders]) async {
+      [bool addToken = false, Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       var headers = <String, String>{
@@ -217,9 +205,7 @@ class NetworkApiProvider {
       print('jsonMap = $jsonMap');
       final response = await http
           .patch(Uri.parse(url), headers: headers, body: jsonEncode(jsonMap))
-          .timeout(Duration(seconds: 120), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 120));
       responseJson = _response(response);
     } on SocketException {
       throw NoInternetNetworkException();
@@ -234,7 +220,7 @@ class NetworkApiProvider {
       String fileBackLicense,
       Map<String, dynamic> jsonMap,
       [bool addToken = false,
-      Map<String, String> additionalHeaders]) async {
+      Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       print(url);
@@ -311,9 +297,7 @@ class NetworkApiProvider {
       final streamedResponse = await request.send();
 
       final response = await http.Response.fromStream(streamedResponse)
-          .timeout(Duration(seconds: 120), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 120));
       print(response.body);
       responseJson = await _response(response);
     } on SocketException {
@@ -330,7 +314,7 @@ class NetworkApiProvider {
       String fileMarijuanaId,
       Map<String, dynamic> jsonMap,
       [bool addToken = false,
-      Map<String, String> additionalHeaders]) async {
+      Map<String, String>? additionalHeaders]) async {
     var responseJson;
     try {
       print(url);
@@ -451,9 +435,7 @@ class NetworkApiProvider {
       final streamedResponse = await request.send();
 
       final response = await http.Response.fromStream(streamedResponse)
-          .timeout(Duration(seconds: 120), onTimeout: () {
-        print('Time Out');
-      });
+          .timeout(Duration(seconds: 120));
       print(response.body);
       responseJson = await _response(response);
     } on SocketException {
@@ -463,14 +445,14 @@ class NetworkApiProvider {
   }
 
   dynamic _response(http.BaseResponse response) async {
-    String responsePhrase = response is http.Response
+    String? responsePhrase = response is http.Response
         ? response.body
         : response is http.StreamedResponse
             ? await response.stream.bytesToString()
             : null;
     switch (response.statusCode) {
       case 200:
-        var responseJson = json.decode(responsePhrase);
+        var responseJson = json.decode(responsePhrase!);
         // print(responseJson);
         return responseJson;
       case 400:
@@ -487,16 +469,16 @@ class NetworkApiProvider {
         if (responsePhrase == "") {
           responseJson = "[]";
         } else {
-          responseJson = json.decode(responsePhrase);
+          responseJson = json.decode(responsePhrase!);
         }
         // print(responseJson);
         return responseJson;
       case 201:
-        var responseJson = json.decode(responsePhrase);
+        var responseJson = json.decode(responsePhrase!);
         //  print(responseJson);
         return responseJson;
       case 409:
-        var responseJson = json.decode(responsePhrase);
+        var responseJson = json.decode(responsePhrase!);
         //  print(responseJson);
         return responseJson;
 

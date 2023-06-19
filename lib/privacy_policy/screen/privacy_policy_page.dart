@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ import 'package:grambunny_customer/theme/theme.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 
-WebViewController webViewContoller1;
+
 
 class PrivacyPolicyPage extends StatefulWidget {
   @override
@@ -18,8 +18,8 @@ class PrivacyPolicyPage extends StatefulWidget {
 }
 
 class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
-  String _redirectedToUrl;
-
+ late String _redirectedToUrl;
+ late WebViewController _webViewContoller1;
   void showHideProgress(bool show) {
     BlocProvider.of<SideNavigatBloc>(context)
         .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
@@ -27,17 +27,41 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
 
   @override
   void initState() {
-    showHideProgress(true);
+
     _redirectedToUrl = UrlPrivacyPolicy;
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+
     super.initState();
+
+    showHideProgress(true);
+    _webViewContoller1 = WebViewController();
+    _webViewContoller1.setJavaScriptMode(JavaScriptMode.unrestricted);
+
+    _webViewContoller1.setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          showHideProgress(true);
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {
+          showHideProgress(false);
+        },
+        onWebResourceError: (WebResourceError error) {},
+        onNavigationRequest: (NavigationRequest request) {
+          if (request.url.startsWith('https://www.youtube.com/')) {
+            return NavigationDecision.prevent;
+          }
+          return NavigationDecision.navigate;
+        },
+      ),
+    );
+    _webViewContoller1.loadRequest(Uri.parse(_redirectedToUrl));
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<PrivacyPolicyBloc, PrivacyPolicyState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is PrivacyPolicyBackToHomeState) {
           BlocProvider.of<PrivacyPolicyBloc>(context)
@@ -51,6 +75,12 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         child: Column(
           children: [
             AHeaderWidget(
+              headerText: "",
+              headerSigninText: "",
+              strBtnRightImageName: "",
+              btnEditOnPressed: () {
+
+              },
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
@@ -62,34 +92,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: (MediaQuery.of(context).size.height),
-              child: WebView(
-                initialUrl: _redirectedToUrl,
-                javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (WebViewController webViewController) {
-                  webViewContoller1 = webViewController;
-                },
-                javascriptChannels: <JavascriptChannel>{},
-                navigationDelegate: (NavigationRequest request) {
-                  //_redirectedToUrl = request.url;
-                  if (request.url.startsWith('https://www.youtube.com/')) {
-                    print('blocking navigation to $request}');
-
-                    return NavigationDecision.prevent;
-                  }
-
-                  print('allowing navigation to $request');
-                  return NavigationDecision.navigate;
-                },
-                onPageStarted: (String url) {
-                  // showHideProgress(false);
-                },
-                onPageFinished: (String url) {
-                  print("on page finished" + url);
-                  // readJS();
-                  showHideProgress(false);
-                },
-                gestureNavigationEnabled: true,
-              ),
+              child: WebViewWidget(controller: _webViewContoller1),
             ).expand()
           ],
         ).widgetBgColor(Colors.white),

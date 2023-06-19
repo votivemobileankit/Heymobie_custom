@@ -10,16 +10,16 @@ class PrivacyPolicyNavigator extends StatefulWidget {
   final UserRepository userRepository;
 
   PrivacyPolicyNavigator({
-    Key key,
-    @required this.userRepository,
-  }) : super(key: key);
+
+    required this.userRepository,
+  });
 
   @override
   State<PrivacyPolicyNavigator> createState() => _PrivacyPolicyNavigatorState();
 }
 
 class _PrivacyPolicyNavigatorState extends State<PrivacyPolicyNavigator> {
-  _PrivacyPolicyRouter _router;
+ late _PrivacyPolicyRouter _router;
 
   @override
   void initState() {
@@ -50,11 +50,11 @@ class _PrivacyPolicyNavigatorState extends State<PrivacyPolicyNavigator> {
 }
 
 class _PrivacyPolicyRouter {
-  final PrivacyPolicyBloc privacyBloc;
+ late  PrivacyPolicyBloc privacyBloc;
 
-  _PrivacyPolicyRouter({this.privacyBloc});
+  _PrivacyPolicyRouter({required this.privacyBloc});
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case PrivacyPolicyNavigator.privacyPolicyPage:
         return getSettingMainPageRoute(settings);

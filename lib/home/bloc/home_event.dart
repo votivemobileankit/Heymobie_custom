@@ -54,44 +54,44 @@ class LoginEventBtnLoginClicked extends HomeEvent {
 }
 
 class SignUpEventSignUpBtnClick extends HomeEvent {
-  String firstName;
-  String lastName;
-  String email;
-  String password;
-  String mobileNO;
-  String devicetype;
-  String devicetoken;
-  String dob;
-  String address;
-  String city;
-  String state;
-  String zipcode;
-  String os_name;
-  String strUserProfilePath;
-  String strFrontLicensePath;
-  String strBackLicensePath;
-  String strCustomerType;
-  String strMarijuanaId;
+late  String firstName;
+late String lastName;
+late String email;
+late String password;
+late String mobileNO;
+late String devicetype;
+late String devicetoken;
+late String dob;
+late  String address;
+late  String city;
+late  String state;
+late String zipcode;
+late  String os_name;
+late String strUserProfilePath;
+late  String strFrontLicensePath;
+late String strBackLicensePath;
+late String strCustomerType;
+late String strMarijuanaId;
 
   SignUpEventSignUpBtnClick(
-      {this.firstName,
-      this.lastName,
-      this.email,
-      this.password,
-      this.mobileNO,
-      this.devicetype,
-      this.devicetoken,
-      this.dob,
-      this.address,
-      this.city,
-      this.state,
-      this.zipcode,
-      this.os_name,
-      this.strUserProfilePath,
-      this.strFrontLicensePath,
-      this.strBackLicensePath,
-      this.strCustomerType,
-      this.strMarijuanaId});
+      {required this.firstName,
+        required   this.lastName,
+        required  this.email,
+        required   this.password,
+        required  this.mobileNO,
+        required  this.devicetype,
+        required  this.devicetoken,
+        required  this.dob,
+        required  this.address,
+        required this.city,
+        required this.state,
+        required    this.zipcode,
+        required  this.os_name,
+        required this.strUserProfilePath,
+        required  this.strFrontLicensePath,
+        required this.strBackLicensePath,
+        required  this.strCustomerType,
+        required this.strMarijuanaId});
 
   @override
   List<Object> get props => [
@@ -117,9 +117,9 @@ class SignUpEventSignUpBtnClick extends HomeEvent {
 }
 
 class HomeEventCatgoryDetailClick extends HomeEvent {
-  DriverList driverDetail;
-  CategoryListModel categoryListModel;
-  String category_id;
+ late DriverList driverDetail;
+ late CategoryListModel categoryListModel;
+ late String category_id;
 
   HomeEventCatgoryDetailClick(
       this.categoryListModel, this.driverDetail, this.category_id);
@@ -152,56 +152,56 @@ class HomeEventCheckOutButtonClick extends HomeEvent {
 }
 
 class HomeEventSubmitOrderBtnClick extends HomeEvent {
-  String payMethod;
-  String mobile;
-  String address;
-  String city;
-  String zip;
-  String state;
-  String comment;
-  String cc_name;
-  String creditcardtype;
-  String cc_number;
-  String cc_expiration;
-  String cc_cvv;
-  String cc_expire_month;
-  String cc_expire_year;
-  String promo_amount;
-  String saletax;
-  String excisetax;
-  String citytax;
-  String vendorId;
-  String final_amount;
-  String sub_total;
-  String coupon_id;
-  String osName;
-  String deviceType;
+late  String payMethod;
+late String mobile;
+late String address;
+late String city;
+late String zip;
+late String state;
+late String comment;
+late String cc_name;
+late String creditcardtype;
+late  String cc_number;
+late String cc_expiration;
+late String cc_cvv;
+late String cc_expire_month;
+late String cc_expire_year;
+late String promo_amount;
+late String saletax;
+late String excisetax;
+late String citytax;
+late String vendorId;
+late String final_amount;
+late String sub_total;
+late String coupon_id;
+late String osName;
+late String deviceType;
 
   HomeEventSubmitOrderBtnClick(
-      {this.payMethod,
-      this.mobile,
-      this.address,
-      this.city,
-      this.state,
-      this.zip,
-      this.comment,
-      this.cc_name,
-      this.creditcardtype,
-      this.cc_number,
-      this.cc_expiration,
-      this.cc_cvv,
-      this.cc_expire_month,
-      this.cc_expire_year,
-      this.saletax,
-      this.promo_amount,
-      this.excisetax,
-      this.citytax,
-      this.vendorId,
-      this.final_amount,
-      this.sub_total,
-      this.coupon_id,
-      this.osName,
-      this.deviceType});
+      {required this.payMethod,
+        required  this.mobile,
+        required  this.address,
+        required  this.city,
+        required  this.state,
+        required   this.zip,
+        required  this.comment,
+        required  this.cc_name,
+        required  this.creditcardtype,
+        required  this.cc_number,
+        required  this.cc_expiration,
+        required  this.cc_cvv,
+        required  this.cc_expire_month,
+        required  this.cc_expire_year,
+        required  this.saletax,
+        required   this.promo_amount,
+        required  this.excisetax,
+        required  this.citytax,
+        required this.vendorId,
+        required this.final_amount,
+        required   this.sub_total,
+        required  this.coupon_id,
+        required  this.osName,
+        required  this.deviceType});
 
   @override
   List<Object> get props => [
@@ -367,32 +367,32 @@ class HomeEventDriverListCartBtnClick extends HomeEvent {
 }
 
 class HomeEventApplyFilter extends HomeEvent {
-  String driverId;
-  String categoryId;
-  String subCategoryId;
-  String weight;
-  String brand;
-  String type;
-  String potencyThcStart;
-  String potencyThcEnd;
-  String potencyCbdStart;
-  String potencyCbdEnd;
-  String popular;
-  DriverList driverDetail;
+late  String driverId;
+late  String categoryId;
+late  String subCategoryId;
+late  String weight;
+late  String brand;
+late  String type;
+late  String potencyThcStart;
+late  String potencyThcEnd;
+late String potencyCbdStart;
+late String potencyCbdEnd;
+late String popular;
+late DriverList driverDetail;
 
   HomeEventApplyFilter(
-      {this.driverId,
-      this.categoryId,
-      this.subCategoryId,
-      this.weight,
-      this.brand,
-      this.type,
-      this.potencyThcStart,
-      this.potencyThcEnd,
-      this.potencyCbdStart,
-      this.potencyCbdEnd,
-      this.popular,
-      this.driverDetail});
+      {required this.driverId,
+        required this.categoryId,
+        required  this.subCategoryId,
+        required   this.weight,
+        required   this.brand,
+        required  this.type,
+        required this.potencyThcStart,
+        required  this.potencyThcEnd,
+        required  this.potencyCbdStart,
+        required  this.potencyCbdEnd,
+        required  this.popular,
+        required this.driverDetail});
 
   @override
   List<Object> get props => [
@@ -412,28 +412,28 @@ class HomeEventApplyFilter extends HomeEvent {
 }
 
 class HomeEventApplyResetProductList extends HomeEvent {
-  String driverId;
-  String categoryId;
-  String subCategoryId;
-  String weight;
-  String brand;
-  String type;
-  String potencyThc;
-  String potencyCbd;
-  String popular;
-  DriverList driverDetail;
+ late String driverId;
+ late String categoryId;
+ late String subCategoryId;
+ late  String weight;
+ late String brand;
+ late String type;
+ late String potencyThc;
+ late String potencyCbd;
+ late String popular;
+ late DriverList driverDetail;
 
   HomeEventApplyResetProductList(
-      {this.driverId,
-      this.categoryId,
-      this.subCategoryId,
-      this.weight,
-      this.brand,
-      this.type,
-      this.potencyThc,
-      this.potencyCbd,
-      this.popular,
-      this.driverDetail});
+      {required this.driverId,
+        required  this.categoryId,
+        required  this.subCategoryId,
+        required  this.weight,
+        required  this.brand,
+        required  this.type,
+        required  this.potencyThc,
+        required this.potencyCbd,
+        required  this.popular,
+        required this.driverDetail});
 
   @override
   List<Object> get props => [
@@ -451,10 +451,10 @@ class HomeEventApplyResetProductList extends HomeEvent {
 }
 
 class HomeEventMenuListItemClick extends HomeEvent {
-  ProductListMenu productList;
-  String driverId;
-  DriverList driverDetail;
-  String screen;
+ late ProductListMenu productList;
+ late String driverId;
+ late DriverList driverDetail;
+ late String screen;
 
   HomeEventMenuListItemClick(
       this.productList, this.driverId, this.driverDetail, this.screen);
@@ -464,11 +464,11 @@ class HomeEventMenuListItemClick extends HomeEvent {
 }
 
 class HomeEventDriverProductListClick extends HomeEvent {
-  String driverId;
-  String screen;
-  int productId;
-  ProductListDriver driverProductList;
-  Vendor driverDetail;
+ late String driverId;
+ late String screen;
+ late int productId;
+ late ProductListDriver driverProductList;
+ late Vendor driverDetail;
 
   HomeEventDriverProductListClick(
       this.driverProductList, this.driverDetail, this.screen, this.productId);
@@ -479,9 +479,9 @@ class HomeEventDriverProductListClick extends HomeEvent {
 }
 
 class HomeEventProductItemDetailPageReset extends HomeEvent {
-  ProductListMenu productListModel;
-  String driverId;
-  DriverList driverDetail;
+ late ProductListMenu productListModel;
+ late String driverId;
+ late DriverList driverDetail;
 
   HomeEventProductItemDetailPageReset(this.productListModel, this.driverDetail);
 
@@ -723,12 +723,12 @@ class HomeEventSubmitRatingBtnClick extends HomeEvent {
 }
 
 class HomeEventLoadMoreBtnClick extends HomeEvent {
-  String pageCount;
-  String productId;
-  ProductListDriver productListDriverModel;
-  String strScreen;
-  DriverList driverDetail;
-  Vendor vendorDetails;
+ late String pageCount;
+ late String productId;
+ late ProductListDriver productListDriverModel;
+ late String strScreen;
+ late DriverList driverDetail;
+ late Vendor vendorDetails;
 
   HomeEventLoadMoreBtnClick(this.pageCount, this.productId,
       this.productListDriverModel, this.strScreen, this.vendorDetails);

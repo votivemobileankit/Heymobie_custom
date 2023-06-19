@@ -1,14 +1,14 @@
 class StateListModel {
-  String message;
-  int status;
-  StateData data;
+late  String message;
+late int status;
+late StateData data;
 
-  StateListModel({this.message, this.status, this.data});
+  StateListModel({required this.message,required this.status,required this.data});
 
   StateListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? new StateData.fromJson(json['data']) : null;
+    data = (json['data'] != null ? new StateData.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,9 +23,9 @@ class StateListModel {
 }
 
 class StateData {
-  List<StatesList> statesList;
+ late List<StatesList> statesList;
 
-  StateData({this.statesList});
+  StateData({required this.statesList});
 
   StateData.fromJson(Map<String, dynamic> json) {
     if (json['states_list'] != null) {
@@ -46,10 +46,10 @@ class StateData {
 }
 
 class StatesList {
-  String name;
-  String stateCode;
+ late String name;
+ late String stateCode;
 
-  StatesList({this.name, this.stateCode});
+  StatesList({required this.name,required this.stateCode});
 
   StatesList.fromJson(Map<String, dynamic> json) {
     name = json['name'];

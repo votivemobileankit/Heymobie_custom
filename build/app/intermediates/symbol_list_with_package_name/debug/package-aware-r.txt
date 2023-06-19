@@ -1,6 +1,10 @@
 com.grambunny_customer.grambunny_customer
+attr activityAction
+attr activityName
 attr alpha
+attr alwaysExpand
 attr ambientEnabled
+attr backgroundColor
 attr buttonSize
 attr cameraBearing
 attr cameraMaxZoomPreference
@@ -10,7 +14,10 @@ attr cameraTargetLng
 attr cameraTilt
 attr cameraZoom
 attr circleCrop
+attr clearTop
 attr colorScheme
+attr finishPrimaryWithSecondary
+attr finishSecondaryWithPrimary
 attr font
 attr fontProviderAuthority
 attr fontProviderCerts
@@ -24,16 +31,26 @@ attr fontVariationSettings
 attr fontWeight
 attr imageAspectRatio
 attr imageAspectRatioAdjust
+attr lStar
 attr latLngBoundsNorthEastLatitude
 attr latLngBoundsNorthEastLongitude
 attr latLngBoundsSouthWestLatitude
 attr latLngBoundsSouthWestLongitude
 attr liteMode
+attr mapId
 attr mapType
 attr nestedScrollViewStyle
+attr placeholderActivityName
+attr primaryActivityName
 attr queryPatterns
 attr scopeUris
+attr secondaryActivityAction
+attr secondaryActivityName
 attr shortcutMatchRequired
+attr splitLayoutDirection
+attr splitMinSmallestWidth
+attr splitMinWidth
+attr splitRatio
 attr ttcIndex
 attr uiCompass
 attr uiMapToolbar
@@ -165,6 +182,7 @@ id action_text
 id actions
 id adjust_height
 id adjust_width
+id androidx_window_activity_scope
 id async
 id auto
 id blocking
@@ -183,6 +201,8 @@ id italic
 id light
 id line1
 id line3
+id locale
+id ltr
 id media_actions
 id none
 id normal
@@ -191,6 +211,7 @@ id notification_main_column
 id notification_main_column_container
 id right_icon
 id right_side
+id rtl
 id satellite
 id standard
 id status_bar_latest_event_content
@@ -212,6 +233,10 @@ id text
 id text2
 id time
 id title
+id view_tree_lifecycle_owner
+id view_tree_on_back_pressed_dispatcher_owner
+id view_tree_saved_state_registry_owner
+id view_tree_view_model_store_owner
 id wide
 integer cancel_button_image_alpha
 integer google_play_services_version
@@ -235,6 +260,7 @@ layout notification_template_part_time
 mipmap grambunnylogo
 mipmap ic_launcher
 mipmap ic_splash
+raw firebase_common_keep
 string common_google_play_services_enable_button
 string common_google_play_services_enable_text
 string common_google_play_services_enable_title
@@ -277,13 +303,18 @@ style TextAppearance_Compat_Notification_Title
 style TextAppearance_Compat_Notification_Title_Media
 style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
+styleable ActivityFilter activityAction activityName
+styleable ActivityRule alwaysExpand
 styleable Capability queryPatterns shortcutMatchRequired
-styleable ColorStateListItem android_color android_alpha alpha
+styleable ColorStateListItem android_color android_alpha android_lStar alpha lStar
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
 styleable GradientColorItem android_color android_offset
 styleable LoadingImageView circleCrop imageAspectRatio imageAspectRatioAdjust
-styleable MapAttrs ambientEnabled cameraBearing cameraMaxZoomPreference cameraMinZoomPreference cameraTargetLat cameraTargetLng cameraTilt cameraZoom latLngBoundsNorthEastLatitude latLngBoundsNorthEastLongitude latLngBoundsSouthWestLatitude latLngBoundsSouthWestLongitude liteMode mapType uiCompass uiMapToolbar uiRotateGestures uiScrollGestures uiScrollGesturesDuringRotateOrZoom uiTiltGestures uiZoomControls uiZoomGestures useViewLifecycle zOrderOnTop
+styleable MapAttrs ambientEnabled backgroundColor cameraBearing cameraMaxZoomPreference cameraMinZoomPreference cameraTargetLat cameraTargetLng cameraTilt cameraZoom latLngBoundsNorthEastLatitude latLngBoundsNorthEastLongitude latLngBoundsSouthWestLatitude latLngBoundsSouthWestLongitude liteMode mapId mapType uiCompass uiMapToolbar uiRotateGestures uiScrollGestures uiScrollGesturesDuringRotateOrZoom uiTiltGestures uiZoomControls uiZoomGestures useViewLifecycle zOrderOnTop
 styleable SignInButton buttonSize colorScheme scopeUris
+styleable SplitPairFilter primaryActivityName secondaryActivityAction secondaryActivityName
+styleable SplitPairRule clearTop finishPrimaryWithSecondary finishSecondaryWithPrimary splitLayoutDirection splitMinSmallestWidth splitMinWidth splitRatio
+styleable SplitPlaceholderRule placeholderActivityName splitLayoutDirection splitMinSmallestWidth splitMinWidth splitRatio
 xml flutter_image_picker_file_paths

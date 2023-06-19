@@ -27,7 +27,7 @@ class AgeAskToUserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<LoginBloc, LoginState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           if (state is LoginPageState) {
             // showHideProgress(false);
@@ -66,6 +66,9 @@ class AgeAskToUserPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ARoundedButton(
+                        btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                        btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                        btnFontWeight: FontWeight.normal,
                         btnBgColor: kColorAppBgColor,
                         btnTextColor: Colors.white,
                         btnOnPressed: () {
@@ -81,6 +84,9 @@ class AgeAskToUserPage extends StatelessWidget {
                       ),
                       AHorizontalSpace(15.0.scale()),
                       ARoundedButton(
+                        btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                        btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                        btnFontWeight: FontWeight.normal,
                         btnBgColor: kColorAppBgColor,
                         btnTextColor: Colors.white,
                         btnOnPressed: () {

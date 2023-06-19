@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/mac/ankitProject/Heymobie_customer/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
+            "outputFile": "/Users/mac/Documents/FlutterApp/Heymobie_custom/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
                     "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/56b4a66ea9e3c3fb55b28947c29f3245/media-1.1.0/res/values-v24/values-v24.xml",

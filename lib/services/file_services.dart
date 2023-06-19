@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 Future<File> openFile(String fileName) async {
   Directory directory;
-  File file;
+ late File file;
   try {
     directory = await getTemporaryDirectory();
     file = File('${directory.path}/$fileName');
@@ -18,14 +18,14 @@ Future<File> openFile(String fileName) async {
 
 Future<File> deleteFile(String fileName) async {
   Directory directory;
-  File file;
+ late File file;
   try {
     directory = await getTemporaryDirectory();
     file = File('${directory.path}/$fileName');
     file.delete();
   } catch (e) {}
 
-  return null;
+  return file;
 }
 
 

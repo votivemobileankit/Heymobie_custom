@@ -7,7 +7,7 @@ import 'package:grambunny_customer/utils/ui_utils.dart';
 const double _kCommonHintTextFieldFontSize = 14.0;
 
 class SearchPage extends StatelessWidget {
-  TextEditingController _textFiledUserName;
+  TextEditingController? _textFiledUserName;
 
   @override
   Widget build(BuildContext context) {

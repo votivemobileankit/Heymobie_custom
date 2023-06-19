@@ -11,11 +11,11 @@ const double _kImageIconWidth = 22.0;
 const double _kImageIconHeight = 22.0;
 
 void showAgeDialog(
-    {@required BuildContext context,
-    @required String titleText,
-    @required descText,
-    @required String btnTitleText,
-    @required VoidCallback btnNoPressed}) {
+    {required BuildContext context,
+    required String titleText,
+    required descText,
+    required String btnTitleText,
+    required VoidCallback btnNoPressed}) {
   showDialog(
     context: context,
     barrierColor: Colors.black26,
@@ -26,7 +26,10 @@ void showAgeDialog(
           titleText: titleText,
           descText: descText,
           btnTitleText: btnTitleText,
-          btnNoPressed: btnNoPressed);
+          btnNoPressed: btnNoPressed,
+      btnYesPressed: () {
+
+      },);
     },
   );
 }
@@ -66,12 +69,12 @@ void showAgeDialog(
 // }
 
 Dialog _getOneButtonDialog(
-    {@required BuildContext context,
-    @required String titleText,
-    @required descText,
-    @required String btnTitleText,
-    @required VoidCallback btnYesPressed,
-    @required VoidCallback btnNoPressed}) {
+    {required BuildContext context,
+    required String titleText,
+    required descText,
+    required String btnTitleText,
+    required VoidCallback btnYesPressed,
+    required VoidCallback btnNoPressed}) {
   return Dialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kBorderRadiusDialog.scale())),
@@ -115,6 +118,9 @@ Dialog _getOneButtonDialog(
         Row(
           children: [
             ARoundedButton(
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBgColor: kColorBtnBgQuinary,
               btnTextColor: kColorTextFieldText,
               btnFontSize: kFontSizeBtnLarge.scale(),
@@ -128,6 +134,9 @@ Dialog _getOneButtonDialog(
               btnElevation: 4,
             ),
             ARoundedButton(
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
               btnBgColor: kColorBtnBgQuinary,
               btnTextColor: kColorTextFieldText,
               btnFontSize: kFontSizeBtnLarge.scale(),

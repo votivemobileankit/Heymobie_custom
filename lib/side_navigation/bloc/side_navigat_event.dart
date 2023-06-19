@@ -9,9 +9,9 @@ abstract class SideNavigatEvent extends Equatable {
 }
 
 class SideNavigationEventTabChanged extends SideNavigatEvent {
-  final SideNavigationTab selectedTab;
+  SideNavigationTab selectedTab;
 
-  SideNavigationEventTabChanged({this.selectedTab});
+  SideNavigationEventTabChanged({required this.selectedTab});
 
   @override
   List<Object> get props => [selectedTab];
@@ -43,10 +43,10 @@ class SideNavigationEventSettingPageReset extends SideNavigatEvent {
 }
 
 class SideNavigationEventToggleLoadingAnimation extends SideNavigatEvent {
-  final bool needToShow;
+  bool needToShow;
 
   SideNavigationEventToggleLoadingAnimation({
-    this.needToShow,
+    required this.needToShow,
   });
 
   @override

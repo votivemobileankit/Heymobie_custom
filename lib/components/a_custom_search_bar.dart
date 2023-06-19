@@ -31,18 +31,18 @@ class CustomSearchBar extends StatefulWidget {
   final TextEditingController searchTextController;
 
   const CustomSearchBar({
-    Key key,
-    @required this.borderColor,
-    @required this.bgColor,
-    @required this.cursorColor,
-    @required this.hintStr,
-    @required this.textStyle,
-    @required this.hintStyle,
-    @required this.onSearch,
-    @required this.searchTextController,
-    @required this.onTextChange,
-    @required this.onBack,
-  }) : super(key: key);
+
+    required this.borderColor,
+    required this.bgColor,
+    required this.cursorColor,
+    required this.hintStr,
+    required this.textStyle,
+    required this.hintStyle,
+    required this.onSearch,
+    required this.searchTextController,
+    required this.onTextChange,
+    required this.onBack,
+  });
 
   @override
   _CustomSearchBarState createState() => _CustomSearchBarState();

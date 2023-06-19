@@ -1,14 +1,14 @@
 class ReviewListModel {
-  String message;
-  int status;
-  DataRating data;
+late  String message;
+ late int status;
+ late DataRating data;
 
-  ReviewListModel({this.message, this.status, this.data});
+  ReviewListModel({required this.message,required this.status,required this.data});
 
   ReviewListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? DataRating.fromJson(json['data']) : null;
+    data = (json['data'] != null ? DataRating.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,11 +23,11 @@ class ReviewListModel {
 }
 
 class DataRating {
-  List<RatingReviewData> ratingReviewData;
-  String totalUserRating;
-  String imageurl;
+ late List<RatingReviewData> ratingReviewData;
+ late int totalUserRating;
+ late String imageurl;
 
-  DataRating({this.ratingReviewData, this.totalUserRating, this.imageurl});
+  DataRating({required this.ratingReviewData,required this.totalUserRating,required this.imageurl});
 
   DataRating.fromJson(Map<String, dynamic> json) {
     if (json['ratingReviewData'] != null) {
@@ -53,20 +53,20 @@ class DataRating {
 }
 
 class RatingReviewData {
-  String profileImage;
-  String name;
-  String lname;
-  String rating;
-  String review;
-  String createdAt;
+ late String profileImage;
+ late String name;
+ late String lname;
+ late String rating;
+ late  String review;
+ late  String createdAt;
 
   RatingReviewData(
-      {this.profileImage,
-      this.name,
-      this.lname,
-      this.rating,
-      this.review,
-      this.createdAt});
+      {required this.profileImage,
+        required  this.name,
+        required this.lname,
+        required this.rating,
+        required this.review,
+        required this.createdAt});
 
   RatingReviewData.fromJson(Map<String, dynamic> json) {
     profileImage = json['profile_image'];

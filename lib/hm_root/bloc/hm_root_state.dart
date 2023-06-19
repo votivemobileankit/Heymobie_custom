@@ -22,11 +22,11 @@ class HmRootHomeState extends HmRootState {
   bool isPushNotificationSending = false;
 
   HmRootHomeState(
-      {this.isFromSetting,
-      this.isBackOrderHistory,
-      this.isBackProfile,
-      this.isBackHome,
-      this.isPushNotificationSending});
+      {required this.isFromSetting,
+        required this.isBackOrderHistory,
+        required  this.isBackProfile,
+        required this.isBackHome,
+        required  this.isPushNotificationSending});
 
   List<Object> get props => [
         isFromSetting,

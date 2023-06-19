@@ -24,22 +24,22 @@ class ARoundedButtonImage extends StatelessWidget {
 
    ARoundedButtonImage({
 
-    @required this.btnBgColor,
-    @required this.btnTextColor,
-    @required this.btnText,
-    @required this.btnFontSize,
-    @required this.btnHeight,
-    @required this.btnOnPressed,
+    required this.btnBgColor,
+    required this.btnTextColor,
+    required this.btnText,
+    required this.btnFontSize,
+    required this.btnHeight,
+    required this.btnOnPressed,
     this.btnWidth = double.infinity,
-    @required this.btnBorderSideColor,
-    @required this.btnIconData,
-    @required this.btnIconImagePath,
-     this.btnIconColor=null,
+    required this.btnBorderSideColor,
+    required this.btnIconData,
+    required this.btnIconImagePath,
+     this.btnIconColor=Colors.black26,
     this.btnIconSize = 24,
     this.btnElevation = 2,
     this.btnFontWeight = FontWeight.normal,
-    @required this.btnDisabledColor,
-    @required this.btnDisabledTextColor,
+    required this.btnDisabledColor,
+    required this.btnDisabledTextColor,
   }) ;
 
   @override

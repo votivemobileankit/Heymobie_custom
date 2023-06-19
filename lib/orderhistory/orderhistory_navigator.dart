@@ -14,16 +14,16 @@ class OrderHistoryNavigator extends StatefulWidget {
   final UserRepository userRepository;
 
   OrderHistoryNavigator({
-    Key key,
-    @required this.userRepository,
-  }) : super(key: key);
+
+    required this.userRepository,
+  }) ;
 
   @override
   _OrderHistoryNavigatorState createState() => _OrderHistoryNavigatorState();
 }
 
 class _OrderHistoryNavigatorState extends State<OrderHistoryNavigator> {
-  _OrderHistoryRouter _router;
+  late _OrderHistoryRouter _router;
 
   @override
   void initState() {
@@ -76,9 +76,9 @@ class _OrderHistoryNavigatorState extends State<OrderHistoryNavigator> {
 class _OrderHistoryRouter {
   final OrderHistoryBloc orderHistoryBloc;
 
-  _OrderHistoryRouter({this.orderHistoryBloc});
+  _OrderHistoryRouter({required this.orderHistoryBloc});
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case OrderHistoryNavigator.orderHistoryPage:
         return getProfileMainPageRoute(settings);

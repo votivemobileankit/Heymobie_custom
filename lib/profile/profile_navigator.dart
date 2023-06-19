@@ -10,14 +10,14 @@ class ProfileNavigator extends StatefulWidget {
   static const String changePasswordPage = '/changePasswordPage';
   final UserRepository userRepository;
 
-  const ProfileNavigator({Key key, this.userRepository}) : super(key: key);
+  const ProfileNavigator({required this.userRepository});
 
   @override
   _ProfileNavigatorState createState() => _ProfileNavigatorState();
 }
 
 class _ProfileNavigatorState extends State<ProfileNavigator> {
-  _ProfileRouter _router;
+ late _ProfileRouter _router;
 
   @override
   void initState() {
@@ -57,11 +57,11 @@ class _ProfileNavigatorState extends State<ProfileNavigator> {
 }
 
 class _ProfileRouter {
-  ProfileBloc profileBloc;
+  late ProfileBloc profileBloc;
 
-  _ProfileRouter({this.profileBloc});
+  _ProfileRouter({required this.profileBloc});
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case ProfileNavigator.profileMainPage:
         return getProfileMainPageRoute(settings);

@@ -16,11 +16,11 @@ const double _kMarginTop1 = 16.0;
 const double _kCommonHintTextFieldFontSize = 14.0;
 
 void showSearchScreen({
-  @required BuildContext context,
-  @required String titleText,
-  @required descText,
-  @required String btnTitleText,
-  @required VoidCallback btnOnPressed,
+  required BuildContext context,
+  required String titleText,
+  required descText,
+  required String btnTitleText,
+  required VoidCallback btnOnPressed,
   bool useMaxInsetPadding = true,
 }) {
   showDialog(
@@ -40,7 +40,7 @@ void showSearchScreen({
 }
 
 void showNoInternetErrorDialog(
-    {@required BuildContext context, @required VoidCallback btnOnPressed}) {
+    {required BuildContext context, required VoidCallback btnOnPressed}) {
   showSearchScreen(
       context: context,
       titleText: Stringss.current.titleTxtAlert,
@@ -82,14 +82,14 @@ void showNoInternetErrorDialog(
 //         openAppSettings();
 //       });
 // }
-TextEditingController _textFiledUserName;
+late TextEditingController _textFiledUserName;
 
 Dialog _getOneButtonDialog({
-  @required BuildContext context,
-  @required String titleText,
-  @required descText,
-  @required String btnTitleText,
-  @required VoidCallback btnOnPressed,
+  required BuildContext context,
+  required String titleText,
+  required descText,
+  required String btnTitleText,
+  required VoidCallback btnOnPressed,
   bool useMaxInsetPadding = true,
 }) {
   return Dialog(
@@ -169,6 +169,9 @@ Dialog _getOneButtonDialog({
             .rightPadding(_kCommonTitlepadding.scale()),
         AVerticalSpace(_kDescBottomMargin.scale()),
         ARoundedCustomButton(
+          btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+          btnDisabledTextColor:Color(0xFFFFFFFF) ,
+          btnFontWeight: FontWeight.normal,
           btnBorderShape: _kBtnBorderShape.scale(),
           btnBgColor: kColorBtnBgQuinary,
           btnTextColor: kColorTextFieldText,

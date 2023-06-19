@@ -54,7 +54,9 @@ class CouponCodeRowItemListModel extends StatelessWidget {
               btnWidth: _kButtonNextWidth.scale(),
               btnFontSize: kFontSizeBtnLarge.scale(),
               btnElevation: 0,
-              btnBorderSideColor: kColorCommonButton,
+              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnFontWeight: FontWeight.normal,
             ),
           ],
         ).leftPadding(15.0.scale()).rightPadding(15.0.scale()));

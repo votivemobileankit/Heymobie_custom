@@ -6,127 +6,105 @@ import 'package:grambunny_customer/side_navigation/bloc/bloc.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
 class SideNavigatBloc extends Bloc<SideNavigatEvent, SideNavigatState> {
-  UserRepository _userRepository;
+  UserRepository? _userRepository;
 
-  SideNavigatBloc({UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(SideNavigationDefaultState(selectedTab: SideNavigationTab.HOME));
+  SideNavigatBloc({required UserRepository userRepository})
+      : super(SideNavigationDefaultState(selectedTab: SideNavigationTab.HOME,orderId: "0",driverId: "0")) {
+    _userRepository = userRepository;
 
-  @override
-  Stream<SideNavigatState> mapEventToState(
-    SideNavigatEvent event,
-  ) async* {
-    // TODO: implement mapEventToState
-    switch (event.runtimeType) {
-      case SideNavigationEventTabChanged:
-        yield* mapTabChangedToState(event);
-        break;
-      case SideNavigationEventGoToHomePage:
-        yield* mapNavigationEventGoToHomePage(event);
-        break;
-      case SideNavigationEventGoToHomePageFromHistory:
-        yield* mapSideNavigationEventGoToHomePageFromHistory();
-        break;
-      case SideNavigationEventToggleLoadingAnimation:
-        yield* mapToggleLoadingAnimation(event);
-        break;
-      case SideNavigationEventSettingPage:
-        yield* mapSideNavigationEventSettingPage();
-        break;
-      case SideNavigationEventSettingPageReset:
-        yield* mapSideNavigationEventSettingPageReset();
-        break;
-      case SideNavigationEventGoToOrderHistoryList:
-        yield* mapSideNavigationEventGoToOrderHistoryList(event);
-        break;
-      case SideNavigationEventGoToOrderDetailPage:
-        yield* mapSideNavigationEventGoToOrderDetailPage(event);
-        break;
-      case SideNavigationEventGoToOrderDetailPageHandel:
-        yield* mapSideNavigationEventGoToOrderDetailPageHandel(event);
-        break;
-    }
+    on<SideNavigationEventTabChanged>(mapTabChangedToState);
+    on<SideNavigationEventGoToHomePage>(mapNavigationEventGoToHomePage);
+    on<SideNavigationEventGoToHomePageFromHistory>(
+        mapSideNavigationEventGoToHomePageFromHistory);
+    on<SideNavigationEventToggleLoadingAnimation>(mapToggleLoadingAnimation);
+    on<SideNavigationEventSettingPage>(mapSideNavigationEventSettingPage);
+    on<SideNavigationEventSettingPageReset>(
+        mapSideNavigationEventSettingPageReset);
+    on<SideNavigationEventGoToOrderHistoryList>(
+        mapSideNavigationEventGoToOrderHistoryList);
+    on<SideNavigationEventGoToOrderDetailPage>(
+        mapSideNavigationEventGoToOrderDetailPage);
+    on<SideNavigationEventGoToOrderDetailPageHandel>(
+        mapSideNavigationEventGoToOrderDetailPageHandel);
   }
 
-  Stream<SideNavigatState> mapSideNavigationEventGoToOrderDetailPageHandel(
-      SideNavigationEventGoToOrderDetailPageHandel event) async* {
-    yield (state as SideNavigationDefaultState).copyWith(
+  Future<void> mapSideNavigationEventGoToOrderDetailPageHandel(
+      SideNavigationEventGoToOrderDetailPageHandel event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState).copyWith(
         selectedTab: SideNavigationTab.ORDERHISTORY,
         driverId: "",
         orderId: "",
         goToOrderDetail: false,
-        fromNotification: false);
+        fromNotification: false));
   }
 
-  Stream<SideNavigatState> mapSideNavigationEventGoToOrderDetailPage(
-      SideNavigationEventGoToOrderDetailPage event) async* {
+  Future<void> mapSideNavigationEventGoToOrderDetailPage(
+      SideNavigationEventGoToOrderDetailPage event,
+      Emitter<SideNavigatState> emitter) async {
     print("order history change");
-    yield (state as SideNavigationDefaultState).copyWith(
+    emitter((state as SideNavigationDefaultState).copyWith(
         selectedTab: SideNavigationTab.ORDERHISTORY,
         driverId: event.driverId,
         orderId: event.orderId,
         goToOrderDetail: true,
-        fromNotification: event.isFromNotification);
+        fromNotification: event.isFromNotification));
   }
 
-  Stream<SideNavigatState> mapToggleLoadingAnimation(
-      SideNavigationEventToggleLoadingAnimation event) async* {
-    yield (state as SideNavigationDefaultState)
-        .copyWith(showLoadingAnimation: event.needToShow);
+  Future<void> mapToggleLoadingAnimation(
+      SideNavigationEventToggleLoadingAnimation event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState)
+        .copyWith(showLoadingAnimation: event.needToShow));
   }
 
-  Stream<SideNavigatState> mapSideNavigationEventGoToOrderHistoryList(
-      SideNavigationEventGoToOrderHistoryList event) async* {
-    yield (state as SideNavigationDefaultState).copyWith(
+  Future<void> mapSideNavigationEventGoToOrderHistoryList(
+      SideNavigationEventGoToOrderHistoryList event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState).copyWith(
       selectedTab: SideNavigationTab.ORDERHISTORY,
-    );
+    ));
   }
 
-  Stream<SideNavigatState> mapSideNavigationEventSettingPage() async* {
+  Future<void> mapSideNavigationEventSettingPage(
+      SideNavigationEventSettingPage event,
+      Emitter<SideNavigatState> emitter) async {
     print("Tab changed in cart ");
-    //  print(event.selectedTab);
-    // yield (state as SideNavigationDefaultState)
-    //     .copyWith(selectedTab: SideNavigationTab.PROFILE);
-    yield (state as SideNavigationDefaultState)
-        .copyWith(selectedTab: SideNavigationTab.HOME, goToCart: true);
-    // yield (state as SideNavigationDefaultState)
-    //     .copyWith(selectedTab: SideNavigationTab.PROFILE);
+
+    emitter((state as SideNavigationDefaultState)
+        .copyWith(selectedTab: SideNavigationTab.HOME, goToCart: true));
   }
 
-  Stream<SideNavigatState> mapSideNavigationEventSettingPageReset() async* {
+  Future<void> mapSideNavigationEventSettingPageReset(
+      SideNavigationEventSettingPageReset event,
+      Emitter<SideNavigatState> emitter) async {
     print("Tab changed");
     //  print(event.selectedTab);
-    yield (state as SideNavigationDefaultState)
-        .copyWith(selectedTab: SideNavigationTab.HOME, goToCart: false);
+    emitter((state as SideNavigationDefaultState)
+        .copyWith(selectedTab: SideNavigationTab.HOME, goToCart: false));
   }
 
-  Stream<SideNavigatState> mapNavigationEventGoToHomePage(
-      SideNavigationEventGoToHomePage event) async* {
-    print("Tab changed");
-    //  print(event.selectedTab);
-    _userRepository.ScreenName = ScreenNavigation.HomeMainPageScreen;
-    yield (state as SideNavigationDefaultState)
-        .copyWith(selectedTab: SideNavigationTab.HOME);
+  Future<void> mapNavigationEventGoToHomePage(
+      SideNavigationEventGoToHomePage event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState)
+        .copyWith(selectedTab: SideNavigationTab.HOME));
+    _userRepository!.ScreenName = ScreenNavigation.HomeMainPageScreen;
   }
 
-  Stream<SideNavigatState>
-      mapSideNavigationEventGoToHomePageFromHistory() async* {
+  Future<void> mapTabChangedToState(SideNavigationEventTabChanged event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState)
+        .copyWith(selectedTab: event.selectedTab));
+  }
+
+  Future<void> mapSideNavigationEventGoToHomePageFromHistory(
+      SideNavigationEventGoToHomePageFromHistory event,
+      Emitter<SideNavigatState> emitter) async {
     print("Tab from history changed");
-    _userRepository.ScreenName = ScreenNavigation.HomeMainPageScreen;
+    _userRepository!.ScreenName = ScreenNavigation.HomeMainPageScreen;
     //yield SideNavigationDefaultState(selectedTab: SideNavigationTab.HOME);
-    yield (state as SideNavigationDefaultState)
-        .copyWith(selectedTab: SideNavigationTab.HOME);
-  }
-
-  Stream<SideNavigatState> mapTabChangedToState(
-      SideNavigationEventTabChanged event) async* {
-    print("Tab changed");
-    print(event.selectedTab);
-    // if (event.selectedTab == "SideNavigationTab.ORDERHISTORY") {
-    //   _userRepository.ScreenName = OrderHistoryPageScreen;
-    // }
-    yield (state as SideNavigationDefaultState)
-        .copyWith(selectedTab: event.selectedTab);
+    emitter((state as SideNavigationDefaultState)
+        .copyWith(selectedTab: SideNavigationTab.HOME));
   }
 }

@@ -9,105 +9,88 @@ import 'package:grambunny_customer/utils/utils.dart';
 import '../orderhistory.dart';
 
 class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
-  UserRepository _userRepository;
+  late UserRepository _userRepository;
 
-  OrderHistoryBloc({UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(OrderHistoryInitial());
+  OrderHistoryBloc({required UserRepository userRepository}): super(OrderHistoryInitial()){
 
-  @override
-  Stream<OrderHistoryState> mapEventToState(
-    OrderHistoryEvent event,
-  ) async* {
-    switch (event.runtimeType) {
-      case OrderHistoryEventRowItemClick:
-        yield* mapOrderHistoryEventRowItemClick(event);
-        break;
-      case OrderEventBackBtnClicked:
-        yield* mapOrderEventBackBtnClicked();
-        break;
-      case OrderHistoryEventReset:
-        yield* mapOrderHistoryEventReset();
-        break;
-      case OrderHistoryEventForOrderList:
-        yield* mapOrderHistoryEventForOrderList(event);
-        break;
-      case OrderHistoryEventRefreshOrderList:
-        yield* mapOrderHistoryEventRefreshOrderList(event);
-        break;
-      case OrderHistoryEventForOrderDeatil:
-        yield* mapOrderDetailEventForOrderDeatil(event);
-        break;
-      case OrderHistoryEventNavigateFromNoticationToOrderDetail:
-        yield* mapOrderHistoryEventNavigateFromNoticationToOrderDetail(event);
-        break;
+        _userRepository = userRepository;
 
-      case OrderTrackEventForMapScreen:
-        yield* mapOrderTrackEventForMapScreen(event);
-        break;
-      case MapScreenEventForVendorUpdateLocation:
-        yield* mapMapScreenEventForVendorUpdateLocation(event);
-        break;
-      case MapScreenResetEvent:
-        yield* mapMapScreenResetEvent(event);
-        break;
-      case OrderHistoryRatingButtonClick:
-        yield* mapOrderHistoryRatingButtonClick(event);
-        break;
-    }
+        on<OrderHistoryEventRowItemClick>(mapOrderHistoryEventRowItemClick);
+        on<OrderEventBackBtnClicked>(mapOrderEventBackBtnClicked);
+        on<OrderHistoryEventReset>(mapOrderHistoryEventReset);
+        on<OrderHistoryEventForOrderList>(mapOrderHistoryEventForOrderList);
+        on<OrderHistoryEventRefreshOrderList>(mapOrderHistoryEventRefreshOrderList);
+        on<OrderHistoryEventForOrderDeatil>(mapOrderDetailEventForOrderDeatil);
+        on<OrderHistoryEventNavigateFromNoticationToOrderDetail>(mapOrderHistoryEventNavigateFromNoticationToOrderDetail);
+        on<OrderTrackEventForMapScreen>(mapOrderTrackEventForMapScreen);
+         on<MapScreenResetEvent>(mapMapScreenResetEvent);
+         on<OrderHistoryRatingButtonClick>(mapOrderHistoryRatingButtonClick);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
-  Stream<OrderHistoryState> mapOrderHistoryRatingButtonClick(
-      OrderHistoryRatingButtonClick event) async* {
+ mapOrderHistoryRatingButtonClick(
+     OrderHistoryRatingButtonClick event,Emitter<OrderHistoryState> emitter) async* {
     NetworkApiCallState<bool> apiCallState =
         await _userRepository.postMerchantRatingReviewApi(
             '${event.vendorId}', '${event.ratingCount}', event.reviewText);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
-        yield OrderMerchantRatingSubmitState(apiCallState.message);
+        emitter( OrderMerchantRatingSubmitState(apiCallState.message!));
       } else {
-        yield OrderDetailLoadingErrorState("Something went wrong");
+        emitter( OrderDetailLoadingErrorState("Something went wrong"));
       }
     } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
       if (apiCallState.message == "Unknown Error") {
-        yield OrderDetailLoadingErrorState("Something went wrong");
+        emitter( OrderDetailLoadingErrorState("Something went wrong"));
       } else {
-        yield OrderDetailLoadingErrorState("Something went wrong");
+        emitter( OrderDetailLoadingErrorState("Something went wrong"));
       }
     }
   }
 
   Stream<OrderHistoryState> mapMapScreenResetEvent(
-      MapScreenResetEvent event) async* {
+      MapScreenResetEvent event,Emitter<OrderHistoryState> emitter) async* {
     //print("emailllllll===>>>" + event.email);
-    yield MapOrderTrackPageState(event.driverLat, event.driverLong,
-        event.userLat, event.userLong, event.vendorId);
+    emitter (MapOrderTrackPageState(event.driverLat, event.driverLong,
+        event.userLat, event.userLong, event.vendorId));
   }
 
-  Stream<OrderHistoryState> mapMapScreenEventForVendorUpdateLocation(
-      MapScreenEventForVendorUpdateLocation event) async* {
+ mapMapScreenEventForVendorUpdateLocation(
+      MapScreenEventForVendorUpdateLocation event,Emitter<OrderHistoryState> emitter) async* {
     NetworkApiCallState<bool> apiCallState =
         await _userRepository.vendorLocationUpdate(vendorID: event.vendorId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
-        yield vendorUpdateLocationApiLoadingCompleteState(
-            apiCallState.message, _userRepository.getVendorLatLong());
+        emitter (vendorUpdateLocationApiLoadingCompleteState(
+            apiCallState.message!, _userRepository.getVendorLatLong()!));
       } else {
-        yield vendorUpdateLocationApiErrorState(apiCallState.message);
+        emitter ( vendorUpdateLocationApiErrorState(apiCallState.message!));
       }
     } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
       if (apiCallState.message == "Unknown Error") {
-        yield vendorUpdateLocationApiErrorState("Something went wrong");
+        emitter ( vendorUpdateLocationApiErrorState("Something went wrong"));
       } else {
-        yield vendorUpdateLocationApiErrorState("Something went wrong");
+        emitter ( vendorUpdateLocationApiErrorState("Something went wrong"));
       }
     }
   }
 
-  Stream<OrderHistoryState>
+
       mapOrderHistoryEventNavigateFromNoticationToOrderDetail(
-          OrderHistoryEventNavigateFromNoticationToOrderDetail event) async* {
+          OrderHistoryEventNavigateFromNoticationToOrderDetail event,Emitter<OrderHistoryState> emitter) async {
     NetworkApiCallState<bool> apiCallState =
         await _userRepository.getOrderDetail(event.orderID, event.vendorId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
@@ -115,21 +98,21 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       _userRepository.ScreenName =
           ScreenNavigation.OrderHistoryDetailPageScreen;
       if (apiCallState.statusValue == "1") {
-        yield OrderDetailApiLoadingCompleteState(
-            _userRepository.getOrderDetailData(),
-            _userRepository.getOrderDetailMenuItem(),
-            _userRepository.getVendorDetailData());
+        emitter (OrderDetailApiLoadingCompleteState(
+            _userRepository.getOrderDetailData()!,
+            _userRepository.getOrderDetailMenuItem()!,
+            _userRepository.getVendorDetailData()!));
       } else {
-        yield OrderDetailLoadingErrorState(apiCallState.message);
+        emitter ( OrderDetailLoadingErrorState(apiCallState.message!));
       }
     } else {
       print("OrderDetailLoadingErrorState state");
-      yield OrderDetailLoadingErrorState("Server Error");
+      emitter ( OrderDetailLoadingErrorState("Server Error"));
     }
   }
 
-  Stream<OrderHistoryState> mapOrderDetailEventForOrderDeatil(
-      OrderHistoryEventForOrderDeatil event) async* {
+  mapOrderDetailEventForOrderDeatil(
+      OrderHistoryEventForOrderDeatil event,Emitter<OrderHistoryState> emitter) async {
     NetworkApiCallState<bool> apiCallState =
         await _userRepository.getOrderDetail(event.orderID, event.vendorId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
@@ -137,93 +120,93 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       _userRepository.ScreenName =
           ScreenNavigation.OrderHistoryDetailPageScreen;
       if (apiCallState.statusValue == "1") {
-        yield OrderDetailApiLoadingCompleteState(
-            _userRepository.getOrderDetailData(),
-            _userRepository.getOrderDetailMenuItem(),
-            _userRepository.getVendorDetailData());
+        emitter(OrderDetailApiLoadingCompleteState(
+            _userRepository.getOrderDetailData()!,
+            _userRepository.getOrderDetailMenuItem()!,
+            _userRepository.getVendorDetailData()!));
       } else {
-        yield OrderDetailLoadingErrorState(apiCallState.message);
+        emitter( OrderDetailLoadingErrorState(apiCallState.message!));
       }
     } else {
       print("OrderDetailLoadingErrorState state");
-      yield OrderDetailLoadingErrorState("Server Error");
+      emitter( OrderDetailLoadingErrorState("Server Error"));
     }
   }
 
   Stream<OrderHistoryState> mapOrderHistoryEventForOrderList(
-      OrderHistoryEventForOrderList event) async* {
+      OrderHistoryEventForOrderList event,Emitter<OrderHistoryState> emitter) async* {
     NetworkApiCallState<bool> apiCallState =
         await _userRepository.getOrderHistoryList(event.pageNumber);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       print("Complete state");
       _userRepository.ScreenName = ScreenNavigation.OrderHistoryPageScreen;
       if (apiCallState.statusValue == "1") {
-        yield OrderHistoryListApiLoadingCompleteState(
-            _userRepository.getOrderHistory(), 0);
+        emitter (OrderHistoryListApiLoadingCompleteState(
+            _userRepository.getOrderHistory()!, 0));
       } else {
-        yield OrderHistoryListApiLoadingCompleteState(
-            _userRepository.getOrderHistory(), 0);
+        emitter ( OrderHistoryListApiLoadingCompleteState(
+            _userRepository.getOrderHistory()!, 0));
       }
     } else {
       print("OrderHistoryListLoadingErrorState state");
-      yield OrderHistoryListLoadingErrorState("Server Error");
+      emitter (  OrderHistoryListLoadingErrorState("Server Error"));
     }
   }
 
   Stream<OrderHistoryState> mapOrderHistoryEventRefreshOrderList(
-      OrderHistoryEventRefreshOrderList event) async* {
+      OrderHistoryEventRefreshOrderList event,Emitter<OrderHistoryState> emitter) async* {
     NetworkApiCallState<bool> apiCallState =
         await _userRepository.getOrderHistoryList(sharedPrefs.getUserId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       print("Complete state");
       _userRepository.ScreenName = ScreenNavigation.OrderHistoryPageScreen;
       if (apiCallState.statusValue == "1") {
-        yield OrderHistoryListApiLoadingCompleteState(
-            _userRepository.getOrderHistory(), 1);
+        emitter( OrderHistoryListApiLoadingCompleteState(
+            _userRepository.getOrderHistory()!, 1));
       } else {
-        yield OrderHistoryListApiLoadingCompleteState(
-            _userRepository.getOrderHistory(), 0);
+        emitter( OrderHistoryListApiLoadingCompleteState(
+            _userRepository.getOrderHistory()!, 0));
       }
     } else {
       print("OrderHistoryListLoadingErrorState state");
-      yield OrderHistoryListLoadingErrorState("Server Error");
+      emitter( OrderHistoryListLoadingErrorState("Server Error"));
     }
   }
 
-  Stream<OrderHistoryState> mapOrderHistoryEventRowItemClick(
-      OrderHistoryEventRowItemClick event) async* {
+  mapOrderHistoryEventRowItemClick(
+      OrderHistoryEventRowItemClick event,Emitter<OrderHistoryState> emitter) async {
     _userRepository.ScreenName = ScreenNavigation.OrderHistoryDetailPageScreen;
-    yield OrderHistoryDetailPageState(
-        event.vendorId, event.orderId, event.vendorlastName, event.vendorName);
+    emitter (OrderHistoryDetailPageState(
+        event.vendorId, event.orderId, event.vendorlastName, event.vendorName));
   }
 
-  Stream<OrderHistoryState> mapOrderTrackEventForMapScreen(
-      OrderTrackEventForMapScreen event) async* {
+   mapOrderTrackEventForMapScreen(
+      OrderTrackEventForMapScreen event,Emitter<OrderHistoryState> emitter) async* {
     _userRepository.ScreenName = ScreenNavigation.MapOrderTrackScreen;
-    yield MapOrderTrackPageState(event.driverLat, event.driverLong,
-        event.userLat, event.userLong, event.vendorID);
+    emitter( MapOrderTrackPageState(event.driverLat, event.driverLong,
+        event.userLat, event.userLong, event.vendorID));
   }
 
-  Stream<OrderHistoryState> mapOrderHistoryEventReset() async* {
+   mapOrderHistoryEventReset(OrderHistoryEventReset event, Emitter<OrderHistoryState> emitter) async {
     // _userRepository.ScreenName = OrderHistoryPageScreen;
-    yield OrderHistoryInitial();
+    emitter (OrderHistoryInitial());
   }
 
-  Stream<OrderHistoryState> mapOrderEventBackBtnClicked() async* {
+   mapOrderEventBackBtnClicked(OrderEventBackBtnClicked event,Emitter<OrderHistoryState> emitter) async* {
     if (state is OrderHistoryDetailPageState) {
       _userRepository.ScreenName = ScreenNavigation.OrderHistoryPageScreen;
-      yield OrderHistoryInitial();
+      emitter( OrderHistoryInitial());
     }
     if (state is OrderHistoryInitial) {
       // print("back call");
       // _userRepository.ScreenName = HomeMainPageScreen;
-      yield OrderHistoryToNavigateHomeResetPageState();
+      emitter( OrderHistoryToNavigateHomeResetPageState());
     }
     if (state is OrderDetailApiLoadingCompleteState) {
-      yield OrderHistoryInitial();
+      emitter( OrderHistoryInitial());
     }
     if (state is MapOrderTrackPageState) {
-      yield OrderHistoryDetailPageState("", "", "", "");
+      emitter( OrderHistoryDetailPageState("", "", "", ""));
     }
   }
 }

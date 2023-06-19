@@ -22,8 +22,8 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool emailReminderCheck;
-  UserDetailResponseModel userDetailInfo;
+  late bool emailReminderCheck;
+  late UserDetailResponseModel userDetailInfo;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<SettingBloc, SettingState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is SettingGetUserSettingDataState) {
           showHideProgress(false);
@@ -69,6 +69,11 @@ class _SettingPageState extends State<SettingPage> {
         child: Column(
           children: [
             AHeaderWidget(
+              headerSigninText: "",
+              headerText: "",
+              btnEditOnPressed: () {
+
+              },
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
@@ -160,8 +165,8 @@ class _SettingPageState extends State<SettingPage> {
 }
 
 class _SwitchWidgetPushNotification extends StatefulWidget {
-  bool _pushReminderCheck = false;
-  String notification;
+ late bool _pushReminderCheck = false;
+ late String notification;
 
   _SwitchWidgetPushNotification(String notification) {
     if (notification == "1") {
@@ -373,8 +378,8 @@ class SwitchWidgetClass extends State<_SwitchWidgetPushNotification>
 }
 
 class _SwitchWidgetEmailNotification extends StatefulWidget {
-  bool _emailReminderCheck = false;
-  String notification;
+ late bool _emailReminderCheck = false;
+ late String notification;
 
   _SwitchWidgetEmailNotification(String notification) {
     this.notification = notification;
@@ -390,7 +395,7 @@ class _SwitchWidgetEmailNotification extends StatefulWidget {
       new SwitchWidgetEmailClass(_emailReminderCheck);
 }
 
-bool _emailSwitchControlMain;
+late bool _emailSwitchControlMain;
 String _emailStatus = "0";
 
 class SwitchWidgetEmailClass extends State<_SwitchWidgetEmailNotification> {
@@ -451,8 +456,8 @@ class SwitchWidgetEmailClass extends State<_SwitchWidgetEmailNotification> {
 }
 
 class _SwitchWidgetSmsNotification extends StatefulWidget {
-  bool _smsReminderCheck = false;
-  String smsnotification;
+  late bool _smsReminderCheck = false;
+  late String smsnotification;
 
   _SwitchWidgetSmsNotification(String notification) {
     this.smsnotification = notification;
@@ -468,7 +473,7 @@ class _SwitchWidgetSmsNotification extends StatefulWidget {
       new SwitchWidgetSmsClass(_smsReminderCheck);
 }
 
-bool _smsSwitchControlMain;
+late bool _smsSwitchControlMain;
 String _smsStatus = "0";
 
 class SwitchWidgetSmsClass extends State<_SwitchWidgetSmsNotification> {

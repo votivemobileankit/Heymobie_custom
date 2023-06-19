@@ -8,16 +8,16 @@ class AboutUsNavigator extends StatefulWidget {
   final UserRepository userRepository;
 
   AboutUsNavigator({
-    Key key,
-    @required this.userRepository,
-  }) : super(key: key);
+
+    required this.userRepository,
+  }) ;
 
   @override
   State<AboutUsNavigator> createState() => _AboutUsNavigatorState();
 }
 
 class _AboutUsNavigatorState extends State<AboutUsNavigator> {
-  _AboutUsRouter _router;
+ late _AboutUsRouter _router;
 
   @override
   void initState() {
@@ -51,15 +51,14 @@ class _AboutUsNavigatorState extends State<AboutUsNavigator> {
 class _AboutUsRouter {
   final AboutBloc aboutBloc;
 
-  _AboutUsRouter({this.aboutBloc});
+  _AboutUsRouter({required this.aboutBloc});
 
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AboutUsNavigator.aboutUsPage:
         return getSettingMainPageRoute(settings);
         break;
-      default:
-        return null;
+
     }
   }
 

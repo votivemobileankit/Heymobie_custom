@@ -1,14 +1,14 @@
 class CartViewReponseList1 {
-  String message;
-  int status;
-  DataCart data;
+ late String message;
+ late int status;
+ late DataCart data;
 
-  CartViewReponseList1({this.message, this.status, this.data});
+  CartViewReponseList1({required this.message,required this.status,required this.data});
 
   CartViewReponseList1.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? new DataCart.fromJson(json['data']) : null;
+    data = (json['data'] != null ? new DataCart.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,22 +23,22 @@ class CartViewReponseList1 {
 }
 
 class DataCart {
-  String salesTax;
-  String exciseTax;
-  String cityTax;
-  String subtotal;
-  String grandtotal;
-  String vendor_id;
-  List<ItemsCart> items;
+ late String salesTax;
+ late  String exciseTax;
+ late String cityTax;
+ late String subtotal;
+ late  String grandtotal;
+ late  String vendor_id;
+ late  List<ItemsCart> items;
 
   DataCart(
-      {this.salesTax,
-      this.exciseTax,
-      this.cityTax,
-      this.subtotal,
-      this.grandtotal,
-      this.items,
-      this.vendor_id});
+      {required this.salesTax,
+        required  this.exciseTax,
+        required this.cityTax,
+        required  this.subtotal,
+        required  this.grandtotal,
+        required  this.items,
+        required  this.vendor_id});
 
   DataCart.fromJson(Map<String, dynamic> json) {
     vendor_id = json['vendor_id'];
@@ -72,73 +72,73 @@ class DataCart {
 }
 
 class ItemsCart {
-  int id;
-  String vendorId;
-  String adminProductId;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  String avgRating;
-  String ratingCount;
-  String name;
-  String slug;
-  String description;
-  String price;
-  String quantity;
-  String unit;
-  String brands;
-  String types;
-  String potencyThc;
-  String potencyCbd;
-  String image;
-  String keyword;
-  String productCode;
-  String status;
-  String loginStatus;
-  String stock;
-  String popular;
-  String createdAt;
-  String updatedAt;
-  String categoryname;
-  String imageURL;
-  String subcategoryname;
+  late int id;
+  late String vendorId;
+  late String adminProductId;
+  late String type;
+  late String categoryId;
+  late String subCategoryId;
+  late  String avgRating;
+  late String ratingCount;
+  late String name;
+  late String slug;
+  late String description;
+  late String price;
+  late String quantity;
+  late String unit;
+  late String brands;
+  late  String types;
+  late  String potencyThc;
+  late  String potencyCbd;
+  late  String image;
+  late  String keyword;
+  late String productCode;
+  late String status;
+  late String loginStatus;
+  late String stock;
+  late  String popular;
+  late String createdAt;
+  late  String updatedAt;
+  late String categoryname;
+  late String imageURL;
+  late String subcategoryname;
 
-  String totalprice;
-  VendorDetailCart vendor;
+  late  String totalprice;
+  late  VendorDetailCart vendor;
 
   ItemsCart(
-      {this.id,
-      this.vendorId,
-      this.adminProductId,
-      this.type,
-      this.categoryId,
-      this.subCategoryId,
-      this.avgRating,
-      this.ratingCount,
-      this.name,
-      this.slug,
-      this.description,
-      this.price,
-      this.quantity,
-      this.unit,
-      this.brands,
-      this.types,
-      this.potencyThc,
-      this.potencyCbd,
-      this.image,
-      this.keyword,
-      this.productCode,
-      this.status,
-      this.loginStatus,
-      this.stock,
-      this.popular,
-      this.createdAt,
-      this.updatedAt,
-      this.categoryname,
-      this.imageURL,
-      this.subcategoryname,
-      this.totalprice,
-      this.vendor});
+      {required this.id,
+        required  this.vendorId,
+        required  this.adminProductId,
+        required this.type,
+        required this.categoryId,
+        required this.subCategoryId,
+        required this.avgRating,
+        required this.ratingCount,
+        required this.name,
+        required this.slug,
+        required  this.description,
+        required  this.price,
+        required  this.quantity,
+        required   this.unit,
+        required   this.brands,
+        required   this.types,
+        required   this.potencyThc,
+        required  this.potencyCbd,
+        required   this.image,
+        required   this.keyword,
+        required   this.productCode,
+        required  this.status,
+        required  this.loginStatus,
+        required  this.stock,
+        required    this.popular,
+        required   this.createdAt,
+        required  this.updatedAt,
+        required  this.categoryname,
+        required   this.imageURL,
+        required  this.subcategoryname,
+        required  this.totalprice,
+        required    this.vendor});
 
   ItemsCart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -155,12 +155,12 @@ class ItemsCart {
     price = json['price'];
     quantity = json['quantity'];
     unit = json['unit'];
-    brands = json['brands'];
-    types = json['types'];
-    potencyThc = json['potency_thc'];
-    potencyCbd = json['potency_cbd'];
+    brands = json['brands']??"";
+    types = json['types']??"";
+    potencyThc = json['potency_thc']??"";
+    potencyCbd = json['potency_cbd']??"";
     image = json['image'];
-    keyword = json['keyword'];
+    keyword = json['keyword']??"";
     productCode = json['product_code'];
     status = json['status'];
     loginStatus = json['login_status'];
@@ -173,9 +173,9 @@ class ItemsCart {
     subcategoryname = json['subcategoryname'];
 
     totalprice = json['totalprice'];
-    vendor = json['Vendor'] != null
+    vendor = (json['Vendor'] != null
         ? new VendorDetailCart.fromJson(json['Vendor'])
-        : null;
+        : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -220,158 +220,158 @@ class ItemsCart {
 }
 
 class VendorDetailCart {
-  int vendorId;
-  String uniqueId;
-  String name;
-  String username;
-  String lastName;
-  String businessName;
-  String email;
-  String mailingAddress;
-  String address;
-  String avgRating;
-  String ratingCount;
-  String lat;
-  String lng;
-  String address1;
-  String suburb;
-  String state;
-  String city;
-  String zipcode;
-  String mobNo;
-  String vendorStatus;
-  String loginStatus;
-  String vendorType;
-  String walletAmount;
-  String deviceid;
-  String devicetype;
-  String marketArea;
-  String serviceRadius;
-  String driverLicense;
-  String licenseExpiry;
-  String licenseFront;
-  String licenseBack;
-  String ssn;
-  String dob;
-  String profileImg1;
-  String profileImg2;
-  String profileImg3;
-  String profileImg4;
-  String type;
-  String categoryId;
-  String subCategoryId;
-  String service;
-  String permitType;
-  String permitNumber;
-  String permitExpiry;
-  String description;
-  String otp;
-  String forgetpassRequest;
-  String forgetpassRequestStatus;
-  String planId;
-  String planPurchased;
-  String planExpiry;
-  String txnId;
-  String createdAt;
-  String updatedAt;
-  String stripeId;
-  String make;
-  String model;
-  String color;
-  String year;
-  String licensePlate;
-  String views;
-  String salesTax;
-  String exciseTax;
-  String cityTax;
-  String commissionRate;
-  String deliveryFee;
-  String licensefrontURL;
-  String licensebackURL;
-  String profileURL;
-  String profile2URL;
-  String profile3URL;
-  String profile4URL;
-  Membership membership;
-  String fullname;
-  String category;
+ late int vendorId;
+ late  String uniqueId;
+ late String name;
+ late String username;
+ late String lastName;
+ late String businessName;
+ late String email;
+ late  String mailingAddress;
+ late String address;
+ late String avgRating;
+ late String ratingCount;
+ late String lat;
+ late String lng;
+ late String address1;
+ late  String suburb;
+ late String state;
+ late  String city;
+ late  String zipcode;
+ late String mobNo;
+ late String vendorStatus;
+ late  String loginStatus;
+ late String vendorType;
+ late String walletAmount;
+ late  String deviceid;
+ late String devicetype;
+ late  String marketArea;
+ late String serviceRadius;
+ late String driverLicense;
+ late String licenseExpiry;
+ late String licenseFront;
+ late  String licenseBack;
+ late  String ssn;
+ late  String dob;
+ late String profileImg1;
+ late String profileImg2;
+ late  String profileImg3;
+ late String profileImg4;
+ late String type;
+ late String categoryId;
+ late String subCategoryId;
+ late String service;
+ late String permitType;
+ late String permitNumber;
+ late String permitExpiry;
+ late  String description;
+ late String otp;
+ late  String forgetpassRequest;
+ late  String forgetpassRequestStatus;
+ late  String planId;
+ late String planPurchased;
+ late String planExpiry;
+ late String txnId;
+ late String createdAt;
+ late  String updatedAt;
+ late  String stripeId;
+ late  String make;
+ late String model;
+ late String color;
+ late  String year;
+ late  String licensePlate;
+ late  String views;
+ late  String salesTax;
+ late  String exciseTax;
+ late  String cityTax;
+ late  String commissionRate;
+ late  String deliveryFee;
+ late String licensefrontURL;
+ late String licensebackURL;
+ late  String profileURL;
+ late  String profile2URL;
+ late  String profile3URL;
+ late  String profile4URL;
+ late  Membership membership;
+ late  String fullname;
+ late  String category;
 
   VendorDetailCart({
-    this.vendorId,
-    this.uniqueId,
-    this.name,
-    this.username,
-    this.lastName,
-    this.businessName,
-    this.email,
-    this.mailingAddress,
-    this.address,
-    this.avgRating,
-    this.ratingCount,
-    this.lat,
-    this.lng,
-    this.address1,
-    this.suburb,
-    this.state,
-    this.city,
-    this.zipcode,
-    this.mobNo,
-    this.vendorStatus,
-    this.loginStatus,
-    this.vendorType,
-    this.walletAmount,
-    this.deviceid,
-    this.devicetype,
-    this.marketArea,
-    this.serviceRadius,
-    this.driverLicense,
-    this.licenseExpiry,
-    this.licenseFront,
-    this.licenseBack,
-    this.ssn,
-    this.dob,
-    this.profileImg1,
-    this.profileImg2,
-    this.profileImg3,
-    this.profileImg4,
-    this.type,
-    this.categoryId,
-    this.subCategoryId,
-    this.service,
-    this.permitType,
-    this.permitNumber,
-    this.permitExpiry,
-    this.description,
-    this.otp,
-    this.forgetpassRequest,
-    this.forgetpassRequestStatus,
-    this.planId,
-    this.planPurchased,
-    this.planExpiry,
-    this.txnId,
-    this.createdAt,
-    this.updatedAt,
-    this.stripeId,
-    this.make,
-    this.model,
-    this.color,
-    this.year,
-    this.licensePlate,
-    this.views,
-    this.salesTax,
-    this.exciseTax,
-    this.cityTax,
-    this.commissionRate,
-    this.deliveryFee,
-    this.licensefrontURL,
-    this.licensebackURL,
-    this.profileURL,
-    this.profile2URL,
-    this.profile3URL,
-    this.profile4URL,
-    this.membership,
-    this.fullname,
-    this.category,
+   required this.vendorId,
+    required   this.uniqueId,
+    required  this.name,
+    required  this.username,
+    required this.lastName,
+    required  this.businessName,
+    required  this.email,
+    required  this.mailingAddress,
+    required  this.address,
+    required this.avgRating,
+    required this.ratingCount,
+    required  this.lat,
+    required   this.lng,
+    required this.address1,
+    required  this.suburb,
+    required  this.state,
+    required  this.city,
+    required  this.zipcode,
+    required this.mobNo,
+    required  this.vendorStatus,
+    required  this.loginStatus,
+    required this.vendorType,
+    required this.walletAmount,
+    required  this.deviceid,
+    required  this.devicetype,
+    required  this.marketArea,
+    required this.serviceRadius,
+    required  this.driverLicense,
+    required  this.licenseExpiry,
+    required   this.licenseFront,
+    required  this.licenseBack,
+    required this.ssn,
+    required this.dob,
+    required this.profileImg1,
+    required this.profileImg2,
+    required this.profileImg3,
+    required  this.profileImg4,
+    required  this.type,
+    required  this.categoryId,
+    required  this.subCategoryId,
+    required this.service,
+    required  this.permitType,
+    required  this.permitNumber,
+    required this.permitExpiry,
+    required  this.description,
+    required   this.otp,
+    required  this.forgetpassRequest,
+    required  this.forgetpassRequestStatus,
+    required  this.planId,
+    required  this.planPurchased,
+    required  this.planExpiry,
+    required   this.txnId,
+    required  this.createdAt,
+    required  this.updatedAt,
+    required  this.stripeId,
+    required  this.make,
+    required  this.model,
+    required  this.color,
+    required  this.year,
+    required  this.licensePlate,
+    required  this.views,
+    required  this.salesTax,
+    required  this.exciseTax,
+    required  this.cityTax,
+    required this.commissionRate,
+    required  this.deliveryFee,
+    required  this.licensefrontURL,
+    required  this.licensebackURL,
+    required  this.profileURL,
+    required  this.profile2URL,
+    required   this.profile3URL,
+    required  this.profile4URL,
+    required  this.membership,
+    required  this.fullname,
+    required  this.category,
   });
 
   VendorDetailCart.fromJson(Map<String, dynamic> json) {
@@ -447,9 +447,9 @@ class VendorDetailCart {
     profile2URL = json['profile2URL'];
     profile3URL = json['profile3URL'];
     profile4URL = json['profile4URL'];
-    membership = json['membership'] != null
+    membership = (json['membership'] != null
         ? new Membership.fromJson(json['membership'])
-        : null;
+        : null)!;
     fullname = json['fullname'];
     category = json['Category'];
   }
@@ -539,10 +539,10 @@ class VendorDetailCart {
 }
 
 class Membership {
-  int remainingDays;
-  int status;
+late  int remainingDays;
+ late int status;
 
-  Membership({this.remainingDays, this.status});
+  Membership({required this.remainingDays,required this.status});
 
   Membership.fromJson(Map<String, dynamic> json) {
     remainingDays = json['remainingDays'];
@@ -558,110 +558,110 @@ class Membership {
 }
 
 class UserInfo {
-  String id;
-  String token;
-  String name;
-  String lname;
-  String email;
-  String password;
-  String profileImage;
-  String licenseFront;
-  String licenseBack;
-  String oauthProvider;
-  String oauthId;
-  String userMob;
-  String userAddress;
-  String userCity;
-  String userStates;
-  String userZipcode;
-  String walletAmount;
-  String userLat;
-  String userLong;
-  String avgRating;
-  String ratingCount;
-  String isAdmin;
-  String rememberToken;
-  String userStatus;
-  String userPass;
-  String deviceid;
-  String devicetype;
-  String carrierId;
-  String carrierName;
-  String carrierEmail;
-  String apiToken;
-  String userRole;
-  String userFbid;
-  String userGpid;
-  String restrictions;
-  String userOtp;
-  String checkoutVerificaiton;
-  String logId;
-  String dob;
-  String emailVerifiedAt;
-  String createdAt;
-  String updatedAt;
-  String stripeId;
-  String cardBrand;
-  String cardLastFour;
-  String trialEndsAt;
-  String devicetoken;
-  String osName;
-  String emailNotification;
-  String notification;
-  String smsNotification;
+ late String id;
+ late String token;
+ late String name;
+ late String lname;
+ late  String email;
+ late String password;
+ late String profileImage;
+ late String licenseFront;
+ late String licenseBack;
+ late String oauthProvider;
+ late String oauthId;
+ late String userMob;
+ late String userAddress;
+ late String userCity;
+ late String userStates;
+ late String userZipcode;
+ late String walletAmount;
+ late  String userLat;
+ late  String userLong;
+ late String avgRating;
+ late String ratingCount;
+ late String isAdmin;
+ late String rememberToken;
+ late String userStatus;
+ late String userPass;
+ late String deviceid;
+ late String devicetype;
+ late String carrierId;
+ late  String carrierName;
+ late String carrierEmail;
+ late String apiToken;
+ late String userRole;
+ late String userFbid;
+ late String userGpid;
+ late String restrictions;
+ late String userOtp;
+ late  String checkoutVerificaiton;
+ late String logId;
+ late String dob;
+ late String emailVerifiedAt;
+ late String createdAt;
+ late String updatedAt;
+ late String stripeId;
+ late String cardBrand;
+ late String cardLastFour;
+ late  String trialEndsAt;
+ late  String devicetoken;
+ late  String osName;
+ late  String emailNotification;
+ late  String notification;
+ late String smsNotification;
 
   UserInfo(
-      {this.id,
-      this.token,
-      this.name,
-      this.lname,
-      this.email,
-      this.password,
-      this.profileImage,
-      this.licenseFront,
-      this.licenseBack,
-      this.oauthProvider,
-      this.oauthId,
-      this.userMob,
-      this.userAddress,
-      this.userCity,
-      this.userStates,
-      this.userZipcode,
-      this.walletAmount,
-      this.userLat,
-      this.userLong,
-      this.avgRating,
-      this.ratingCount,
-      this.isAdmin,
-      this.rememberToken,
-      this.userStatus,
-      this.userPass,
-      this.deviceid,
-      this.devicetype,
-      this.carrierId,
-      this.carrierName,
-      this.carrierEmail,
-      this.apiToken,
-      this.userRole,
-      this.userFbid,
-      this.userGpid,
-      this.restrictions,
-      this.userOtp,
-      this.checkoutVerificaiton,
-      this.logId,
-      this.dob,
-      this.emailVerifiedAt,
-      this.createdAt,
-      this.updatedAt,
-      this.stripeId,
-      this.cardBrand,
-      this.cardLastFour,
-      this.trialEndsAt,
-      this.devicetoken,
-      this.osName,
-      this.emailNotification,
-      this.notification,
-      this.smsNotification});
+      {required this.id,
+        required this.token,
+        required this.name,
+        required  this.lname,
+        required  this.email,
+        required  this.password,
+        required   this.profileImage,
+        required  this.licenseFront,
+        required   this.licenseBack,
+        required  this.oauthProvider,
+        required  this.oauthId,
+        required  this.userMob,
+        required  this.userAddress,
+        required  this.userCity,
+        required this.userStates,
+        required  this.userZipcode,
+        required  this.walletAmount,
+        required  this.userLat,
+        required  this.userLong,
+        required  this.avgRating,
+        required this.ratingCount,
+        required  this.isAdmin,
+        required   this.rememberToken,
+        required   this.userStatus,
+        required  this.userPass,
+        required   this.deviceid,
+        required  this.devicetype,
+        required   this.carrierId,
+        required   this.carrierName,
+        required   this.carrierEmail,
+        required   this.apiToken,
+        required   this.userRole,
+        required   this.userFbid,
+        required  this.userGpid,
+        required   this.restrictions,
+        required    this.userOtp,
+        required  this.checkoutVerificaiton,
+        required   this.logId,
+        required   this.dob,
+        required    this.emailVerifiedAt,
+        required   this.createdAt,
+        required  this.updatedAt,
+        required   this.stripeId,
+        required this.cardBrand,
+        required  this.cardLastFour,
+        required  this.trialEndsAt,
+        required  this.devicetoken,
+        required   this.osName,
+        required   this.emailNotification,
+        required   this.notification,
+        required   this.smsNotification});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];

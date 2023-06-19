@@ -7,7 +7,7 @@ import 'package:grambunny_customer/utils/utils.dart';
 import '../login.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  UserRepository _userRepository;
+  UserRepository? _userRepository;
 
   LoginBloc(UserRepository userRepository) : super(LoginInitial()) {
     _userRepository = userRepository;
@@ -38,12 +38,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> mapLoginAgeVerifyYesButtonClicked() async* {
-    _userRepository.ScreenName = ScreenNavigation.Loginpage;
+    _userRepository!.ScreenName = ScreenNavigation.Loginpage;
     yield LoginPageState();
   }
 
   Stream<LoginState> mapLoginEventSignUpButtonClick() async* {
-    _userRepository.ScreenName = ScreenNavigation.SignUpPage;
+    _userRepository!.ScreenName = ScreenNavigation.SignUpPage;
     yield SignUpPageState();
   }
 
@@ -53,17 +53,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> mapLoginEventForgetPasswordClick() async* {
-    _userRepository.ScreenName = ScreenNavigation.ForgetPwdPage;
+    _userRepository!.ScreenName = ScreenNavigation.ForgetPwdPage;
     yield (ForgetPwdPageState());
   }
 
   Stream<LoginState> mapEventBackBtnClicked() async* {
     if (state is SignUpPageState) {
-      _userRepository.ScreenName = ScreenNavigation.Loginpage;
+      _userRepository!.ScreenName = ScreenNavigation.Loginpage;
       yield (LoginInitial());
     }
     if (state is ForgetPwdPageState) {
-      _userRepository.ScreenName = ScreenNavigation.Loginpage;
+      _userRepository!.ScreenName = ScreenNavigation.Loginpage;
       yield (LoginInitial());
     }
   }

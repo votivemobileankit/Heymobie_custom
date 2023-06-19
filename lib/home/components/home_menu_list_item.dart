@@ -19,9 +19,9 @@ const double _kButtonNextWidth = 102;
 const kHeightBtnAddToCart = 35.0;
 
 class MenuListRowItem extends StatelessWidget {
-  ProductListMenu productList;
-  DriverList driverDetail;
-  String strSubcategoryId;
+  late ProductListMenu productList;
+  late DriverList driverDetail;
+  late String strSubcategoryId;
 
   MenuListRowItem(this.productList, this.driverDetail);
 
@@ -64,7 +64,12 @@ class MenuListRowItem extends StatelessWidget {
                           return getAddToCartWidget(
                               context1: context12,
                               productlist: productList,
-                              driverDetail: driverDetail);
+                              driverDetail: driverDetail,
+                              titleText: '',
+                              btn1TitleText: '',
+                              btn1OnPressed: () {},
+                              btn2TitleText: '',
+                              btn2OnPressed: () {});
                         },
                       );
                     }
@@ -154,6 +159,11 @@ class MenuListRowItem extends StatelessWidget {
                       barrierDismissible: true,
                       builder: (context) {
                         return getAddToCartWidget(
+                            btn1OnPressed: () {},
+                            btn1TitleText: "",
+                            btn2OnPressed: () {},
+                            btn2TitleText: "",
+                            titleText: "",
                             context1: context12,
                             productlist: productList,
                             driverDetail: driverDetail);
@@ -203,14 +213,14 @@ const double _kCommonCartMediumFontSize = 14.0;
 const double _kCommonFontSize = 16.0;
 
 Dialog getAddToCartWidget(
-    {@required BuildContext context1,
-    @required String titleText,
-    @required String btn1TitleText,
-    @required VoidCallback btn1OnPressed,
-    @required String btn2TitleText,
-    @required VoidCallback btn2OnPressed,
-    @required ProductListMenu productlist,
-    @required DriverList driverDetail}) {
+    {required BuildContext context1,
+    required String titleText,
+    required String btn1TitleText,
+    required VoidCallback btn1OnPressed,
+    required String btn2TitleText,
+    required VoidCallback btn2OnPressed,
+    required ProductListMenu productlist,
+    required DriverList driverDetail}) {
   return Dialog(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_kAddtoCartDialogRadius.scale())),
@@ -235,8 +245,8 @@ class _AddToCartWidget extends StatefulWidget {
 class __AddToCartWidgetState extends State<_AddToCartWidget> {
   int _counter = 1;
   int decrease = 0;
-  double price;
-  BuildContext contexttext;
+  late double price;
+  late BuildContext contexttext;
 
   @override
   void initState() {
@@ -417,6 +427,9 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                   btnFontSize: kFontSizeBtnLarge.scale(),
                   btnElevation: 0,
                   btnBorderSideColor: kColorCommonButton,
+                 btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                 ).align(Alignment.center),
                 AVerticalSeparatorLine(
                     width: 1, height: 20, color: Colors.white),
@@ -432,6 +445,9 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                   btnFontSize: kFontSizeBtnLarge.scale(),
                   btnElevation: 0,
                   btnBorderSideColor: kColorCommonButton,
+                  btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                 ).align(Alignment.center),
               ],
             )

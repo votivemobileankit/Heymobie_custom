@@ -7,6 +7,6 @@ class DRThemeData {
         // backgroundColor: kColorBg,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         dividerColor: Color(0xFFE7E7E7),
-        textSelectionHandleColor: Colors.transparent);
+       );
   }
 }

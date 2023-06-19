@@ -27,22 +27,22 @@ class MenuProductDetailPage extends StatefulWidget {
 
 class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
   GlobalKey keydemo = new GlobalKey();
-  ProductListMenu _productListModel;
-  List<RelatedProductList> _relatedProductList;
-  String _driverId;
-  DriverList _driverDetail;
-  Vendor _vendorDetails;
-  String name;
-  ProductListDriver _productListDriverModel;
+  late ProductListMenu _productListModel;
+  late List<RelatedProductList> _relatedProductList;
+   String? _driverId;
+  late DriverList _driverDetail;
+  late Vendor _vendorDetails;
+  late String name;
+  late ProductListDriver _productListDriverModel;
   int _counter = 1;
   double ratingCountSend = 5;
   double _price = 0;
   int pageCount = 1;
-  String _cartCount;
-  String strScreen;
-  int productID;
-  List<AddonProductList> _addOnProductList;
-  List<AddonProductListBool> _addOnProductLocalList;
+  late String _cartCount;
+  late String strScreen;
+  late int productID;
+  late List<AddonProductList> _addOnProductList;
+  late List<AddonProductListBool> _addOnProductLocalList;
   TextEditingController _textFiledUserSpecialInstruction =
       TextEditingController();
 
@@ -52,7 +52,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
   }
 
   final TextEditingController _textReview = TextEditingController();
-  List<RatingReviewData> ratingReviewList;
+  late List<RatingReviewData> ratingReviewList;
 
   @override
   void initState() {
@@ -61,17 +61,20 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
     if (homeState is HomeMenuItemDetailsPageState) {
       _productListModel = homeState.productListModel;
       _driverId = homeState.driverId;
+      print("driver Id ${_driverId}");
       _price = double.parse(_productListModel.price);
       _driverDetail = homeState.driverDetail;
       _productListModel.brands;
       name = _driverDetail.name + " " + _driverDetail.lastName;
       strScreen = "";
+      print("HomeMenuItemDetailsPageState");
     } else if (homeState is HomeFromDriverProductListDetailsPageState) {
+      print("productlistdetailPage");
       _productListDriverModel = homeState.driverProductList;
       _vendorDetails = homeState.driverDetail;
-      _relatedProductList = homeState.relatedProductList;
-      _addOnProductList = homeState.addOnProductList;
-
+      _relatedProductList = homeState.relatedProductList!;
+      _addOnProductList = homeState.addOnProductList!;
+      _driverId =  "${_vendorDetails.vendorId}";
       strScreen = homeState.screen;
       _driverDetail = DriverList(
           state: _vendorDetails.state,
@@ -93,7 +96,55 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           name: _vendorDetails.name,
           lastName: _vendorDetails.lastName,
           marketArea: _vendorDetails.marketArea,
-          vendorStatus: _vendorDetails.vendorStatus);
+          vendorStatus: _vendorDetails.vendorStatus, uniqueId: '',loginStatus: "",updatedAt: "",
+
+        createdAt: "",devicetype: "",year: "",
+        walletAmount: "",
+        views: "",
+        type_of_merchant: "",
+        txnId: "",
+        suburb: "",
+        stripeId: "",
+        ssn: "",
+        serviceRadius: "",
+        service: "",
+        rememberToken: "",
+        profileImg4: "",
+        profileImg3: "",
+        profileImg2: "",
+        planPurchased: "",
+        planId: "",
+        planExpiry: "",
+        permitType: "",
+        permitNumber: "",
+        permitExpiry: "",
+        password: "",
+        otp: "",
+        model: "",
+        map_icon: "",
+        make: "",
+        mailingAddress: "",
+        licensePlate: "",
+        licenseFront: "",
+        licenseExpiry: "",
+        licenseBack: "",
+        forgetpassRequestStatus: "",
+        forgetpassRequest: "",
+        driverLicense: "",
+        distance: "",
+        vendorType: "",
+        salesTax: "",
+        ratingCount: "",
+        exciseTax: "",
+        dob: "",
+        deliveryFee: "",
+        commissionRate: "",
+        color: "",
+        cityTax: "",
+        businessName: "",
+        lat: "",
+        lng: ""
+      );
       name = _driverDetail.name + " " + _driverDetail.lastName;
       productID = _productListDriverModel.id;
       _productListModel = ProductListMenu(
@@ -118,9 +169,16 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           ratingCount: _productListDriverModel.ratingCount,
           types: _productListDriverModel.types,
           subcategoryname: _productListDriverModel.subcategoryname,
-          unit: _productListDriverModel.unit);
+          unit: _productListDriverModel.unit,
+          slug: '',
+          createdAt: "",
+          updatedAt: "",
+          loginStatus: "",
+          images: [],
+          keyword: "",
+          stock: "");
       _price = double.parse(_productListModel.price);
-      ratingReviewList = homeState.ratingReviewList;
+      ratingReviewList = homeState.ratingReviewList!;
     }
 
     super.initState();
@@ -144,13 +202,14 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
     });
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is HomeCategoryProductPageState) {
           Navigator.of(context).pop(true);
         } else if (state is HomeMenuItemDetailsPageState) {
           _productListModel = state.productListModel;
           _driverId = state.driverId;
+          print("driver Id ${_driverId}");
           _price = double.parse(_productListModel.price);
           _driverDetail = state.driverDetail;
           name = _driverDetail.name + " " + _driverDetail.lastName;
@@ -158,14 +217,14 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           showHideProgress(false);
           setState(() {
             List<RatingReviewData> ratingReviewListData =
-                state.ratingReviewList;
+                state.ratingReviewList!;
             ratingReviewList.addAll(ratingReviewListData);
             //ratingReviewList = state.ratingReviewList;
           });
-
+          print("driver Id ${_driverId}");
           BlocProvider.of<HomeBloc>(context).add(
               HomeEventProductDetailPageReset(
-                  _productListModel, _driverId, _driverDetail));
+                  _productListModel, _driverId!, _driverDetail));
         } else if (state is HomeEventMessageShowState) {
           print("Add to cart data =========");
           try {
@@ -178,18 +237,21 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           _textFiledUserSpecialInstruction.text = "";
           showHideProgress(false);
           showSnackBar(state.message, context);
+          print("driver Id ${_driverId}");
           BlocProvider.of<HomeBloc>(context).add(
               HomeEventProductDetailPageReset(
-                  _productListModel, _driverId, _driverDetail));
+                  _productListModel, _driverId!, _driverDetail));
         } else if (state is HomeCustomerRatingReviewSubmitState) {
           showHideProgress(false);
           showSnackBar(state.message, context);
+          print("driver Id ${_driverId}");
           BlocProvider.of<HomeBloc>(context).add(
               HomeEventProductDetailPageReset(
-                  _productListModel, _driverId, _driverDetail));
+                  _productListModel, _driverId!, _driverDetail));
         } else if (state is HomeMenuItemDetailsPageState) {
           _productListModel = state.productListModel;
           _driverId = state.driverId;
+          print("driver Id ${_driverId}");
           _price = double.parse(_productListModel.price);
           _driverDetail = state.driverDetail;
           name = _driverDetail.name + " " + _driverDetail.lastName;
@@ -245,7 +307,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   backBtnVisibility: true,
                   btnBackOnPressed: () {
                     timerOnListener = false;
-                    _contextLoad = null;
+                    _contextLoad = null!;
                     BlocProvider.of<HomeBloc>(context)
                         .add(HomeEventBackBtnClick());
                   },
@@ -254,7 +316,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   headerSigninText: _cartCount,
                   btnEditOnPressed: () {
                     if (sharedPrefs.getCartCount != "0") {
-                      _contextLoad = null;
+
                       showHideProgress(true);
                       print(strScreen);
                       if (strScreen == "DriverList") {
@@ -266,8 +328,12 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                             HomeEventProductDetailPageCartBtnClick(
                                 _driverDetail, _productListModel, strScreen));
                       }
+                     // _contextLoad = null!;
                     }
                   }),
+
+
+
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -487,6 +553,9 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                       ),
                       AHorizontalSpace(10.0.scale()),
                       ARoundedButton(
+                       btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                        btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                        btnFontWeight: FontWeight.normal,
                         btnBgColor: kColorCommonButton,
                         btnTextColor: Colors.white,
                         btnOnPressed: () {
@@ -566,7 +635,10 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                                 context1: context,
                                 addOnProductLocalList: _addOnProductLocalList,
                                 vendorId: _productListModel.vendorId,
-                                driverDetail: _driverDetail);
+                                driverDetail: _driverDetail,
+                                titleText: '',
+                                btn1TitleText: '',
+                                btn1OnPressed: () {});
                           },
                         );
                       },
@@ -694,6 +766,9 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   ),
                   AVerticalSpace(15.0.scale()),
                   ARoundedButton(
+                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                    btnFontWeight: FontWeight.normal,
                     btnBgColor: kColorCommonButton,
                     btnTextColor: Colors.white,
                     btnText: "Submit Review",
@@ -736,9 +811,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                 ],
               )
                   .leftPadding(8.0.scale())
-                  .rightPadding(8.0.scale())
-                  .scroll()
-                  .expand()
+                  .rightPadding(8.0.scale()).scroll().expand()
             ],
           ).widgetBgColor(Colors.white),
         ),
@@ -748,13 +821,13 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
 }
 
 Dialog getDialogAddOnProductList({
-  @required List<AddonProductListBool> addOnProductLocalList,
-  @required String vendorId,
-  @required DriverList driverDetail,
-  @required BuildContext context1,
-  @required String titleText,
-  @required String btn1TitleText,
-  @required VoidCallback btn1OnPressed,
+  required List<AddonProductListBool> addOnProductLocalList,
+  required String vendorId,
+  required DriverList driverDetail,
+  required BuildContext context1,
+  required String titleText,
+  required String btn1TitleText,
+  required VoidCallback btn1OnPressed,
 }) {
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -818,6 +891,9 @@ class _AddonProductListWidgetState extends State<_AddonProductListWidget> {
               child: _RadioViewSelectA(widget.addOnProductLocalList[i])),
         AVerticalSpace(10.0.scale()),
         ARoundedButton(
+          btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+          btnDisabledTextColor:Color(0xFFFFFFFF) ,
+          btnFontWeight: FontWeight.normal,
           btnBgColor: kColorCommonButton,
           btnTextColor: Colors.white,
           btnText: "Add",
@@ -837,7 +913,7 @@ class _AddonProductListWidgetState extends State<_AddonProductListWidget> {
         ),
         AVerticalSpace(20.0.scale())
       ],
-    ).scroll();
+    );
   }
 }
 
@@ -929,6 +1005,11 @@ class _RelatedProductListWidget extends StatelessWidget {
                     context1: context1,
                     productlist: relatedProductList[index],
                     driverDetail: driverDetail,
+                    titleText: '',
+                    btn1TitleText: '',
+                    btn1OnPressed: () {},
+                    btn2TitleText: '',
+                    btn2OnPressed: () {},
                   );
                 },
               );
@@ -1013,14 +1094,14 @@ const double _kAddtoCartDialogRadius = 20.0;
 const double _kCommonCartMediumFontSize = 14.0;
 
 Dialog getAddToCartWidget({
-  @required BuildContext context1,
-  @required String titleText,
-  @required String btn1TitleText,
-  @required VoidCallback btn1OnPressed,
-  @required String btn2TitleText,
-  @required VoidCallback btn2OnPressed,
-  @required RelatedProductList productlist,
-  @required DriverList driverDetail,
+  required BuildContext context1,
+  required String titleText,
+  required String btn1TitleText,
+  required VoidCallback btn1OnPressed,
+  required String btn2TitleText,
+  required VoidCallback btn2OnPressed,
+  required RelatedProductList productlist,
+  required DriverList driverDetail,
 }) {
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -1046,8 +1127,8 @@ class _AddToCartWidget extends StatefulWidget {
 class __AddToCartWidgetState extends State<_AddToCartWidget> {
   int _counter = 1;
   int decrease = 0;
-  double price;
-  BuildContext contexttext;
+  late double price;
+  late BuildContext contexttext;
 
   @override
   void initState() {
@@ -1208,6 +1289,9 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ARoundedButton(
+                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorCommonButton,
                   btnTextColor: Colors.white,
                   btnOnPressed: () {
@@ -1229,11 +1313,14 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                   btnWidth: 110.0.scale(),
                   btnFontSize: kFontSizeBtnLarge.scale(),
                   btnElevation: 0,
-                  btnBorderSideColor: kColorCommonButton,
+
                 ).align(Alignment.center),
                 AVerticalSeparatorLine(
                     width: 1, height: 20, color: Colors.white),
                 ARoundedButton(
+                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorCommonButton,
                   btnTextColor: Colors.white,
                   btnOnPressed: () {
@@ -1244,7 +1331,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                   btnWidth: 110.0.scale(),
                   btnFontSize: kFontSizeBtnLarge.scale(),
                   btnElevation: 0,
-                  btnBorderSideColor: kColorCommonButton,
+
                 ).align(Alignment.center),
               ],
             )
@@ -1255,7 +1342,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
   }
 }
 
-BuildContext _contextLoad;
+late BuildContext _contextLoad;
 
 createNewMessage(BuildContext context) {
   _contextLoad = context;

@@ -6,193 +6,169 @@ import 'package:grambunny_customer/hm_root/bloc/bloc.dart';
 import 'package:grambunny_customer/hm_root/hm_root.dart';
 
 class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
-  UserRepository _userRepository;
+  late UserRepository _userRepository;
 
-  HmRootBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(HmRootInitial());
+  HmRootBloc({required UserRepository userRepository})
+      : super(HmRootInitial()) {
+    _userRepository = userRepository;
 
-  @override
-  Stream<HmRootState> mapEventToState(
-    HmRootEvent event,
-  ) async* {
-    switch (event.runtimeType) {
-      case HmSplashEventloading:
-        yield* mapLoadingCompletedEvent();
-        break;
-
-      case HmRootEventLoginLoadingComplete:
-        yield* mapRootEventLoginLoadingComplete();
-        break;
-      case HmRootEventSettingScreenSelectFromRoot:
-        yield* mapHmRootEventSettingScreenSelectFromRoot();
-        break;
-      case HmRootEventSettingScreenUnSelectFromRoot:
-        yield* mapHmRootEventSettingScreenUnSelectFromRoot();
-        break;
-      case HmRootEventBackButtonOrderHistory:
-        yield* mapHmRootEventBackButtonOrderHistory();
-        break;
-      case HmRootEventBackButtonOrderHistoryReset:
-        yield* mapHmRootEventBackButtonOrderHistoryReset();
-        break;
-      case HmRootEventBackButtonProfile:
-        yield* mapHmRootEventBackButtonProfile();
-        break;
-      case HmRootEventBackButtonProfileReset:
-        yield* mapHmRootEventBackButtonProfileReset();
-        break;
-      case HmRootEventBackButtonHome:
-        yield* mapHmRootHmRootEventBackButtonHome();
-        break;
-      case HmRootEventBackButtonHomeReset:
-        yield* mapHmRootEventBackButtonHomeReset();
-        break;
-      case HmRootEventLogoutClick:
-        yield* mapHmRootEventLogoutClick();
-        break;
-      case HmRootEventHomePageBack:
-        yield* mapHmRootEventHomePageBack();
-        break;
-      case HmRootEventPushReceived:
-        yield* mapPushReceived();
-        break;
-      case HmRootEventPushHandeled:
-        yield* mapRootEventPushHandeled();
-        break;
-    }
+    on<HmSplashEventloading>(mapLoadingCompletedEvent);
+    on<HmRootEventLoginLoadingComplete>(mapRootEventLoginLoadingComplete);
+    on<HmRootEventSettingScreenSelectFromRoot>(
+        mapHmRootEventSettingScreenSelectFromRoot);
+    on<HmRootEventSettingScreenUnSelectFromRoot>(
+        mapHmRootEventSettingScreenUnSelectFromRoot);
+    on<HmRootEventBackButtonOrderHistory>(mapHmRootEventBackButtonOrderHistory);
+    on<HmRootEventBackButtonOrderHistoryReset>(
+        mapHmRootEventBackButtonOrderHistoryReset);
+    on<HmRootEventBackButtonProfile>(mapHmRootEventBackButtonProfile);
+    on<HmRootEventBackButtonProfileReset>(mapHmRootEventBackButtonProfileReset);
+    on<HmRootEventBackButtonHome>(mapHmRootHmRootEventBackButtonHome);
+    on<HmRootEventBackButtonHomeReset>(mapHmRootEventBackButtonHomeReset);
+    on<HmRootEventLogoutClick>(mapHmRootEventLogoutClick);
+    on<HmRootEventHomePageBack>(mapHmRootEventHomePageBack);
+    on<HmRootEventPushReceived>(mapPushReceived);
+    on<HmRootEventPushHandeled>(mapRootEventPushHandeled);
   }
 
-  Stream<HmRootState> mapPushReceived() async* {
+  mapPushReceived(
+      HmRootEventPushReceived event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: false,
         isBackProfile: false,
         isBackHome: false,
-        isPushNotificationSending: true);
+        isPushNotificationSending: true));
   }
 
-  Stream<HmRootState> mapRootEventPushHandeled() async* {
+  mapRootEventPushHandeled(
+      HmRootEventPushHandeled event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: false,
         isBackProfile: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventLogoutClick() async* {
+  mapHmRootEventLogoutClick(
+      HmRootEventLogoutClick event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootInitial();
+    emitter(HmRootInitial());
   }
 
-  Stream<HmRootState> mapHmRootEventHomePageBack() async* {
+  mapHmRootEventHomePageBack(
+      HmRootEventHomePageBack event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootInitial();
+    emitter(HmRootInitial());
   }
 
-  Stream<HmRootState> mapHmRootEventBackButtonHomeReset() async* {
+  mapHmRootEventBackButtonHomeReset(HmRootEventBackButtonHomeReset event,
+      Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: false,
         isBackProfile: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootHmRootEventBackButtonHome() async* {
+  mapHmRootHmRootEventBackButtonHome(
+      HmRootEventBackButtonHome event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: false,
         isBackProfile: false,
-        isBackHome: true);
+        isBackHome: true,
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventBackButtonProfile() async* {
+  mapHmRootEventBackButtonProfile(
+      HmRootEventBackButtonProfile event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: false,
         isBackProfile: true,
-        isBackHome: false);
+        isBackHome: false,
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventBackButtonProfileReset() async* {
+  mapHmRootEventBackButtonProfileReset(HmRootEventBackButtonProfileReset event,
+      Emitter<HmRootState> emitter) async {
     print("call home root ");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: false,
         isBackProfile: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventBackButtonOrderHistoryReset() async* {
+  mapHmRootEventBackButtonOrderHistoryReset(
+      HmRootEventBackButtonOrderHistoryReset event,
+      Emitter<HmRootState> emitter) async {
     print("call home root");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackProfile: false,
         isFromSetting: false,
         isBackOrderHistory: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventBackButtonOrderHistory() async* {
+  mapHmRootEventBackButtonOrderHistory(HmRootEventBackButtonOrderHistory event,
+      Emitter<HmRootState> emitter) async {
     //print("call home root for history");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackProfile: false,
         isBackOrderHistory: true,
         isFromSetting: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventSettingScreenSelectFromRoot() async* {
+  mapHmRootEventSettingScreenSelectFromRoot(
+      HmRootEventSettingScreenSelectFromRoot event,
+      Emitter<HmRootState> emitter) async {
     print("call home for cart root");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isBackOrderHistory: false,
         isFromSetting: true,
         isBackProfile: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapHmRootEventSettingScreenUnSelectFromRoot() async* {
+  mapHmRootEventSettingScreenUnSelectFromRoot(
+      HmRootEventSettingScreenUnSelectFromRoot event,
+      Emitter<HmRootState> emitter) async {
     // print("setting un select home root");
-    yield HmRootHomeState(
+    emitter(HmRootHomeState(
         isFromSetting: false,
         isBackOrderHistory: false,
         isBackProfile: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
-  Stream<HmRootState> mapLoadingCompletedEvent() async* {
-    //if (sharedPrefs.isAgeAbove21 == false) {
-    yield HmRootSplashLoadingComplete();
-    // }
-
-    // else {
-    //   yield HmRootHomeState(
-    //       isFromSetting: false,
-    //       isBackProfile: false,
-    //       isBackOrderHistory: false,
-    //       isBackHome: false);
-    // }
+  mapLoadingCompletedEvent(
+      HmSplashEventloading event, Emitter<HmRootState> emitter) async {
+    emitter(HmRootSplashLoadingComplete());
   }
 
-  Stream<HmRootState> mapRootEventLoginLoadingComplete() async* {
-    yield HmRootHomeState(
+  mapRootEventLoginLoadingComplete(HmRootEventLoginLoadingComplete event,
+      Emitter<HmRootState> emitter) async {
+    emitter(HmRootHomeState(
         isFromSetting: false,
         isBackProfile: false,
         isBackOrderHistory: false,
         isBackHome: false,
-        isPushNotificationSending: false);
+        isPushNotificationSending: false));
   }
 
   Stream<HmRootState> mapEventFtBackPressed() async* {

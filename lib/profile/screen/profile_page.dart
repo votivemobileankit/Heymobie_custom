@@ -29,7 +29,7 @@ class ProfileMainPage extends StatefulWidget {
 }
 
 class _ProfileMainPageState extends State<ProfileMainPage> {
-  UserDetailResponseModel userDetailInfo1;
+late  UserDetailResponseModel userDetailInfo1;
   double average_rating = 1;
   double rating_count = 1;
   TextEditingController _textFiledCity = TextEditingController();
@@ -39,14 +39,14 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
   TextEditingController _textFiledlastName = TextEditingController();
   TextEditingController _textFiledMobileNumber = TextEditingController();
   TextEditingController _textFiledAddress = TextEditingController();
-  List<StatesList> _stateArrayList;
+late List<StatesList> _stateArrayList;
   String strState = "";
   double _currentLat = 0.0;
   double _currentLong = 0.0;
-  File _userImage;
-  File _licenseImageBack;
-  File _licenseImageFront;
-  File _mariyunaImage;
+late  File _userImage;
+late File _licenseImageBack;
+late File _licenseImageFront;
+late  File _mariyunaImage;
   String strServerProfiImage = "";
   String strServerLicenseFront = "";
   String strServerLicenseBack = "";
@@ -55,7 +55,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
   String strPathLicenseBack = "Select license image copy back";
   String strPathMarijuanaId = "Select Marijuana id";
   String _strServerPathMarijuana = "";
-  String type;
+late String type;
   String _customerType = "Recreational Customer";
 
   @override
@@ -89,6 +89,9 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
         break;
       case LocationPermission.deniedForever:
         await handleDeniedForeverLocationPermission();
+        break;
+      case LocationPermission.unableToDetermine:
+        // TODO: Handle this case.
         break;
     }
   }
@@ -209,13 +212,13 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
 
     setState(() {
       if (type == "UserProfile") {
-        _userImage = File(pickedFile.path);
+        _userImage = File(pickedFile!.path);
         strPathProfile = pickedFile.path;
       } else if (type == "LicenseFront") {
-        strPathLicenseFront = pickedFile.path;
+        strPathLicenseFront = pickedFile!.path;
         _licenseImageFront = File(pickedFile.path);
       } else {
-        _licenseImageBack = File(pickedFile.path);
+        _licenseImageBack = File(pickedFile!.path);
         strPathLicenseBack = pickedFile.path;
       }
       print(pickedFile.path);
@@ -266,7 +269,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<ProfileBloc, ProfileState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is ProfileToHomeNavigateState) {
           print("bloc call");
@@ -352,6 +355,11 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
         child: Column(
           children: [
             AHeaderWidget(
+              headerText: "",
+              headerSigninText: "",
+              btnEditOnPressed: () {
+
+              },
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
@@ -863,6 +871,9 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                             ),
                             AVerticalSpace(5.0.scale()),
                             ARoundedButton(
+                              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                              btnFontWeight: FontWeight.normal,
                               btnBgColor: kColorCommonButton,
                               btnTextColor: Colors.white,
                               btnOnPressed: () {
@@ -927,6 +938,9 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                             ),
                             AVerticalSpace(5.0.scale()),
                             ARoundedButton(
+                              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                              btnFontWeight: FontWeight.normal,
                               btnBgColor: kColorCommonButton,
                               btnTextColor: Colors.white,
                               btnOnPressed: () {
@@ -988,6 +1002,9 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                             ),
                             AVerticalSpace(5.0.scale()),
                             ARoundedButton(
+                              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                              btnFontWeight: FontWeight.normal,
                               btnBgColor: kColorCommonButton,
                               btnTextColor: Colors.white,
                               btnOnPressed: () {
@@ -1006,6 +1023,9 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                 ).leftPadding(18.0.scale()).rightPadding(18.0.scale()),
                 AVerticalSpace(_kCommonSpaceBetweenTextField.scale()),
                 ARoundedButton(
+                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorCommonButton,
                   btnTextColor: Colors.white,
                   btnOnPressed: () {
@@ -1112,9 +1132,9 @@ class __BuyRentWidgetState1State extends State<__BuyRentWidgetState1> {
                   child: Text(item.strType),
                 );
               }).toList(),
-              onChanged: (CustomerType value) {
+              onChanged: (CustomerType? value) {
                 setState(() {
-                  _strCustomerType = value.strType;
+                  _strCustomerType = value!.strType;
                   widget.searchData(_strCustomerType);
                 });
               },
@@ -1382,7 +1402,7 @@ class _DateOfBirthWidgetState extends State<DateOfBirthWidget> {
   TimeOfDay _time = new TimeOfDay.now();
 
   Future<Null> _selectedDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: _date,
         firstDate: new DateTime(DateTime.now().ordinalDate),

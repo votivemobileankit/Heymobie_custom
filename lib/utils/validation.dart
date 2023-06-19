@@ -13,34 +13,34 @@ bool isvalidSSNNumber(String value) {
 }
 
 String validateEmail(String value) {
-  Pattern pattern =
+ late Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regex = new RegExp(pattern);
-  if (value.isEmpty) {
-    return 'Please enter email id';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'Enter valid email id';
-    } else {
+  // RegExp regex = RegExp(pattern);
+  // if (value.isEmpty) {
+  //   return 'Please enter email id';
+  // } else {
+  //   if (!regex.hasMatch(value)) {
+  //     return 'Enter valid email id';
+  //   } else {
       return "Success";
-    }
-  }
+  //   }
+  // }
 }
 
 String validatePassword(String value) {
   Pattern pattern =
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-  RegExp regex = new RegExp(pattern);
-  print(value);
-  if (value.isEmpty) {
-    return 'Please enter password';
-  } else {
-    if (!regex.hasMatch(value)) {
-      return 'Enter valid password';
-    } else {
-      return "Success";
-    }
-  }
+  // RegExp regex = RegExp(pattern);
+  // print(value);
+  // if (value.isEmpty) {
+  //   return 'Please enter password';
+  // } else {
+  //   if (!regex.hasMatch(value)) {
+  //     return 'Enter valid password';
+  //   } else {
+       return "Success";
+  //   }
+  // }
 }
 
 bool isvalidNumber(String value) {

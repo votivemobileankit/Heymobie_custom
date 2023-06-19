@@ -18,43 +18,44 @@ import 'package:grambunny_customer/setting/model/model.dart';
 import 'package:grambunny_customer/utils/image_cropper1.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
-NetworkApiProvider _vdApiProvider;
 
+late NetworkApiProvider _vdApiProvider;
 class UserRepository {
-  String currentLanguageCode = "";
-  ScreenNavigation ScreenName;
-  List<RatingReviewData> ratingReviewDataArray;
-  String herberiumUrlCall;
-  List<CategoryListModel> categortList;
-  List<DriverList> _driverList;
-  List<ProductListMenu> _productList;
-  FilterListModel _filterListModel;
-  List<StatesList> statesList;
-  String cartCount = "0";
-  List<ItemsCart> _cartList;
-  DataCart cartDataModel;
-  List<Couponlist> couponlist;
-  DataResponse checkoutCalculation;
-  List<ProductListDriver> _driverProductList;
-  UserDetail _userDetail;
-  List<VendorLatlng> _vendorLatLong;
-  List<HistoryList> _orderHistoryItem;
-  List<OrderDetail> orderDetail;
-  List<OrderItems> orderItems;
-  List<Vendor1> vendorData;
-  String orderId = "";
-  String notifyOrderId = "";
-  String notifyDriverId = "";
-  String isNewdriver;
-  UserDetailResponseModel userDetailResponseModel;
-  NotificationDetail notificationDetail;
-  UserInfoData userDataInfo;
-  String strFirebaseToken = "";
-  String strBannerImage = "";
-  List<RelatedProductList> relatedProductList;
-  List<AddonProductList> addonProductList;
-  List<Advertisement> _advertisement;
-  List<BitmapDescriptor> pinLocationIcon;
+
+ late String currentLanguageCode = "";
+ late ScreenNavigation ScreenName;
+  List<RatingReviewData>? ratingReviewDataArray;
+ late String herberiumUrlCall;
+ late List<CategoryListModel> categortList;
+ late List<DriverList> _driverList;
+late  List<ProductListMenu> _productList;
+ late FilterListModel _filterListModel;
+late  List<StatesList> statesList;
+ late String cartCount = "0";
+ late List<ItemsCart> _cartList;
+  late DataCart cartDataModel;
+ late List<Couponlist> couponlist;
+ late DataResponse checkoutCalculation;
+ late List<ProductListDriver> _driverProductList;
+ late UserDetail _userDetail;
+ late List<VendorLatlng> _vendorLatLong;
+ late List<HistoryList> _orderHistoryItem;
+ late List<OrderDetail> orderDetail;
+ late List<OrderItems> orderItems;
+ late List<Vendor1> vendorData;
+ late String orderId = "";
+ late String notifyOrderId = "";
+ late String notifyDriverId = "";
+ late String isNewdriver;
+ late UserDetailResponseModel userDetailResponseModel;
+ late NotificationDetail notificationDetail;
+ late UserInfoData userDataInfo;
+ late String strFirebaseToken = "";
+ late String strBannerImage = "";
+  List<RelatedProductList>? relatedProductList;
+  List<AddonProductList>? addonProductList;
+ late List<Advertisement> _advertisement;
+ late List<BitmapDescriptor> pinLocationIcon;
   static String strProfileMerchantUrl = "";
 
   UserRepository() {
@@ -63,16 +64,16 @@ class UserRepository {
     _vdApiProvider = NetworkApiProvider(herberiumUrlCall);
   }
 
-  Future<void> getToken() async {
-    strFirebaseToken = await FirebaseMessaging.instance.getToken();
-    print('user Repos ${strFirebaseToken}');
-  }
+  // Future<void> getToken() async {
+  //   strFirebaseToken = await FirebaseMessaging.instance.getToken();
+  //   print('user Repos ${strFirebaseToken}');
+  // }
 
   set profileMerchantUrl(String value) {
     strProfileMerchantUrl = value;
   }
 
-  static String getProfileUrl() {
+  static  String? getProfileUrl() {
     return strProfileMerchantUrl;
   }
 
@@ -391,24 +392,24 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> SignUpToAPI(
-      {String fname,
-      String lname,
-      String email,
-      String password,
-      String mobileno,
-      String devicetype,
-      String devicetoken,
-      String dob,
-      String address,
-      String city,
-      String state,
-      String zipcode,
-      String os_name,
-      String profileImage,
-      String licenseImageFront,
-      String licenseImageBack,
-      String strCustomerType,
-      String marijuanaIdCard}) async {
+      {required String fname,
+        required String lname,
+        required String email,
+        required   String password,
+        required  String mobileno,
+        required  String devicetype,
+        required  String devicetoken,
+        required  String dob,
+        required  String address,
+        required  String city,
+        required String state,
+        required  String zipcode,
+        required String os_name,
+        required String profileImage,
+        required  String licenseImageFront,
+        required String licenseImageBack,
+        required String strCustomerType,
+        required String marijuanaIdCard}) async {
     NetworkApiCallState<bool> apiCallState;
     var response;
     String status;
@@ -589,7 +590,7 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> uploadImageCopyAPI(
-      {String imageCopyPath, String paramName}) async {
+      {required String imageCopyPath,required String paramName}) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> userDetailMap = {
       "userid": sharedPrefs.getUserId,
@@ -626,14 +627,10 @@ class UserRepository {
     return apiCallState;
   }
 
-  Future<NetworkApiCallState<bool>> getMapImage({
-    String url,
+  Future<NetworkApiCallState<bool>?> getMapImage({
+   required String url,
   }) async {
-    // var dataBytes;
-    // var request = await http.get(Uri.parse(url));
-    // var bytes = await request.bodyBytes;
-    // dataBytes = bytes;
-    //  print("url========= " + url);
+
     BitmapDescriptor bitmapDescriptor =
         await ImageCropper().resizeAndCircle(url, 80);
 
@@ -657,7 +654,7 @@ class UserRepository {
     final recordedPicture = pictureRecorder.endRecording();
     Image img = await recordedPicture.toImage(image.width, image.height);
     final byteData = await img.toByteData(format: ImageByteFormat.png);
-    final buffer = byteData.buffer.asUint8List();
+    final buffer = byteData!.buffer.asUint8List();
 
     return BitmapDescriptor.fromBytes(buffer);
   }
@@ -679,9 +676,9 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> getProductListApiCall({
-    String categoryId,
-    String driverId,
-    String search,
+   required String categoryId,
+    required String driverId,
+    required  String search,
   }) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> latlongMap = {
@@ -885,7 +882,7 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> vendorLocationUpdate({
-    String vendorID,
+   required String vendorID,
   }) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> vendorUpdateLocationMap = {
@@ -925,8 +922,8 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> changePasswordAPI({
-    String old_Password,
-    String new_Password,
+  required  String old_Password,
+  required  String new_Password,
   }) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> userDetailMap = {
@@ -964,18 +961,18 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> postUpdateUserInfoApi(
-      {String mobileNo,
-      String firstName,
-      String lastName,
-      String address,
-      String city,
-      double lat,
-      double long,
-      String zipCode,
-      String State,
-      String userPath,
-      String frontCopyPath,
-      String backCopyPath}) async {
+      {required String mobileNo,
+        required  String firstName,
+        required  String lastName,
+        required  String address,
+        required   String city,
+        required   double lat,
+        required  double long,
+        required   String zipCode,
+        required  String State,
+        required  String userPath,
+        required  String frontCopyPath,
+        required String backCopyPath}) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> userDetailMap;
     print("file front path" + userPath);
@@ -1096,7 +1093,7 @@ class UserRepository {
 
   Future<NetworkApiCallState<bool>> getViewCartListApiCall() async {
     NetworkApiCallState<bool> apiCallState;
-    Map<String, dynamic> latlongMap = {"user_id": sharedPrefs.getUserId};
+
 
     try {
       String userid;
@@ -1111,7 +1108,7 @@ class UserRepository {
       var responseList = await _vdApiProvider.get(
           herberiumUrlCall + apiCartList + "/${userid}", false);
       _cartList = [];
-      cartDataModel = DataCart();
+      // cartDataModel = DataCart();
       print("status" + responseList["status"].toString());
       if (responseList["status"] == 1) {
         CartViewReponseList1 cartViewReponseList =
@@ -1517,30 +1514,30 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> postSubmitPaymentApiCall(
-      {String payMethod,
-      String mobile,
-      String address,
-      String city,
-      String state,
-      String zip,
-      String comment,
-      String cc_name,
-      String creditcardtype,
-      String cc_number,
-      String cc_expiration,
-      String cc_cvv,
-      String cc_expire_month,
-      String cc_expire_year,
-      String promo_amount,
-      String saletax,
-      String excisetax,
-      String citytax,
-      String vendorId,
-      String final_amount,
-      String subTotal,
-      String coupon_id,
-      String device_type,
-      String device_os_name}) async {
+      {required String payMethod,
+        required String mobile,
+        required  String address,
+        required  String city,
+        required  String state,
+        required  String zip,
+        required   String comment,
+        required   String cc_name,
+        required   String creditcardtype,
+        required  String cc_number,
+        required  String cc_expiration,
+        required String cc_cvv,
+        required  String cc_expire_month,
+        required  String cc_expire_year,
+        required  String promo_amount,
+        required  String saletax,
+        required  String excisetax,
+        required  String citytax,
+        required   String vendorId,
+        required  String final_amount,
+        required  String subTotal,
+        required   String coupon_id,
+        required   String device_type,
+        required  String device_os_name}) async {
     NetworkApiCallState<bool> apiCallState;
 
     Map<String, dynamic> paymentParam = {
@@ -1607,113 +1604,113 @@ class UserRepository {
     return orderId == "" ? "" : orderId;
   }
 
-  DriverList driverDetail;
+ late DriverList driverDetail;
 
   set saveDriverDetail(DriverList driverDetail) {
     this.driverDetail = driverDetail;
   }
 
-  List<BitmapDescriptor> getPinLocationList() {
+  List<BitmapDescriptor>? getPinLocationList() {
     return pinLocationIcon == "" ? null : pinLocationIcon;
   }
 
-  String getBannerImage() {
+  String? getBannerImage() {
     return strBannerImage == "" ? null : strBannerImage;
   }
 
-  UserDetailResponseModel getUserDetailInfo() {
+  UserDetailResponseModel? getUserDetailInfo() {
     return userDetailResponseModel == "" ? null : userDetailResponseModel;
   }
 
-  DataResponse getCheckOutCalculation() {
+  DataResponse? getCheckOutCalculation() {
     return checkoutCalculation == "" ? null : checkoutCalculation;
   }
 
-  List<RelatedProductList> getRelatedProductList() {
-    return relatedProductList == "" ? null : relatedProductList;
+  List<RelatedProductList>? getRelatedProductList() {
+    return relatedProductList == [] ? [] : relatedProductList;
   }
 
-  List<AddonProductList> getAddOnProductList() {
-    return addonProductList == "" ? null : addonProductList;
+  List<AddonProductList>? getAddOnProductList() {
+    return addonProductList == [] ? [] : addonProductList;
   }
 
-  List<StatesList> getStateArrayList() {
-    return statesList == "" ? null : statesList;
+  List<StatesList>? getStateArrayList() {
+    return statesList == [] ? [] : statesList;
   }
 
-  List<RatingReviewData> getRatingReviewList() {
-    return ratingReviewDataArray == "" ? null : ratingReviewDataArray;
+  List<RatingReviewData>? getRatingReviewList() {
+    return ratingReviewDataArray == [] ? [] : ratingReviewDataArray;
   }
 
-  List<OrderDetail> getOrderDetailData() {
-    return orderDetail == "" ? null : orderDetail;
+  List<OrderDetail>? getOrderDetailData() {
+    return orderDetail == [] ? [] : orderDetail;
   }
 
-  List<Vendor1> getVendorDetailData() {
-    return vendorData == "" ? null : vendorData;
+  List<Vendor1>? getVendorDetailData() {
+    return vendorData == [] ? [] : vendorData;
   }
 
-  List<OrderItems> getOrderDetailMenuItem() {
-    return orderItems == "" ? null : orderItems;
+  List<OrderItems>? getOrderDetailMenuItem() {
+    return orderItems == [] ? [] : orderItems;
   }
 
-  List<Couponlist> getCouponArrayList() {
-    return couponlist == "" ? 0 : couponlist;
+  List<Couponlist>? getCouponArrayList() {
+    return couponlist == [] ? [] : couponlist;
   }
 
-  UserDetail getUserDetail() {
+  UserDetail? getUserDetail() {
     return _userDetail == null ? null : _userDetail;
   }
 
-  List<VendorLatlng> getVendorLatLong() {
-    return _vendorLatLong == null ? null : _vendorLatLong;
+  List<VendorLatlng>? getVendorLatLong() {
+    return _vendorLatLong == [] ? [] : _vendorLatLong;
   }
 
-  NotificationDetail getNotificationDataList() {
+  NotificationDetail? getNotificationDataList() {
     return notificationDetail == "" ? null : notificationDetail;
   }
 
-  DriverList getDriverDetails() {
+  DriverList? getDriverDetails() {
     return driverDetail == "" ? null : driverDetail;
   }
 
-  String getUpdatedCartCount() {
-    return cartCount == "" ? 0 : cartCount;
+  String? getUpdatedCartCount() {
+    return cartCount == "" ? "0" : cartCount;
   }
 
-  List<ItemsCart> getCartDataListArray() {
+  List<ItemsCart>? getCartDataListArray() {
     return _cartList == null ? null : _cartList;
   }
 
-  List<HistoryList> getOrderHistory() {
+  List<HistoryList>? getOrderHistory() {
     return _orderHistoryItem == null ? null : _orderHistoryItem;
   }
 
-  DataCart getCartDataModel() {
+  DataCart? getCartDataModel() {
     return cartDataModel == null ? null : cartDataModel;
   }
 
-  List<CategoryListModel> getCategoryListArray() {
+  List<CategoryListModel>? getCategoryListArray() {
     return categortList == null ? null : categortList;
   }
 
-  List<DriverList> getDriverListArray() {
+  List<DriverList>? getDriverListArray() {
     return _driverList == null ? null : _driverList;
   }
 
-  List<Advertisement> getAdvertisementArray() {
+  List<Advertisement>? getAdvertisementArray() {
     return _advertisement == null ? [] : _advertisement;
   }
 
-  List<ProductListDriver> getDriverProductListArray() {
-    return _driverProductList == null ? null : _driverProductList;
+  List<ProductListDriver>? getDriverProductListArray() {
+    return _driverProductList == null ? [] : _driverProductList;
   }
 
-  List<ProductListMenu> getProductListArray() {
-    return _productList == null ? null : _productList;
+  List<ProductListMenu>? getProductListArray() {
+    return _productList == null ? [] : _productList;
   }
 
-  FilterListModel getFilterData() {
+  FilterListModel? getFilterData() {
     return _filterListModel == null ? null : _filterListModel;
   }
 }

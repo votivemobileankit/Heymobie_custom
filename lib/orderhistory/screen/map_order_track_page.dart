@@ -16,12 +16,12 @@ class MapOrderTrackPage extends StatefulWidget {
   State<MapOrderTrackPage> createState() => _MapOrderTrackPageState();
 }
 
-double _originLatitude;
-double _originLongitude;
-double _destLatitude;
-double _destLongitude;
-String _vendorID;
-PolylinePoints polylinePoints;
+late double _originLatitude;
+late double _originLongitude;
+late double _destLatitude;
+late double _destLongitude;
+late String _vendorID;
+late PolylinePoints polylinePoints;
 
 // Markers to show points on the map
 Map<MarkerId, Marker> markers = {};
@@ -30,8 +30,8 @@ Map<PolylineId, Polyline> polylines = {};
 class _MapOrderTrackPageState extends State<MapOrderTrackPage> {
   // Google Maps controller
   Completer<GoogleMapController> _controller = Completer();
-  CameraPosition _kGooglePlex;
-  Timer _timer;
+  late CameraPosition _kGooglePlex;
+  late Timer _timer;
 
   void showHideProgress(bool show) {
     BlocProvider.of<SideNavigatBloc>(context)
@@ -91,7 +91,7 @@ class _MapOrderTrackPageState extends State<MapOrderTrackPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<OrderHistoryBloc, OrderHistoryState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           if (state is OrderHistoryDetailPageState) {
             Navigator.of(context).pop(true);
@@ -132,6 +132,11 @@ class _MapOrderTrackPageState extends State<MapOrderTrackPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               AHeaderWidget(
+                headerText: "",
+                headerSigninText: "",
+                btnEditOnPressed: () {
+
+                },
                 strBackbuttonName: 'ic_red_btn_back.png',
                 backBtnVisibility: true,
                 btnBackOnPressed: () {

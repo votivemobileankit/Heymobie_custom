@@ -6,36 +6,29 @@ import 'package:grambunny_customer/hm_root/hm_root.dart';
 import 'bloc.dart';
 
 class PrivacyPolicyBloc extends Bloc<PrivacyPolicyEvent, PrivacyPolicyState> {
-  UserRepository _userRepository;
+  UserRepository? _userRepository;
 
-  PrivacyPolicyBloc({UserRepository userRepository})
+  PrivacyPolicyBloc({required UserRepository userRepository})
       : super(PrivacyPolicyInitial()) {
     _userRepository = userRepository;
+
+    on<PrivacyPolicyBackBtnClick>(mapPrivacyPolicyBackBtnClick);
+    on<PrivacyPolicyResetEventInitialState>(mapPrivacyPolicyResetEventInitialState);
+
+
   }
 
-  @override
-  Stream<PrivacyPolicyState> mapEventToState(
-    PrivacyPolicyEvent event,
-  ) async* {
-    switch (event.runtimeType) {
-      case PrivacyPolicyBackBtnClick:
-        yield* mapPrivacyPolicyBackBtnClick();
-        break;
-      case PrivacyPolicyResetEventInitialState:
-        yield* mapPrivacyPolicyResetEventInitialState();
-        break;
-    }
-  }
 
-  Stream<PrivacyPolicyState> mapPrivacyPolicyResetEventInitialState() async* {
+
+  mapPrivacyPolicyResetEventInitialState(PrivacyPolicyResetEventInitialState event,Emitter<PrivacyPolicyState> emitter) async {
     print("profile back");
-    yield PrivacyPolicyInitial();
+    emitter( PrivacyPolicyInitial());
   }
 
-  Stream<PrivacyPolicyState> mapPrivacyPolicyBackBtnClick() async* {
+  Stream<PrivacyPolicyState> mapPrivacyPolicyBackBtnClick(PrivacyPolicyBackBtnClick event,Emitter<PrivacyPolicyState> emitter) async* {
     if (state is PrivacyPolicyInitial) {
       print("profile back");
-      yield PrivacyPolicyBackToHomeState();
+      emitter( PrivacyPolicyBackToHomeState());
     }
   }
 }

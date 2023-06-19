@@ -38,7 +38,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<HomeBloc, HomeState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           if (state is LoginPageState) {
             Navigator.of(context).pop(true);
@@ -71,6 +71,11 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   BlocProvider.of<HomeBloc>(context)
                       .add(HomeEventBackBtnClick());
                 },
+                btnEditOnPressed: () {},
+                headerText: "",
+                rightEditButtonVisibility: false,
+                strBtnRightImageName: "",
+                headerSigninText: "",
               ),
               Column(
                 children: [
@@ -130,6 +135,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     btnWidth: kWidthBtnNormal.scale(),
                     btnFontSize: kFontSizeBtnLarge.scale(),
                     btnElevation: 0,
+                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                    btnFontWeight: FontWeight.normal,
                   ),
                 ],
               )

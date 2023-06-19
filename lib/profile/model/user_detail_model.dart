@@ -1,14 +1,14 @@
 class UserDetailResponseModel {
-  String message;
-  int status;
-  Data data;
+late  String message;
+ late int status;
+ late Data data;
 
-  UserDetailResponseModel({this.message, this.status, this.data});
+  UserDetailResponseModel({required this.message,required this.status,required this.data});
 
   UserDetailResponseModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = (json['data'] != null ? new Data.fromJson(json['data']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,14 +23,14 @@ class UserDetailResponseModel {
 }
 
 class Data {
-  UserInfo userInfo;
+ late UserInfo userInfo;
 
-  Data({this.userInfo});
+  Data({required this.userInfo});
 
   Data.fromJson(Map<String, dynamic> json) {
-    userInfo = json['user_info'] != null
-        ? new UserInfo.fromJson(json['user_info'])
-        : null;
+    userInfo = (json['user_info'] != null
+        ? UserInfo.fromJson(json['user_info'])
+        : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -43,118 +43,118 @@ class Data {
 }
 
 class UserInfo {
-  int id;
-  String token;
-  String name;
-  String lname;
-  String email;
-  String profileImage;
-  String licenseFront;
-  String licenseBack;
-  String customerType;
-  String marijuanaCard;
-  String oauthProvider;
-  String oauthId;
-  String userMob;
-  String userAddress;
-  String userCity;
-  String userStates;
-  String userZipcode;
-  String walletAmount;
-  String userLat;
-  String userLong;
-  String avgRating;
-  String ratingCount;
-  String isAdmin;
-  String userStatus;
-  String userPass;
-  String deviceid;
-  String devicetype;
-  String carrierId;
-  String carrierName;
-  String carrierEmail;
-  String apiToken;
-  String userRole;
-  String userFbid;
-  String userGpid;
-  String restrictions;
-  String userOtp;
-  String checkoutVerificaiton;
-  String logId;
-  String dob;
-  String emailVerifiedAt;
-  String createdAt;
-  String updatedAt;
-  String stripeId;
-  String cardBrand;
-  String cardLastFour;
-  String trialEndsAt;
-  String devicetoken;
-  String osName;
-  String emailNotification;
-  String notification;
-  String smsNotification;
-  String profileURL;
-  String licenseFrontURL;
-  String licenseBackURL;
-  String marijuanaCardURL;
+ late int id;
+ late String token;
+ late String name;
+ late String lname;
+ late String email;
+ late String profileImage;
+ late  String licenseFront;
+ late String licenseBack;
+ late String customerType;
+ late String marijuanaCard;
+ late  String oauthProvider;
+ late  String oauthId;
+ late String userMob;
+ late String userAddress;
+ late String userCity;
+ late String userStates;
+ late String userZipcode;
+ late  String walletAmount;
+ late String userLat;
+ late String userLong;
+ late String avgRating;
+ late String ratingCount;
+ late String isAdmin;
+ late String userStatus;
+ late String userPass;
+ late String deviceid;
+ late String devicetype;
+ late String carrierId;
+ late  String carrierName;
+ late String carrierEmail;
+ late String apiToken;
+ late String userRole;
+ late String userFbid;
+ late String userGpid;
+ late String restrictions;
+ late String userOtp;
+ late String checkoutVerificaiton;
+ late String logId;
+ late String dob;
+ late String emailVerifiedAt;
+ late String createdAt;
+ late String updatedAt;
+ late String stripeId;
+ late String cardBrand;
+ late String cardLastFour;
+ late String trialEndsAt;
+ late String devicetoken;
+ late String osName;
+ late String emailNotification;
+ late String notification;
+ late String smsNotification;
+ late String profileURL;
+ late String licenseFrontURL;
+ late String licenseBackURL;
+ late String marijuanaCardURL;
 
   UserInfo(
-      {this.id,
-      this.token,
-      this.name,
-      this.lname,
-      this.email,
-      this.profileImage,
-      this.licenseFront,
-      this.licenseBack,
-      this.customerType,
-      this.marijuanaCard,
-      this.oauthProvider,
-      this.oauthId,
-      this.userMob,
-      this.userAddress,
-      this.userCity,
-      this.userStates,
-      this.userZipcode,
-      this.walletAmount,
-      this.userLat,
-      this.userLong,
-      this.avgRating,
-      this.ratingCount,
-      this.isAdmin,
-      this.userStatus,
-      this.userPass,
-      this.deviceid,
-      this.devicetype,
-      this.carrierId,
-      this.carrierName,
-      this.carrierEmail,
-      this.apiToken,
-      this.userRole,
-      this.userFbid,
-      this.userGpid,
-      this.restrictions,
-      this.userOtp,
-      this.checkoutVerificaiton,
-      this.logId,
-      this.dob,
-      this.emailVerifiedAt,
-      this.createdAt,
-      this.updatedAt,
-      this.stripeId,
-      this.cardBrand,
-      this.cardLastFour,
-      this.trialEndsAt,
-      this.devicetoken,
-      this.osName,
-      this.emailNotification,
-      this.notification,
-      this.smsNotification,
-      this.profileURL,
-      this.licenseFrontURL,
-      this.licenseBackURL,
-      this.marijuanaCardURL});
+      {required this.id,
+        required this.token,
+        required this.name,
+        required this.lname,
+        required  this.email,
+        required this.profileImage,
+        required this.licenseFront,
+        required this.licenseBack,
+        required this.customerType,
+        required this.marijuanaCard,
+        required this.oauthProvider,
+        required this.oauthId,
+        required this.userMob,
+        required this.userAddress,
+        required this.userCity,
+        required this.userStates,
+        required this.userZipcode,
+        required this.walletAmount,
+        required this.userLat,
+        required this.userLong,
+        required this.avgRating,
+        required  this.ratingCount,
+        required this.isAdmin,
+        required   this.userStatus,
+        required this.userPass,
+        required this.deviceid,
+        required this.devicetype,
+        required this.carrierId,
+        required  this.carrierName,
+        required  this.carrierEmail,
+        required this.apiToken,
+        required this.userRole,
+        required  this.userFbid,
+        required this.userGpid,
+        required this.restrictions,
+        required this.userOtp,
+        required this.checkoutVerificaiton,
+        required this.logId,
+        required this.dob,
+        required this.emailVerifiedAt,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.stripeId,
+        required this.cardBrand,
+        required this.cardLastFour,
+        required  this.trialEndsAt,
+        required this.devicetoken,
+        required this.osName,
+        required this.emailNotification,
+        required this.notification,
+        required this.smsNotification,
+        required this.profileURL,
+        required  this.licenseFrontURL,
+        required this.licenseBackURL,
+        required this.marijuanaCardURL});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];

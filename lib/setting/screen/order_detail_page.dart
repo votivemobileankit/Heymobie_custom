@@ -29,13 +29,13 @@ class _NotificationOrderDetailsPageState
   //
   // String vendorLastName;
 
-  List<OrderDetail> orderDetailData;
+  late List<OrderDetail> orderDetailData;
 
-  List<OrderItems> orderDetailMenuItem;
+  late List<OrderItems> orderDetailMenuItem;
 
-  List<Vendor1> vendorDetailData;
+  late List<Vendor1> vendorDetailData;
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  late final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   @override
@@ -54,7 +54,7 @@ class _NotificationOrderDetailsPageState
     // BlocProvider.of<OrderHistoryBloc>(context)
     //     .add(OrderHistoryEventForOrderDetail(orderId, vendorId));
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState!.show());
     super.initState();
   }
 
@@ -78,7 +78,7 @@ class _NotificationOrderDetailsPageState
         onRefresh: _refresh,
         child: BlocListener<SettingBloc, SettingState>(
                 listenWhen: (prevState, curState) =>
-                    ModalRoute.of(context).isCurrent,
+                    ModalRoute.of(context)!.isCurrent,
                 listener: (context, state) {
                   if (state is SettingNotificationDataListState) {
                     Navigator.of(context).pop(true);
@@ -90,6 +90,11 @@ class _NotificationOrderDetailsPageState
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       AHeaderWidget(
+                        headerText: "",
+                        headerSigninText: "",
+                        btnEditOnPressed: () {
+
+                        },
                         strBackbuttonName: 'ic_red_btn_back.png',
                         backBtnVisibility: true,
                         btnBackOnPressed: () {
@@ -426,14 +431,10 @@ const double _kAddtoCartDialogRadius = 20.0;
 const double _kCommonCartMediumFontSize = 14.0;
 const double _kCommonFontSize = 16.0;
 
-Dialog _getRatingReviewToMerchant({
-  @required BuildContext context1,
-  @required String titleText,
-  @required String btn1TitleText,
-  @required VoidCallback btn1OnPressed,
-  @required String btn2TitleText,
-  @required VoidCallback btn2OnPressed,
-  @required Vendor1 vendorDetail,
+Dialog _getRatingReviewToMerchant(
+ {
+  required BuildContext context1,
+  required Vendor1 vendorDetail,
 }) {
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -519,6 +520,9 @@ class _AddRatingReview extends StatelessWidget {
           ).leftPadding(15.0.scale()).rightPadding(15.0.scale()),
           AVerticalSpace(15.0.scale()),
           ARoundedButton(
+            btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+            btnDisabledTextColor:Color(0xFFFFFFFF) ,
+            btnFontWeight: FontWeight.normal,
             btnBgColor: kColorCommonButtonBackGround,
             btnTextColor: kColorCommonButton,
             btnText: "Submit Review",

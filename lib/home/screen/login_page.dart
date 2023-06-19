@@ -27,22 +27,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _textFiledUserName;
-  TextEditingController _textFiledPassword;
-  String _deviceType;
-  String _osName;
-  String _card_id;
-  String _deviceToken;
-  String strScreen;
-  List<ItemsCart> _productList;
+  late TextEditingController _textFiledUserName;
+  late  TextEditingController _textFiledPassword;
+  late String _deviceType;
+  late  String _osName;
+  late  String _card_id;
+  late String _deviceToken;
+  late String strScreen;
+  late List<ItemsCart> _productList;
 
-  DriverList _driverDetail;
-  ProductListMenu productListModel;
+  late  DriverList _driverDetail;
+  late  ProductListMenu productListModel;
 
-  DataCart _cartDataModel;
+  late DataCart _cartDataModel;
 
   @override
-  Future<void> initState() {
+  void initState() {
     // TODO: implement initState
     HomeState homeState = BlocProvider.of<HomeBloc>(context).state;
     if (homeState is LoginPageState) {
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement build
 
     return BlocListener<HomeBloc, HomeState>(
-        listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+        listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
           if (state is HomeMenuItemDetailsPageState) {
             Navigator.of(context).pop();
@@ -139,6 +139,13 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               AHeaderWidget(
+                btnEditOnPressed: () {
+
+                },
+                rightEditButtonVisibility: false,
+                headerText: "",
+                headerSigninText: "",
+                strBtnRightImageName:"" ,
                 strBackbuttonName: 'ic_red_btn_back.png',
                 backBtnVisibility: true,
                 btnBackOnPressed: () {
@@ -219,6 +226,9 @@ class _LoginPageState extends State<LoginPage> {
                       )),
                   AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                   ARoundedButton(
+                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
+                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                    btnFontWeight: FontWeight.normal,
                     btnBgColor: kColorAppBgColor,
                     btnTextColor: Colors.white,
                     btnOnPressed: () {
@@ -327,7 +337,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ).leftPadding(_kCommonPadding).rightPadding(_kCommonPadding)
             ],
-          ).widgetBgColor(kColorScreenBgColor).scroll(),
+          ).widgetBgColor(kColorScreenBgColor),
         )).pageBgColor(kColorScreenBgColor);
   }
 }

@@ -26,17 +26,17 @@ const double _kBtnWidth = 89.0;
 const double _kHeightNormal = 35.0;
 const double _kMenuitemNameTextFontSize = 16.0;
 
-List<DriverList> driverInfoList;
-List<ProductListDriver> driverProductList;
-List<Advertisement> advertisementArray;
-List<BitmapDescriptor> pinLocationIcon;
-LatLng pinPosition;
+late List<DriverList> driverInfoList;
+late List<ProductListDriver> driverProductList;
+late List<Advertisement> advertisementArray;
+late List<BitmapDescriptor> pinLocationIcon;
+ LatLng? pinPosition;
 CameraPosition _kGooglePlex = CameraPosition(
   target: LatLng(33.974514956322324, -117.77841125765117),
   zoom: 14.4746,
 );
 double Zoom = 9;
-BuildContext _dialogContext;
+late BuildContext _dialogContext;
 bool _dialogDriverOpen = true;
 
 class HomeDriverListPage extends StatefulWidget {
@@ -47,20 +47,20 @@ class HomeDriverListPage extends StatefulWidget {
 class _HomeDriverListPageState extends State<HomeDriverListPage>
     with WidgetsBindingObserver {
   Completer<GoogleMapController> _controller = Completer();
-  GoogleMapController _cameraController;
+  late  GoogleMapController _cameraController;
   bool isListView = true;
   bool ontimeCall = false;
   double currentLat = 22.7196, currentLong = 75.8577;
 
-  double searchLat, searchLong;
+  late double searchLat, searchLong;
   Set<Marker> _markers = {};
-  BitmapDescriptor pinLocationIcon;
-  BitmapDescriptor pinLocationIcon1;
-  CustomInfoWindowController _customInfoWindowController;
+  late BitmapDescriptor pinLocationIcon;
+  late BitmapDescriptor pinLocationIcon1;
+  late  CustomInfoWindowController _customInfoWindowController;
   String cartCountValue = "0";
 
   String bannerImage = "";
-  List<BitmapDescriptor> pinLocationImageMapArray;
+  late List<BitmapDescriptor> pinLocationImageMapArray;
 
   loadDriverData() {}
 
@@ -81,7 +81,73 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
         lat: "33.974514956322324",
         lng: "-117.77841125765117",
         profileImg1:
-            "https://news.artnet.com/app/news-upload/2016/04/Lemon-Kush-oakland-museum.jpg"));
+            "https://news.artnet.com/app/news-upload/2016/04/Lemon-Kush-oakland-museum.jpg",
+    address1: "",
+    address: "",
+    avgRating: "",
+    businessName: "",
+    categoryId: "",
+    city: "",
+    cityTax: "",
+      color: "",
+      commissionRate: "",
+      createdAt: "",
+      deliveryFee: "",
+       description: "",
+      deviceid: "",
+      devicetype: "",
+      distance: "",
+      dob: "",
+      driverLicense: "",
+      email: "",
+      exciseTax: "",
+      forgetpassRequest: "",
+      forgetpassRequestStatus: "",
+      licenseBack: "",
+      licenseExpiry: "",
+      licenseFront: "",
+      licensePlate: "",
+      loginStatus: "",
+      mailingAddress: "",
+      make: "",
+      map_icon: "",
+      marketArea: "",
+      mobNo: "",
+      model: "",
+      otp: "",
+      password: "",
+      permitExpiry: "",
+      permitNumber: "",
+      permitType: "",
+      planExpiry: "",
+      planId: "",
+      planPurchased: "",
+      profileImg2: "",
+      profileImg3: "",
+      profileImg4: "",
+      ratingCount: "",
+      rememberToken: "",
+      salesTax: "",
+      service: "",
+      serviceRadius: "",
+      ssn: "",
+      state: "",
+      stripeId: "",
+      subCategoryId: "",
+      suburb: "",
+      txnId: "",
+      type: "",
+      type_of_merchant: "",
+      uniqueId: "",
+      updatedAt: "",
+      vendorId: "",
+      vendorStatus: "",
+      vendorType: "",
+      views: "",
+      walletAmount: "",
+      year: "",
+      zipcode: ""
+    ));
 
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -97,7 +163,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
   void driverListCall(double currentLat, double currentLong) {
     showHideProgress(true);
     BlocProvider.of<HomeBloc>(context).add(
-        HomeEventDriverListApiCallLoading(currentLat, currentLong, "", ""));
+        HomeEventDriverListApiCallLoading(currentLat,currentLong, "", ""));
   }
 
   void showHideProgress(bool show) {
@@ -120,6 +186,9 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
         break;
       case LocationPermission.deniedForever:
         await handleDeniedForeverLocationPermission();
+        break;
+      case LocationPermission.unableToDetermine:
+        // TODO: Handle this case.
         break;
     }
   }
@@ -236,7 +305,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
 
   CameraPosition markerCenterPoint(double lat, double lon) {
     pinPosition = LatLng(lat, lon);
-    _kGooglePlex = CameraPosition(target: pinPosition, zoom: Zoom);
+    _kGooglePlex = CameraPosition(target: pinPosition!, zoom: Zoom);
     CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
 
     _cameraController.animateCamera(update);
@@ -259,21 +328,23 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
 
   findAddres(String search) async {
     print("Search =======: $search");
-    List<Location> address = await locationFromAddress(search).then((value) {
-      var first = value.first;
-      print("========== ${first.latitude},${first.longitude}");
-      setState(() {
-        if (first.latitude != null) {
-          searchLat = first.latitude;
-          searchLong = first.longitude;
-          _kGooglePlex = CameraPosition(
-              target: new LatLng(first.latitude, first.longitude), zoom: Zoom);
+    List<Location>? address = await locationFromAddress(search).then((value)
+          {
+            var first = value.first;
+            print("========== ${first.latitude},${first.longitude}");
+            setState(() {
+              if (first.latitude != null) {
+                searchLat = first.latitude;
+                searchLong = first.longitude;
+                _kGooglePlex = CameraPosition(
+                    target: new LatLng(first.latitude, first.longitude), zoom: Zoom);
 
-          CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
-          _cameraController.animateCamera(update);
-        }
-      });
-    });
+                CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
+                _cameraController.animateCamera(update);
+              }
+            });
+
+    }, onError:(){ } );
   }
 
   @override
@@ -296,7 +367,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
       });
     }
     return BlocListener<HomeBloc, HomeState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         //  print("state  ${state}");
         if (state is HomeFromDriverListCartPageState) {
@@ -595,8 +666,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                                   });
                                 },
                               ),
-                              _SearchWidget(currentLat, currentLong,
-                                  _cameraController, _controller, isListView),
+                              // _SearchWidget(currentLat, currentLong,
+                              //     _cameraController, _controller, isListView),
                             ],
                           ),
                         )),
@@ -606,8 +677,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                         Visibility(
                           visible: isListView == true ? true : false,
                           child: Column(children: [
-                            _SearchWidget(currentLat, currentLong,
-                                _cameraController, _controller, isListView),
+                            // _SearchWidget(currentLat, currentLong,
+                            //     _cameraController, _controller, isListView),
                             if (driverInfoList != null)
                               _DriverHorizontalList(driverInfoList)
                                   .align(Alignment.centerLeft)
@@ -754,7 +825,7 @@ class _DriverHorizontalList extends StatelessWidget {
                           if (driverInfoData[index].distance != null)
                             Container(
                                 child: Text(
-                              'Distance ${double.parse(driverInfoData[index].distance)} Miles',
+                              'Distance ${driverInfoData[index].distance} Miles',
                               style: textStyleBoldCustomColor(
                                   11.0.scale(), KColorCommonText),
                               textAlign: TextAlign.center,
@@ -815,7 +886,7 @@ class _MapListViewState extends State<MapListView> {
   CameraPosition markerCenterPoint(double lat, double lon) {
     setState(() {
       pinPosition = LatLng(lat, lon);
-      _kGooglePlex = CameraPosition(target: pinPosition, zoom: Zoom);
+      _kGooglePlex = CameraPosition(target: pinPosition!, zoom: Zoom);
       CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
 
       widget.cameraController.animateCamera(update);
@@ -894,7 +965,7 @@ class _MapListViewState extends State<MapListView> {
             ],
           )
       ],
-    ).scroll();
+    );
   }
 }
 
@@ -951,7 +1022,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
               splashColor: Colors.grey,
               onTap: () {
                 isTimerOn = false;
-                _timer.cancel();
+              //  _timer.cancel();
                 widget.showHideProgress(true);
                 BlocProvider.of<HomeBloc>(context).add(
                     HomeEventDriverProductListClick(
@@ -1043,7 +1114,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
 
 const double _kTextBirthdateField = 128.0;
 String strCity = "";
-Timer _timer;
+late Timer _timer;
 bool isTimerOn = false;
 String strProduct = "";
 
@@ -1062,9 +1133,9 @@ class _SearchWidget extends StatefulWidget {
 }
 
 class __SearchWidgetState extends State<_SearchWidget> {
-  TextEditingController _textSearchCity;
-  TextEditingController _textSearchByText;
-  String lastInputValue;
+  late TextEditingController _textSearchCity;
+  late  TextEditingController _textSearchByText;
+  late  String lastInputValue;
 
   @override
   void initState() {

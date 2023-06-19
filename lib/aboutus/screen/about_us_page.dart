@@ -10,7 +10,7 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-WebViewController webViewContoller1;
+late WebViewController webViewContoller1;
 
 class AboutUsPage extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class AboutUsPage extends StatefulWidget {
 }
 
 class _AboutUsPageState extends State<AboutUsPage> {
-  String _redirectedToUrl;
+ late String _redirectedToUrl;
 
   bool _isLoading = false;
 
@@ -31,7 +31,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
   void initState() {
     showHideProgress(true);
     _redirectedToUrl = UrlAboutUs;
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     super.initState();
   }
 
@@ -39,7 +39,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocListener<AboutBloc, AboutState>(
-      listenWhen: (prevState, curState) => ModalRoute.of(context).isCurrent,
+      listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
         if (state is AboutBackToHomeState) {
           BlocProvider.of<AboutBloc>(context)
@@ -53,46 +53,50 @@ class _AboutUsPageState extends State<AboutUsPage> {
         child: Column(
           children: [
             AHeaderWidget(
+              headerSigninText: "",
+              headerText: "",
+              strBtnRightImageName: "",
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
                 BlocProvider.of<AboutBloc>(context)
                     .add(AboutEventBackBtnClick());
               },
-              rightEditButtonVisibility: false,
+              rightEditButtonVisibility: false, btnEditOnPressed: () {  },
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: (MediaQuery.of(context).size.height),
-              child: WebView(
-                initialUrl: _redirectedToUrl,
-                javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (WebViewController webViewController) {
-                  webViewContoller1 = webViewController;
-                },
-                javascriptChannels: <JavascriptChannel>{},
-                navigationDelegate: (NavigationRequest request) {
-                  //_redirectedToUrl = request.url;
-                  if (request.url.startsWith('https://www.youtube.com/')) {
-                    print('blocking navigation to $request}');
-
-                    return NavigationDecision.prevent;
-                  }
-
-                  print('allowing navigation to $request');
-                  return NavigationDecision.navigate;
-                },
-                onPageStarted: (String url) {
-                  // showHideProgress(false);
-                },
-                onPageFinished: (String url) {
-                  print("on page finished" + url);
-                  // readJS();
-                  showHideProgress(false);
-                },
-                gestureNavigationEnabled: true,
-              ),
-            ).expand()
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   height: (MediaQuery.of(context).size.height),
+            //   child: WebView(
+            //
+            //     initialUrl: _redirectedToUrl,
+            //
+            //     onWebViewCreated: (WebViewController webViewController) {
+            //       webViewContoller1 = webViewController;
+            //     },
+            //     javascriptChannels: <JavascriptChannel>{},
+            //     navigationDelegate: (NavigationRequest request) {
+            //       //_redirectedToUrl = request.url;
+            //       if (request.url.startsWith('https://www.youtube.com/')) {
+            //         print('blocking navigation to $request}');
+            //
+            //         return NavigationDecision.prevent;
+            //       }
+            //
+            //       print('allowing navigation to $request');
+            //       return NavigationDecision.navigate;
+            //     },
+            //     onPageStarted: (String url) {
+            //       // showHideProgress(false);
+            //     },
+            //     onPageFinished: (String url) {
+            //       print("on page finished" + url);
+            //       // readJS();
+            //       showHideProgress(false);
+            //     },
+            //     gestureNavigationEnabled: true,
+            //   ),
+            // ).expand()
           ],
         ).widgetBgColor(Colors.white),
       ).lightStatusBarText().pageBgColor(kColorAppBgColor),

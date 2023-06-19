@@ -14,11 +14,11 @@ class OrderHistoryPage extends StatefulWidget {
 }
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
-  List<HistoryList> _historyListArray;
+  late List<HistoryList> _historyListArray;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
   int pageCount = 1;
   bool isLoading = false;
 
@@ -76,7 +76,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         onRefresh: _refresh,
         child: BlocListener<OrderHistoryBloc, OrderHistoryState>(
             listenWhen: (prevState, curState) =>
-                ModalRoute.of(context).isCurrent,
+                ModalRoute.of(context)!.isCurrent,
             listener: (context, state) {
               if (state is OrderHistoryDetailPageState) {
                 Navigator.of(context)
@@ -123,6 +123,11 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
               child: Column(
                 children: [
                   AHeaderWidget(
+                    headerSigninText: "",
+                    headerText: "",
+                    btnEditOnPressed: () {
+
+                    },
                     strBackbuttonName: 'ic_red_btn_back.png',
                     backBtnVisibility: true,
                     btnBackOnPressed: () {

@@ -6,17 +6,17 @@ abstract class SideNavigatState extends Equatable {
 }
 
 class SideNavigationDefaultState extends SideNavigatState {
-  final SideNavigationTab selectedTab;
-  final bool showLoadingAnimation;
-  final bool goToHomepage;
-  final bool goToCart;
-  final bool goToOrderDetail;
-  final bool fromNotification;
-  final String orderId;
-  final String driverId;
+   SideNavigationTab? selectedTab;
+   bool showLoadingAnimation;
+   bool goToHomepage;
+   bool goToCart;
+   bool goToOrderDetail;
+   bool fromNotification;
+   String? orderId;
+   String? driverId;
 
-  SideNavigationDefaultState(
-      {this.selectedTab,
+  SideNavigationDefaultState({
+      this.selectedTab,
       this.showLoadingAnimation = false,
       this.goToHomepage = false,
       this.goToCart = false,
@@ -27,25 +27,25 @@ class SideNavigationDefaultState extends SideNavigatState {
 
   @override
   List<Object> get props => [
-        selectedTab,
+        selectedTab!,
         showLoadingAnimation,
         goToHomepage,
         goToCart,
         goToOrderDetail,
         fromNotification,
-        orderId,
-        driverId
+        orderId!,
+        driverId!
       ];
 
   SideNavigationDefaultState copyWith(
-      {SideNavigationTab selectedTab,
-      bool showLoadingAnimation,
-      bool goToHomepage,
-      bool goToCart,
-      bool fromNotification,
-      bool goToOrderDetail,
-      String orderId,
-      String driverId}) {
+      { SideNavigationTab? selectedTab,
+      bool? showLoadingAnimation,
+         bool? goToHomepage,
+      bool? goToCart,
+         bool? fromNotification,
+         bool? goToOrderDetail,
+         String? orderId,
+         String ?driverId}) {
     return SideNavigationDefaultState(
         selectedTab: selectedTab ?? this.selectedTab,
         showLoadingAnimation: showLoadingAnimation ?? this.showLoadingAnimation,

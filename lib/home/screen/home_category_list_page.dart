@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -20,7 +19,8 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+
+import '../model/driver_list_model.dart';
 
 const double _kTextBirthdateField = 60.0;
 const double _kCommonHintTextFieldFontSize = 18.0;
@@ -57,7 +57,7 @@ class _HomeCategoryMainPageState extends State<HomeCategoryMainPage> {
     locator1 = GetIt.instance;
     setupLocator();
     _service = locator1!<CallsAndMessagesService>();
-   // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     // categoryStaticList();
     super.initState();
   }
@@ -252,12 +252,12 @@ class CallsAndMessagesService {
 }
 
 class _DriverDetail extends StatelessWidget {
-late  double initialRat = 3;
-late  DriverList driverDetail;
- late Function callNumber;
+  late double initialRat = 3;
+  late DriverList driverDetail;
+  late Function callNumber;
 
- late CallsAndMessagesService service;
- late GetIt locator1;
+  late CallsAndMessagesService service;
+  late GetIt locator1;
 
   _DriverDetail(this.driverDetail, this.callNumber, this.locator1);
 
@@ -309,7 +309,7 @@ late  DriverList driverDetail;
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
                   imageUrl:
-                     "${UserRepository.getProfileUrl()! + driverDetail.profileImg1}",
+                      "${UserRepository.getProfileUrl()! + driverDetail.profileImg1!}",
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                 ),
@@ -323,7 +323,7 @@ late  DriverList driverDetail;
                 Row(
                   children: [
                     Text(
-                      driverDetail.name,
+                      driverDetail.name!,
                       style: textStyleBoldCustomLargeColor(
                           18.0.scale(), KColorCommonText),
                     ).leftPadding(5.0.scale()),
@@ -363,7 +363,7 @@ late  DriverList driverDetail;
                 AVerticalSpace(5.0.scale()),
                 if (_driverDetail!.marketArea != null)
                   Text(
-                    _driverDetail!.marketArea,
+                    _driverDetail!.marketArea!,
                     style: textStyleBoldCustomColor(
                         12.0.scale(), kColorTextFieldText),
                   ).leftPadding(5.0.scale()),
@@ -394,7 +394,7 @@ late  DriverList driverDetail;
                         if (_driverDetail!.mobNo != null)
                           GestureDetector(
                             child: Text(
-                              _driverDetail!.mobNo,
+                              _driverDetail!.mobNo!,
                               style: textStyleBoldCustomColor(
                                   12.0.scale(), kColorTextFieldText),
                             ),
@@ -403,7 +403,7 @@ late  DriverList driverDetail;
                               print("tap");
                               // launch("tel:${_driverDetail.mobNo}");
                               //set the number here
-                              _callNumber(_driverDetail!.mobNo);
+                              _callNumber(_driverDetail!.mobNo!);
                             },
                           )
                       ],
@@ -523,9 +523,9 @@ class __BannerWidgetState extends State<_BannerWidget> {
 // }
 
 class _GridLayout extends StatefulWidget {
- late Function showHideProgress;
+  late Function showHideProgress;
 
-  _GridLayout( Function showHideProgress) {
+  _GridLayout(Function showHideProgress) {
     this.showHideProgress = showHideProgress;
   }
 
@@ -540,10 +540,8 @@ class __GridLayoutState extends State<_GridLayout> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return GoogleGrid(
-
       gap: 16,
       padding: const EdgeInsets.all(16),
-
       children: [
         for (int i = 0; i < _categoryList!.length; i++)
           GestureDetector(

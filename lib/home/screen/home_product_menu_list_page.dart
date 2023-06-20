@@ -21,6 +21,8 @@ import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kTitleBottomMargin = 20.0;
 const double _kDescBottomMargin = 20.0;
 const double _kBtnWidth = 135.0;
@@ -42,8 +44,8 @@ class ProductMenuListPage extends StatefulWidget {
 class _ProductMenuListPageState extends State<ProductMenuListPage>
     with TickerProviderStateMixin {
   late List<ProductListMenu> _productList;
-  late  List<ProductListMenu> _productListSearch;
-  late  DriverList _driverDetail;
+  late List<ProductListMenu> _productListSearch;
+  late DriverList _driverDetail;
 
   // FilterListModel _filterListModel;
   // List<Subcategories> _subcategories;
@@ -51,11 +53,11 @@ class _ProductMenuListPageState extends State<ProductMenuListPage>
   // List<Brands> _brands;
   // List<Types> _types;
   late TabController primaryTC;
-  late  GoogleMapController _cameraController;
+  late GoogleMapController _cameraController;
   late bool isListView = true;
-  late  double currentLat, currentLong;
-  late  Set<Marker> _markers = {};
-  late  BitmapDescriptor pinLocationIcon;
+  late double currentLat, currentLong;
+  late Set<Marker> _markers = {};
+  late BitmapDescriptor pinLocationIcon;
   late CustomInfoWindowController _customInfoWindowController;
   String _cartCountValue = "0";
   bool innerBoxScrolled = false;
@@ -432,7 +434,7 @@ class _DriverDetailWidget extends StatelessWidget {
 
   _DriverDetailWidget(
       this.driverDetail, this.showHideProgress, this.cartCountValue) {
-    initialRat = double.parse(driverDetail.avgRating);
+    initialRat = double.parse(driverDetail.avgRating!);
   }
 
   void _callNumber(String phonenumber) async {
@@ -480,8 +482,8 @@ class _DriverDetailWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
-                  imageUrl:
-                      UserRepository.getProfileUrl()! + driverDetail.profileImg1,
+                  imageUrl: UserRepository.getProfileUrl()! +
+                      driverDetail.profileImg1!,
                   fit: BoxFit.cover,
                   placeholder: (context, url) {
                     return Image(
@@ -501,7 +503,7 @@ class _DriverDetailWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      driverDetail.name + " " + driverDetail.lastName,
+                      driverDetail.name! + " " + driverDetail.lastName!,
                       style: textStyleBoldCustomLargeColor(
                           18.0.scale(), KColorCommonText),
                     ).leftPadding(5.0.scale()),
@@ -540,7 +542,7 @@ class _DriverDetailWidget extends StatelessWidget {
                 ),
                 AVerticalSpace(5.0.scale()),
                 Text(
-                  driverDetail.marketArea,
+                  driverDetail.marketArea!,
                   style: textStyleBoldCustomColor(
                       12.0.scale(), kColorTextFieldText),
                 ).leftPadding(5.0.scale()),
@@ -571,12 +573,12 @@ class _DriverDetailWidget extends StatelessWidget {
                         if (driverDetail.mobNo != null)
                           GestureDetector(
                             child: Text(
-                              driverDetail.mobNo,
+                              driverDetail.mobNo!,
                               style: textStyleBoldCustomColor(
                                   12.0.scale(), kColorTextFieldText),
                             ),
                             onTap: () {
-                              _callNumber(driverDetail.mobNo);
+                              _callNumber(driverDetail.mobNo!);
                             },
                           )
                       ],
@@ -815,7 +817,7 @@ class _TabDetailScreen extends StatelessWidget {
                   ),
                   AHorizontalSpace(5.0.scale()),
                   Text(
-                    driverDetail.mobNo,
+                    driverDetail.mobNo!,
                     style: textStyleCustomColor(
                         _kCommonFontSize.scale(), KColorCommonText),
                   ),
@@ -973,7 +975,7 @@ class _TabDetailScreen extends StatelessWidget {
                   ),
                   AHorizontalSpace(5.0.scale()),
                   Text(
-                    driverDetail.email,
+                    driverDetail.email!,
                     style: textStyleCustomColor(
                         _kCommonFontSize.scale(), KColorCommonText),
                   ),
@@ -1017,10 +1019,10 @@ class _MapWidget extends StatefulWidget {
 
 class __MapWidgetState extends State<_MapWidget> {
   // Function markerCenterPointCall;
- late BitmapDescriptor pinLocationIcon;
+  late BitmapDescriptor pinLocationIcon;
   Set<Marker> markers = {};
 
- late GoogleMapController cameraController;
+  late GoogleMapController cameraController;
 
   CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(33.974514956322324, -117.77841125765117),
@@ -1036,8 +1038,8 @@ class __MapWidgetState extends State<_MapWidget> {
         markers.add(Marker(
             markerId: MarkerId("1"),
             onTap: () {},
-            position: LatLng(double.parse(widget.driverDetail.lat),
-                double.parse(widget.driverDetail.lng)),
+            position: LatLng(double.parse(widget.driverDetail.lat!),
+                double.parse(widget.driverDetail.lng!)),
             icon: pinLocationIcon));
       }
     });
@@ -1084,8 +1086,8 @@ class __MapWidgetState extends State<_MapWidget> {
         cameraController = controller;
         // markerCenterPointCall(
         //     driverInfoList[0].driverLat, driverInfoList[0].driverLong);
-        markerCenterPoint(double.parse(widget.driverDetail.lat),
-            double.parse(widget.driverDetail.lng));
+        markerCenterPoint(double.parse(widget.driverDetail.lat!),
+            double.parse(widget.driverDetail.lng!));
         _markerPositionWidget();
       },
     );
@@ -1097,8 +1099,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   late List<Weights> weights;
   late List<Brands> brands;
   late List<Types> types;
-  late  Function showHideProgress;
-  late  DriverList driverDetail;
+  late Function showHideProgress;
+  late DriverList driverDetail;
 
   late int activeTabIndex;
   late bool returnValue = false;

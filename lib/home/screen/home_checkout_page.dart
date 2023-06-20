@@ -17,6 +17,8 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kFontSizeHeadingText = 17.0;
 const double _kFontSizeMedium = 14.0;
 const double _kFontSizeEditFieldHint = 13.0;
@@ -38,14 +40,14 @@ class HomeCheckOutPage extends StatefulWidget {
 }
 
 class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
- late TextEditingController _textFiledAddressaprtment;
- late TextEditingController _textFiledCity;
+  late TextEditingController _textFiledAddressaprtment;
+  late TextEditingController _textFiledCity;
 
- late TextEditingController _textFiledZip;
- late TextEditingController _textFiledMobile;
- late String strPaymentType = '';
- late String strState = '';
- late String strApartment = '';
+  late TextEditingController _textFiledZip;
+  late TextEditingController _textFiledMobile;
+  late String strPaymentType = '';
+  late String strState = '';
+  late String strApartment = '';
   String strCity = '';
   String strZipCode = '';
   String strMobile = '';
@@ -63,17 +65,17 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
   bool _isCodSelect = false;
   bool _isCouponApplied = false;
   bool _isCreditSelect = false;
- late String _strScreen;
- late DriverList _driverDetail;
- late ProductListMenu _productListModel;
+  late String _strScreen;
+  late DriverList _driverDetail;
+  late ProductListMenu _productListModel;
   bool showPerformance = false;
- late List<Couponlist> couponArrayList;
- late DataResponse _checkOutCalculation;
+  late List<Couponlist> couponArrayList;
+  late DataResponse _checkOutCalculation;
   bool oneTimeCall = true;
- late List<StatesList> _stateArrayList;
- late String _osName;
- late String _deviceType;
- late  String _vendorId;
+  late List<StatesList> _stateArrayList;
+  late String _osName;
+  late String _deviceType;
+  late String _vendorId;
 
   onSettingCallback() {
     setState(() {
@@ -81,7 +83,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
     });
   }
 
- late ScrollController scrollController;
+  late ScrollController scrollController;
 
   ///The controller of sliding up panel
   SlidingUpPanelController panelController = SlidingUpPanelController();
@@ -91,7 +93,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
         .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
   }
 
- late CreditCardValidator _ccValidator;
+  late CreditCardValidator _ccValidator;
 
   @override
   void initState() {
@@ -266,7 +268,10 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
               btnOrderHistory: () {
                 BlocProvider.of<SideNavigatBloc>(context)
                     .add(SideNavigationEventGoToOrderHistoryList(true));
-              }, titleText: '', descText: "",btnTitleText: "");
+              },
+              titleText: '',
+              descText: "",
+              btnTitleText: "");
         } else if (state is HomeCheckOutOrderErrorState) {
           showHideProgress(false);
           showSnackBar(state.message, context);
@@ -299,8 +304,8 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                   }
                 },
                 strBtnRightImageName: 'ic_search_logo.png',
-                rightEditButtonVisibility: false, btnEditOnPressed: () {  },
-
+                rightEditButtonVisibility: false,
+                btnEditOnPressed: () {},
               ),
               Column(
                 children: [
@@ -663,8 +668,10 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                     ),
                                   ),
                                   ARoundedButton(
-                                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                                    btnBorderSideColor: kColorCommonButton,
+                                    btnDisabledColor: Color(0xFF5e6163),
+                                    btnIconSize: 15,
+                                    btnDisabledTextColor: Color(0xFFFFFFFF),
                                     btnFontWeight: FontWeight.normal,
                                     btnBgColor: kColorCommonButton,
                                     btnTextColor: Colors.white,
@@ -745,7 +752,8 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                                   deviceType: _deviceType,
                                                   osName: _osName));
                                         } else {
-                                          if (formKey.currentState!.validate()) {
+                                          if (formKey.currentState!
+                                              .validate()) {
                                             print("PaymentSuccess");
 
                                             strApartment =
@@ -1146,8 +1154,9 @@ class _CouponCodeRowItemListModelNewState
               ],
             ),
             ARoundedButton(
-             btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnDisabledColor: Color(0xFF5e6163),
+              btnIconSize: 15,
+              btnDisabledTextColor: Color(0xFFFFFFFF),
               btnFontWeight: FontWeight.normal,
               btnBgColor: kColorCommonButtonBackGround,
               btnTextColor: kColorCommonButton,
@@ -1156,7 +1165,7 @@ class _CouponCodeRowItemListModelNewState
                 widget.showHideProgress(true);
                 BlocProvider.of<HomeBloc>(context).add(
                     HomeEventCouponListbtnApply(
-                        widget.driverDetail.vendorId,
+                        widget.driverDetail.vendorId!,
                         widget.strScreen,
                         widget.driverDetail,
                         widget.productListModel,

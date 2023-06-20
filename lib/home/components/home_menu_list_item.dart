@@ -8,6 +8,8 @@ import 'package:grambunny_customer/home/model/product_list_model.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kMenuImageWidthSize = 100.0;
 const double _kMenuImageHeightSize = 110.0;
 const double _kMenuitemNameTextFontSize = 14.0;
@@ -19,9 +21,9 @@ const double _kButtonNextWidth = 102;
 const kHeightBtnAddToCart = 35.0;
 
 class MenuListRowItem extends StatelessWidget {
-  late ProductListMenu productList;
-  late DriverList driverDetail;
-  late String strSubcategoryId;
+  ProductListMenu? productList;
+  DriverList? driverDetail;
+  String? strSubcategoryId;
 
   MenuListRowItem(this.productList, this.driverDetail);
 
@@ -53,7 +55,7 @@ class MenuListRowItem extends StatelessWidget {
             children: [
               InkWell(
                   onTap: () {
-                    if (int.parse(productList.quantity) == 0) {
+                    if (int.parse(productList!.quantity) == 0) {
                       showSnackBar("Product is out of stock!", context12);
                     } else {
                       showDialog(
@@ -63,8 +65,8 @@ class MenuListRowItem extends StatelessWidget {
                         builder: (context) {
                           return getAddToCartWidget(
                               context1: context12,
-                              productlist: productList,
-                              driverDetail: driverDetail,
+                              productlist: productList!,
+                              driverDetail: driverDetail!,
                               titleText: '',
                               btn1TitleText: '',
                               btn1OnPressed: () {},
@@ -83,7 +85,7 @@ class MenuListRowItem extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              if (int.parse(productList.quantity) == 0)
+                              if (int.parse(productList!.quantity) == 0)
                                 OutlinedButton(
                                   onPressed: () {},
                                   style: ButtonStyle(
@@ -105,14 +107,14 @@ class MenuListRowItem extends StatelessWidget {
                           ),
                           AVerticalSpace(3.0.scale()),
                           Text(
-                            productList.name,
+                            productList!.name,
                             style: textStyleBoldCustomColor(
                                 _kMenuitemNameTextFontSize.scale(),
                                 KColorCommonText),
                           ),
                           AVerticalSpace(3.0.scale()),
                           Text(
-                            "UPC#" + productList.productCode,
+                            "UPC#" + productList!.productCode,
                             style: textStyleBoldCustomColor(
                                 _kMenuitemNameTextFontSize.scale(),
                                 KColorCommonText),
@@ -127,7 +129,7 @@ class MenuListRowItem extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '\$' + productList.price,
+                                  '\$' + productList!.price,
                                   style: textStyleBoldCustomLargeColor(
                                       _kMenuTypeTextFontSize.scale(),
                                       KColorCommonText),
@@ -135,7 +137,7 @@ class MenuListRowItem extends StatelessWidget {
                                 ).align(Alignment.centerLeft),
                                 AHorizontalSpace(5.0.scale()),
                                 Text(
-                                  "(${productList.unit}) ",
+                                  "(${productList!.unit}) ",
                                   style: textStyleBoldCustomLargeColor(
                                       _kMenuTypeTextFontSize.scale(),
                                       KColorCommonText),
@@ -150,7 +152,7 @@ class MenuListRowItem extends StatelessWidget {
                   )).align(Alignment.centerLeft).expand(),
               InkWell(
                 onTap: () {
-                  if (int.parse(productList.quantity) == 0) {
+                  if (int.parse(productList!.quantity) == 0) {
                     showSnackBar("Product is out of stock!", context12);
                   } else {
                     showDialog(
@@ -165,8 +167,8 @@ class MenuListRowItem extends StatelessWidget {
                             btn2TitleText: "",
                             titleText: "",
                             context1: context12,
-                            productlist: productList,
-                            driverDetail: driverDetail);
+                            productlist: productList!,
+                            driverDetail: driverDetail!);
                       },
                     );
                   }
@@ -181,7 +183,7 @@ class MenuListRowItem extends StatelessWidget {
                         child: CachedNetworkImage(
                           width: _kMenuImageHeightSize.scale(),
                           height: _kMenuImageHeightSize.scale() - 30.0.scale(),
-                          imageUrl: productList.imageURL,
+                          imageUrl: productList!.imageURL,
                           fit: BoxFit.fill,
                           errorWidget: (context, url, error) =>
                               new Icon(Icons.error),
@@ -415,7 +417,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                         HomeEventAddToCartBtnClick(
                             _counter,
                             widget.productlist.id,
-                            widget.driverDetail.vendorId,
+                            widget.driverDetail.vendorId!,
                             0,
                             widget.driverDetail,
                             "0",
@@ -427,8 +429,9 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                   btnFontSize: kFontSizeBtnLarge.scale(),
                   btnElevation: 0,
                   btnBorderSideColor: kColorCommonButton,
-                 btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnDisabledColor: Color(0xFF5e6163),
+                  btnIconSize: 15,
+                  btnDisabledTextColor: Color(0xFFFFFFFF),
                   btnFontWeight: FontWeight.normal,
                 ).align(Alignment.center),
                 AVerticalSeparatorLine(
@@ -445,8 +448,9 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                   btnFontSize: kFontSizeBtnLarge.scale(),
                   btnElevation: 0,
                   btnBorderSideColor: kColorCommonButton,
-                  btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnDisabledColor: Color(0xFF5e6163),
+                  btnIconSize: 15,
+                  btnDisabledTextColor: Color(0xFFFFFFFF),
                   btnFontWeight: FontWeight.normal,
                 ).align(Alignment.center),
               ],

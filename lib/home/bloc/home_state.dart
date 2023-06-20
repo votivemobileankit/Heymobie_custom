@@ -19,12 +19,12 @@ abstract class HomeState extends Equatable {
 }
 
 class LoginPageState extends HomeState {
-  String strScreen;
+  String? strScreen;
 
   LoginPageState(this.strScreen);
 
   @override
-  List<Object> get props => [strScreen];
+  List<Object> get props => [strScreen!];
 }
 
 class LoginPageStateFromCheckOut extends HomeState {
@@ -301,9 +301,9 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
   ProductListDriver driverProductList;
   String screen;
   Vendor driverDetail;
-   List<RatingReviewData>? ratingReviewList;
-   List<RelatedProductList>? relatedProductList;
-   List<AddonProductList>? addOnProductList;
+  List<RatingReviewData>? ratingReviewList;
+  List<RelatedProductList>? relatedProductList;
+  List<AddonProductList>? addOnProductList;
 
   HomeFromDriverProductListDetailsPageState(
       this.driverProductList,

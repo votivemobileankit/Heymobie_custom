@@ -9,6 +9,8 @@ import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/ui_utils.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kMenuImageWidthSize = 100.0;
 const double _kMenuImageHeightSize = 100.0;
 const double _kMenuitemNameTextFontSize = 16.0;
@@ -44,7 +46,7 @@ class HomeDriverListRowItem extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl:
                           "https://herbariumdelivery.com/public/uploads/vendor/profile/" +
-                              driverInfoData.profileImg1,
+                              driverInfoData.profileImg1!,
                       fit: BoxFit.cover,
                       errorWidget: (context, url, error) =>
                           new Icon(Icons.error),
@@ -108,8 +110,9 @@ class HomeDriverListRowItem extends StatelessWidget {
                           btnFontSize: kFontSizeBtnLarge.scale(),
                           btnElevation: 0,
                           btnBorderSideColor: kColorCommonButton,
-                          btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                          btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                          btnDisabledColor: Color(0xFF5e6163),
+                          btnIconSize: 15,
+                          btnDisabledTextColor: Color(0xFFFFFFFF),
                           btnFontWeight: FontWeight.normal,
                         ),
                       ],

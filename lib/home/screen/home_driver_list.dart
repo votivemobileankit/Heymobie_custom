@@ -22,6 +22,8 @@ import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/ui_utils.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kBtnWidth = 89.0;
 const double _kHeightNormal = 35.0;
 const double _kMenuitemNameTextFontSize = 16.0;
@@ -30,7 +32,7 @@ late List<DriverList> driverInfoList;
 late List<ProductListDriver> driverProductList;
 late List<Advertisement> advertisementArray;
 late List<BitmapDescriptor> pinLocationIcon;
- LatLng? pinPosition;
+LatLng? pinPosition;
 CameraPosition _kGooglePlex = CameraPosition(
   target: LatLng(33.974514956322324, -117.77841125765117),
   zoom: 14.4746,
@@ -47,7 +49,7 @@ class HomeDriverListPage extends StatefulWidget {
 class _HomeDriverListPageState extends State<HomeDriverListPage>
     with WidgetsBindingObserver {
   Completer<GoogleMapController> _controller = Completer();
-  late  GoogleMapController _cameraController;
+  late GoogleMapController _cameraController;
   bool isListView = true;
   bool ontimeCall = false;
   double currentLat = 22.7196, currentLong = 75.8577;
@@ -56,7 +58,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
   Set<Marker> _markers = {};
   late BitmapDescriptor pinLocationIcon;
   late BitmapDescriptor pinLocationIcon1;
-  late  CustomInfoWindowController _customInfoWindowController;
+  late CustomInfoWindowController _customInfoWindowController;
   String cartCountValue = "0";
 
   String bannerImage = "";
@@ -82,72 +84,70 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
         lng: "-117.77841125765117",
         profileImg1:
             "https://news.artnet.com/app/news-upload/2016/04/Lemon-Kush-oakland-museum.jpg",
-    address1: "",
-    address: "",
-    avgRating: "",
-    businessName: "",
-    categoryId: "",
-    city: "",
-    cityTax: "",
-      color: "",
-      commissionRate: "",
-      createdAt: "",
-      deliveryFee: "",
-       description: "",
-      deviceid: "",
-      devicetype: "",
-      distance: "",
-      dob: "",
-      driverLicense: "",
-      email: "",
-      exciseTax: "",
-      forgetpassRequest: "",
-      forgetpassRequestStatus: "",
-      licenseBack: "",
-      licenseExpiry: "",
-      licenseFront: "",
-      licensePlate: "",
-      loginStatus: "",
-      mailingAddress: "",
-      make: "",
-      map_icon: "",
-      marketArea: "",
-      mobNo: "",
-      model: "",
-      otp: "",
-      password: "",
-      permitExpiry: "",
-      permitNumber: "",
-      permitType: "",
-      planExpiry: "",
-      planId: "",
-      planPurchased: "",
-      profileImg2: "",
-      profileImg3: "",
-      profileImg4: "",
-      ratingCount: "",
-      rememberToken: "",
-      salesTax: "",
-      service: "",
-      serviceRadius: "",
-      ssn: "",
-      state: "",
-      stripeId: "",
-      subCategoryId: "",
-      suburb: "",
-      txnId: "",
-      type: "",
-      type_of_merchant: "",
-      uniqueId: "",
-      updatedAt: "",
-      vendorId: "",
-      vendorStatus: "",
-      vendorType: "",
-      views: "",
-      walletAmount: "",
-      year: "",
-      zipcode: ""
-    ));
+        address1: "",
+        address: "",
+        avgRating: "",
+        businessName: "",
+        categoryId: "",
+        city: "",
+        cityTax: "",
+        color: "",
+        commissionRate: "",
+        createdAt: "",
+        deliveryFee: "",
+        description: "",
+        deviceid: "",
+        devicetype: "",
+        distance: "",
+        dob: "",
+        driverLicense: "",
+        email: "",
+        exciseTax: "",
+        forgetpassRequest: "",
+        forgetpassRequestStatus: "",
+        licenseBack: "",
+        licenseExpiry: "",
+        licenseFront: "",
+        licensePlate: "",
+        loginStatus: "",
+        mailingAddress: "",
+        make: "",
+        map_icon: "",
+        marketArea: "",
+        mobNo: "",
+        model: "",
+        otp: "",
+        password: "",
+        permitExpiry: "",
+        permitNumber: "",
+        permitType: "",
+        planExpiry: "",
+        planId: "",
+        planPurchased: "",
+        profileImg2: "",
+        profileImg3: "",
+        profileImg4: "",
+        ratingCount: "",
+        rememberToken: "",
+        salesTax: "",
+        service: "",
+        serviceRadius: "",
+        ssn: "",
+        state: "",
+        stripeId: "",
+        subCategoryId: "",
+        suburb: "",
+        txnId: "",
+        type: "",
+        uniqueId: "",
+        updatedAt: "",
+        vendorId: "",
+        vendorStatus: "",
+        vendorType: "",
+        views: "",
+        walletAmount: "",
+        year: "",
+        zipcode: ""));
 
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -163,7 +163,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
   void driverListCall(double currentLat, double currentLong) {
     showHideProgress(true);
     BlocProvider.of<HomeBloc>(context).add(
-        HomeEventDriverListApiCallLoading(currentLat,currentLong, "", ""));
+        HomeEventDriverListApiCallLoading(currentLat, currentLong, "", ""));
   }
 
   void showHideProgress(bool show) {
@@ -282,14 +282,14 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
               markerId: MarkerId("$i"),
               onTap: () {
                 isTimerOn = false;
-                _timer.cancel();
+                _timer?.cancel();
                 DriverList driverDetail = driverInfoList[i];
                 print(driverInfoList[i].vendorId);
                 BlocProvider.of<HomeBloc>(context)
                     .add(HomeEventDriverItemClick(driverDetail));
               },
-              position: LatLng(double.parse(driverInfoList[i].lat),
-                  double.parse(driverInfoList[i].lng)),
+              position: LatLng(double.parse(driverInfoList[i].lat!),
+                  double.parse(driverInfoList[i].lng!)),
               icon: pinLocationImageMapArray[i]));
         }
       }
@@ -328,23 +328,21 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
 
   findAddres(String search) async {
     print("Search =======: $search");
-    List<Location>? address = await locationFromAddress(search).then((value)
-          {
-            var first = value.first;
-            print("========== ${first.latitude},${first.longitude}");
-            setState(() {
-              if (first.latitude != null) {
-                searchLat = first.latitude;
-                searchLong = first.longitude;
-                _kGooglePlex = CameraPosition(
-                    target: new LatLng(first.latitude, first.longitude), zoom: Zoom);
+    List<Location>? address = await locationFromAddress(search).then((value) {
+      var first = value.first;
+      print("========== ${first.latitude},${first.longitude}");
+      setState(() {
+        if (first.latitude != null) {
+          searchLat = first.latitude;
+          searchLong = first.longitude;
+          _kGooglePlex = CameraPosition(
+              target: new LatLng(first.latitude, first.longitude), zoom: Zoom);
 
-                CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
-                _cameraController.animateCamera(update);
-              }
-            });
-
-    }, onError:(){ } );
+          CameraUpdate update = CameraUpdate.newCameraPosition(_kGooglePlex);
+          _cameraController.animateCamera(update);
+        }
+      });
+    }, onError: () {});
   }
 
   @override
@@ -417,10 +415,10 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
             pinLocationImageMapArray = state.pinLocationList;
             if (ontimeCall) {
               _markerPositionWidget(driverInfoList, pinLocationImageMapArray);
-              searchLat = double.parse(driverInfoList[0].lat);
-              searchLong = double.parse(driverInfoList[0].lng);
-              moveCamera(double.parse(driverInfoList[0].lat),
-                  double.parse(driverInfoList[0].lng));
+              searchLat = double.parse(driverInfoList[0].lat!);
+              searchLong = double.parse(driverInfoList[0].lng!);
+              moveCamera(double.parse(driverInfoList[0].lat!),
+                  double.parse(driverInfoList[0].lng!));
             } else {
               isListView = false;
             }
@@ -502,7 +500,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
               backBtnVisibility: true,
               btnBackOnPressed: () {
                 if (_timer != null) {
-                  _timer.cancel();
+                  _timer?.cancel();
                 }
                 Scaffold.of(context).openDrawer();
               },
@@ -513,7 +511,9 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
               rightEditButtonVisibility: true,
               btnEditOnPressed: () {
                 if (sharedPrefs.isLogin == false) {
-                  _timer.cancel();
+                  if (_timer != null) {
+                    _timer?.cancel();
+                  }
                   isTimerOn = false;
                   BlocProvider.of<HomeBloc>(context)
                       .add(LoginEventSignInButtonClick());
@@ -560,7 +560,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                             onTap: () {
                               setState(() {
                                 isListView = true;
-                                _timer.cancel();
+                                _timer?.cancel();
                               });
                             },
                             child: isListView == true
@@ -568,17 +568,18 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                                     image: AssetImage(
                                         '${imgPathGeneral}ic_list_driver_icon.png'),
                                     color: Colors.white,
-                                    height: 40.0.scale(),
-                                    width: 40.0.scale(),
+                                    height: 20.0.scale(),
+                                    width: 20.0.scale(),
                                   ).align(Alignment.center)
                                 : Image(
                                     image: AssetImage(
                                         '${imgPathGeneral}ic_list_driver_white_icon.png'),
                                     color: KColorTextGrey,
-                                    height: 40.0.scale(),
-                                    width: 40.0.scale(),
+                                    height: 20.0.scale(),
+                                    width: 20.0.scale(),
                                   ).align(Alignment.center),
                           ),
+                          AHorizontalSpace(5.0.scale()),
                           InkWell(
                             onTap: () {
                               setState(() {
@@ -589,8 +590,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                                     driverInfoList, pinLocationImageMapArray);
                                 if (driverInfoList != null)
                                   moveCamera(
-                                      double.parse(driverInfoList[0].lat),
-                                      double.parse(driverInfoList[0].lng));
+                                      double.parse(driverInfoList[0].lat!),
+                                      double.parse(driverInfoList[0].lng!));
                               });
                             },
                             child: isListView == false
@@ -598,15 +599,15 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                                     image: AssetImage(
                                         '${imgPathGeneral}ic_map_driver_icon.png'),
                                     color: Colors.white,
-                                    height: 40.0.scale(),
-                                    width: 40.0.scale(),
+                                    height: 25.0.scale(),
+                                    width: 25.0.scale(),
                                   ).align(Alignment.center)
                                 : Image(
                                     image: AssetImage(
                                         '${imgPathGeneral}ic_map_driver_white_icon.png'),
                                     color: KColorTextGrey,
-                                    height: 40.0.scale(),
-                                    width: 40.0.scale(),
+                                    height: 25.0.scale(),
+                                    width: 25.0.scale(),
                                   ).align(Alignment.center),
                           )
                         ],
@@ -696,8 +697,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: CachedNetworkImage(
-                                  imageUrl: advertisementArray[0].url +
-                                      advertisementArray[0].image,
+                                  imageUrl: advertisementArray[0].url! +
+                                      advertisementArray[0].image!,
                                   fit: BoxFit.fill,
                                   errorWidget: (context, url, error) =>
                                       new Icon(Icons.error),
@@ -713,8 +714,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: CachedNetworkImage(
-                                  imageUrl: advertisementArray[1].url +
-                                      advertisementArray[1].image,
+                                  imageUrl: advertisementArray[1].url! +
+                                      advertisementArray[1].image!,
                                   fit: BoxFit.fill,
                                   errorWidget: (context, url, error) =>
                                       new Icon(Icons.error),
@@ -784,7 +785,7 @@ class _DriverHorizontalList extends StatelessWidget {
           child: InkWell(
               onTap: () {
                 if (driverInfoData[index].name != "") {
-                  _timer.cancel();
+                  _timer?.cancel();
                   BlocProvider.of<HomeBloc>(context)
                       .add(HomeEventDriverItemClick(driverInfoData[index]));
                 }
@@ -804,7 +805,7 @@ class _DriverHorizontalList extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl:
                                 "https://heymobie.com/public/uploads/vendor/profile/" +
-                                    driverInfoData[index].profileImg1,
+                                    driverInfoData[index].profileImg1!,
                             fit: BoxFit.fill,
                             errorWidget: (context, url, error) =>
                                 new Icon(Icons.error),
@@ -1006,6 +1007,21 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
     super.initState();
   }
 
+  //
+  // String getCategoryNameStatus(String str) {
+  //   String status = "";
+  //   if (str == "0") {
+  //     status = "Product";
+  //   } else if (str == "1") {
+  //     status = "Product";
+  //   } else if (str == "2") {
+  //     status = "Ride";
+  //   } else if (str == "3") {
+  //     status = "Event";
+  //   }
+  //   return status;
+  // }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -1022,14 +1038,14 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
               splashColor: Colors.grey,
               onTap: () {
                 isTimerOn = false;
-              //  _timer.cancel();
+                //_timer.cancel();
                 widget.showHideProgress(true);
                 BlocProvider.of<HomeBloc>(context).add(
                     HomeEventDriverProductListClick(
                         widget._driverProductList[i],
-                        widget._driverProductList[i].vendor,
+                        widget._driverProductList[i].vendor!,
                         "DriverList",
-                        widget._driverProductList[i].id));
+                        widget._driverProductList[i].id!));
               },
               child: Container(
                 height: 210.0.scale(),
@@ -1042,25 +1058,82 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                       child: CachedNetworkImage(
                         width: 100.0.scale(),
                         height: 80.0.scale(),
-                        imageUrl: widget._driverProductList[i].imageURL,
+                        imageUrl: widget._driverProductList[i].imageURL!,
                         fit: BoxFit.cover,
                         errorWidget: (context, url, error) =>
                             new Icon(Icons.error),
                       ),
                     ).align(Alignment.center),
                     AVerticalSpace(4.0.scale()),
-                    Text(
-                      widget._driverProductList[i].categoryname == null
-                          ? ""
-                          : widget._driverProductList[i].categoryname,
-                      textAlign: TextAlign.center,
-                      style: textStyleCustomColor(14.0.scale(), KColorTextGrey),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (widget._driverProductList[i].productType == "0")
+                          Image.asset(
+                            "${imgPathGeneral}ic_product.png",
+                            height: 15,
+                            width: 15,
+                          ),
+                        if (widget._driverProductList[i].productType == "1")
+                          Image.asset(
+                            "${imgPathGeneral}ic_product.png",
+                            height: 15,
+                            width: 15,
+                          ),
+                        if (widget._driverProductList[i].productType == "2")
+                          Image.asset(
+                            "${imgPathGeneral}ic_ride.png",
+                            height: 18,
+                            width: 18,
+                          ),
+                        if (widget._driverProductList[i].productType == "3")
+                          Image.asset(
+                            "${imgPathGeneral}ic_ticket.png",
+                            height: 15,
+                            width: 15,
+                          ),
+                        AHorizontalSpace(7.0.scale()),
+
+                        // if (widget._driverProductList[i].categoryname == "0")
+                        //   Text(
+                        //     "Product",
+                        //     style: textStyleCustomColor(
+                        //         14.0.scale(), KColorTextGrey),
+                        //   ),
+                        // if (widget._driverProductList[i].categoryname == "1")
+                        //   Text(
+                        //     "Product",
+                        //     style: textStyleCustomColor(
+                        //         14.0.scale(), KColorTextGrey),
+                        //   ),
+                        // if (widget._driverProductList[i].categoryname == "2")
+                        //   Text(
+                        //     "Ride",
+                        //     style: textStyleCustomColor(
+                        //         14.0.scale(), KColorTextGrey),
+                        //   ),
+                        // if (widget._driverProductList[i].categoryname  == "3")
+                        //   Text(
+                        //     "Event",
+                        //     style: textStyleCustomColor(
+                        //         14.0.scale(), KColorTextGrey),
+                        //   )
+
+                        Text(
+                          widget._driverProductList[i].categoryname! == null
+                              ? ""
+                              : widget._driverProductList[i].categoryname!,
+                          textAlign: TextAlign.center,
+                          style: textStyleCustomColor(
+                              14.0.scale(), KColorTextGrey),
+                        ),
+                      ],
                     ),
                     AVerticalSpace(4.0.scale()),
                     Text(
-                      widget._driverProductList[i].name,
+                      widget._driverProductList[i].name!,
                       textAlign: TextAlign.center,
-                      maxLines: 1,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: textStyleBoldCustomColor(
                           15.0.scale(), KColorCommonText),
@@ -1071,12 +1144,13 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                       children: [
                         Image(
                           image: AssetImage('${imgPathGeneral}ic_bluetick.png'),
+                          height: 15,
                         ),
                         AHorizontalSpace(3.0.scale()),
                         Text(
-                          widget._driverProductList[i].vendorname +
+                          widget._driverProductList[i].vendorname! +
                               " " +
-                              widget._driverProductList[i].lastName,
+                              widget._driverProductList[i].lastName!,
                           overflow: TextOverflow.ellipsis,
                           style: textStyleBoldCustomColor(
                               12.0.scale(), KColorCommonText),
@@ -1095,7 +1169,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                           ),
                           AHorizontalSpace(3.0.scale()),
                           Text(
-                            widget._driverProductList[i].avgRating,
+                            widget._driverProductList[i].avgRating!,
                             overflow: TextOverflow.ellipsis,
                             style: textStyleBoldCustomColor(
                                 12.0.scale(), KColorCommonText),
@@ -1114,7 +1188,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
 
 const double _kTextBirthdateField = 128.0;
 String strCity = "";
-late Timer _timer;
+Timer? _timer;
 bool isTimerOn = false;
 String strProduct = "";
 
@@ -1134,8 +1208,8 @@ class _SearchWidget extends StatefulWidget {
 
 class __SearchWidgetState extends State<_SearchWidget> {
   late TextEditingController _textSearchCity;
-  late  TextEditingController _textSearchByText;
-  late  String lastInputValue;
+  late TextEditingController _textSearchByText;
+  late String lastInputValue;
 
   @override
   void initState() {
@@ -1144,7 +1218,7 @@ class __SearchWidgetState extends State<_SearchWidget> {
     if (widget.isListView == false) {
       if (_timer != null) {
         // print("timer on ===========");
-        if (_timer.isActive == false) {
+        if (_timer?.isActive == false) {
           print("timer on ===========");
           timerOn();
         }
@@ -1210,8 +1284,8 @@ class __SearchWidgetState extends State<_SearchWidget> {
       // _timer.cancel();
     }
 
-    print("timer isActive ====== ${_timer.isActive}");
-    if (_timer.isActive == false) {
+    print("timer isActive ====== ${_timer?.isActive}");
+    if (_timer?.isActive == false) {
       print("is List${widget.isListView}");
       // timerOn();
       // if (widget.isListView == true) timerOn();
@@ -1255,8 +1329,8 @@ class __SearchWidgetState extends State<_SearchWidget> {
                     ).align(Alignment.center).leftPadding(5.0.scale()),
                     TextField(
                       onChanged: (text) {
-                        if (_timer.isActive != null) {
-                          if (_timer.isActive != true) {
+                        if (_timer?.isActive != null) {
+                          if (_timer?.isActive != true) {
                             if (isTimerOn == false) {
                               isTimerOn = true;
                               timerOn();
@@ -1428,8 +1502,8 @@ class __SearchWidgetState extends State<_SearchWidget> {
                     ).align(Alignment.center).leftPadding(5.0.scale()),
                     TextField(
                       onChanged: (text) {
-                        if (_timer.isActive != null) {
-                          if (_timer.isActive != true) {
+                        if (_timer?.isActive != null) {
+                          if (_timer?.isActive != true) {
                             if (isTimerOn == false) {
                               isTimerOn = true;
                               timerOn();

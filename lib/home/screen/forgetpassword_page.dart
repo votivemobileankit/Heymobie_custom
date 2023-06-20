@@ -68,8 +68,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 strBackbuttonName: 'ic_red_btn_back.png',
                 backBtnVisibility: true,
                 btnBackOnPressed: () {
-                  BlocProvider.of<HomeBloc>(context)
-                      .add(HomeEventBackBtnClick());
+                  Navigator.pop(context);
+                  // BlocProvider.of<HomeBloc>(context)
+                  //     .add(HomeEventBackBtnClick());
                 },
                 btnEditOnPressed: () {},
                 headerText: "",
@@ -135,8 +136,10 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     btnWidth: kWidthBtnNormal.scale(),
                     btnFontSize: kFontSizeBtnLarge.scale(),
                     btnElevation: 0,
-                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                    btnBorderSideColor: kColorCommonButton,
+                    btnDisabledColor: Color(0xFF5e6163),
+                    btnIconSize: 15,
+                    btnDisabledTextColor: Color(0xFFFFFFFF),
                     btnFontWeight: FontWeight.normal,
                   ),
                 ],

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:grambunny_customer/home/home.dart';
 import 'package:grambunny_customer/home/model/cartlist_response_model.dart';
@@ -15,47 +14,48 @@ import 'package:grambunny_customer/orderhistory/model/vendor_location_model.dart
 import 'package:grambunny_customer/profile/profile.dart';
 import 'package:grambunny_customer/services/herbarium_cust_shared_preferences.dart';
 import 'package:grambunny_customer/setting/model/model.dart';
-import 'package:grambunny_customer/utils/image_cropper1.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../home/model/driver_list_model.dart';
+import '../utils/imagecropper2.dart';
 
 late NetworkApiProvider _vdApiProvider;
-class UserRepository {
 
- late String currentLanguageCode = "";
- late ScreenNavigation ScreenName;
+class UserRepository {
+  late String currentLanguageCode = "";
+  late ScreenNavigation ScreenName;
   List<RatingReviewData>? ratingReviewDataArray;
- late String herberiumUrlCall;
- late List<CategoryListModel> categortList;
- late List<DriverList> _driverList;
-late  List<ProductListMenu> _productList;
- late FilterListModel _filterListModel;
-late  List<StatesList> statesList;
- late String cartCount = "0";
- late List<ItemsCart> _cartList;
+  late String herberiumUrlCall;
+  late List<CategoryListModel> categortList;
+  late List<DriverList> _driverList;
+  late List<ProductListMenu> _productList;
+  late FilterListModel _filterListModel;
+  late List<StatesList> statesList;
+  late String cartCount = "0";
+  late List<ItemsCart> _cartList;
   late DataCart cartDataModel;
- late List<Couponlist> couponlist;
- late DataResponse checkoutCalculation;
- late List<ProductListDriver> _driverProductList;
- late UserDetail _userDetail;
- late List<VendorLatlng> _vendorLatLong;
- late List<HistoryList> _orderHistoryItem;
- late List<OrderDetail> orderDetail;
- late List<OrderItems> orderItems;
- late List<Vendor1> vendorData;
- late String orderId = "";
- late String notifyOrderId = "";
- late String notifyDriverId = "";
- late String isNewdriver;
- late UserDetailResponseModel userDetailResponseModel;
- late NotificationDetail notificationDetail;
- late UserInfoData userDataInfo;
- late String strFirebaseToken = "";
- late String strBannerImage = "";
+  late List<Couponlist> couponlist;
+  late DataResponse checkoutCalculation;
+  late List<ProductListDriver> _driverProductList;
+  late UserDetail _userDetail;
+  late List<VendorLatlng> _vendorLatLong;
+  late List<HistoryList> _orderHistoryItem;
+  late List<OrderDetail> orderDetail;
+  late List<OrderItems> orderItems;
+  late List<Vendor1> vendorData;
+  late String orderId = "";
+  late String notifyOrderId = "";
+  late String notifyDriverId = "";
+  late String isNewdriver;
+  late UserDetailResponseModel userDetailResponseModel;
+  late NotificationDetail notificationDetail;
+  late UserInfoData userDataInfo;
+  late String strFirebaseToken = "";
+  late String strBannerImage = "";
   List<RelatedProductList>? relatedProductList;
   List<AddonProductList>? addonProductList;
- late List<Advertisement> _advertisement;
- late List<BitmapDescriptor> pinLocationIcon;
+  late List<Advertisement> _advertisement;
+  late List<BitmapDescriptor> pinLocationIcon;
   static String strProfileMerchantUrl = "";
 
   UserRepository() {
@@ -73,7 +73,7 @@ late  List<StatesList> statesList;
     strProfileMerchantUrl = value;
   }
 
-  static  String? getProfileUrl() {
+  static String? getProfileUrl() {
     return strProfileMerchantUrl;
   }
 
@@ -110,7 +110,7 @@ late  List<StatesList> statesList;
       if (response["status"].toString() == "1" ||
           response["status"].toString() == "2") {
         LoginModel loginModel = LoginModel.fromJson(response);
-        _userDetail = loginModel.data.userDetail;
+        _userDetail = loginModel.data!.userDetail;
         apiCallState = NetworkApiCallState.completed(true,
             response["message"].toString(), response["status"].toString());
       } else {
@@ -218,7 +218,7 @@ late  List<StatesList> statesList;
       if (responseList["status"] == 1) {
         OrderHistoryModel historyModel =
             OrderHistoryModel.fromJson(responseList);
-        _orderHistoryItem = historyModel.items.data;
+        _orderHistoryItem = historyModel.items!.data!;
         print("ORder=====>>>>" + "success");
         status = responseList['status'].toString();
         apiCallState = NetworkApiCallState.completed(
@@ -265,7 +265,7 @@ late  List<StatesList> statesList;
       if (response["status"].toString() == "1" ||
           response["status"].toString() == "2") {
         LoginModel loginModel = LoginModel.fromJson(response);
-        _userDetail = loginModel.data.userDetail;
+        _userDetail = loginModel.data!.userDetail;
         apiCallState = NetworkApiCallState.completed(true,
             response["message"].toString(), response["status"].toString());
       } else {
@@ -393,23 +393,23 @@ late  List<StatesList> statesList;
 
   Future<NetworkApiCallState<bool>> SignUpToAPI(
       {required String fname,
-        required String lname,
-        required String email,
-        required   String password,
-        required  String mobileno,
-        required  String devicetype,
-        required  String devicetoken,
-        required  String dob,
-        required  String address,
-        required  String city,
-        required String state,
-        required  String zipcode,
-        required String os_name,
-        required String profileImage,
-        required  String licenseImageFront,
-        required String licenseImageBack,
-        required String strCustomerType,
-        required String marijuanaIdCard}) async {
+      required String lname,
+      required String email,
+      required String password,
+      required String mobileno,
+      required String devicetype,
+      required String devicetoken,
+      required String dob,
+      required String address,
+      required String city,
+      required String state,
+      required String zipcode,
+      required String os_name,
+      required String profileImage,
+      required String licenseImageFront,
+      required String licenseImageBack,
+      required String strCustomerType,
+      required String marijuanaIdCard}) async {
     NetworkApiCallState<bool> apiCallState;
     var response;
     String status;
@@ -447,8 +447,9 @@ late  List<StatesList> statesList;
       print("Status=====>>>>" + status);
       if (response["status"].toString() == "1") {
         LoginModel loginModel = LoginModel.fromJson(response);
-        _userDetail = loginModel.data.userDetail;
-        sharedPrefs.setUserProfileImage = loginModel.data.userDetail.profileURL;
+        _userDetail = loginModel.data!.userDetail;
+        sharedPrefs.setUserProfileImage =
+            loginModel.data?.userDetail.profileURL ?? "";
         apiCallState = NetworkApiCallState.completed(true,
             response["message"].toString(), response["status"].toString());
       } else {
@@ -551,11 +552,11 @@ late  List<StatesList> statesList;
         DriverListModel driverListModel =
             DriverListModel.fromJson(responseList);
         print(driverListModel.status);
-        strBannerImage = driverListModel.banner_image;
-        _driverList = driverListModel.data.driverList;
+        strBannerImage = driverListModel.bannerImage!;
+        _driverList = driverListModel.data!.driverList!;
 
-        _driverProductList = driverListModel.data.productList;
-        _advertisement = driverListModel.data.advertisement;
+        _driverProductList = driverListModel.data!.productList!;
+        _advertisement = driverListModel.data!.advertisement!;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -568,7 +569,7 @@ late  List<StatesList> statesList;
             DriverListModel.fromJson(responseList);
         //  print(driverListModel.status);
 
-        _advertisement = driverListModel.data.advertisement;
+        _advertisement = driverListModel.data!.advertisement!;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -590,7 +591,7 @@ late  List<StatesList> statesList;
   }
 
   Future<NetworkApiCallState<bool>> uploadImageCopyAPI(
-      {required String imageCopyPath,required String paramName}) async {
+      {required String imageCopyPath, required String paramName}) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> userDetailMap = {
       "userid": sharedPrefs.getUserId,
@@ -627,19 +628,31 @@ late  List<StatesList> statesList;
     return apiCallState;
   }
 
+  // Future<NetworkApiCallState<bool>?> getMapImage({
+  //  required String url,
+  // }) async {
+  //
+  //   BitmapDescriptor bitmapDescriptor =
+  //       await ImageCropper().resizeAndCircle(url, 80);
+  //
+  //   // ui.FrameInfo fi = await codec.getNextFrame();
+  //   // return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer
+  //   //     .asUint8List()
+  //
+  //   // pinLocationIcon
+  //   //     .add(BitmapDescriptor.fromBytes(dataBytes.buffer.asUint8List()));
+  //   pinLocationIcon.add(bitmapDescriptor);
+  // }
   Future<NetworkApiCallState<bool>?> getMapImage({
-   required String url,
+    required String url,
   }) async {
+    // var dataBytes;
+    // var request = await http.get(Uri.parse(url));
+    // var bytes = await request.bodyBytes;
+    // dataBytes = bytes;
+    //  print("url========= " + url);
+    BitmapDescriptor bitmapDescriptor = await ImageCropper2().byteData(url);
 
-    BitmapDescriptor bitmapDescriptor =
-        await ImageCropper().resizeAndCircle(url, 80);
-
-    // ui.FrameInfo fi = await codec.getNextFrame();
-    // return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer
-    //     .asUint8List()
-
-    // pinLocationIcon
-    //     .add(BitmapDescriptor.fromBytes(dataBytes.buffer.asUint8List()));
     pinLocationIcon.add(bitmapDescriptor);
   }
 
@@ -676,9 +689,9 @@ late  List<StatesList> statesList;
   }
 
   Future<NetworkApiCallState<bool>> getProductListApiCall({
-   required String categoryId,
+    required String categoryId,
     required String driverId,
-    required  String search,
+    required String search,
   }) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> latlongMap = {
@@ -882,7 +895,7 @@ late  List<StatesList> statesList;
   }
 
   Future<NetworkApiCallState<bool>> vendorLocationUpdate({
-   required String vendorID,
+    required String vendorID,
   }) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> vendorUpdateLocationMap = {
@@ -922,8 +935,8 @@ late  List<StatesList> statesList;
   }
 
   Future<NetworkApiCallState<bool>> changePasswordAPI({
-  required  String old_Password,
-  required  String new_Password,
+    required String old_Password,
+    required String new_Password,
   }) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> userDetailMap = {
@@ -962,17 +975,17 @@ late  List<StatesList> statesList;
 
   Future<NetworkApiCallState<bool>> postUpdateUserInfoApi(
       {required String mobileNo,
-        required  String firstName,
-        required  String lastName,
-        required  String address,
-        required   String city,
-        required   double lat,
-        required  double long,
-        required   String zipCode,
-        required  String State,
-        required  String userPath,
-        required  String frontCopyPath,
-        required String backCopyPath}) async {
+      required String firstName,
+      required String lastName,
+      required String address,
+      required String city,
+      required double lat,
+      required double long,
+      required String zipCode,
+      required String State,
+      required String userPath,
+      required String frontCopyPath,
+      required String backCopyPath}) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> userDetailMap;
     print("file front path" + userPath);
@@ -1093,7 +1106,6 @@ late  List<StatesList> statesList;
 
   Future<NetworkApiCallState<bool>> getViewCartListApiCall() async {
     NetworkApiCallState<bool> apiCallState;
-
 
     try {
       String userid;
@@ -1515,29 +1527,29 @@ late  List<StatesList> statesList;
 
   Future<NetworkApiCallState<bool>> postSubmitPaymentApiCall(
       {required String payMethod,
-        required String mobile,
-        required  String address,
-        required  String city,
-        required  String state,
-        required  String zip,
-        required   String comment,
-        required   String cc_name,
-        required   String creditcardtype,
-        required  String cc_number,
-        required  String cc_expiration,
-        required String cc_cvv,
-        required  String cc_expire_month,
-        required  String cc_expire_year,
-        required  String promo_amount,
-        required  String saletax,
-        required  String excisetax,
-        required  String citytax,
-        required   String vendorId,
-        required  String final_amount,
-        required  String subTotal,
-        required   String coupon_id,
-        required   String device_type,
-        required  String device_os_name}) async {
+      required String mobile,
+      required String address,
+      required String city,
+      required String state,
+      required String zip,
+      required String comment,
+      required String cc_name,
+      required String creditcardtype,
+      required String cc_number,
+      required String cc_expiration,
+      required String cc_cvv,
+      required String cc_expire_month,
+      required String cc_expire_year,
+      required String promo_amount,
+      required String saletax,
+      required String excisetax,
+      required String citytax,
+      required String vendorId,
+      required String final_amount,
+      required String subTotal,
+      required String coupon_id,
+      required String device_type,
+      required String device_os_name}) async {
     NetworkApiCallState<bool> apiCallState;
 
     Map<String, dynamic> paymentParam = {
@@ -1604,7 +1616,7 @@ late  List<StatesList> statesList;
     return orderId == "" ? "" : orderId;
   }
 
- late DriverList driverDetail;
+  late DriverList driverDetail;
 
   set saveDriverDetail(DriverList driverDetail) {
     this.driverDetail = driverDetail;

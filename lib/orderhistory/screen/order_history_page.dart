@@ -14,7 +14,7 @@ class OrderHistoryPage extends StatefulWidget {
 }
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
-  late List<HistoryList> _historyListArray;
+  List<HistoryList>? _historyListArray;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -26,7 +26,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   void initState() {
     // TODO: implement initState
     _historyListArray = [];
-    showHideProgress(true);
+    //showHideProgress(true);
 
     BlocProvider.of<OrderHistoryBloc>(context)
         .add(OrderHistoryEventForOrderList('${pageCount}'));
@@ -48,17 +48,17 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   void startLoader() {
     setState(() {
       isLoading = !isLoading;
-      showHideProgress(true);
+      // showHideProgress(false);
       pageCount = pageCount + 1;
       BlocProvider.of<OrderHistoryBloc>(context)
           .add(OrderHistoryEventForOrderList('${pageCount}'));
     });
   }
 
-  void showHideProgress(bool show) {
-    BlocProvider.of<SideNavigatBloc>(context)
-        .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
-  }
+  // void showHideProgress(bool show) {
+  //   BlocProvider.of<SideNavigatBloc>(context)
+  //       .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
+  // }
 
   Future<Null> _refresh() async {
     pageCount = 1;
@@ -85,25 +85,25 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 //     .add(SideNavigationEventGoToHomePage(true));
               }
               if (state is OrderHistoryListApiLoadingCompleteState) {
-                showHideProgress(false);
+                // showHideProgress(false);
 
                 setState(() {
                   if (state.refresh == 1) {
-                    _historyListArray.clear();
+                    _historyListArray!.clear();
                     List<HistoryList> historyListArray = state.historyList;
 
-                    _historyListArray.addAll(historyListArray);
+                    _historyListArray!.addAll(historyListArray);
                   } else {
                     List<HistoryList> historyListArray = state.historyList;
 
-                    _historyListArray.addAll(historyListArray);
+                    _historyListArray!.addAll(historyListArray);
                   }
                 });
                 BlocProvider.of<OrderHistoryBloc>(context)
                     .add(OrderHistoryEventReset());
               }
               if (state is OrderHistoryListLoadingErrorState) {
-                showHideProgress(false);
+                // showHideProgress(false);
                 BlocProvider.of<OrderHistoryBloc>(context)
                     .add(OrderHistoryEventReset());
                 // BlocProvider.of<SideNavigatBloc>(context)
@@ -125,9 +125,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                   AHeaderWidget(
                     headerSigninText: "",
                     headerText: "",
-                    btnEditOnPressed: () {
-
-                    },
+                    btnEditOnPressed: () {},
                     strBackbuttonName: 'ic_red_btn_back.png',
                     backBtnVisibility: true,
                     btnBackOnPressed: () {
@@ -143,9 +141,9 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                   Column(
                     children: [
                       if (_historyListArray != null &&
-                          _historyListArray.isNotEmpty)
+                          _historyListArray!.isNotEmpty)
                         _HistoryListContainer(
-                                _historyListArray.toList(), _scrollController)
+                                _historyListArray!.toList(), _scrollController)
                             .expand()
                       else
                         _NoProductFoundWidget(),

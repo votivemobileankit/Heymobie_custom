@@ -12,6 +12,8 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kVerticalSpaceTopHeartLogo = 45.0;
 const double _kVerticalSpaceAfterHeartLogo = 10.0;
 const double _kVerticalSpaceAfterUserNameField = 25.0;
@@ -28,16 +30,16 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _textFiledUserName;
-  late  TextEditingController _textFiledPassword;
-  late String _deviceType;
-  late  String _osName;
-  late  String _card_id;
-  late String _deviceToken;
-  late String strScreen;
-  late List<ItemsCart> _productList;
+  late TextEditingController _textFiledPassword;
+  String? _deviceType;
+  String? _osName;
+  String? _card_id;
+  String? _deviceToken;
+  String? strScreen;
+  List<ItemsCart>? _productList;
 
-  late  DriverList _driverDetail;
-  late  ProductListMenu productListModel;
+  late DriverList _driverDetail;
+  late ProductListMenu productListModel;
 
   late DataCart _cartDataModel;
 
@@ -76,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
       _osName = "IOS " + iosInfo.systemName;
       _deviceType = "IOS";
     }
-    print("deviceType:" + _deviceType + "  osName:" + _osName);
+    print("deviceType:" + _deviceType! + "  osName:" + _osName!);
   }
 
   void showHideProgress(bool show) {
@@ -117,8 +119,8 @@ class _LoginPageState extends State<LoginPage> {
           } else if (state is LoginLoadingCompleteState) {
             showHideProgress(false);
             if (state.userDetail.userStatus == "0") {
-              BlocProvider.of<HomeBloc>(context)
-                  .add(HomeEventForOTPScreen(state.userDetail.email, "signin"));
+              BlocProvider.of<HomeBloc>(context).add(HomeEventForOTPScreen(
+                  state.userDetail.email ?? "", "signin"));
             } else {
               BlocProvider.of<HomeBloc>(context).add(HomeEventBackBtnClick());
             }
@@ -139,17 +141,16 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               AHeaderWidget(
-                btnEditOnPressed: () {
-
-                },
+                btnEditOnPressed: () {},
                 rightEditButtonVisibility: false,
                 headerText: "",
                 headerSigninText: "",
-                strBtnRightImageName:"" ,
+                strBtnRightImageName: "",
                 strBackbuttonName: 'ic_red_btn_back.png',
                 backBtnVisibility: true,
                 btnBackOnPressed: () {
                   print(strScreen);
+
                   if (strScreen == "ProductDetail") {
                     BlocProvider.of<HomeBloc>(context).add(
                         HomeEventBackForProductDetailPage(
@@ -164,6 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                     BlocProvider.of<HomeBloc>(context)
                         .add(HomeEventBackForProductListpage());
                   } else {
+                    //Navigator.pop(context);
+                    print("Back==");
                     BlocProvider.of<HomeBloc>(context)
                         .add(HomeEventBackBtnClick());
                   }
@@ -181,7 +184,10 @@ class _LoginPageState extends State<LoginPage> {
                   //AVerticalSpace(_kVerticalSpaceAfterHeartLogo.scale()),
 
                   Image(
-                    image: AssetImage('${imgPathGeneral}ic_app_name_logo.png'),
+                    image: AssetImage(
+                      '${imgPathGeneral}ic_app_name_logo.png',
+                    ),
+                    height: 120.0.scale(),
                   ).align(Alignment.center),
                   AVerticalSpace(_kVerticalSpaceBeforeUserNameField.scale()),
                   TextField(
@@ -226,8 +232,10 @@ class _LoginPageState extends State<LoginPage> {
                       )),
                   AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                   ARoundedButton(
-                    btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                    btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                    btnBorderSideColor: kColorCommonButton,
+                    btnDisabledColor: Color(0xFF5e6163),
+                    btnIconSize: 15,
+                    btnDisabledTextColor: Color(0xFFFFFFFF),
                     btnFontWeight: FontWeight.normal,
                     btnBgColor: kColorAppBgColor,
                     btnTextColor: Colors.white,
@@ -242,10 +250,10 @@ class _LoginPageState extends State<LoginPage> {
                             LoginEventBtnLoginClicked(
                                 _textFiledUserName.text.toString(),
                                 _textFiledPassword.text.toString(),
-                                _card_id,
-                                _deviceType,
-                                _osName,
-                                _deviceToken));
+                                _card_id!,
+                                _deviceType!,
+                                _osName!,
+                                _deviceToken!));
                       }
                     },
                     btnText: Stringss.current.txtBtnLogin,
@@ -337,7 +345,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ).leftPadding(_kCommonPadding).rightPadding(_kCommonPadding)
             ],
-          ).widgetBgColor(kColorScreenBgColor),
+          ).widgetBgColor(kColorScreenBgColor).scroll(),
         )).pageBgColor(kColorScreenBgColor);
   }
 }

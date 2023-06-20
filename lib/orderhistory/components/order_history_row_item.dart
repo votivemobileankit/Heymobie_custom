@@ -57,7 +57,7 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                           ).align(Alignment.centerLeft),
                           AHorizontalSpace(4.0.scale()),
                           Text(
-                            widget._historyItemModel.createdAt,
+                            widget._historyItemModel.createdAt!,
                             style: textStyleCustomColor(
                                 _kTextCommonFontSize.scale(), KColorCommonText),
                             textAlign: TextAlign.left,
@@ -123,9 +123,9 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        widget._historyItemModel.name +
+                        widget._historyItemModel.name! +
                             " " +
-                            widget._historyItemModel.lastName,
+                            widget._historyItemModel.lastName!,
                         style: textStyleCustomColor(
                             _kTextCommonFontSize.scale(), KColorCommonText),
                         textAlign: TextAlign.left,
@@ -154,7 +154,7 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        "#" + widget._historyItemModel.orderId,
+                        "#" + widget._historyItemModel.orderId!,
                         style: textStyleCustomColor(
                             _kTextCommonFontSize.scale(), KColorCommonText),
                         textAlign: TextAlign.left,
@@ -183,7 +183,7 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        '\$' + widget._historyItemModel.total,
+                        '\$' + widget._historyItemModel.total!,
                         style: textStyleCustomColor(
                             _kTextCommonFontSize.scale(), KColorCommonText),
                         textAlign: TextAlign.left,
@@ -211,7 +211,7 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        widget._historyItemModel.paymentMethod,
+                        widget._historyItemModel.paymentMethod!,
                         style: textStyleCustomColor(
                             _kTextCommonFontSize.scale(), KColorCommonText),
                         textAlign: TextAlign.left,
@@ -222,24 +222,25 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                 ],
               ).leftPadding(5.0.scale()).rightPadding(5.0.scale()),
               ARoundedButton(
-                btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                btnBorderSideColor: kColorCommonButton,
+                btnDisabledColor: Color(0xFF5e6163),
+                btnIconSize: 15,
+                btnDisabledTextColor: Color(0xFFFFFFFF),
                 btnFontWeight: FontWeight.normal,
                 btnBgColor: KColorAppThemeColor,
                 btnTextColor: Colors.white,
                 btnOnPressed: () {
                   BlocProvider.of<OrderHistoryBloc>(context).add(
                       OrderHistoryEventRowItemClick(
-                          widget._historyItemModel.id,
-                          widget._historyItemModel.username,
-                          widget._historyItemModel.lastName,
-                          widget._historyItemModel.vendorId));
+                          widget._historyItemModel.id!,
+                          widget._historyItemModel.username!,
+                          widget._historyItemModel.lastName!,
+                          widget._historyItemModel.vendorId!));
                 },
                 btnText: Stringss.current.btnViewOrder,
                 btnHeight: kHeightBtnAddToCart.scale(),
                 btnWidth: _kButtonNextWidth.scale(),
                 btnFontSize: kFontSizeBtnLarge.scale(),
-
               ),
             ],
           ).width(double.infinity),

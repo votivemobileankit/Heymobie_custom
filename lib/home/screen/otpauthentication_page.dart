@@ -6,7 +6,6 @@ import 'package:grambunny_customer/services/services.dart';
 import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
-
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 
@@ -20,8 +19,8 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
-  late String email;
-  late String from;
+  String? email;
+  String? from;
 
   @override
   void initState() {
@@ -59,7 +58,7 @@ class _OtpPageState extends State<OtpPage> {
           } else if (from == "signup") {
             sharedPrefs.setUserId = "${state.userArray.id}";
             sharedPrefs.isLogin = true;
-            sharedPrefs.setUserName = state.userArray.name;
+            sharedPrefs.setUserName = state.userArray.name!;
             BlocProvider.of<HomeBloc>(context).add(HomeEventBackBtnClick());
           } else if (from == "forgetpwd") {
             BlocProvider.of<HomeBloc>(context)
@@ -70,20 +69,20 @@ class _OtpPageState extends State<OtpPage> {
         if (state is OtpApiLoadingErrorState) {
           showHideProgress(false);
           BlocProvider.of<HomeBloc>(context)
-              .add(HomeEventForOTPScreen(email, from));
+              .add(HomeEventForOTPScreen(email!, from!));
           showSnackBar(state.message, context);
         }
         if (state is OtpResendApiLoadingCompleteState) {
           showHideProgress(false);
           showSnackBar(state.message, context);
           BlocProvider.of<HomeBloc>(context)
-              .add(HomeEventForOTPScreen(email, from));
+              .add(HomeEventForOTPScreen(email!, from!));
         }
         if (state is OtpResendApiLoadingErrorState) {
           showHideProgress(false);
           showSnackBar(state.message, context);
           BlocProvider.of<HomeBloc>(context)
-              .add(HomeEventForOTPScreen(email, from));
+              .add(HomeEventForOTPScreen(email!, from!));
         }
       },
       child: SafeArea(
@@ -119,20 +118,22 @@ class _OtpPageState extends State<OtpPage> {
                     print("Completed: " + pin);
                     showHideProgress(true);
                     BlocProvider.of<HomeBloc>(context)
-                        .add(OTPEventOTPVerifyButton(email, pin, from));
+                        .add(OTPEventOTPVerifyButton(email!, pin, from!));
                   },
                 ),
                 AVerticalSpace(_kVerticalSpaceBeforeEnterCodeText.scale()),
                 ARoundedButton(
-                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnBorderSideColor: kColorCommonButton,
+                  btnDisabledColor: Color(0xFF5e6163),
+                  btnIconSize: 15,
+                  btnDisabledTextColor: Color(0xFFFFFFFF),
                   btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorAppBgColor,
                   btnTextColor: Colors.white,
                   btnOnPressed: () {
                     showHideProgress(true);
                     BlocProvider.of<HomeBloc>(context)
-                        .add(OTPEventOTPResendButton(email, "reset"));
+                        .add(OTPEventOTPResendButton(email!, "reset"));
                   },
                   btnText: "Resend OTP",
                   btnHeight: kHeightBtnSplashNormal.scale(),

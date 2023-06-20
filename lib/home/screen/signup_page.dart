@@ -46,10 +46,10 @@ class _SignupPageState extends State<SignupPage> {
   String _dateStrServer = "";
   DateTime _date = new DateTime.now();
   TimeOfDay _time = new TimeOfDay.now();
-  late List<StatesList> stateArrayList;
-  late  File _userImage;
-  late File _licenseImage;
-  late File _mariyunaImage;
+  List<StatesList>? stateArrayList;
+  File? _userImage;
+  File? _licenseImage;
+  File? _mariyunaImage;
   String strPathProfile = "";
   String strPathLicenseFront = "Select license image copy front";
   String strPathLicenseBack = "Select license image copy back";
@@ -241,7 +241,8 @@ class _SignupPageState extends State<SignupPage> {
           return Future<bool>.value(false);
         },
         child: BlocListener<HomeBloc, HomeState>(
-          listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
+          listenWhen: (prevState, curState) =>
+              ModalRoute.of(context)!.isCurrent,
           listener: (context, state) {
             if (state is LoginPageState) {
               Navigator.of(context).pop(true);
@@ -267,9 +268,7 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               children: [
                 AHeaderWidget(
-                  btnEditOnPressed: () {
-
-                  },
+                  btnEditOnPressed: () {},
                   strBtnRightImageName: "",
                   headerSigninText: "",
                   headerText: "",
@@ -277,8 +276,9 @@ class _SignupPageState extends State<SignupPage> {
                   strBackbuttonName: 'ic_red_btn_back.png',
                   backBtnVisibility: true,
                   btnBackOnPressed: () {
-                    BlocProvider.of<HomeBloc>(context)
-                        .add(HomeEventBackBtnClick());
+                    Navigator.pop(context);
+                    // BlocProvider.of<HomeBloc>(context)
+                    //     .add(HomeEventBackBtnClick());
                   },
                 ),
                 Column(
@@ -297,7 +297,7 @@ class _SignupPageState extends State<SignupPage> {
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
                                     child: Image.file(
-                                      _userImage,
+                                      _userImage!,
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,
@@ -396,7 +396,7 @@ class _SignupPageState extends State<SignupPage> {
                     _PhoneWidget(),
                     _AddressWidget(),
                     _CityWidget(),
-                    _StateListWidget(stateArrayList),
+                    _StateListWidget(stateArrayList!),
                     _ZipWidget(),
                     GestureDetector(
                         onTap: () {
@@ -470,8 +470,10 @@ class _SignupPageState extends State<SignupPage> {
                             _kHeightTextFieldGender.scale())),
                     AVerticalSpace(_kVerticalSpaceBetweenTextField.scale()),
                     ARoundedButton(
-                      btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                      btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                      btnBorderSideColor: kColorCommonButton,
+                      btnDisabledColor: Color(0xFF5e6163),
+                      btnIconSize: 15,
+                      btnDisabledTextColor: Color(0xFFFFFFFF),
                       btnFontWeight: FontWeight.normal,
                       btnBgColor: kColorAppBgColor,
                       btnTextColor: Colors.white,

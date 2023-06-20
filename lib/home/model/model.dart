@@ -2,7 +2,6 @@ export 'addon_productlist_boolean.dart';
 export 'cartlist_response_model.dart';
 export 'category_list_model.dart';
 export 'checkout_calculation_reponse_model.dart';
-export 'driver_list_model.dart';
 export 'filter_list_model.dart';
 export 'home_coupon_code_model.dart';
 export 'login_model.dart';

@@ -14,7 +14,6 @@ class ARoundedButton extends StatelessWidget {
   final double btnWidth;
   final VoidCallback btnOnPressed;
 
-
   final double btnIconSize;
   final double btnElevation;
   final FontWeight btnFontWeight;
@@ -22,7 +21,6 @@ class ARoundedButton extends StatelessWidget {
   final Color btnDisabledTextColor;
 
   const ARoundedButton({
-
     required this.btnBgColor,
     required this.btnTextColor,
     required this.btnText,
@@ -31,14 +29,12 @@ class ARoundedButton extends StatelessWidget {
     required this.btnOnPressed,
     this.btnWidth = double.infinity,
     required this.btnBorderSideColor,
-
-
     this.btnIconSize = 24,
     this.btnElevation = 2,
     this.btnFontWeight = FontWeight.normal,
-    required this.btnDisabledColor,
-    required this.btnDisabledTextColor,
-  }) ;
+    this.btnDisabledColor = Colors.white,
+    this.btnDisabledTextColor = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,31 +54,28 @@ class ARoundedButton extends StatelessWidget {
       //     fontWeight: btnFontWeight),
     );
 
-    return
-             ElevatedButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.disabled))
-                      return btnDisabledColor;
-                    return btnBgColor;
-                  }),
-                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.disabled)) {}
-                    return btnDisabledTextColor;
-                  }),
-                  shape: MaterialStateProperty.all(shape),
-                  elevation: MaterialStateProperty.resolveWith<double>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.disabled)) return 0;
-                    return btnElevation;
-                  }),
-                ),
-                onPressed: btnOnPressed,
-                child: text,
-              )
-        .size(btnWidth, btnHeight);
+    return ElevatedButton(
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) return btnDisabledColor;
+          return btnBgColor;
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {}
+          return btnDisabledTextColor;
+        }),
+        shape: MaterialStateProperty.all(shape),
+        elevation: MaterialStateProperty.resolveWith<double>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) return 0;
+          return btnElevation;
+        }),
+      ),
+      onPressed: btnOnPressed,
+      child: text,
+    ).size(btnWidth, btnHeight);
   }
 }

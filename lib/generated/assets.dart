@@ -2,11 +2,76 @@
 class Assets {
   Assets._();
 
-  static const String QuicksandQuicksand-Bold = 'assets/fonts/Quicksand/Quicksand-Bold.ttf';
-  static const String QuicksandQuicksand-Light = 'assets/fonts/Quicksand/Quicksand-Light.ttf';
-  static const String QuicksandQuicksand-Medium = 'assets/fonts/Quicksand/Quicksand-Medium.ttf';
-  static const String QuicksandQuicksand-Regular = 'assets/fonts/Quicksand/Quicksand-Regular.ttf';
-  static const String QuicksandQuicksand-SemiBold = 'assets/fonts/Quicksand/Quicksand-SemiBold.ttf';
+  static const String QuicksandQuicksand
+
+  -
+
+  Bold
+
+  =
+
+  '
+
+  assets/fonts/Quicksand/Quicksand-Bold.ttf
+
+  ';
+
+  static const String QuicksandQuicksand
+
+  -
+
+  Light
+
+  =
+
+  '
+
+  assets/fonts/Quicksand/Quicksand-Light.ttf
+
+  ';
+
+  static const String QuicksandQuicksand
+
+  -
+
+  Medium
+
+  =
+
+  '
+
+  assets/fonts/Quicksand/Quicksand-Medium.ttf
+
+  ';
+
+  static const String QuicksandQuicksand
+
+  -
+
+  Regular
+
+  =
+
+  '
+
+  assets/fonts/Quicksand/Quicksand-Regular.ttf
+
+  ';
+
+  static const String QuicksandQuicksand
+
+  -
+
+  SemiBold
+
+  =
+
+  '
+
+  assets/fonts/Quicksand/Quicksand-SemiBold.ttf
+
+  ';
+
   static const String generalIcAboutUs = 'assets/images/general/ic_about_us.png';
   static const String generalIcAddIcon = 'assets/images/general/ic_add_icon.png';
   static const String generalIcAppLogoSplash = 'assets/images/general/ic_app_logo_splash.png';
@@ -46,14 +111,17 @@ class Assets {
   static const String generalIcOrderIcon = 'assets/images/general/ic_order_icon.png';
   static const String generalIcOrderPending = 'assets/images/general/ic_order_pending.png';
   static const String generalIcPhoneIcon = 'assets/images/general/ic_phone_icon.png';
+  static const String generalIcProduct = 'assets/images/general/ic_product.png';
   static const String generalIcProfileIcon = 'assets/images/general/ic_profile_icon.png';
   static const String generalIcProfileUser = 'assets/images/general/ic_profile_user.png';
   static const String generalIcRedBtnBack = 'assets/images/general/ic_red_btn_back.png';
+  static const String generalIcRide = 'assets/images/general/ic_ride.png';
   static const String generalIcSearchLogo = 'assets/images/general/ic_search_logo.png';
   static const String generalIcSelectGallery = 'assets/images/general/ic_select_gallery.png';
   static const String generalIcSlideMenuIcon = 'assets/images/general/ic_slide_menu_icon.png';
   static const String generalIcStar = 'assets/images/general/ic_star.png';
   static const String generalIcSuccesIcon = 'assets/images/general/ic_succes_icon.png';
+  static const String generalIcTicket = 'assets/images/general/ic_ticket.png';
   static const String generalSplash = 'assets/images/general/splash.png';
 
 }

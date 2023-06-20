@@ -18,7 +18,6 @@ class AHeaderWidget extends StatelessWidget {
   final VoidCallback btnBackOnPressed;
 
   const AHeaderWidget({
-
     required this.backBtnVisibility,
     this.strBackbuttonName = 'ic_red_btn_back.png',
     required this.strBtnRightImageName,
@@ -27,7 +26,7 @@ class AHeaderWidget extends StatelessWidget {
     this.rightEditButtonVisibility = false,
     required this.btnEditOnPressed,
     required this.btnBackOnPressed,
-  }) ;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class AHeaderWidget extends StatelessWidget {
                           color: Colors.white,
                           image:
                               AssetImage('${imgPathGeneral}$strBackbuttonName'),
-                          height: 40,
+                          height: 25,
                         ),
                         style: ButtonStyle(
                           overlayColor:

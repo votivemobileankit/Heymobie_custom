@@ -64,6 +64,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventCouponListbtnApply>(mapHomeEventCouponListbtnApply);
     on<HomeEventResetCheckOutState>(mapHomeEventResetCheckOutState);
     on<HomeEventDriverProductListClick>(mapHomeEventDriverProductListClick);
+
+    on<HomeEventDriverTicketListClick>(mapHomeEventDriverTicketListClick);
+
     on<LoginEventLoginStateReset>(mapLoginEventLoginStateReset);
 
     on<LoginEventSignUpButtonClick>(mapLoginEventSignUpButtonClick);
@@ -86,7 +89,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (apiCallState.statusValue == "1") {
       emitter(HomeFromDriverProductListDetailsPageState(
           event.productListDriverModel!,
-          event.vendorDetails!,
+          // event.vendorDetails!,
           event.strScreen!,
           _userRepository!.getRatingReviewList()!,
           _userRepository!.getRelatedProductList()!,
@@ -1126,13 +1129,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emitter(HomeFromDriverProductListDetailsPageState(
           event.driverProductList,
-          event.driverDetail,
+          // event.driverDetail,
           event.screen,
           _userRepository!.getRatingReviewList()!,
           _userRepository!.getRelatedProductList()!,
           _userRepository!.getAddOnProductList()!));
     } else {
       emitter(HomeEventErrorHandelState(apiCallState.message!));
+    }
+  }
+
+  ////////..............................
+  mapHomeEventDriverTicketListClick(
+      HomeEventDriverTicketListClick event, Emitter<HomeState> emitter) async {
+    NetworkApiCallState<bool> apiCallState = await _userRepository!
+        .getTicketListApi(event.merchant_id, event.ps_id, event.type);
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      print("Complete state");
+      emit(HomeEventDriverTicketListClickPageState(
+        _userRepository?.getTicketList()!,
+      ));
+    } else {
+      print("EventListstate===>");
+      emit(HomeTicketEventErrorHandelState(apiCallState.message!));
     }
   }
 
@@ -1318,7 +1337,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       //  print(driverDetail.vendorId);
       emitter(HomeFromDriverProductListDetailsPageState(
           driverProductList!,
-          _userRepository!.getDriverProductListArray()![0].vendor!,
+          // _userRepository!.getDriverProductListArray()![0].vendor!,
           "DriverList",
           _userRepository!.getRatingReviewList()!,
           _userRepository!.getRelatedProductList()!,

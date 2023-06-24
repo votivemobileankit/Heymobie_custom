@@ -64,7 +64,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
       _productListModel = homeState.productListModel;
       _driverId = homeState.driverId;
       print("driver Id ${_driverId}");
-      _price = double.parse(_productListModel.price);
+      _price = double.parse(_productListModel.price ?? "");
       _driverDetail = homeState.driverDetail;
       _productListModel.brands;
       name = _driverDetail.name! + " " + _driverDetail.lastName!;
@@ -73,7 +73,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
     } else if (homeState is HomeFromDriverProductListDetailsPageState) {
       print("productlistdetailPage");
       _productListDriverModel = homeState.driverProductList;
-      _vendorDetails = homeState.driverDetail;
+      //_vendorDetails = homeState.driverDetail;
       _relatedProductList = homeState.relatedProductList!;
       _addOnProductList = homeState.addOnProductList!;
       _driverId = "${_vendorDetails.vendorId}";
@@ -180,7 +180,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           images: [],
           keyword: "",
           stock: "");
-      _price = double.parse(_productListModel.price);
+      _price = double.parse(_productListModel.price ?? "");
       ratingReviewList = homeState.ratingReviewList!;
     }
 
@@ -213,7 +213,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           _productListModel = state.productListModel;
           _driverId = state.driverId;
           print("driver Id ${_driverId}");
-          _price = double.parse(_productListModel.price);
+          _price = double.parse(_productListModel.price ?? "");
           _driverDetail = state.driverDetail;
           name = _driverDetail.name! + " " + _driverDetail.lastName!;
         } else if (state is HomeFromDriverProductListDetailsPageState) {
@@ -255,7 +255,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           _productListModel = state.productListModel;
           _driverId = state.driverId;
           print("driver Id ${_driverId}");
-          _price = double.parse(_productListModel.price);
+          _price = double.parse(_productListModel.price ?? "");
           _driverDetail = state.driverDetail;
           name = _driverDetail.name! + " " + _driverDetail.lastName!;
           setState(() {
@@ -289,7 +289,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                     HomeEventItemClickAddToCartBtnClick(
                         _counter,
                         state.productId,
-                        _productListModel.vendorId,
+                        _productListModel.vendorId!,
                         0,
                         _driverDetail,
                         "1",
@@ -312,8 +312,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                     Navigator.pop(context);
                     timerOnListener = false;
                     _contextLoad = null;
-                    // BlocProvider.of<HomeBloc>(context)
-                    //     .add(HomeEventBackBtnClick());
+                    BlocProvider.of<HomeBloc>(context)
+                        .add(HomeEventBackBtnClick());
                   },
                   strBtnRightImageName: 'ic_cart_white.png',
                   rightEditButtonVisibility: true,
@@ -339,8 +339,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                 children: [
                   CachedNetworkImage(
                     imageUrl: _productListModel == null
-                        ? _productListDriverModel.imageURL!
-                        : _productListModel.imageURL,
+                        ? _productListDriverModel.imageURL ?? ""
+                        : _productListModel.imageURL ?? "",
                     width: MediaQuery.of(context).size.width,
                     height: 200.0.scale(),
                     fit: BoxFit.cover,
@@ -349,8 +349,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   AVerticalSpace(5.0.scale()),
                   Text(
                     _productListModel == null
-                        ? _productListDriverModel.name!
-                        : _productListModel.name,
+                        ? _productListDriverModel.name ?? ""
+                        : _productListModel.name ?? "",
                     style: textStyleBoldCustomLargeColor(
                         _kMenuItemNameFontSize, KColorCommonText),
                   ).align(Alignment.centerLeft),
@@ -358,7 +358,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   Text(
                     _productListModel == null
                         ? "UPC#" + _productListDriverModel.productCode!
-                        : "UPC#" + _productListModel.productCode,
+                        : "UPC#" + "${_productListModel.productCode}",
                     style: textStyleBoldCustomLargeColor(
                         _kCommonFontSize, KColorCommonText),
                   ).align(Alignment.centerLeft),
@@ -367,8 +367,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                     children: [
                       Text(
                           _productListModel == null
-                              ? _productListDriverModel.categoryname!
-                              : _productListModel.categoryname,
+                              ? _productListDriverModel.categoryname ?? ""
+                              : _productListModel.categoryname ?? "",
                           style: textStyleCustomColor(
                               _kCommonFontSize, KColorCommonText)),
                       AHorizontalSpace(5.0.scale()),
@@ -409,7 +409,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                             Text(
                               _productListModel == null
                                   ? ", (" + _productListDriverModel.unit! + ")"
-                                  : ", (" + _productListModel.unit + ")",
+                                  : ", (" + _productListModel.unit! + ")",
                               style: textStyleBoldCustomLargeColor(
                                   _kCommonFontSize.scale(), KColorCommonText),
                             ),
@@ -457,10 +457,11 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                                   _counter--;
                                   print(_counter);
                                   setState(() {
-                                    _price = double.parse(
-                                            _productListModel == null
-                                                ? _productListDriverModel.price!
-                                                : _productListModel.price) *
+                                    _price = double.parse(_productListModel ==
+                                                null
+                                            ? _productListDriverModel.price ??
+                                                ""
+                                            : _productListModel.price ?? "") *
                                         _counter;
                                     String value = _price.toStringAsFixed(2);
                                     _price = double.parse(value);
@@ -511,15 +512,16 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                               onTap: () {
                                 if (_counter <
                                     int.parse(_productListModel == null
-                                        ? _productListDriverModel.quantity!
-                                        : _productListModel.quantity)) {
+                                        ? _productListDriverModel.quantity ?? ""
+                                        : _productListModel.quantity ?? "")) {
                                   _counter++;
                                   print(_counter);
                                   setState(() {
-                                    _price = double.parse(
-                                            _productListModel == null
-                                                ? _productListDriverModel.price!
-                                                : _productListModel.price) *
+                                    _price = double.parse(_productListModel ==
+                                                null
+                                            ? _productListDriverModel.price ??
+                                                ""
+                                            : _productListModel.price ?? "") *
                                         _counter;
                                     String value = _price.toStringAsFixed(2);
                                     _price = double.parse(value);
@@ -560,14 +562,14 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                         btnBgColor: kColorCommonButton,
                         btnTextColor: Colors.white,
                         btnOnPressed: () {
-                          if (int.parse(_productListModel.quantity) > 0) {
+                          if (int.parse(_productListModel.quantity!) > 0) {
                             showHideProgress(true);
 
                             BlocProvider.of<HomeBloc>(context).add(
                                 HomeEventItemClickAddToCartBtnClick(
                                     _counter,
-                                    _productListModel.id,
-                                    _productListModel.vendorId,
+                                    _productListModel.id!,
+                                    _productListModel.vendorId!,
                                     0,
                                     _driverDetail,
                                     "0",
@@ -594,8 +596,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   AVerticalSpace(5.0.scale()),
                   Text(
                     _productListModel == null
-                        ? _productListDriverModel.description!
-                        : _productListModel.description,
+                        ? _productListDriverModel.description ?? ""
+                        : _productListModel.description ?? "",
                     style: textStyleCustomColor(
                         _kCommonSmallFontSize.scale(), KColorTextGrey),
                   ).align(Alignment.centerLeft),
@@ -635,7 +637,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                             return getDialogAddOnProductList(
                                 context1: context,
                                 addOnProductLocalList: _addOnProductLocalList,
-                                vendorId: _productListModel.vendorId,
+                                vendorId: _productListModel.vendorId!,
                                 driverDetail: _driverDetail,
                                 titleText: '',
                                 btn1TitleText: '',
@@ -783,7 +785,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                         showHideProgress(true);
                         BlocProvider.of<HomeBloc>(context).add(
                             HomeEventSubmitRatingBtnClick("${ratingCountSend}",
-                                _textReview.text, _productListModel.id));
+                                _textReview.text, _productListModel.id!));
                       }
                     },
                     btnHeight: 40.0.scale(),
@@ -1396,7 +1398,7 @@ class _UserReviewListState extends State<UserReviewList> {
               Row(
                 children: [
                   CachedNetworkImage(
-                    imageUrl: widget.ratingReviewList[i].profileImage,
+                    imageUrl: widget.ratingReviewList[i].profileImage!,
                     width: 60.0.scale(),
                     height: 40.0.scale(),
                     fit: BoxFit.cover,
@@ -1408,15 +1410,15 @@ class _UserReviewListState extends State<UserReviewList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.ratingReviewList[i].name +
+                        widget.ratingReviewList[i].name! +
                             " " +
-                            widget.ratingReviewList[i].lname,
+                            widget.ratingReviewList[i].lname!,
                         style: textStyleBoldCustomColor(
                             14.0.scale(), KColorCommonText),
                       ),
                       RatingBar.builder(
                         initialRating:
-                            double.parse(widget.ratingReviewList[i].rating),
+                            double.parse(widget.ratingReviewList[i].rating!),
                         minRating: 1,
                         itemSize: 20,
                         direction: Axis.horizontal,
@@ -1432,14 +1434,14 @@ class _UserReviewListState extends State<UserReviewList> {
                         },
                       ),
                       Text(
-                        widget.ratingReviewList[i].review,
+                        widget.ratingReviewList[i].review!,
                         style: textStyleBoldCustomColor(
                             14.0.scale(), KColorCommonText),
                         maxLines: 1,
                       ),
                       AVerticalSpace(4.0.scale()),
                       Text(
-                        widget.ratingReviewList[i].createdAt,
+                        widget.ratingReviewList[i].createdAt!,
                         style: textStyleBoldCustomColor(
                             14.0.scale(), KColorCommonText),
                       ).align(Alignment.center),

@@ -11,6 +11,8 @@ import 'package:grambunny_customer/home/model/rating_review_list_model.dart';
 import 'package:grambunny_customer/home/model/related_product_model.dart';
 import 'package:grambunny_customer/home/model/statelist_reponse_model.dart';
 
+import '../model/ps_list_model.dart';
+
 abstract class HomeState extends Equatable {
   const HomeState();
 
@@ -300,14 +302,15 @@ class HomeCustomerRatingReviewSubmitState extends HomeState {
 class HomeFromDriverProductListDetailsPageState extends HomeState {
   ProductListDriver driverProductList;
   String screen;
-  Vendor driverDetail;
+
+  //Vendor driverDetail;
   List<RatingReviewData>? ratingReviewList;
   List<RelatedProductList>? relatedProductList;
   List<AddonProductList>? addOnProductList;
 
   HomeFromDriverProductListDetailsPageState(
       this.driverProductList,
-      this.driverDetail,
+      //this.driverDetail,
       this.screen,
       this.ratingReviewList,
       this.relatedProductList,
@@ -316,11 +319,48 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
   @override
   List<Object> get props => [
         driverProductList,
-        driverDetail,
+        //driverDetail,
         screen,
         ratingReviewList!,
         relatedProductList!,
         addOnProductList!
+      ];
+}
+
+class HomeEventDriverTicketListClickPageState extends HomeState {
+  List<EventDetailsList>? eventdetaillist;
+
+  // String merchant_id;
+  // String ps_id;
+  // String type;
+
+  HomeEventDriverTicketListClickPageState(
+    this.eventdetaillist,
+  );
+
+  List<Object> get props => [
+        eventdetaillist!,
+      ];
+}
+
+class HomeTicketEventErrorHandelState extends HomeState {
+  final String message;
+
+  HomeTicketEventErrorHandelState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class HomeEventDriverTicketListClickCompleteState extends HomeState {
+  List<EventDetailsList>? eventdetaillist;
+
+  HomeEventDriverTicketListClickCompleteState(
+    this.eventdetaillist,
+  );
+
+  List<Object> get props => [
+        eventdetaillist!,
       ];
 }
 

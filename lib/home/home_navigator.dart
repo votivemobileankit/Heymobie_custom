@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grambunny_customer/hm_root/hm_root.dart';
+import 'package:grambunny_customer/home/screen/home_ticket_detail-page.dart';
 import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 
 import 'home.dart';
@@ -18,10 +19,11 @@ class HomeNavigator extends StatefulWidget {
   static const String otpPage = '/otpPage';
   static const String resetPasswordPage = '/resetPasswordPage';
   static const String homeCheckoutPage = '/homeCheckoutPage';
+  static const String homeMenuTicketPage = '/homeMenuTicketPage';
 
   final UserRepository userRepository;
 
-  const HomeNavigator({ required this.userRepository}) ;
+  const HomeNavigator({required this.userRepository});
 
   @override
   _HomeNavigatorState createState() => _HomeNavigatorState();
@@ -165,6 +167,15 @@ class _HomeRouter {
           builder: (_) => BlocProvider<HomeBloc>.value(
             value: homeBloc,
             child: HomeCheckOutPage(),
+          ),
+        );
+        break;
+
+      case HomeNavigator.homeMenuTicketPage:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<HomeBloc>.value(
+            value: homeBloc,
+            child: MenuTicketDetailPage(),
           ),
         );
         break;

@@ -55,7 +55,7 @@ class MenuListRowItem extends StatelessWidget {
             children: [
               InkWell(
                   onTap: () {
-                    if (int.parse(productList!.quantity) == 0) {
+                    if (int.parse(productList!.quantity!) == 0) {
                       showSnackBar("Product is out of stock!", context12);
                     } else {
                       showDialog(
@@ -85,7 +85,7 @@ class MenuListRowItem extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              if (int.parse(productList!.quantity) == 0)
+                              if (int.parse(productList!.quantity!) == 0)
                                 OutlinedButton(
                                   onPressed: () {},
                                   style: ButtonStyle(
@@ -107,14 +107,14 @@ class MenuListRowItem extends StatelessWidget {
                           ),
                           AVerticalSpace(3.0.scale()),
                           Text(
-                            productList!.name,
+                            productList!.name!,
                             style: textStyleBoldCustomColor(
                                 _kMenuitemNameTextFontSize.scale(),
                                 KColorCommonText),
                           ),
                           AVerticalSpace(3.0.scale()),
                           Text(
-                            "UPC#" + productList!.productCode,
+                            "UPC#" + productList!.productCode!,
                             style: textStyleBoldCustomColor(
                                 _kMenuitemNameTextFontSize.scale(),
                                 KColorCommonText),
@@ -129,7 +129,7 @@ class MenuListRowItem extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '\$' + productList!.price,
+                                  '\$' + productList!.price!,
                                   style: textStyleBoldCustomLargeColor(
                                       _kMenuTypeTextFontSize.scale(),
                                       KColorCommonText),
@@ -152,7 +152,7 @@ class MenuListRowItem extends StatelessWidget {
                   )).align(Alignment.centerLeft).expand(),
               InkWell(
                 onTap: () {
-                  if (int.parse(productList!.quantity) == 0) {
+                  if (int.parse(productList!.quantity!) == 0) {
                     showSnackBar("Product is out of stock!", context12);
                   } else {
                     showDialog(
@@ -183,7 +183,7 @@ class MenuListRowItem extends StatelessWidget {
                         child: CachedNetworkImage(
                           width: _kMenuImageHeightSize.scale(),
                           height: _kMenuImageHeightSize.scale() - 30.0.scale(),
-                          imageUrl: productList!.imageURL,
+                          imageUrl: productList!.imageURL!,
                           fit: BoxFit.fill,
                           errorWidget: (context, url, error) =>
                               new Icon(Icons.error),
@@ -253,7 +253,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    price = double.parse(widget.productlist.price);
+    price = double.parse(widget.productlist.price!);
     contexttext = widget.context1;
     super.initState();
   }
@@ -269,7 +269,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: CachedNetworkImage(
-              imageUrl: widget.productlist.imageURL,
+              imageUrl: widget.productlist.imageURL!,
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               errorWidget: (context, url, error) => new Icon(Icons.error),
@@ -280,7 +280,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
           children: [
             AVerticalSpace(5.0.scale()),
             Text(
-              widget.productlist.name,
+              widget.productlist.name!,
               style: textStyleBoldCustomLargeColor(
                   _kMenuitemNameTextFontSize.scale(), KColorCommonText),
             ).align(Alignment.centerLeft),
@@ -294,7 +294,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                       _kMenuitemNameTextFontSize.scale(), KColorCommonText),
                 ),
                 Text(
-                  widget.productlist.unit + ", ",
+                  widget.productlist.unit! + ", ",
                   style: textStyleBoldCustomLargeColor(
                       _kMenuitemNameTextFontSize.scale(), KColorCommonText),
                 ),
@@ -316,7 +316,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                             _counter--;
                             print(_counter);
                             setState(() {
-                              price = double.parse(widget.productlist.price) *
+                              price = double.parse(widget.productlist.price!) *
                                   _counter;
                               String value = price.toStringAsFixed(2);
                               price = double.parse(value);
@@ -366,11 +366,11 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                       InkWell(
                         onTap: () {
                           if (_counter <
-                              int.parse(widget.productlist.quantity)) {
+                              int.parse(widget.productlist.quantity!)) {
                             _counter++;
                             print(_counter);
                             setState(() {
-                              price = double.parse(widget.productlist.price) *
+                              price = double.parse(widget.productlist.price!) *
                                   _counter;
                               String value = price.toStringAsFixed(2);
                               price = double.parse(value);
@@ -416,7 +416,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                     BlocProvider.of<HomeBloc>(contexttext).add(
                         HomeEventAddToCartBtnClick(
                             _counter,
-                            widget.productlist.id,
+                            widget.productlist.id!,
                             widget.driverDetail.vendorId!,
                             0,
                             widget.driverDetail,

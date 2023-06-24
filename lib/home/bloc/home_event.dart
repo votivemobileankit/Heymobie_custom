@@ -478,6 +478,32 @@ class HomeEventDriverProductListClick extends HomeEvent {
       [driverProductList, driverDetail, screen, productId];
 }
 
+// class HomeEventDriverTicketListClick extends HomeEvent {
+//   late String driverId;
+//   late String screen;
+//   late int productId;
+//   late ProductListDriver driverProductList;
+//   late Vendor driverDetail;
+//
+//   HomeEventDriverTicketListClick(
+//       this.driverProductList, this.driverDetail, this.screen, this.productId);
+//
+//   @override
+//   List<Object> get props =>
+//       [driverProductList, driverDetail, screen, productId];
+// }
+
+class HomeEventDriverTicketListClick extends HomeEvent {
+  String merchant_id;
+  String ps_id;
+  String type;
+
+  HomeEventDriverTicketListClick(this.merchant_id, this.ps_id, this.type);
+
+  @override
+  List<Object> get props => [merchant_id, ps_id, type];
+}
+
 class HomeEventProductItemDetailPageReset extends HomeEvent {
   late ProductListMenu productListModel;
   late String driverId;

@@ -23,6 +23,7 @@ import 'package:grambunny_customer/utils/ui_utils.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
 import '../model/driver_list_model.dart';
+import '../model/ps_list_model.dart';
 
 const double _kBtnWidth = 89.0;
 const double _kHeightNormal = 35.0;
@@ -33,6 +34,10 @@ late List<ProductListDriver> driverProductList;
 late List<Advertisement> advertisementArray;
 late List<BitmapDescriptor> pinLocationIcon;
 LatLng? pinPosition;
+String? merchant_id;
+String? ps_id;
+String? type;
+List<EventDetailsList> eventdetaillist = [];
 CameraPosition _kGooglePlex = CameraPosition(
   target: LatLng(33.974514956322324, -117.77841125765117),
   zoom: 14.4746,
@@ -387,6 +392,12 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
           showHideProgress(false);
           Navigator.of(context).pushNamed(HomeNavigator.homeMenuDetailPage);
         }
+
+        if (state is HomeEventDriverTicketListClickPageState) {
+          showHideProgress(false);
+          Navigator.of(context).pushNamed(HomeNavigator.homeMenuTicketPage);
+        }
+
         if (state is HomeDriverListApiCallCompleteState) {
           if (_dialogDriverOpen == true) {
             _dialogDriverOpen = false;
@@ -1004,23 +1015,9 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
 
   @override
   void initState() {
+    setState(() {});
     super.initState();
   }
-
-  //
-  // String getCategoryNameStatus(String str) {
-  //   String status = "";
-  //   if (str == "0") {
-  //     status = "Product";
-  //   } else if (str == "1") {
-  //     status = "Product";
-  //   } else if (str == "2") {
-  //     status = "Ride";
-  //   } else if (str == "3") {
-  //     status = "Event";
-  //   }
-  //   return status;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -1038,14 +1035,29 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
               splashColor: Colors.grey,
               onTap: () {
                 isTimerOn = false;
+                print("id=====${widget._driverProductList[i].id}");
                 //_timer.cancel();
                 widget.showHideProgress(true);
+
+                // BlocProvider.of<HomeBloc>(context).add(
+                //     HomeEventDriverProductListClick(
+                //         widget._driverProductList[i],
+                //         widget._driverProductList[i].vendor!,
+                //         "DriverList",
+                //         widget._driverProductList[i].id!));
+
+                // BlocProvider.of<HomeBloc>(context).add(
+                //     HomeEventDriverTicketListClick(
+                //         widget._driverProductList[i],
+                //         widget._driverProductList[i].vendor!,
+                //         "DriverList",
+                //         widget._driverProductList[i].id!));
+
                 BlocProvider.of<HomeBloc>(context).add(
-                    HomeEventDriverProductListClick(
-                        widget._driverProductList[i],
-                        widget._driverProductList[i].vendor!,
-                        "DriverList",
-                        widget._driverProductList[i].id!));
+                    HomeEventDriverTicketListClick(
+                        widget._driverProductList[i].vendorId!,
+                        widget._driverProductList[i].id!.toString(),
+                        widget._driverProductList[i].type!));
               },
               child: Container(
                 height: 210.0.scale(),

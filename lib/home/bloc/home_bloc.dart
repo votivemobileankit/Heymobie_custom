@@ -692,7 +692,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 profileImg1: "",
                 profileURL: "",
                 username: "",
-                profile3URL: ""),
+                profile3URL: "", membership: new Membership(remainingDays: 0, status: 0)),
             _userRepository!.getCartDataModel()!));
       } else {
         emitter(HomeCartPageState(
@@ -1151,7 +1151,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   mapHomeEventDriverProductListClick(
       HomeEventDriverProductListClick event, Emitter<HomeState> emitter) async {
-    // print("In bloc " + event.name);
+     print("In bloc " + event.toString());
     // _userRepository.ScreenName = "CategoryDetailPage";
 
     NetworkApiCallState<bool> apiCallState =
@@ -1162,8 +1162,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       NetworkApiCallState<bool> apiCallState1 = await _userRepository!
           .postRelatedProductApi(
               '${event.productId}',
-              event.driverProductList.vendorId!,
-              event.driverProductList.categoryId!);
+              event.driverProductList.vendorId,
+              event.driverProductList.categoryId);
 
       driverProductList = event.driverProductList;
 

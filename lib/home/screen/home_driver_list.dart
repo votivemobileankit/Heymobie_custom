@@ -152,7 +152,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
         views: "",
         walletAmount: "",
         year: "",
-        zipcode: ""));
+        zipcode: "",
+        type_of_merchant: ''));
 
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1035,10 +1036,32 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
               splashColor: Colors.grey,
               onTap: () {
                 isTimerOn = false;
-                print("id=====${widget._driverProductList[i].id}");
-                //_timer.cancel();
-                widget.showHideProgress(true);
+                // print("id=====${widget._driverProductList[i].id}");
 
+                //_timer!.cancel();
+                  widget.showHideProgress(true);
+                print(widget._driverProductList[i].producttype );
+                if (widget._driverProductList[i].producttype == "1" ||
+                    widget._driverProductList[i].producttype == "0") {
+                  print("id=====${widget._driverProductList[i].id}");
+                  BlocProvider.of<HomeBloc>(context).add(
+                      HomeEventDriverProductListClick(
+                          widget._driverProductList[i],
+                          widget._driverProductList[i].vendor,
+                          "DriverList",
+                          widget._driverProductList[i].id));
+                } else if (widget._driverProductList[i].producttype == "2") {
+                  print("id=====${widget._driverProductList[i].id}");
+
+                } else if (widget._driverProductList[i].producttype == "3") {
+                  print("No condition======");
+                  BlocProvider.of<HomeBloc>(context).add(
+                      HomeEventDriverTicketListClick(
+                          widget._driverProductList[i].vendorId,
+                          widget._driverProductList[i].id.toString(),
+                          widget._driverProductList[i].type,
+                          driverProductList[i]));
+                }
                 // BlocProvider.of<HomeBloc>(context).add(
                 //     HomeEventDriverProductListClick(
                 //         widget._driverProductList[i],
@@ -1053,12 +1076,12 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                 //         "DriverList",
                 //         widget._driverProductList[i].id!));
 
-                BlocProvider.of<HomeBloc>(context).add(
-                    HomeEventDriverTicketListClick(
-                        widget._driverProductList[i].vendorId!,
-                        widget._driverProductList[i].id!.toString(),
-                        widget._driverProductList[i].type!,
-                        driverProductList[i]));
+                // BlocProvider.of<HomeBloc>(context).add(
+                //     HomeEventDriverTicketListClick(
+                //         widget._driverProductList[i].vendorId!,
+                //         widget._driverProductList[i].id!.toString(),
+                //         widget._driverProductList[i].type!,
+                //         driverProductList[i]));
               },
               child: Container(
                 height: 210.0.scale(),
@@ -1081,25 +1104,25 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (widget._driverProductList[i].productType == "0")
+                        if (widget._driverProductList[i].producttype == "0")
                           Image.asset(
                             "${imgPathGeneral}ic_product.png",
                             height: 15,
                             width: 15,
                           ),
-                        if (widget._driverProductList[i].productType == "1")
+                        if (widget._driverProductList[i].producttype == "1")
                           Image.asset(
                             "${imgPathGeneral}ic_product.png",
                             height: 15,
                             width: 15,
                           ),
-                        if (widget._driverProductList[i].productType == "2")
+                        if (widget._driverProductList[i].producttype == "2")
                           Image.asset(
                             "${imgPathGeneral}ic_ride.png",
                             height: 18,
                             width: 18,
                           ),
-                        if (widget._driverProductList[i].productType == "3")
+                        if (widget._driverProductList[i].producttype == "3")
                           Image.asset(
                             "${imgPathGeneral}ic_ticket.png",
                             height: 15,

@@ -110,7 +110,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
           updatedAt: "",
           views: "",
           walletAmount: "",
-          year: "");
+          year: "", type_of_merchant: '');
       _cartDataModel = homeState.cartDataModel;
     } else if (homeState is HomeFromCategoryCartPageState) {
       strScreen = "CategoryPage";
@@ -218,7 +218,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                     driverLicense: "",
                     distance: "",
                     devicetype: "",
-                    createdAt: "");
+                    createdAt: "", type_of_merchant: '');
               }
 
               _cartDataModel = state.cartDataModel;

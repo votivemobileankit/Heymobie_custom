@@ -147,7 +147,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           cityTax: "",
           businessName: "",
           lat: "",
-          lng: "");
+          lng: "", txnId: '', type_of_merchant: '',);
       name = _driverDetail.name! + " " + _driverDetail.lastName!;
       productID = _productListDriverModel.id!;
       _productListModel = ProductListMenu(

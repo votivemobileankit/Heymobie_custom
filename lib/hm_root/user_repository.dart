@@ -554,7 +554,7 @@ class UserRepository {
         DriverListModel driverListModel =
             DriverListModel.fromJson(responseList);
         print(driverListModel.status);
-        strBannerImage = driverListModel.bannerImage!;
+        strBannerImage = driverListModel.banner_image!;
         _driverList = driverListModel.data!.driverList!;
 
         _driverProductList = driverListModel.data!.productList!;

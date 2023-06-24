@@ -6,6 +6,8 @@ import 'package:grambunny_customer/home/model/product_list_model.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/ui_utils.dart';
 
+import '../model/driver_list_model.dart';
+
 const double _kButtonNextWidth = 102;
 const double _kHeightBtnAddToCart = 35.0;
 

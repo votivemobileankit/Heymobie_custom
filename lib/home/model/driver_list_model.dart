@@ -1,13 +1,17 @@
 class DriverListModel {
-late  String message;
- late String imgUrl;
- late String productUrl;
- late String banner_image;
- late int status;
- late Data data;
+  late String message;
+  late String imgUrl;
+  late String productUrl;
+  late String banner_image;
+  late int status;
+  late Data data;
 
   DriverListModel(
-      {required this.message,required this.imgUrl,required this.productUrl,required this.status,required this.data});
+      {required this.message,
+      required this.imgUrl,
+      required this.productUrl,
+      required this.status,
+      required this.data});
 
   DriverListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -33,11 +37,14 @@ late  String message;
 }
 
 class Data {
- late List<DriverList> driverList;
-late  List<ProductListDriver> productList;
-late  List<Advertisement> advertisement;
+  late List<DriverList> driverList;
+  late List<ProductListDriver> productList;
+  late List<Advertisement> advertisement;
 
-  Data({required this.driverList, required this.productList,required this.advertisement});
+  Data(
+      {required this.driverList,
+      required this.productList,
+      required this.advertisement});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['driver_list'] != null) {
@@ -77,150 +84,150 @@ late  List<Advertisement> advertisement;
 }
 
 class DriverList {
- late String vendorId;
- late  String uniqueId;
- late  String name;
- late String username;
- late String lastName;
- late  String businessName;
- late String email;
- late  String mailingAddress;
- late String address;
- late  String avgRating;
- late  String ratingCount;
- late  String lat;
- late  String lng;
- late  String address1;
- late  String suburb;
- late  String state;
- late  String city;
- late  String zipcode;
- late  String mobNo;
- late  String vendorStatus;
- late  String loginStatus;
- late String vendorType;
- late  String walletAmount;
- late String deviceid;
- late  String devicetype;
- late  String password;
- late String marketArea;
- late String serviceRadius;
- late String driverLicense;
- late String licenseExpiry;
- late  String licenseFront;
- late String licenseBack;
- late  String ssn;
- late String dob;
- late  String profileImg1;
- late String profileImg2;
- late String profileImg3;
- late String profileImg4;
- late String type;
- late String categoryId;
- late String subCategoryId;
- late String service;
- late String permitType;
- late String permitNumber;
- late String permitExpiry;
- late String description;
- late String rememberToken;
- late  String otp;
- late  String forgetpassRequest;
- late String forgetpassRequestStatus;
- late String planId;
- late String planPurchased;
- late String planExpiry;
- late String txnId;
- late  String createdAt;
- late String updatedAt;
- late String stripeId;
- late  String make;
- late String model;
- late String color;
- late String year;
- late String licensePlate;
- late String views;
- late String salesTax;
- late  String exciseTax;
- late  String cityTax;
- late  String commissionRate;
- late String deliveryFee;
- late String distance;
- late String map_icon;
- late String type_of_merchant;
+  late String vendorId;
+  late String uniqueId;
+  late String name;
+  late String username;
+  late String lastName;
+  late String businessName;
+  late String email;
+  late String mailingAddress;
+  late String address;
+  late String avgRating;
+  late String ratingCount;
+  late String lat;
+  late String lng;
+  late String address1;
+  late String suburb;
+  late String state;
+  late String city;
+  late String zipcode;
+  late String mobNo;
+  late String vendorStatus;
+  late String loginStatus;
+  late String vendorType;
+  late String walletAmount;
+  late String deviceid;
+  late String devicetype;
+  late String password;
+  late String marketArea;
+  late String serviceRadius;
+  late String driverLicense;
+  late String licenseExpiry;
+  late String licenseFront;
+  late String licenseBack;
+  late String ssn;
+  late String dob;
+  late String profileImg1;
+  late String profileImg2;
+  late String profileImg3;
+  late String profileImg4;
+  late String type;
+  late String categoryId;
+  late String subCategoryId;
+  late String service;
+  late String permitType;
+  late String permitNumber;
+  late String permitExpiry;
+  late String description;
+  late String rememberToken;
+  late String otp;
+  late String forgetpassRequest;
+  late String forgetpassRequestStatus;
+  late String planId;
+  late String planPurchased;
+  late String planExpiry;
+  late String txnId;
+  late String createdAt;
+  late String updatedAt;
+  late String stripeId;
+  late String make;
+  late String model;
+  late String color;
+  late String year;
+  late String licensePlate;
+  late String views;
+  late String salesTax;
+  late String exciseTax;
+  late String cityTax;
+  late String commissionRate;
+  late String deliveryFee;
+  late String distance;
+  late String map_icon;
+  late String type_of_merchant;
 
   DriverList(
       {required this.vendorId,
-        required this.uniqueId,
-        required this.name,
-        required  this.username,
-        required  this.lastName,
-        required  this.businessName,
-        required  this.email,
-        required   this.mailingAddress,
-        required   this.address,
-        required   this.avgRating,
-        required  this.ratingCount,
-        required this.lat,
-        required  this.lng,
-        required   this.address1,
-        required   this.suburb,
-        required   this.state,
-        required  this.city,
-        required  this.zipcode,
-        required  this.mobNo,
-        required   this.vendorStatus,
-        required   this.loginStatus,
-        required  this.vendorType,
-        required this.walletAmount,
-        required this.deviceid,
-        required this.devicetype,
-        required  this.password,
-        required  this.marketArea,
-        required   this.serviceRadius,
-        required  this.driverLicense,
-        required  this.licenseExpiry,
-        required  this.licenseFront,
-        required  this.licenseBack,
-        required   this.ssn,
-        required this.dob,
-        required  this.profileImg1,
-        required  this.profileImg2,
-        required  this.profileImg3,
-        required   this.profileImg4,
-        required   this.type,
-        required   this.categoryId,
-        required  this.subCategoryId,
-        required   this.service,
-        required  this.permitType,
-        required  this.permitNumber,
-        required   this.permitExpiry,
-        required  this.description,
-        required  this.rememberToken,
-        required  this.otp,
-        required  this.forgetpassRequest,
-        required   this.forgetpassRequestStatus,
-        required  this.planId,
-        required  this.planPurchased,
-        required  this.planExpiry,
-        required  this.txnId,
-        required  this.createdAt,
-        required  this.updatedAt,
-        required  this.stripeId,
-        required  this.make,
-        required   this.model,
-        required    this.color,
-        required    this.year,
-        required this.licensePlate,
-        required  this.views,
-        required   this.salesTax,
-        required   this.exciseTax,
-        required  this.cityTax,
-        required  this.commissionRate,
-        required  this.deliveryFee,
-        required  this.distance,
-        required    this.map_icon,
-        required   this.type_of_merchant});
+      required this.uniqueId,
+      required this.name,
+      required this.username,
+      required this.lastName,
+      required this.businessName,
+      required this.email,
+      required this.mailingAddress,
+      required this.address,
+      required this.avgRating,
+      required this.ratingCount,
+      required this.lat,
+      required this.lng,
+      required this.address1,
+      required this.suburb,
+      required this.state,
+      required this.city,
+      required this.zipcode,
+      required this.mobNo,
+      required this.vendorStatus,
+      required this.loginStatus,
+      required this.vendorType,
+      required this.walletAmount,
+      required this.deviceid,
+      required this.devicetype,
+      required this.password,
+      required this.marketArea,
+      required this.serviceRadius,
+      required this.driverLicense,
+      required this.licenseExpiry,
+      required this.licenseFront,
+      required this.licenseBack,
+      required this.ssn,
+      required this.dob,
+      required this.profileImg1,
+      required this.profileImg2,
+      required this.profileImg3,
+      required this.profileImg4,
+      required this.type,
+      required this.categoryId,
+      required this.subCategoryId,
+      required this.service,
+      required this.permitType,
+      required this.permitNumber,
+      required this.permitExpiry,
+      required this.description,
+      required this.rememberToken,
+      required this.otp,
+      required this.forgetpassRequest,
+      required this.forgetpassRequestStatus,
+      required this.planId,
+      required this.planPurchased,
+      required this.planExpiry,
+      required this.txnId,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.stripeId,
+      required this.make,
+      required this.model,
+      required this.color,
+      required this.year,
+      required this.licensePlate,
+      required this.views,
+      required this.salesTax,
+      required this.exciseTax,
+      required this.cityTax,
+      required this.commissionRate,
+      required this.deliveryFee,
+      required this.distance,
+      required this.map_icon,
+      required this.type_of_merchant});
 
   DriverList.fromJson(Map<String, dynamic> json) {
     vendorId = json['vendor_id'];
@@ -374,193 +381,195 @@ class DriverList {
 }
 
 class ProductListDriver {
- late int id;
- late String vendorId;
- late String type;
- late String categoryId;
- late String subCategoryId;
- late  String avgRating;
- late  String ratingCount;
- late  String name;
- late String slug;
- late  String description;
- late  String price;
- late String quantity;
- late  String unit;
- late  String brands;
- late String types;
- late  String potencyThc;
- late  String potencyCbd;
- late  String image;
- late String keyword;
- late String productCode;
- late String status;
- late String loginStatus;
- late String stock;
- late String popular;
- late String createdAt;
- late  String updatedAt;
- late  String uniqueId;
- late String username;
- late String lastName;
- late  String businessName;
- late  String email;
- late  String mailingAddress;
- late  String address;
- late String lat;
- late String lng;
- late String address1;
- late  String suburb;
- late String state;
- late String city;
- late  String zipcode;
- late  String mobNo;
- late  String vendorStatus;
- late  String vendorType;
- late  String walletAmount;
- late String deviceid;
- late  String devicetype;
- late  String password;
- late  String marketArea;
- late String serviceRadius;
- late String driverLicense;
- late  String licenseExpiry;
- late String licenseFront;
- late String licenseBack;
- late String ssn;
- late String dob;
- late String profileImg1;
- late String profileImg2;
- late String profileImg3;
- late String profileImg4;
- late  String service;
- late String permitType;
- late String permitNumber;
- late String permitExpiry;
- late String rememberToken;
- late String otp;
- late String forgetpassRequest;
- late String forgetpassRequestStatus;
- late String planId;
- late String planPurchased;
- late String planExpiry;
- late String txnId;
- late String stripeId;
- late  String make;
- late  String model;
- late  String color;
- late String year;
- late  String licensePlate;
- late  String views;
- late  String salesTax;
- late String exciseTax;
- late String cityTax;
- late  String commissionRate;
- late  String deliveryFee;
- late  String vid;
- late  String vendorname;
- late  String vendorlastname;
+  late int id;
+  late String vendorId;
+  late String type;
+  late String categoryId;
+  late String subCategoryId;
+  late String avgRating;
+  late String ratingCount;
+  late String name;
+  late String slug;
+  late String description;
+  late String price;
+  late String quantity;
+  late String unit;
+  late String brands;
+  late String types;
+  late String potencyThc;
+  late String potencyCbd;
+  late String image;
+  late String keyword;
+  late String productCode;
+  late String status;
+  late String loginStatus;
+  late String stock;
+  late String popular;
+  late String createdAt;
+  late String updatedAt;
+  late String uniqueId;
+  late String username;
+  late String lastName;
+  late String businessName;
+  late String email;
+  late String mailingAddress;
+  late String address;
+  late String lat;
+  late String lng;
+  late String address1;
+  late String suburb;
+  late String state;
+  late String city;
+  late String zipcode;
+  late String mobNo;
+  late String vendorStatus;
+  late String vendorType;
+  late String walletAmount;
+  late String deviceid;
+  late String devicetype;
+  late String password;
+  late String marketArea;
+  late String serviceRadius;
+  late String driverLicense;
+  late String licenseExpiry;
+  late String licenseFront;
+  late String licenseBack;
+  late String ssn;
+  late String dob;
+  late String profileImg1;
+  late String profileImg2;
+  late String profileImg3;
+  late String profileImg4;
+  late String service;
+  late String permitType;
+  late String permitNumber;
+  late String permitExpiry;
+  late String rememberToken;
+  late String otp;
+  late String forgetpassRequest;
+  late String forgetpassRequestStatus;
+  late String planId;
+  late String planPurchased;
+  late String planExpiry;
+  late String txnId;
+  late String stripeId;
+  late String make;
+  late String model;
+  late String color;
+  late String year;
+  late String licensePlate;
+  late String views;
+  late String salesTax;
+  late String exciseTax;
+  late String cityTax;
+  late String commissionRate;
+  late String deliveryFee;
+  late String vid;
+  late String vendorname;
+  late String vendorlastname;
+  late String producttype;
 
- late String categoryname;
- late String imageURL;
- late  String subcategoryname;
- late List<Images> images;
- late  String totalprice;
- late Vendor vendor;
+  late String categoryname;
+  late String imageURL;
+  late String subcategoryname;
+  late List<Images> images;
+  late String totalprice;
+  late Vendor vendor;
 
   ProductListDriver(
       {required this.id,
-        required  this.vendorId,
-        required   this.type,
-        required   this.categoryId,
-        required  this.subCategoryId,
-        required  this.avgRating,
-        required   this.ratingCount,
-        required  this.name,
-        required  this.slug,
-        required  this.description,
-        required  this.price,
-        required this.quantity,
-        required this.unit,
-        required  this.brands,
-        required  this.types,
-        required this.potencyThc,
-        required this.potencyCbd,
-        required   this.image,
-        required  this.keyword,
-        required   this.productCode,
-        required  this.status,
-        required   this.loginStatus,
-        required   this.stock,
-        required   this.popular,
-        required  this.createdAt,
-        required  this.updatedAt,
-        required  this.uniqueId,
-        required   this.username,
-        required   this.lastName,
-        required  this.businessName,
-        required  this.email,
-        required  this.mailingAddress,
-        required  this.address,
-        required  this.lat,
-        required  this.lng,
-        required  this.address1,
-        required  this.suburb,
-        required  this.state,
-        required   this.city,
-        required    this.zipcode,
-        required   this.mobNo,
-        required   this.vendorStatus,
-        required   this.vendorType,
-        required   this.walletAmount,
-        required   this.deviceid,
-        required   this.devicetype,
-        required   this.password,
-        required   this.marketArea,
-        required  this.serviceRadius,
-        required  this.driverLicense,
-        required    this.licenseExpiry,
-        required   this.licenseFront,
-        required   this.licenseBack,
-        required  this.ssn,
-        required  this.dob,
-        required   this.profileImg1,
-        required   this.profileImg2,
-        required   this.profileImg3,
-        required  this.profileImg4,
-        required  this.service,
-        required  this.permitType,
-        required  this.permitNumber,
-        required  this.permitExpiry,
-        required   this.rememberToken,
-        required   this.otp,
-        required   this.forgetpassRequest,
-        required   this.forgetpassRequestStatus,
-        required   this.planId,
-        required   this.planPurchased,
-        required   this.planExpiry,
-        required  this.txnId,
-        required  this.stripeId,
-        required  this.make,
-        required   this.model,
-        required   this.color,
-        required   this.year,
-        required   this.licensePlate,
-        required  this.views,
-        required    this.salesTax,
-        required  this.exciseTax,
-        required   this.cityTax,
-        required   this.commissionRate,
-        required   this.deliveryFee,
-        required   this.vid,
-        required  this.vendorname,
-        required  this.vendorlastname,
-        required   this.categoryname,
-        required  this.imageURL,
-        required  this.subcategoryname,
-        required  this.images,
-        required  this.totalprice,
-        required   this.vendor});
+      required this.vendorId,
+      required this.type,
+      required this.categoryId,
+      required this.subCategoryId,
+      required this.avgRating,
+      required this.ratingCount,
+      required this.name,
+      required this.slug,
+      required this.description,
+      required this.price,
+      required this.quantity,
+      required this.unit,
+      required this.brands,
+      required this.types,
+      required this.potencyThc,
+      required this.potencyCbd,
+      required this.image,
+      required this.keyword,
+      required this.productCode,
+      required this.status,
+      required this.loginStatus,
+      required this.stock,
+      required this.popular,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.uniqueId,
+      required this.username,
+      required this.lastName,
+      required this.businessName,
+      required this.email,
+      required this.mailingAddress,
+      required this.address,
+      required this.lat,
+      required this.lng,
+      required this.address1,
+      required this.suburb,
+      required this.state,
+      required this.city,
+      required this.zipcode,
+      required this.mobNo,
+      required this.vendorStatus,
+      required this.vendorType,
+      required this.walletAmount,
+      required this.deviceid,
+      required this.devicetype,
+      required this.password,
+      required this.marketArea,
+      required this.serviceRadius,
+      required this.driverLicense,
+      required this.licenseExpiry,
+      required this.licenseFront,
+      required this.licenseBack,
+      required this.ssn,
+      required this.dob,
+      required this.profileImg1,
+      required this.profileImg2,
+      required this.profileImg3,
+      required this.profileImg4,
+      required this.service,
+      required this.permitType,
+      required this.permitNumber,
+      required this.permitExpiry,
+      required this.rememberToken,
+      required this.otp,
+      required this.forgetpassRequest,
+      required this.forgetpassRequestStatus,
+      required this.planId,
+      required this.planPurchased,
+      required this.planExpiry,
+      required this.txnId,
+      required this.stripeId,
+      required this.make,
+      required this.model,
+      required this.color,
+      required this.year,
+      required this.licensePlate,
+      required this.views,
+      required this.salesTax,
+      required this.exciseTax,
+      required this.cityTax,
+      required this.commissionRate,
+      required this.deliveryFee,
+      required this.vid,
+      required this.vendorname,
+      required this.vendorlastname,
+      required this.categoryname,
+      required this.imageURL,
+      required this.subcategoryname,
+      required this.images,
+      required this.totalprice,
+      required this.vendor,
+      required this.producttype});
 
   ProductListDriver.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -652,6 +661,7 @@ class ProductListDriver {
     categoryname = json['categoryname'];
     imageURL = json['ImageURL'];
     subcategoryname = json['subcategoryname'];
+    producttype = json['product_type'];
     if (json['images'] != null) {
       images = [];
       json['images'].forEach((v) {
@@ -700,6 +710,7 @@ class ProductListDriver {
     data['address'] = this.address;
     data['lat'] = this.lat;
     data['lng'] = this.lng;
+    data['product_type'] = this.producttype;
     data['address1'] = this.address1;
     data['suburb'] = this.suburb;
     data['state'] = this.state;
@@ -766,22 +777,22 @@ class ProductListDriver {
 }
 
 class Images {
-late  String id;
-late String psId;
-late String name;
-late String thumb;
-late String createdAt;
-late  String updatedAt;
-late String path;
+  late String id;
+  late String psId;
+  late String name;
+  late String thumb;
+  late String createdAt;
+  late String updatedAt;
+  late String path;
 
   Images(
       {required this.id,
-        required   this.psId,
-        required   this.name,
-        required   this.thumb,
-        required   this.createdAt,
-        required  this.updatedAt,
-        required   this.path});
+      required this.psId,
+      required this.name,
+      required this.thumb,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.path});
 
   Images.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -807,157 +818,157 @@ late String path;
 }
 
 class Vendor {
- late int vendorId;
- late  String uniqueId;
- late String name;
- late  String username;
- late  String lastName;
- late String businessName;
- late String email;
- late  String mailingAddress;
- late String address;
- late String avgRating;
- late String ratingCount;
- late  String lat;
- late  String lng;
- late  String address1;
- late  String suburb;
- late String state;
- late String city;
- late  String zipcode;
- late String mobNo;
- late String vendorStatus;
- late String loginStatus;
- late  String vendorType;
- late  String walletAmount;
- late String deviceid;
- late String devicetype;
- late  String marketArea;
- late  String serviceRadius;
- late String driverLicense;
- late  String licenseExpiry;
- late String licenseFront;
- late  String licenseBack;
- late  String ssn;
- late  String dob;
- late  String profileImg1;
- late  String profileImg2;
- late String profileImg3;
- late  String profileImg4;
- late  String type;
- late  String categoryId;
- late  String subCategoryId;
- late  String service;
- late  String permitType;
- late  String permitNumber;
- late  String permitExpiry;
- late  String description;
- late  String otp;
- late  String forgetpassRequest;
- late  String forgetpassRequestStatus;
- late  String planId;
- late  String planPurchased;
- late  String planExpiry;
- late  String txnId;
- late  String createdAt;
- late  String updatedAt;
- late  String stripeId;
- late  String make;
- late  String model;
- late  String color;
- late  String year;
- late  String licensePlate;
- late  String views;
- late  String salesTax;
- late  String exciseTax;
- late  String cityTax;
- late  String commissionRate;
- late  String deliveryFee;
- late  String licensefrontURL;
- late  String licensebackURL;
- late  String profileURL;
- late  String profile2URL;
- late  String profile3URL;
- late  String profile4URL;
+  late int vendorId;
+  late String uniqueId;
+  late String name;
+  late String username;
+  late String lastName;
+  late String businessName;
+  late String email;
+  late String mailingAddress;
+  late String address;
+  late String avgRating;
+  late String ratingCount;
+  late String lat;
+  late String lng;
+  late String address1;
+  late String suburb;
+  late String state;
+  late String city;
+  late String zipcode;
+  late String mobNo;
+  late String vendorStatus;
+  late String loginStatus;
+  late String vendorType;
+  late String walletAmount;
+  late String deviceid;
+  late String devicetype;
+  late String marketArea;
+  late String serviceRadius;
+  late String driverLicense;
+  late String licenseExpiry;
+  late String licenseFront;
+  late String licenseBack;
+  late String ssn;
+  late String dob;
+  late String profileImg1;
+  late String profileImg2;
+  late String profileImg3;
+  late String profileImg4;
+  late String type;
+  late String categoryId;
+  late String subCategoryId;
+  late String service;
+  late String permitType;
+  late String permitNumber;
+  late String permitExpiry;
+  late String description;
+  late String otp;
+  late String forgetpassRequest;
+  late String forgetpassRequestStatus;
+  late String planId;
+  late String planPurchased;
+  late String planExpiry;
+  late String txnId;
+  late String createdAt;
+  late String updatedAt;
+  late String stripeId;
+  late String make;
+  late String model;
+  late String color;
+  late String year;
+  late String licensePlate;
+  late String views;
+  late String salesTax;
+  late String exciseTax;
+  late String cityTax;
+  late String commissionRate;
+  late String deliveryFee;
+  late String licensefrontURL;
+  late String licensebackURL;
+  late String profileURL;
+  late String profile2URL;
+  late String profile3URL;
+  late String profile4URL;
 
- late  String fullname;
- late  String category;
+  late String fullname;
+  late String category;
 
   Vendor({
-   required this.vendorId,
-    required  this.uniqueId,
+    required this.vendorId,
+    required this.uniqueId,
     required this.name,
-    required  this.username,
-    required  this.lastName,
-    required  this.businessName,
-    required  this.email,
+    required this.username,
+    required this.lastName,
+    required this.businessName,
+    required this.email,
     required this.mailingAddress,
     required this.address,
     required this.avgRating,
-    required  this.ratingCount,
-    required  this.lat,
-    required  this.lng,
+    required this.ratingCount,
+    required this.lat,
+    required this.lng,
     required this.address1,
     required this.suburb,
-    required  this.state,
-    required  this.city,
-    required  this.zipcode,
-    required  this.mobNo,
-    required  this.vendorStatus,
-    required  this.loginStatus,
-    required  this.vendorType,
-    required  this.walletAmount,
-    required  this.deviceid,
-    required  this.devicetype,
-    required  this.marketArea,
-    required  this.serviceRadius,
-    required  this.driverLicense,
-    required  this.licenseExpiry,
-    required  this.licenseFront,
-    required   this.licenseBack,
-    required   this.ssn,
-    required  this.dob,
-    required   this.profileImg1,
-    required   this.profileImg2,
-    required   this.profileImg3,
-    required  this.profileImg4,
-    required   this.type,
-    required  this.categoryId,
+    required this.state,
+    required this.city,
+    required this.zipcode,
+    required this.mobNo,
+    required this.vendorStatus,
+    required this.loginStatus,
+    required this.vendorType,
+    required this.walletAmount,
+    required this.deviceid,
+    required this.devicetype,
+    required this.marketArea,
+    required this.serviceRadius,
+    required this.driverLicense,
+    required this.licenseExpiry,
+    required this.licenseFront,
+    required this.licenseBack,
+    required this.ssn,
+    required this.dob,
+    required this.profileImg1,
+    required this.profileImg2,
+    required this.profileImg3,
+    required this.profileImg4,
+    required this.type,
+    required this.categoryId,
     required this.subCategoryId,
-    required  this.service,
-    required  this.permitType,
-    required  this.permitNumber,
-    required  this.permitExpiry,
-    required  this.description,
-    required  this.otp,
-    required   this.forgetpassRequest,
-    required  this.forgetpassRequestStatus,
-    required   this.planId,
-    required   this.planPurchased,
-    required   this.planExpiry,
+    required this.service,
+    required this.permitType,
+    required this.permitNumber,
+    required this.permitExpiry,
+    required this.description,
+    required this.otp,
+    required this.forgetpassRequest,
+    required this.forgetpassRequestStatus,
+    required this.planId,
+    required this.planPurchased,
+    required this.planExpiry,
     required this.txnId,
-    required  this.createdAt,
-    required   this.updatedAt,
-    required   this.stripeId,
-    required   this.make,
-    required   this.model,
-    required   this.color,
-    required   this.year,
-    required   this.licensePlate,
-    required  this.views,
-    required   this.salesTax,
-    required  this.exciseTax,
-    required   this.cityTax,
-    required   this.commissionRate,
-    required   this.deliveryFee,
-    required  this.licensefrontURL,
-    required   this.licensebackURL,
-    required   this.profileURL,
-    required   this.profile2URL,
-    required   this.profile3URL,
-    required  this.profile4URL,
-    required   this.fullname,
-    required   this.category,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.stripeId,
+    required this.make,
+    required this.model,
+    required this.color,
+    required this.year,
+    required this.licensePlate,
+    required this.views,
+    required this.salesTax,
+    required this.exciseTax,
+    required this.cityTax,
+    required this.commissionRate,
+    required this.deliveryFee,
+    required this.licensefrontURL,
+    required this.licensebackURL,
+    required this.profileURL,
+    required this.profile2URL,
+    required this.profile3URL,
+    required this.profile4URL,
+    required this.fullname,
+    required this.category,
   });
 
   Vendor.fromJson(Map<String, dynamic> json) {
@@ -1121,10 +1132,10 @@ class Vendor {
 }
 
 class Advertisement {
-late  String image;
- late String url;
+  late String image;
+  late String url;
 
-  Advertisement({required this.image,required this.url});
+  Advertisement({required this.image, required this.url});
 
   Advertisement.fromJson(Map<String, dynamic> json) {
     image = json['image'];

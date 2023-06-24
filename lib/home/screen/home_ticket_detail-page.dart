@@ -627,7 +627,8 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                       btnElevation: 0,
                       btnBorderSideColor: kColorCommonButton,
                       btnIconImagePath: '${imgPathGeneral}ic_cart_white.png',
-                      btnIconData: ImageIcon(AssetImage('')),
+                      btnIconData: ImageIcon(AssetImage('')), btnDisabledColor: kColorCommonButton,
+                      btnDisabledTextColor: kColorCommonButton,
                     )
                   ],
                 ),
@@ -747,6 +748,8 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                   btnHeight: 40.0.scale(),
                   btnWidth: kWidthBtnNormal.scale(),
                   btnFontSize: kFontSizeBtnLarge.scale(),
+                  btnBorderSideColor: kColorCommonButton,
+                  btnDisabledTextColor: kColorCommonButton,
                   btnElevation: 0,
                 ),
                 AVerticalSpace(15.0.scale()),

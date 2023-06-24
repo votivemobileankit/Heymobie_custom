@@ -329,6 +329,10 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
 class HomeEventDriverTicketListClickPageState extends HomeState {
   List<EventDetailsList>? eventdetaillist;
 
+  // ProductListMenu productListModel;
+  // String driverId;
+  // DriverList driverDetail;
+
   // String merchant_id;
   // String ps_id;
   // String type;

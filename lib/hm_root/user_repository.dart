@@ -17,13 +17,14 @@ import 'package:grambunny_customer/setting/model/model.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
 import '../home/model/driver_list_model.dart';
+import '../home/model/ps_list_model.dart';
 import '../utils/imagecropper2.dart';
 
 late NetworkApiProvider _vdApiProvider;
 
 class UserRepository {
   late String currentLanguageCode = "";
-  late ScreenNavigation ScreenName;
+  ScreenNavigation? ScreenName;
   List<RatingReviewData>? ratingReviewDataArray;
   late String herberiumUrlCall;
   late List<CategoryListModel> categortList;
@@ -57,6 +58,7 @@ class UserRepository {
   late List<Advertisement> _advertisement;
   late List<BitmapDescriptor> pinLocationIcon;
   static String strProfileMerchantUrl = "";
+  List<EventDetailsList>? eventdetaillist;
 
   UserRepository() {
     herberiumUrlCall = herBeriumBaseDevUrl;
@@ -1327,6 +1329,59 @@ class UserRepository {
     return apiCallState;
   }
 
+  Future<NetworkApiCallState<bool>> getPurchaseTicketApi(
+      int quantity,
+      int productId,
+      String driverId,
+      int decrease,
+      String Changedriver,
+      String specialInstruction) async {
+    NetworkApiCallState<bool> apiCallState;
+    Map<String, dynamic> addToCartMap = {
+      "user_id": sharedPrefs.getUserId,
+      "product_id": productId,
+      "vendor_id": driverId,
+      "qty": quantity,
+      "delete": "",
+      "decrease": decrease,
+      "changedriver": Changedriver,
+      "sinstruction": specialInstruction
+    };
+
+    try {
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiAddToCart, addToCartMap);
+
+      print(responseList.toString());
+      if (responseList["status"].toString() == "1") {
+        print("Sucess==>");
+        sharedPrefs.setUserId = responseList["user_id"];
+        print("complet");
+        isNewdriver = responseList["newdriver"].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      } else {
+        isNewdriver = "";
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      }
+    } catch (Excep) {
+      print('Exception  Call ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState = NetworkApiCallState.error(
+          Excep.message,
+          "",
+          Excep.errorType,
+        );
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+
+    return apiCallState;
+  }
+
   Future<NetworkApiCallState<bool>> postProductRatingReviewApi(
       String productId, String ratingCount, String reviewText) async {
     NetworkApiCallState<bool> apiCallState;
@@ -1421,7 +1476,7 @@ class UserRepository {
       if (responseList["status"].toString() == "1") {
         ReviewListModel ratingReviewModel =
             ReviewListModel.fromJson(responseList);
-        ratingReviewDataArray = ratingReviewModel.data.ratingReviewData;
+        ratingReviewDataArray = ratingReviewModel.data?.ratingReviewData!;
         apiCallState = NetworkApiCallState.completed(
             true, responseList["message"], responseList["status"].toString());
       } else {
@@ -1612,6 +1667,60 @@ class UserRepository {
     return apiCallState;
   }
 
+  Future<NetworkApiCallState<bool>> getTicketListApi(
+    String merchant_id,
+    String ps_id,
+    String type,
+  ) async {
+    NetworkApiCallState<bool> apiCallState;
+    var response;
+    String status;
+    String massage;
+    try {
+      Map<String, dynamic> requestParams = {
+        // "merchant_id": sharedPrefs.getUserId,
+        // "ps_id": sharedPrefs.getUserId,
+        // "type": type
+        "merchant_id": merchant_id,
+        "ps_id": ps_id,
+        "type": type
+      };
+      eventdetaillist = [];
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apipsdetails, requestParams);
+
+      status = responseList['ok'].toString();
+      massage = responseList['message'].toString();
+      print(
+          "list=====>>>>" + status + "response==>>" + responseList.toString());
+      if (responseList["ok"] == 1) {
+        TicketListModel eventModel = TicketListModel.fromJson(responseList);
+        eventdetaillist = eventModel.data?.eventdetaillist ?? [];
+        eventModel.data?.eventdetaillist![0].vendor;
+        print("list=====>>>>" + "success");
+        status = responseList['ok'].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true,
+            responseList["message"].toString(),
+            responseList['status'].toString());
+      } else {
+        eventdetaillist = [];
+        apiCallState = NetworkApiCallState.completed(true,
+            responseList["message"].toString(), responseList["ok"].toString());
+      }
+    } catch (Excep) {
+      print('Exception Auth ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState =
+            NetworkApiCallState.error(Excep.message, "", Excep.errorType);
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+    return apiCallState;
+  }
+
   String getOrderId() {
     return orderId == "" ? "" : orderId;
   }
@@ -1724,5 +1833,9 @@ class UserRepository {
 
   FilterListModel? getFilterData() {
     return _filterListModel == null ? null : _filterListModel;
+  }
+
+  List<EventDetailsList>? getTicketList() {
+    return eventdetaillist == [] ? [] : eventdetaillist;
   }
 }

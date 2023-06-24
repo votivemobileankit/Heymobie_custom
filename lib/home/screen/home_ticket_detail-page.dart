@@ -54,13 +54,16 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
   Vendor? _vendorDetails;
   List<RelatedProductList>? _relatedProductList;
   int? productID;
-  int _counter = 1;
+  int qty = 1;
   double ratingCountSend = 5;
   int pageCount = 1;
   List<EventDetailsList> eventdetaillist = [];
   String? merchant_id;
   int? ps_id;
   String? type;
+  String? changedriver;
+  String? delete;
+  String? decrease;
 
   List<AddonProductList>? _addOnProductList;
   List<AddonProductListBool>? _addOnProductLocalList;
@@ -78,8 +81,10 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
     // TODO: implement initState
     HomeState state = BlocProvider.of<HomeBloc>(context).state;
 
-    if (state is HomeEventDriverTicketListClickCompleteState) {
+    if (state is HomeEventDriverTicketListClickPageState) {
       eventdetaillist = state.eventdetaillist!;
+      _driverId = eventdetaillist[0].vendorId;
+
       print("price====>${eventdetaillist[0].price}");
     }
 
@@ -114,6 +119,24 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
         //   print("${eventdetaillist}");
         //   print("dataPrint====>${eventdetaillist[0].vendorId}");
         // }
+        if (state is HomeCategoryProductPageState) {
+          Navigator.of(context).pop(true);
+        } else if (state is HomeEventMessageShowState) {
+          print("Add to cart data =========");
+          try {
+            if (_contextLoad != null) {
+              Navigator.of(_contextLoad!, rootNavigator: true).pop();
+            }
+          } catch (v) {
+            print(v.toString());
+          }
+          _textFiledUserSpecialInstruction.text = "";
+          showHideProgress(false);
+          showSnackBar(state.message, context);
+          //print("driver Id ${_driverId}");
+          BlocProvider.of<HomeBloc>(context).add(HomeEventEventDetailPageReset(
+              eventdetaillist, _driverId!, _driverDetail!));
+        }
       },
       child: SafeArea(
           bottom: false,
@@ -200,7 +223,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                             ).leftPadding(10.0.scale()),
                             AHorizontalSpace(5.0.scale()),
                             Text(
-                              "${eventdetaillist[0].price}",
+                              "\$${eventdetaillist[0].price}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.black,
@@ -222,7 +245,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                   fontWeight: FontWeight.bold),
                             ).leftPadding(10.0.scale()),
                             Text(
-                              "${eventdetaillist[0].ticketFee}",
+                              "\$${eventdetaillist[0].ticketFee}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.black,
@@ -244,7 +267,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                   fontWeight: FontWeight.bold),
                             ).leftPadding(10.0.scale()),
                             Text(
-                              "${eventdetaillist[0].ticketServiceFee}",
+                              "\$${eventdetaillist[0].ticketServiceFee}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.black,
@@ -472,15 +495,14 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                         children: [
                           InkWell(
                             onTap: () {
-                              if (_counter > 1) {
-                                _counter--;
-                                print(_counter);
+                              if (qty > 1) {
+                                qty--;
+                                print(qty);
                                 setState(() {
-                                  _price = double.parse(_productListModel! ==
-                                              null
-                                          ? _productListDriverModel?.price ?? ""
-                                          : _productListModel?.price ?? "") *
-                                      _counter;
+                                  _price = double.parse(eventdetaillist[0]
+                                          .quantity
+                                          .toString()) *
+                                      qty;
                                   String value = _price.toStringAsFixed(2);
                                   _price = double.parse(value);
                                 });
@@ -513,7 +535,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                 //     color: kColorCommonButton),
 
                                 Text(
-                                  ' ${_counter}',
+                                  ' ${qty}',
                                   style: textStyleBoldCustomLargeColor(
                                       _kMenuitemNameTextFontSize.scale(),
                                       Colors.white),
@@ -528,24 +550,22 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              if (_counter <
-                                  int.parse(_productListModel == null
-                                      ? _productListDriverModel?.quantity ?? ""
-                                      : _productListModel?.quantity ?? "")) {
-                                _counter++;
-                                print(_counter);
+                              if (qty <
+                                  int.parse(
+                                      eventdetaillist[0].quantity.toString())) {
+                                qty++;
+                                print(qty);
                                 setState(() {
-                                  _price = double.parse(_productListModel ==
-                                              null
-                                          ? _productListDriverModel?.price ?? ""
-                                          : _productListModel?.price ?? "") *
-                                      _counter;
+                                  _price = double.parse(eventdetaillist[0]
+                                          .quantity
+                                          .toString()) *
+                                      qty;
                                   String value = _price.toStringAsFixed(2);
                                   _price = double.parse(value);
                                 });
                               } else {
                                 showSnackBar(
-                                    "Product available quantity is ${_productListModel == null ? _productListDriverModel!.quantity! : _productListModel!.quantity!}",
+                                    "Product available quantity is ${eventdetaillist[0].quantity}",
                                     context);
                               }
                             },
@@ -575,16 +595,25 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                       btnBgColor: kColorCommonButton,
                       btnTextColor: Colors.white,
                       btnOnPressed: () {
-                        if (int.parse(_productListModel!.quantity!) > 0) {
+                        if (int.parse(eventdetaillist[0].quantity!) > 0) {
                           showHideProgress(true);
 
+                          // BlocProvider.of<HomeBloc>(context).add(
+                          //     HomeEventItemClickAddToCartBtnClick(
+                          //         qty,
+                          //         _productListModel!.id!,
+                          //         _productListModel!.vendorId!,
+                          //         0,
+                          //         _driverDetail!,
+                          //         "0",
+                          //         _textFiledUserSpecialInstruction.text));
+
                           BlocProvider.of<HomeBloc>(context).add(
-                              HomeEventItemClickAddToCartBtnClick(
-                                  _counter,
-                                  _productListModel!.id!,
-                                  _productListModel!.vendorId!,
+                              HomeEventTicketItemClickPurchaseTicketBtnClick(
+                                  qty,
+                                  eventdetaillist[0].id,
+                                  eventdetaillist[0].vendorId!,
                                   0,
-                                  _driverDetail!,
                                   "0",
                                   _textFiledUserSpecialInstruction.text));
                         } else {

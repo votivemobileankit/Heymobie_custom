@@ -302,15 +302,14 @@ class HomeCustomerRatingReviewSubmitState extends HomeState {
 class HomeFromDriverProductListDetailsPageState extends HomeState {
   ProductListDriver driverProductList;
   String screen;
-
-  //Vendor driverDetail;
+  Vendor driverDetail;
   List<RatingReviewData>? ratingReviewList;
   List<RelatedProductList>? relatedProductList;
   List<AddonProductList>? addOnProductList;
 
   HomeFromDriverProductListDetailsPageState(
       this.driverProductList,
-      //this.driverDetail,
+      this.driverDetail,
       this.screen,
       this.ratingReviewList,
       this.relatedProductList,

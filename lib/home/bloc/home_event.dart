@@ -5,6 +5,8 @@ import 'package:grambunny_customer/home/model/driver_list_model.dart';
 import 'package:grambunny_customer/home/model/product_list_model.dart';
 import 'package:grambunny_customer/home/model/statelist_reponse_model.dart';
 
+import '../model/ps_list_model.dart';
+
 abstract class HomeEvent extends Equatable {
   const HomeEvent();
 
@@ -497,11 +499,13 @@ class HomeEventDriverTicketListClick extends HomeEvent {
   String merchant_id;
   String ps_id;
   String type;
+  ProductListDriver driverProductList;
 
-  HomeEventDriverTicketListClick(this.merchant_id, this.ps_id, this.type);
+  HomeEventDriverTicketListClick(
+      this.merchant_id, this.ps_id, this.type, this.driverProductList);
 
   @override
-  List<Object> get props => [merchant_id, ps_id, type];
+  List<Object> get props => [merchant_id, ps_id, type, driverProductList];
 }
 
 class HomeEventProductItemDetailPageReset extends HomeEvent {
@@ -706,6 +710,38 @@ class HomeEventAddToCartBtnClick extends HomeEvent {
       ];
 }
 
+class HomeEventTicketItemClickPurchaseTicketBtnClick extends HomeEvent {
+  int quantity;
+  int productId;
+  String driverId;
+  int decrease;
+
+  //DriverList driverDetail;
+  String newDriver;
+  String specialInstruction;
+
+  HomeEventTicketItemClickPurchaseTicketBtnClick(
+      // this.quantity,
+      this.quantity,
+      this.productId,
+      this.driverId,
+      this.decrease,
+      //  this.driverDetail,
+      this.newDriver,
+      this.specialInstruction);
+
+  @override
+  List<Object> get props => [
+        quantity,
+        productId,
+        driverId,
+        decrease,
+        //driverDetail,
+        newDriver,
+        specialInstruction
+      ];
+}
+
 class HomeEventItemClickAddToCartBtnClick extends HomeEvent {
   int quantity;
   int productId;
@@ -810,6 +846,19 @@ class HomeEventProductDetailPageReset extends HomeEvent {
 
   @override
   List<Object> get props => [productListModel, driverId, driverDetail];
+}
+
+class HomeEventEventDetailPageReset extends HomeEvent {
+  List<EventDetailsList>? eventdetaillist;
+
+  String driverId;
+  DriverList driverDetail;
+
+  HomeEventEventDetailPageReset(
+      this.eventdetaillist, this.driverId, this.driverDetail);
+
+  @override
+  List<Object> get props => [eventdetaillist!, driverId, driverDetail];
 }
 
 class HomeEventCategoryPageReset extends HomeEvent {

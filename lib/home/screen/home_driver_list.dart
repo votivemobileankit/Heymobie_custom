@@ -1039,12 +1039,12 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                 //_timer.cancel();
                 widget.showHideProgress(true);
 
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverProductListClick(
-                //         widget._driverProductList[i],
-                //         widget._driverProductList[i].vendor!,
-                //         "DriverList",
-                //         widget._driverProductList[i].id!));
+                BlocProvider.of<HomeBloc>(context).add(
+                    HomeEventDriverProductListClick(
+                        widget._driverProductList[i],
+                        widget._driverProductList[i].vendor!,
+                        "DriverList",
+                        widget._driverProductList[i].id!));
 
                 // BlocProvider.of<HomeBloc>(context).add(
                 //     HomeEventDriverTicketListClick(
@@ -1053,11 +1053,12 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                 //         "DriverList",
                 //         widget._driverProductList[i].id!));
 
-                BlocProvider.of<HomeBloc>(context).add(
-                    HomeEventDriverTicketListClick(
-                        widget._driverProductList[i].vendorId!,
-                        widget._driverProductList[i].id!.toString(),
-                        widget._driverProductList[i].type!));
+                // BlocProvider.of<HomeBloc>(context).add(
+                //     HomeEventDriverTicketListClick(
+                //         widget._driverProductList[i].vendorId!,
+                //         widget._driverProductList[i].id!.toString(),
+                //         widget._driverProductList[i].type!,
+                //         driverProductList[i]));
               },
               child: Container(
                 height: 210.0.scale(),

@@ -73,7 +73,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
     } else if (homeState is HomeFromDriverProductListDetailsPageState) {
       print("productlistdetailPage");
       _productListDriverModel = homeState.driverProductList;
-      //_vendorDetails = homeState.driverDetail;
+      _vendorDetails = homeState.driverDetail;
       _relatedProductList = homeState.relatedProductList!;
       _addOnProductList = homeState.addOnProductList!;
       _driverId = "${_vendorDetails.vendorId}";

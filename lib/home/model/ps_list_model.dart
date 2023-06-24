@@ -47,7 +47,7 @@ class EventData {
 }
 
 class EventDetailsList {
-  int? id;
+  dynamic? id;
   String? vendorId;
   String? adminProductId;
   String? vendorProductId;

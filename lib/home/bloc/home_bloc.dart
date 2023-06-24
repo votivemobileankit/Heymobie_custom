@@ -42,6 +42,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventCartPageBtnClick>(mapHomeEventCartPageBtnClick);
     on<HomeEventDriverListCartBtnClick>(mapHomeEventDriverListCartBtnClick);
     on<HomeEventAddToCartBtnClick>(mapHomeEventAddToCartBtnClick);
+
+    on<HomeEventTicketItemClickPurchaseTicketBtnClick>(
+        mapHomeEventTicketItemClickPurchaseTicketBtnClick);
+
     on<HomeEventItemClickAddToCartBtnClick>(
         mapHomeEventItemClickAddToCartBtnClick);
     on<HomeEventItemAddMinusToCartBtnClick>(
@@ -89,7 +93,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (apiCallState.statusValue == "1") {
       emitter(HomeFromDriverProductListDetailsPageState(
           event.productListDriverModel!,
-          // event.vendorDetails!,
+          event.vendorDetails!,
           event.strScreen!,
           _userRepository!.getRatingReviewList()!,
           _userRepository!.getRelatedProductList()!,
@@ -1013,6 +1017,42 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  mapHomeEventTicketItemClickPurchaseTicketBtnClick(
+      HomeEventTicketItemClickPurchaseTicketBtnClick event,
+      Emitter<HomeState> emitter) async {
+    print("In bloc setting");
+    // yield HomeInitial();
+    // yield HomeMenuItemDetailsPageState();
+    NetworkApiCallState<bool> apiCallState = await _userRepository!
+        .getPurchaseTicketApi(event.quantity, event.productId, event.driverId,
+            event.decrease, event.newDriver, event.specialInstruction);
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      if (apiCallState.statusValue == "1") {
+        print("list==>");
+        NetworkApiCallState<bool> apiCallState1 =
+            await _userRepository!.getCartCountApiCall();
+        if (_userRepository!.isNewdriver == "1") {
+          print("complete state==>");
+          emit(HomeEventAddtocartSuccessState(
+              apiCallState.message!,
+              _userRepository!.isNewdriver,
+              event.productId,
+              event.specialInstruction));
+        } else {
+          emit(HomeEventMessageShowState(apiCallState.message!));
+        }
+      } else {
+        emit(HomeEventMessageShowState(apiCallState.message!));
+      }
+    } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
+      if (apiCallState.message == "Unknown Error") {
+        emit(HomeEventMessageShowState("Something went wrong"));
+      } else {
+        emit(HomeEventMessageShowState("Something went wrong"));
+      }
+    }
+  }
+
   mapHomeEventItemClickAddToCartBtnClick(
       HomeEventItemClickAddToCartBtnClick event,
       Emitter<HomeState> emitter) async {
@@ -1129,7 +1169,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emitter(HomeFromDriverProductListDetailsPageState(
           event.driverProductList,
-          // event.driverDetail,
+          event.driverDetail,
           event.screen,
           _userRepository!.getRatingReviewList()!,
           _userRepository!.getRelatedProductList()!,
@@ -1145,7 +1185,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .getTicketListApi(event.merchant_id, event.ps_id, event.type);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
-      print("Complete state");
+      print("Complete state===>");
+      print("${_userRepository?.getTicketList()?.length}");
       emit(HomeEventDriverTicketListClickPageState(
         _userRepository?.getTicketList()!,
       ));
@@ -1337,7 +1378,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       //  print(driverDetail.vendorId);
       emitter(HomeFromDriverProductListDetailsPageState(
           driverProductList!,
-          // _userRepository!.getDriverProductListArray()![0].vendor!,
+          _userRepository!.getDriverProductListArray()![0].vendor!,
           "DriverList",
           _userRepository!.getRatingReviewList()!,
           _userRepository!.getRelatedProductList()!,

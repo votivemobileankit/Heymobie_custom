@@ -70,6 +70,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventDriverProductListClick>(mapHomeEventDriverProductListClick);
 
     on<HomeEventDriverTicketListClick>(mapHomeEventDriverTicketListClick);
+    on<HomeEventDriverRideListClick>(mapHomeEventDriverRideListClick);
 
     on<LoginEventLoginStateReset>(mapLoginEventLoginStateReset);
 
@@ -81,6 +82,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventLoadMoreBtnClick>(mapHomeEventLoadMoreBtnClick);
     on<HomeEventCartPageReset>(mapHomeEventCartBeforeCheckout);
     on<HomeEventCategoryCartBtnClick>(mapHomeEventCategoryCartBtnClick);
+
+    on<HomeEventRideSearchTextFieldClick>(mapHomeEventRideSearchTextFieldClick);
+
+    on<HomeEventRideBackBtnClicked>(mapHomeEventRideBackBtnClicked);
   }
 
   mapHomeEventLoadMoreBtnClick(
@@ -178,6 +183,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
+        print("complete State====>");
         emitter(HomeCustomerRatingReviewSubmitState(apiCallState.message!));
       } else {
         emitter(HomeEventErrorHandelState(apiCallState.message!));
@@ -692,7 +698,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 profileImg1: "",
                 profileURL: "",
                 username: "",
-                profile3URL: "", membership: new Membership(remainingDays: 0, status: 0)),
+                profile3URL: "",
+                membership: new Membership(remainingDays: 0, status: 0)),
             _userRepository!.getCartDataModel()!));
       } else {
         emitter(HomeCartPageState(
@@ -769,7 +776,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     print("Here=====");
     emitter(HomeInitialReset());
     emitter(HomeMenuItemDetailsPageState(event.productListModel,
-        event.driverDetail.vendorId!, event.driverDetail));
+        event.driverDetail.vendorId, event.driverDetail));
   }
 
   mapHomeEventDriverListCartBtnClick(
@@ -1151,7 +1158,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   mapHomeEventDriverProductListClick(
       HomeEventDriverProductListClick event, Emitter<HomeState> emitter) async {
-     print("In bloc " + event.toString());
+    print("In bloc " + event.toString());
     // _userRepository.ScreenName = "CategoryDetailPage";
 
     NetworkApiCallState<bool> apiCallState =
@@ -1191,9 +1198,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _userRepository?.getTicketList()!,
       ));
     } else {
-      print("EventListstate===>");
+      print("EventTicketListstate===>");
       emit(HomeTicketEventErrorHandelState(apiCallState.message!));
     }
+  }
+
+  mapHomeEventDriverRideListClick(
+      HomeEventDriverRideListClick event, Emitter<HomeState> emitter) async {
+    NetworkApiCallState<bool> apiCallState = await _userRepository!
+        .getRideListApi(event.merchant_id, event.ps_id, event.type);
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      print("Complete state===>");
+      print("${_userRepository?.getRideList()?.length}");
+      emit(HomeEventDriverRideListClickPageState(
+        _userRepository?.getRideList()!,
+      ));
+    } else {
+      print("EventRideListstate===>");
+      emit(HomeEventRideErrorHandelState(apiCallState.message!));
+    }
+    //emitter(HomeEventDriverRideListClickPageState(_userRepository?.getRideList()!));
   }
 
   mapHomeEventMenuListItemClick(
@@ -1392,5 +1416,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _userRepository!.ScreenName = ScreenNavigation.HomeMainPageScreen;
       emitter(HomeInitial());
     }
+  }
+
+  mapHomeEventRideSearchTextFieldClick(HomeEventRideSearchTextFieldClick event,
+      Emitter<HomeState> emitter) async {
+    emitter(HomeRideLocationSeatchResetPageState());
+    emitter(HomeRideLocationSeatchPageState(event.type));
+  }
+
+  mapHomeEventRideBackBtnClicked(
+      HomeEventRideBackBtnClicked event, Emitter<HomeState> emitter) async {
+    emitter(
+        HomeEventDriverRideListClickPageState(_userRepository?.getRideList()!));
+    print("State===>${state}");
   }
 }

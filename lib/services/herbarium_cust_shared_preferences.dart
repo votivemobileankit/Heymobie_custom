@@ -10,6 +10,8 @@ const String _keyIsLogin = "_keyIsLogin";
 const String _keyUserName = "_keyUserName";
 const String _keyUserProfileImage = "_keyUserProfileImage";
 const String _keyUserComment = "_keyUserComment";
+const String _keyLocationPickUP = "_keyLocationPickUP";
+const String _keyLocationDropOff = "_keyLocationDropOff";
 
 final sharedPrefs = HerbariumCustSharedPreference();
 
@@ -75,6 +77,20 @@ class HerbariumCustSharedPreference {
 
   set keyLongitude(double longitude) {
     _sharedPrefs?.setDouble(_keyLongitude, longitude);
+  }
+
+  String get searchLocation =>
+      _sharedPrefs?.getString(_keyLocationPickUP) ?? "Search";
+
+  set searchLocation(String location) {
+    _sharedPrefs?.setString(_keyLocationPickUP, location);
+  }
+
+  String get searchDropLocation =>
+      _sharedPrefs?.getString(_keyLocationDropOff) ?? "Search";
+
+  set searchDropLocation(String location1) {
+    _sharedPrefs?.setString(_keyLocationDropOff, location1);
   }
 
   void resetPreferences() {

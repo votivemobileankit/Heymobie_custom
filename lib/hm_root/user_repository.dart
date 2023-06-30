@@ -554,11 +554,11 @@ class UserRepository {
         DriverListModel driverListModel =
             DriverListModel.fromJson(responseList);
         print(driverListModel.status);
-        strBannerImage = driverListModel.banner_image!;
-        _driverList = driverListModel.data!.driverList!;
+        strBannerImage = driverListModel.banner_image;
+        _driverList = driverListModel.data.driverList;
 
-        _driverProductList = driverListModel.data!.productList!;
-        _advertisement = driverListModel.data!.advertisement!;
+        _driverProductList = driverListModel.data.productList;
+        _advertisement = driverListModel.data.advertisement;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -571,7 +571,7 @@ class UserRepository {
             DriverListModel.fromJson(responseList);
         //  print(driverListModel.status);
 
-        _advertisement = driverListModel.data!.advertisement!;
+        _advertisement = driverListModel.data.advertisement;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -1398,6 +1398,7 @@ class UserRepository {
 
       print(responseList["status"]);
       if (responseList["status"].toString() == "1") {
+        print("Sucess======>");
         apiCallState = NetworkApiCallState.completed(
             true, responseList["message"], responseList["status"].toString());
       } else {
@@ -1678,12 +1679,60 @@ class UserRepository {
     String massage;
     try {
       Map<String, dynamic> requestParams = {
-        // "merchant_id": sharedPrefs.getUserId,
-        // "ps_id": sharedPrefs.getUserId,
-        // "type": type
         "merchant_id": merchant_id,
         "ps_id": ps_id,
         "type": type
+      };
+      eventdetaillist = [];
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apipsdetails, requestParams);
+
+      status = responseList['ok'].toString();
+      massage = responseList['message'].toString();
+      print(
+          "list=====>>>>" + status + "response==>>" + responseList.toString());
+      if (responseList["ok"] == 1) {
+        TicketListModel eventModel = TicketListModel.fromJson(responseList);
+        eventdetaillist = eventModel.data?.eventdetaillist ?? [];
+        eventModel.data?.eventdetaillist![0].vendor;
+        print("list=====>>>>" + "success");
+        status = responseList['ok'].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true,
+            responseList["message"].toString(),
+            responseList['status'].toString());
+      } else {
+        eventdetaillist = [];
+        apiCallState = NetworkApiCallState.completed(true,
+            responseList["message"].toString(), responseList["ok"].toString());
+      }
+    } catch (Excep) {
+      print('Exception Auth ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState =
+            NetworkApiCallState.error(Excep.message, "", Excep.errorType);
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> getRideListApi(
+    String merchant_id,
+    String ps_id,
+    String type,
+  ) async {
+    NetworkApiCallState<bool> apiCallState;
+    var response;
+    String status;
+    String massage;
+    try {
+      Map<String, dynamic> requestParams = {
+        "merchant_id": merchant_id,
+        "ps_id": ps_id,
+        "type": 2
       };
       eventdetaillist = [];
       var responseList = await _vdApiProvider.post(
@@ -1836,6 +1885,10 @@ class UserRepository {
   }
 
   List<EventDetailsList>? getTicketList() {
+    return eventdetaillist == [] ? [] : eventdetaillist;
+  }
+
+  List<EventDetailsList>? getRideList() {
     return eventdetaillist == [] ? [] : eventdetaillist;
   }
 }

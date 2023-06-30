@@ -508,6 +508,19 @@ class HomeEventDriverTicketListClick extends HomeEvent {
   List<Object> get props => [merchant_id, ps_id, type, driverProductList];
 }
 
+class HomeEventDriverRideListClick extends HomeEvent {
+  String merchant_id;
+  String ps_id;
+  String type;
+  ProductListDriver driverProductList;
+
+  HomeEventDriverRideListClick(
+      this.merchant_id, this.ps_id, this.type, this.driverProductList);
+
+  @override
+  List<Object> get props => [merchant_id, ps_id, type, driverProductList];
+}
+
 class HomeEventProductItemDetailPageReset extends HomeEvent {
   late ProductListMenu productListModel;
   late String driverId;
@@ -848,17 +861,17 @@ class HomeEventProductDetailPageReset extends HomeEvent {
   List<Object> get props => [productListModel, driverId, driverDetail];
 }
 
-class HomeEventEventDetailPageReset extends HomeEvent {
+class HomeEventTicketDetailPageReset extends HomeEvent {
   List<EventDetailsList>? eventdetaillist;
 
-  String driverId;
-  DriverList driverDetail;
-
-  HomeEventEventDetailPageReset(
-      this.eventdetaillist, this.driverId, this.driverDetail);
+  HomeEventTicketDetailPageReset(
+    this.eventdetaillist,
+  );
 
   @override
-  List<Object> get props => [eventdetaillist!, driverId, driverDetail];
+  List<Object> get props => [
+        eventdetaillist!,
+      ];
 }
 
 class HomeEventCategoryPageReset extends HomeEvent {
@@ -876,3 +889,14 @@ class HomeEventViewCartButtonClick extends HomeEvent {
   @override
   List<Object> get props => [];
 }
+
+class HomeEventRideSearchTextFieldClick extends HomeEvent {
+  String type;
+
+  HomeEventRideSearchTextFieldClick(this.type);
+
+  @override
+  List<Object> get props => [type];
+}
+
+class HomeEventRideBackBtnClicked extends HomeEvent {}

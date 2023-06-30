@@ -399,6 +399,11 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
           Navigator.of(context).pushNamed(HomeNavigator.homeMenuTicketPage);
         }
 
+        if (state is HomeEventDriverRideListClickPageState) {
+          showHideProgress(false);
+          Navigator.of(context).pushNamed(HomeNavigator.homeMenuRidePage);
+        }
+
         if (state is HomeDriverListApiCallCompleteState) {
           if (_dialogDriverOpen == true) {
             _dialogDriverOpen = false;
@@ -427,10 +432,10 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
             pinLocationImageMapArray = state.pinLocationList;
             if (ontimeCall) {
               _markerPositionWidget(driverInfoList, pinLocationImageMapArray);
-              searchLat = double.parse(driverInfoList[0].lat!);
-              searchLong = double.parse(driverInfoList[0].lng!);
-              moveCamera(double.parse(driverInfoList[0].lat!),
-                  double.parse(driverInfoList[0].lng!));
+              searchLat = double.parse(driverInfoList[0].lat);
+              searchLong = double.parse(driverInfoList[0].lng);
+              moveCamera(double.parse(driverInfoList[0].lat),
+                  double.parse(driverInfoList[0].lng));
             } else {
               isListView = false;
             }
@@ -602,8 +607,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                                     driverInfoList, pinLocationImageMapArray);
                                 if (driverInfoList != null)
                                   moveCamera(
-                                      double.parse(driverInfoList[0].lat!),
-                                      double.parse(driverInfoList[0].lng!));
+                                      double.parse(driverInfoList[0].lat),
+                                      double.parse(driverInfoList[0].lng));
                               });
                             },
                             child: isListView == false
@@ -709,8 +714,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: CachedNetworkImage(
-                                  imageUrl: advertisementArray[0].url! +
-                                      advertisementArray[0].image!,
+                                  imageUrl: advertisementArray[0].url +
+                                      advertisementArray[0].image,
                                   fit: BoxFit.fill,
                                   errorWidget: (context, url, error) =>
                                       new Icon(Icons.error),
@@ -726,8 +731,8 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: CachedNetworkImage(
-                                  imageUrl: advertisementArray[1].url! +
-                                      advertisementArray[1].image!,
+                                  imageUrl: advertisementArray[1].url +
+                                      advertisementArray[1].image,
                                   fit: BoxFit.fill,
                                   errorWidget: (context, url, error) =>
                                       new Icon(Icons.error),
@@ -817,7 +822,7 @@ class _DriverHorizontalList extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl:
                                 "https://heymobie.com/public/uploads/vendor/profile/" +
-                                    driverInfoData[index].profileImg1!,
+                                    driverInfoData[index].profileImg1,
                             fit: BoxFit.fill,
                             errorWidget: (context, url, error) =>
                                 new Icon(Icons.error),
@@ -1039,8 +1044,8 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                 // print("id=====${widget._driverProductList[i].id}");
 
                 //_timer!.cancel();
-                  widget.showHideProgress(true);
-                print(widget._driverProductList[i].producttype );
+                widget.showHideProgress(true);
+                print(widget._driverProductList[i].producttype);
                 if (widget._driverProductList[i].producttype == "1" ||
                     widget._driverProductList[i].producttype == "0") {
                   print("id=====${widget._driverProductList[i].id}");
@@ -1052,7 +1057,12 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                           widget._driverProductList[i].id));
                 } else if (widget._driverProductList[i].producttype == "2") {
                   print("id=====${widget._driverProductList[i].id}");
-
+                  BlocProvider.of<HomeBloc>(context).add(
+                      HomeEventDriverRideListClick(
+                          widget._driverProductList[i].vendorId,
+                          widget._driverProductList[i].id.toString(),
+                          widget._driverProductList[i].type,
+                          driverProductList[i]));
                 } else if (widget._driverProductList[i].producttype == "3") {
                   print("No condition======");
                   BlocProvider.of<HomeBloc>(context).add(
@@ -1062,26 +1072,6 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                           widget._driverProductList[i].type,
                           driverProductList[i]));
                 }
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverProductListClick(
-                //         widget._driverProductList[i],
-                //         widget._driverProductList[i].vendor!,
-                //         "DriverList",
-                //         widget._driverProductList[i].id!));
-
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverTicketListClick(
-                //         widget._driverProductList[i],
-                //         widget._driverProductList[i].vendor!,
-                //         "DriverList",
-                //         widget._driverProductList[i].id!));
-
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverTicketListClick(
-                //         widget._driverProductList[i].vendorId!,
-                //         widget._driverProductList[i].id!.toString(),
-                //         widget._driverProductList[i].type!,
-                //         driverProductList[i]));
               },
               child: Container(
                 height: 210.0.scale(),
@@ -1094,7 +1084,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                       child: CachedNetworkImage(
                         width: 100.0.scale(),
                         height: 80.0.scale(),
-                        imageUrl: widget._driverProductList[i].imageURL!,
+                        imageUrl: widget._driverProductList[i].imageURL,
                         fit: BoxFit.cover,
                         errorWidget: (context, url, error) =>
                             new Icon(Icons.error),
@@ -1156,9 +1146,9 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                         //   )
 
                         Text(
-                          widget._driverProductList[i].categoryname! == null
+                          widget._driverProductList[i].categoryname == null
                               ? ""
-                              : widget._driverProductList[i].categoryname!,
+                              : widget._driverProductList[i].categoryname,
                           textAlign: TextAlign.center,
                           style: textStyleCustomColor(
                               14.0.scale(), KColorTextGrey),
@@ -1167,7 +1157,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                     ),
                     AVerticalSpace(4.0.scale()),
                     Text(
-                      widget._driverProductList[i].name!,
+                      widget._driverProductList[i].name,
                       textAlign: TextAlign.center,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -1184,9 +1174,9 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                         ),
                         AHorizontalSpace(3.0.scale()),
                         Text(
-                          widget._driverProductList[i].vendorname! +
+                          widget._driverProductList[i].vendorname +
                               " " +
-                              widget._driverProductList[i].lastName!,
+                              widget._driverProductList[i].lastName,
                           overflow: TextOverflow.ellipsis,
                           style: textStyleBoldCustomColor(
                               12.0.scale(), KColorCommonText),
@@ -1205,7 +1195,7 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                           ),
                           AHorizontalSpace(3.0.scale()),
                           Text(
-                            widget._driverProductList[i].avgRating!,
+                            widget._driverProductList[i].avgRating,
                             overflow: TextOverflow.ellipsis,
                             style: textStyleBoldCustomColor(
                                 12.0.scale(), KColorCommonText),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grambunny_customer/hm_root/hm_root.dart';
+import 'package:grambunny_customer/home/screen/home_ride_detail_page.dart';
 import 'package:grambunny_customer/home/screen/home_ticket_detail-page.dart';
+import 'package:grambunny_customer/home/screen/ride_location_search_page.dart';
 import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 
 import 'home.dart';
@@ -20,6 +22,8 @@ class HomeNavigator extends StatefulWidget {
   static const String resetPasswordPage = '/resetPasswordPage';
   static const String homeCheckoutPage = '/homeCheckoutPage';
   static const String homeMenuTicketPage = '/homeMenuTicketPage';
+  static const String homeMenuRidePage = '/homeMenuRidePage';
+  static const String homeRidelocationPage = '/homeRidelocationPage';
 
   final UserRepository userRepository;
 
@@ -179,6 +183,25 @@ class _HomeRouter {
           ),
         );
         break;
+
+      case HomeNavigator.homeMenuRidePage:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<HomeBloc>.value(
+            value: homeBloc,
+            child: MenuRideDetailPage(),
+          ),
+        );
+        break;
+
+      case HomeNavigator.homeRidelocationPage:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<HomeBloc>.value(
+            value: homeBloc,
+            child: RidelocationSearchPage(),
+          ),
+        );
+        break;
+
       default:
         return null;
     }

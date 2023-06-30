@@ -329,14 +329,6 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
 class HomeEventDriverTicketListClickPageState extends HomeState {
   List<EventDetailsList>? eventdetaillist;
 
-  // ProductListMenu productListModel;
-  // String driverId;
-  // DriverList driverDetail;
-
-  // String merchant_id;
-  // String ps_id;
-  // String type;
-
   HomeEventDriverTicketListClickPageState(
     this.eventdetaillist,
   );
@@ -350,6 +342,27 @@ class HomeTicketEventErrorHandelState extends HomeState {
   final String message;
 
   HomeTicketEventErrorHandelState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class HomeEventDriverRideListClickPageState extends HomeState {
+  List<EventDetailsList>? eventdetaillist;
+
+  HomeEventDriverRideListClickPageState(
+    this.eventdetaillist,
+  );
+
+  List<Object> get props => [
+        eventdetaillist!,
+      ];
+}
+
+class HomeEventRideErrorHandelState extends HomeState {
+  final String message;
+
+  HomeEventRideErrorHandelState(this.message);
 
   @override
   List<Object> get props => [message];
@@ -579,4 +592,16 @@ class HomeEventErrorHandelCategorypageState extends HomeState {
 
   @override
   List<Object> get props => [message, driverDetail];
+}
+
+class HomeRideLocationSeatchPageState extends HomeState {
+  String type;
+
+  HomeRideLocationSeatchPageState(this.type);
+
+  List<Object> get props => [type];
+}
+
+class HomeRideLocationSeatchResetPageState extends HomeState {
+  List<Object> get props => [];
 }

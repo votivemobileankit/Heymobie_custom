@@ -38,6 +38,8 @@ const String apiRatingList = "customer/ratings-user-list";
 const String apiRating = "customer/ratings-user-list";
 const String apiMerchantRating = "customer/merchant-rating";
 const String apipsdetails = "merchant/ps-details";
+const String apiEventHistory = "event_order_list";
+const String apiEventDetails = "event_order_detail";
 
 const String UrlAboutUs = "https://www.grambunny.com/about-us-mobile";
 const String UrlPrivacyPolicy =

@@ -1,14 +1,19 @@
 enum LoginPageLinks { TermsOfServices, PrivacyPolicy }
+
 enum NetworkRequestStatus { LOADING, COMPLETED, ERROR, PENDING }
+
 enum NetworkErrorType { NO_INTERNET, BAD_REQUEST, UNAUTHORIZED, OTHER, PENDING }
+
 enum SideNavigationTab {
   HOME,
   ORDERHISTORY,
   PROFILE,
   SETTING,
   ABOUTUS,
-  PRIVACYPOLICY
+  PRIVACYPOLICY,
+  EventHistory
 }
+
 enum ScreenNavigation {
   Loginpage,
   SignUpPage,
@@ -22,6 +27,7 @@ enum ScreenNavigation {
   ProfileMainPageScreen,
   OrderHistoryPageScreen,
   OrderHistoryDetailPageScreen,
+  EventHistoryPage,
   HomeProductListScreen,
   CheckOutPageScreen,
   MapOrderTrackScreen

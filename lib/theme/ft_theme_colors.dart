@@ -35,6 +35,7 @@ const _kColorYellow = Color(0xFF231F20);
 const _kColorYellowLight = Color(0xFF231F20);
 const _kColorOrange = Color(0xFF231F20);
 const _kColorOrangeLight = Color(0xFFf9b8ba);
+const mainColor = Color(0xFF000000);
 
 const _kColorPrivacyButton = Color(0xFFC26C6C);
 const kColorBtnBgQuinary = _kColorVD1;

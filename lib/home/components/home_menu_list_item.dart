@@ -417,7 +417,7 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                         HomeEventAddToCartBtnClick(
                             _counter,
                             widget.productlist.id!,
-                            widget.driverDetail.vendorId!,
+                            widget.driverDetail.vendorId,
                             0,
                             widget.driverDetail,
                             "0",

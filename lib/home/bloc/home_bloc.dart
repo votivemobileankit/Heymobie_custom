@@ -1349,6 +1349,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeEventBackBtnClick event, Emitter<HomeState> emitter) async* {
     // _userRepository.ScreenName = "CategoryDetailPage";
     // print(state.toString());
+    if (state is HomeEventDriverTicketListClickPageState) {
+      emitter(HomeInitial());
+    }
     if (state is SignUpPageState) {
       _userRepository!.ScreenName = ScreenNavigation.Loginpage;
       emit((LoginPageState("")));
@@ -1361,6 +1364,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } else if (state is LoginLoadingCompleteState) {
       _userRepository!.ScreenName = ScreenNavigation.HomeMainPageScreen;
       emitter(HomeInitial());
+      emitter(HomeInitialReset());
     } else if (state is OtpApiLoadingCompleteState) {
       _userRepository!.ScreenName = ScreenNavigation.OTPpage;
       emitter(HomeInitial());

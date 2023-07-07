@@ -67,7 +67,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
       _price = double.parse(_productListModel.price ?? "");
       _driverDetail = homeState.driverDetail;
       _productListModel.brands;
-      name = _driverDetail.name! + " " + _driverDetail.lastName!;
+      name = _driverDetail.name + " " + _driverDetail.lastName;
       strScreen = "";
       print("HomeMenuItemDetailsPageState");
     } else if (homeState is HomeFromDriverProductListDetailsPageState) {
@@ -79,100 +79,103 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
       _driverId = "${_vendorDetails.vendorId}";
       strScreen = homeState.screen;
       _driverDetail = DriverList(
-          state: _vendorDetails.state,
-          city: _vendorDetails.city,
-          address: _vendorDetails.address,
-          vendorId: "${_vendorDetails.vendorId}",
-          type: _vendorDetails.type,
-          subCategoryId: _vendorDetails.subCategoryId,
-          categoryId: _vendorDetails.categoryId,
-          zipcode: _vendorDetails.zipcode,
-          profileImg1: _vendorDetails.profileImg1,
-          description: _vendorDetails.description,
-          address1: _vendorDetails.address,
-          mobNo: _vendorDetails.mobNo,
-          avgRating: _vendorDetails.avgRating,
-          deviceid: _vendorDetails.deviceid,
-          email: _vendorDetails.email,
-          username: _vendorDetails.username,
-          name: _vendorDetails.name,
-          lastName: _vendorDetails.lastName,
-          marketArea: _vendorDetails.marketArea,
-          vendorStatus: _vendorDetails.vendorStatus,
-          uniqueId: '',
-          loginStatus: "",
-          updatedAt: "",
-          createdAt: "",
-          devicetype: "",
-          year: "",
-          walletAmount: "",
-          views: "",
-          suburb: "",
-          stripeId: "",
-          ssn: "",
-          serviceRadius: "",
-          service: "",
-          rememberToken: "",
-          profileImg4: "",
-          profileImg3: "",
-          profileImg2: "",
-          planPurchased: "",
-          planId: "",
-          planExpiry: "",
-          permitType: "",
-          permitNumber: "",
-          permitExpiry: "",
-          password: "",
-          otp: "",
-          model: "",
-          map_icon: "",
-          make: "",
-          mailingAddress: "",
-          licensePlate: "",
-          licenseFront: "",
-          licenseExpiry: "",
-          licenseBack: "",
-          forgetpassRequestStatus: "",
-          forgetpassRequest: "",
-          driverLicense: "",
-          distance: "",
-          vendorType: "",
-          salesTax: "",
-          ratingCount: "",
-          exciseTax: "",
-          dob: "",
-          deliveryFee: "",
-          commissionRate: "",
-          color: "",
-          cityTax: "",
-          businessName: "",
-          lat: "",
-          lng: "", txnId: '', type_of_merchant: '',);
-      name = _driverDetail.name! + " " + _driverDetail.lastName!;
-      productID = _productListDriverModel.id!;
+        state: _vendorDetails.state,
+        city: _vendorDetails.city,
+        address: _vendorDetails.address,
+        vendorId: "${_vendorDetails.vendorId}",
+        type: _vendorDetails.type,
+        subCategoryId: _vendorDetails.subCategoryId,
+        categoryId: _vendorDetails.categoryId,
+        zipcode: _vendorDetails.zipcode,
+        profileImg1: _vendorDetails.profileImg1,
+        description: _vendorDetails.description,
+        address1: _vendorDetails.address,
+        mobNo: _vendorDetails.mobNo,
+        avgRating: _vendorDetails.avgRating,
+        deviceid: _vendorDetails.deviceid,
+        email: _vendorDetails.email,
+        username: _vendorDetails.username,
+        name: _vendorDetails.name,
+        lastName: _vendorDetails.lastName,
+        marketArea: _vendorDetails.marketArea,
+        vendorStatus: _vendorDetails.vendorStatus,
+        uniqueId: '',
+        loginStatus: "",
+        updatedAt: "",
+        createdAt: "",
+        devicetype: "",
+        year: "",
+        walletAmount: "",
+        views: "",
+        suburb: "",
+        stripeId: "",
+        ssn: "",
+        serviceRadius: "",
+        service: "",
+        rememberToken: "",
+        profileImg4: "",
+        profileImg3: "",
+        profileImg2: "",
+        planPurchased: "",
+        planId: "",
+        planExpiry: "",
+        permitType: "",
+        permitNumber: "",
+        permitExpiry: "",
+        password: "",
+        otp: "",
+        model: "",
+        map_icon: "",
+        make: "",
+        mailingAddress: "",
+        licensePlate: "",
+        licenseFront: "",
+        licenseExpiry: "",
+        licenseBack: "",
+        forgetpassRequestStatus: "",
+        forgetpassRequest: "",
+        driverLicense: "",
+        distance: "",
+        vendorType: "",
+        salesTax: "",
+        ratingCount: "",
+        exciseTax: "",
+        dob: "",
+        deliveryFee: "",
+        commissionRate: "",
+        color: "",
+        cityTax: "",
+        businessName: "",
+        lat: "",
+        lng: "",
+        txnId: '',
+        type_of_merchant: '',
+      );
+      name = _driverDetail.name + " " + _driverDetail.lastName;
+      productID = _productListDriverModel.id;
       _productListModel = ProductListMenu(
-          name: _productListDriverModel.name!,
-          avgRating: _productListDriverModel.avgRating!,
-          description: _productListDriverModel.description!,
-          categoryId: _productListDriverModel.categoryId!,
-          subCategoryId: _productListDriverModel.subCategoryId!,
-          vendorId: _productListDriverModel.vendorId!,
-          id: _productListDriverModel.id!,
-          status: _productListDriverModel.status!,
-          type: _productListDriverModel.type!,
-          potencyThc: _productListDriverModel.potencyThc!,
-          potencyCbd: _productListDriverModel.potencyCbd!,
-          brands: _productListDriverModel.brands!,
-          categoryname: _productListDriverModel.categoryname!,
-          image: _productListDriverModel.image!,
-          imageURL: _productListDriverModel.imageURL!,
-          price: _productListDriverModel.price!,
-          productCode: _productListDriverModel.productCode!,
-          quantity: _productListDriverModel.quantity!,
-          ratingCount: _productListDriverModel.ratingCount!,
-          types: _productListDriverModel.types!,
-          subcategoryname: _productListDriverModel.subcategoryname!,
-          unit: _productListDriverModel.unit!,
+          name: _productListDriverModel.name,
+          avgRating: _productListDriverModel.avgRating,
+          description: _productListDriverModel.description,
+          categoryId: _productListDriverModel.categoryId,
+          subCategoryId: _productListDriverModel.subCategoryId,
+          vendorId: _productListDriverModel.vendorId,
+          id: _productListDriverModel.id,
+          status: _productListDriverModel.status,
+          type: _productListDriverModel.type,
+          potencyThc: _productListDriverModel.potencyThc,
+          potencyCbd: _productListDriverModel.potencyCbd,
+          brands: _productListDriverModel.brands,
+          categoryname: _productListDriverModel.categoryname,
+          image: _productListDriverModel.image,
+          imageURL: _productListDriverModel.imageURL,
+          price: _productListDriverModel.price,
+          productCode: _productListDriverModel.productCode,
+          quantity: _productListDriverModel.quantity,
+          ratingCount: _productListDriverModel.ratingCount,
+          types: _productListDriverModel.types,
+          subcategoryname: _productListDriverModel.subcategoryname,
+          unit: _productListDriverModel.unit,
           slug: '',
           createdAt: "",
           updatedAt: "",
@@ -215,7 +218,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           print("driver Id ${_driverId}");
           _price = double.parse(_productListModel.price ?? "");
           _driverDetail = state.driverDetail;
-          name = _driverDetail.name! + " " + _driverDetail.lastName!;
+          name = _driverDetail.name + " " + _driverDetail.lastName;
         } else if (state is HomeFromDriverProductListDetailsPageState) {
           showHideProgress(false);
           setState(() {
@@ -257,7 +260,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           print("driver Id ${_driverId}");
           _price = double.parse(_productListModel.price ?? "");
           _driverDetail = state.driverDetail;
-          name = _driverDetail.name! + " " + _driverDetail.lastName!;
+          name = _driverDetail.name + " " + _driverDetail.lastName;
           setState(() {
             _counter = 1;
           });
@@ -357,7 +360,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   AVerticalSpace(5.0.scale()),
                   Text(
                     _productListModel == null
-                        ? "UPC#" + _productListDriverModel.productCode!
+                        ? "UPC#" + _productListDriverModel.productCode
                         : "UPC#" + "${_productListModel.productCode}",
                     style: textStyleBoldCustomLargeColor(
                         _kCommonFontSize, KColorCommonText),
@@ -408,7 +411,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                             ),
                             Text(
                               _productListModel == null
-                                  ? ", (" + _productListDriverModel.unit! + ")"
+                                  ? ", (" + _productListDriverModel.unit + ")"
                                   : ", (" + _productListModel.unit! + ")",
                               style: textStyleBoldCustomLargeColor(
                                   _kCommonFontSize.scale(), KColorCommonText),

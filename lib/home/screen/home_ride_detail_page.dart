@@ -10,6 +10,7 @@ import 'package:grambunny_customer/utils/ui_utils.dart';
 import '../../components/a_header_back_button.dart';
 import '../../components/a_horizontal_space.dart';
 import '../../components/a_rounded_button.dart';
+import '../../components/a_rounded_buttonimage.dart';
 import '../../components/a_vertical_space.dart';
 import '../../orderhistory/components/my_order_list_item.dart';
 import '../../services/herbarium_cust_shared_preferences.dart';
@@ -35,7 +36,8 @@ class MenuRideDetailPage extends StatefulWidget {
 class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
   //TextEditingController textFiledPickUpAddress = TextEditingController();
   TextEditingController textFiledDropOffAddress = TextEditingController();
-
+  TextEditingController _textFiledUserSpecialInstruction =
+      TextEditingController();
   List<dynamic> _placeList = [];
   String? _cartCount;
   List<EventDetailsList> eventdetaillist = [];
@@ -47,7 +49,8 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
   double? secondlong;
   double? _totalDistance;
   double? metertomile;
-  double? estimatedPrice;
+  double? estimatedPrice = 0;
+  bool eventSelect = false;
 
   List<Position> locations = <Position>[];
 
@@ -60,9 +63,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
       eventdetaillist = state.eventdetaillist!;
       print("rateMile====>${eventdetaillist[0].rateMile}");
       print("price====>${eventdetaillist[0].price}");
-      print('Total Distance===> ${_totalDistance}');
-      print('Total Distance in miles ===> ${metertomile}');
-      print('Estimated proice ===> $estimatedPrice');
+
       //  print('_positionStream===> $_positionStream');
     }
 
@@ -104,7 +105,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
       print('Total Distance in miles ===> $meter');
       setState(() {
         estimatedPrice = double.parse(eventdetaillist[0].price!) +
-            (double.parse(eventdetaillist[0].rateMile!) * double.parse(meter!));
+            (double.parse(eventdetaillist[0].rateMile!) * double.parse(meter));
       });
 
       print('Estimated price ===> $estimatedPrice');
@@ -313,6 +314,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                             .align(Alignment.centerLeft)
                                             .topPadding(10.0.scale()),
                                         AHorizontalSpace(10.0.scale()),
+                                        // if (eventSelect == true)
                                         Expanded(
                                           child: Row(
                                             children: [
@@ -327,8 +329,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                               ),
                                               AHorizontalSpace(5.0.scale()),
                                               Expanded(
-                                                child: Text(
-                                                    "\$${estimatedPrice}",
+                                                child: Text("${estimatedPrice}",
                                                     maxLines: 5,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -920,7 +921,40 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                       ],
                     ),
                   ),
-                  AVerticalSpace(20.0.scale()),
+                  AVerticalSpace(10.0.scale()),
+                  TextField(
+                    controller: _textFiledUserSpecialInstruction,
+                    keyboardType: TextInputType.text,
+                    autofocus: false,
+                    cursorColor: KColorTextFieldCommonHint,
+                    decoration: InputDecoration(
+                      hintText: "Special Instructions",
+                      hintStyle: textStyleCustomColor(
+                          14.0.scale().scale(), KColorTextGrey),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                  AVerticalSpace(15.0.scale()),
+                  ARoundedButtonImage(
+                    btnBgColor: kColorCommonButton,
+                    btnTextColor: Colors.white,
+                    btnOnPressed: () {},
+                    btnText: "Book Ride Now",
+                    btnHeight: kHeightBtnAddToCart.scale(),
+                    btnWidth: 160.0.scale(),
+                    btnFontSize: kFontSizeBtnLarge.scale(),
+                    btnElevation: 0,
+                    btnBorderSideColor: kColorCommonButton,
+                    btnIconImagePath: '${imgPathGeneral}ic_cart_white.png',
+                    btnIconData: ImageIcon(AssetImage('')),
+                    btnDisabledColor: kColorCommonButton,
+                    btnDisabledTextColor: kColorCommonButton,
+                  ).align(Alignment.centerLeft),
+                  AVerticalSpace(20.0.scale())
                 ],
               )
                   .leftPadding(8.0.scale())

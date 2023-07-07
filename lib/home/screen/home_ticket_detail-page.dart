@@ -83,8 +83,6 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
 
     if (state is HomeEventDriverTicketListClickPageState) {
       eventdetaillist = state.eventdetaillist!;
-      _driverId = eventdetaillist[0].vendorId;
-
       print("price====>${eventdetaillist[0].price}");
     }
 
@@ -113,12 +111,6 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
     return BlocListener<HomeBloc, HomeState>(
       listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
-        // if (state is HomeEventDriverTicketListClickCompleteState) {
-        //   eventdetaillist = state.eventdetaillist!;
-        //   print("${eventdetaillist}");
-        //   print("${eventdetaillist}");
-        //   print("dataPrint====>${eventdetaillist[0].vendorId}");
-        // }
         if (state is HomeCategoryProductPageState) {
           Navigator.of(context).pop(true);
         } else if (state is HomeEventMessageShowState) {
@@ -134,8 +126,9 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
           showHideProgress(false);
           showSnackBar(state.message, context);
           //print("driver Id ${_driverId}");
-          BlocProvider.of<HomeBloc>(context).add(HomeEventEventDetailPageReset(
-              eventdetaillist, _driverId!, _driverDetail!));
+          BlocProvider.of<HomeBloc>(context).add(HomeEventTicketDetailPageReset(
+            eventdetaillist,
+          ));
         }
       },
       child: SafeArea(
@@ -177,13 +170,13 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                   }),
               Column(mainAxisSize: MainAxisSize.max, children: [
                 CachedNetworkImage(
-                  imageUrl: 'https://picsum.photos/200?image=9',
+                  imageUrl: eventdetaillist[0].imageURL!,
                   width: MediaQuery.of(context).size.width,
                   height: 200.0.scale(),
                   fit: BoxFit.cover,
-                  // errorWidget: (context, url, error) => new Icon(Icons.error),
+                  errorWidget: (context, url, error) => new Icon(Icons.error),
                 ).topPadding(2.0.scale()),
-                AVerticalSpace(5.0.scale()),
+                AVerticalSpace(10.0.scale()),
                 Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -221,7 +214,6 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ).leftPadding(10.0.scale()),
-                            AHorizontalSpace(5.0.scale()),
                             Text(
                               "\$${eventdetaillist[0].price}",
                               overflow: TextOverflow.ellipsis,
@@ -598,16 +590,6 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                         if (int.parse(eventdetaillist[0].quantity!) > 0) {
                           showHideProgress(true);
 
-                          // BlocProvider.of<HomeBloc>(context).add(
-                          //     HomeEventItemClickAddToCartBtnClick(
-                          //         qty,
-                          //         _productListModel!.id!,
-                          //         _productListModel!.vendorId!,
-                          //         0,
-                          //         _driverDetail!,
-                          //         "0",
-                          //         _textFiledUserSpecialInstruction.text));
-
                           BlocProvider.of<HomeBloc>(context).add(
                               HomeEventTicketItemClickPurchaseTicketBtnClick(
                                   qty,
@@ -627,7 +609,8 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                       btnElevation: 0,
                       btnBorderSideColor: kColorCommonButton,
                       btnIconImagePath: '${imgPathGeneral}ic_cart_white.png',
-                      btnIconData: ImageIcon(AssetImage('')), btnDisabledColor: kColorCommonButton,
+                      btnIconData: ImageIcon(AssetImage('')),
+                      btnDisabledColor: kColorCommonButton,
                       btnDisabledTextColor: kColorCommonButton,
                     )
                   ],
@@ -666,8 +649,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                         color: KColorAppThemeColor,
                       ),
                       child: Text(
-                        // "${_productListModel?.avgRating}/5",
-                        "3/5",
+                        "${eventdetaillist[0].avgRating}/5",
                         style: textStyleBoldCustomColor(
                             18.0.scale(), Colors.white),
                       ),
@@ -742,7 +724,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                       showHideProgress(true);
                       BlocProvider.of<HomeBloc>(context).add(
                           HomeEventSubmitRatingBtnClick("${ratingCountSend}",
-                              _textReview.text, _productListModel?.id));
+                              _textReview.text, eventdetaillist[0].id));
                     }
                   },
                   btnHeight: 40.0.scale(),

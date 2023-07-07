@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:grambunny_customer/eventhistory/model/event_detail_model.dart';
 import 'package:grambunny_customer/home/home.dart';
 import 'package:grambunny_customer/home/model/cartlist_response_model.dart';
 import 'package:grambunny_customer/home/model/category_list_model.dart';
@@ -16,6 +17,7 @@ import 'package:grambunny_customer/services/herbarium_cust_shared_preferences.da
 import 'package:grambunny_customer/setting/model/model.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
+import '../eventhistory/model/event_history_model.dart';
 import '../home/model/driver_list_model.dart';
 import '../home/model/ps_list_model.dart';
 import '../utils/imagecropper2.dart';
@@ -59,6 +61,10 @@ class UserRepository {
   late List<BitmapDescriptor> pinLocationIcon;
   static String strProfileMerchantUrl = "";
   List<EventDetailsList>? eventdetaillist;
+  List<EventHistoryListData> eventHistoryList = [];
+  List<EventViewDetail> eventDetail = [];
+  List<EventViewItems> eventItems = [];
+  List<EventMultipleDetail> eventmultipleDetail = [];
 
   UserRepository() {
     herberiumUrlCall = herBeriumBaseDevUrl;
@@ -1770,6 +1776,94 @@ class UserRepository {
     return apiCallState;
   }
 
+  Future<NetworkApiCallState<bool>> getEventHistoryApi(
+      String pageNumber) async {
+    NetworkApiCallState<bool> apiCallState;
+    var response;
+    String status;
+    String massage;
+    try {
+      Map<String, dynamic> requestParams = {
+        // "user_id": sharedPrefs.getUserId,
+        "user_id": "6",
+        "current_page": pageNumber
+      };
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiEventHistory, requestParams);
+      status = responseList['status'].toString();
+      massage = responseList['message'].toString();
+      print(
+          "Event=====>>>>" + status + "response==>>" + responseList.toString());
+      if (responseList["status"] == 1) {
+        EventHistoryModel eventModel = EventHistoryModel.fromJson(responseList);
+        eventHistoryList = eventModel.items?.eventHistoryList ?? [];
+        print("Event=====>>>>" + "success");
+        status = responseList['status'].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true,
+            responseList["message"].toString(),
+            responseList['status'].toString());
+      } else {
+        apiCallState = NetworkApiCallState.completed(
+            true,
+            responseList["message"].toString(),
+            responseList["status"].toString());
+      }
+    } catch (Excep) {
+      print('Exception Auth ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState =
+            NetworkApiCallState.error(Excep.message, "", Excep.errorType);
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> EventDetailAPi(
+      String orderID, String vendorId) async {
+    NetworkApiCallState<bool> apiCallState;
+    var response;
+    String status;
+    String massage;
+    try {
+      Map<String, dynamic> requestParams = {
+        "user_id": sharedPrefs.getUserId,
+        "vendor_id": vendorId,
+        "order_id": orderID
+      };
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiEventDetails, requestParams);
+      status = responseList['status'].toString();
+      massage = responseList['message'].toString();
+      print(
+          "Event=====>>>>" + status + "response==>>" + responseList.toString());
+      if (responseList["status"] == 1) {
+        var eventdetailmodel = EventDetailResponseModel.fromJson(responseList);
+        eventDetail = eventdetailmodel.data?.eventDetail ?? [];
+        eventItems = eventdetailmodel.data?.eventItems ?? [];
+        eventmultipleDetail = eventdetailmodel.data?.eventmultipleDetail ?? [];
+        print("Status====> true");
+        apiCallState = NetworkApiCallState.completed(true, "", massage);
+      } else {
+        apiCallState =
+            NetworkApiCallState.error(massage, "", NetworkErrorType.OTHER);
+      }
+    } catch (Excep) {
+      print('Exception Auth ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState =
+            NetworkApiCallState.error(Excep.message, "", Excep.errorType);
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+    return apiCallState;
+  }
+
   String getOrderId() {
     return orderId == "" ? "" : orderId;
   }
@@ -1890,5 +1984,9 @@ class UserRepository {
 
   List<EventDetailsList>? getRideList() {
     return eventdetaillist == [] ? [] : eventdetaillist;
+  }
+
+  List<EventHistoryListData>? getEventHistoryData() {
+    return eventHistoryList == [] ? [] : eventHistoryList;
   }
 }

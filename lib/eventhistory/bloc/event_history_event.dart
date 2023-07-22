@@ -41,3 +41,5 @@ class EventListDetailEventForViewDetail extends EventHistoryEvent {
 }
 
 class EventDetailStateReset extends EventHistoryEvent {}
+
+class EventHistoryBackBtnClicked extends EventHistoryEvent {}

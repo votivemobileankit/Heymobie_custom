@@ -43,21 +43,24 @@ class CouponCodeRowItemListModel extends StatelessWidget {
               btnOnPressed: () {
                 Navigator.of(context).pop();
                 showHideProgress(true);
-                BlocProvider.of<HomeBloc>(context).add(
-                    HomeEventCouponListbtnClick(
-                        driverDetail.vendorId,
-                        strScreen,
-                        driverDetail,
-                        productListModel,
-                        couponArrayList.coupon));
+                BlocProvider.of<HomeBloc>(context)
+                    .add(HomeEventCouponListbtnClick(
+                  driverDetail.vendorId,
+                  strScreen,
+                  driverDetail,
+                  productListModel,
+                  couponArrayList.coupon,
+                ));
               },
               btnText: "Apply",
               btnHeight: _kHeightBtnAddToCart.scale(),
               btnWidth: _kButtonNextWidth.scale(),
               btnFontSize: kFontSizeBtnLarge.scale(),
               btnElevation: 0,
-              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+              btnBorderSideColor: kColorCommonButton,
+              btnDisabledColor: Color(0xFF5e6163),
+              btnIconSize: 15,
+              btnDisabledTextColor: Color(0xFFFFFFFF),
               btnFontWeight: FontWeight.normal,
             ),
           ],

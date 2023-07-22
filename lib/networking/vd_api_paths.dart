@@ -40,8 +40,10 @@ const String apiMerchantRating = "customer/merchant-rating";
 const String apipsdetails = "merchant/ps-details";
 const String apiEventHistory = "event_order_list";
 const String apiEventDetails = "event_order_detail";
-
+const String apiRideHistory = "ride_order_list";
+const String apiRideDetails = "ride_order_detail";
 const String UrlAboutUs = "https://www.grambunny.com/about-us-mobile";
+const String apiAddToCartRide = "add_to_cart_ride";
 const String UrlPrivacyPolicy =
     "https://www.grambunny.com/privacy-policy-mobile";
 //https://herbariumdelivery.com/terms-mobile

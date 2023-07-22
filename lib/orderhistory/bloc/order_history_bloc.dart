@@ -102,7 +102,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   mapOrderDetailEventForOrderDeatil(OrderHistoryEventForOrderDeatil event,
       Emitter<OrderHistoryState> emitter) async {
     NetworkApiCallState<bool> apiCallState =
-        await _userRepository.getOrderDetail(event.orderID, event.vendorId);
+        await _userRepository.getOrderDetail(event.order_id, event.vendorId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       print("Complete state");
       _userRepository.ScreenName =

@@ -27,6 +27,7 @@ class HomeCartMenuListRowItem extends StatelessWidget {
   String strScreen;
   ProductListMenu productListModel;
   String vendor_id;
+  String psType;
 
   HomeCartMenuListRowItem(
       this.productList,
@@ -34,7 +35,8 @@ class HomeCartMenuListRowItem extends StatelessWidget {
       this.showHideProgress,
       this.strScreen,
       this.productListModel,
-      this.vendor_id);
+      this.vendor_id,
+      this.psType);
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +132,8 @@ class HomeCartMenuListRowItem extends StatelessWidget {
                                                     1,
                                                     driverDetail,
                                                     strScreen,
-                                                    productListModel));
+                                                    productListModel,
+                                                    "1"));
                                           }
                                         },
                                         child: Container(
@@ -180,7 +183,8 @@ class HomeCartMenuListRowItem extends StatelessWidget {
                                                   0,
                                                   driverDetail,
                                                   strScreen,
-                                                  productListModel));
+                                                  productListModel,
+                                                  "1"));
                                         },
                                         child: Container(
                                             padding:
@@ -199,7 +203,8 @@ class HomeCartMenuListRowItem extends StatelessWidget {
                                               width: 15.0.scale(),
                                               height: 15.0.scale(),
                                               image: AssetImage(
-                                                  '${imgPathGeneral}ic_add_icon.png'),
+                                                '${imgPathGeneral}ic_add_icon.png',
+                                              ),
                                             )).align(Alignment.centerLeft),
                                       ).leftPadding(8.0.scale()),
                                     ],
@@ -214,6 +219,9 @@ class HomeCartMenuListRowItem extends StatelessWidget {
                                             productList.id, driverDetail));
                                   },
                                   child: Image(
+                                    fit: BoxFit.fill,
+                                    width: 20.0.scale(),
+                                    height: 20.0.scale(),
                                     color: kColorCommonButton,
                                     image: AssetImage(
                                         '${imgPathGeneral}ic_delete_icon.png'),

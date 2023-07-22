@@ -13,6 +13,7 @@ import 'package:grambunny_customer/orderhistory/model/model.dart';
 import 'package:grambunny_customer/orderhistory/model/order_detail_model.dart';
 import 'package:grambunny_customer/orderhistory/model/vendor_location_model.dart';
 import 'package:grambunny_customer/profile/profile.dart';
+import 'package:grambunny_customer/ridehistory/model/ride_detail_model.dart';
 import 'package:grambunny_customer/services/herbarium_cust_shared_preferences.dart';
 import 'package:grambunny_customer/setting/model/model.dart';
 import 'package:grambunny_customer/utils/utils.dart';
@@ -20,6 +21,7 @@ import 'package:grambunny_customer/utils/utils.dart';
 import '../eventhistory/model/event_history_model.dart';
 import '../home/model/driver_list_model.dart';
 import '../home/model/ps_list_model.dart';
+import '../ridehistory/model/ride_history_model.dart';
 import '../utils/imagecropper2.dart';
 
 late NetworkApiProvider _vdApiProvider;
@@ -33,7 +35,7 @@ class UserRepository {
   late List<DriverList> _driverList;
   late List<ProductListMenu> _productList;
   late FilterListModel _filterListModel;
-  late List<StatesList> statesList;
+  List<StatesList>? statesList;
   late String cartCount = "0";
   late List<ItemsCart> _cartList;
   late DataCart cartDataModel;
@@ -65,6 +67,11 @@ class UserRepository {
   List<EventViewDetail> eventDetail = [];
   List<EventViewItems> eventItems = [];
   List<EventMultipleDetail> eventmultipleDetail = [];
+  List<RideHistoryListData>? rideHistoryList = [];
+  List<RideViewDetail> rideDetail = [];
+  List<RideViewItems> rideItems = [];
+  String? timeresponse;
+  RideDetailResponseModel? ridedetailmodel;
 
   UserRepository() {
     herberiumUrlCall = herBeriumBaseDevUrl;
@@ -1202,12 +1209,14 @@ class UserRepository {
   }
 
   Future<NetworkApiCallState<bool>> getCheckOutCalculationApi(
-      String driverId, String couponCode) async {
+    String driverId,
+    String couponCode,
+  ) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> latlongMap = {
       "user_id": sharedPrefs.getUserId,
       "coupon_code": couponCode,
-      "vendor_id": driverId
+      "vendor_id": driverId,
     };
 
     try {
@@ -1217,6 +1226,7 @@ class UserRepository {
       print(responseList["status"]);
       print(responseList.toString());
       if (responseList["status"].toString() == "1") {
+        print("Success===>");
         CheckOutResponseModel reponse =
             CheckOutResponseModel.fromJson(responseList);
         checkoutCalculation = reponse.data;
@@ -1290,7 +1300,8 @@ class UserRepository {
       String driverId,
       int decrease,
       String Changedriver,
-      String specialInstruction) async {
+      String specialInstruction,
+      String psType) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> addToCartMap = {
       "user_id": sharedPrefs.getUserId,
@@ -1300,12 +1311,69 @@ class UserRepository {
       "delete": "",
       "decrease": decrease,
       "changedriver": Changedriver,
-      "sinstruction": specialInstruction
+      "sinstruction": specialInstruction,
+      "ps_type": psType
     };
 
     try {
       var responseList = await _vdApiProvider.post(
           herberiumUrlCall + apiAddToCart, addToCartMap);
+
+      print(responseList.toString());
+      if (responseList["status"].toString() == "1") {
+        sharedPrefs.setUserId = responseList["user_id"];
+        isNewdriver = responseList["newdriver"].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      } else {
+        isNewdriver = "";
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      }
+    } catch (Excep) {
+      print('Exception  Call ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState = NetworkApiCallState.error(
+          Excep.message,
+          "",
+          Excep.errorType,
+        );
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> postAddToCartRideApi(
+      int quantity,
+      int productId,
+      String driverId,
+      String Changedriver,
+      String specialInstruction,
+      String pick_address,
+      String drop_address,
+      String distance,
+      String estimate_price) async {
+    NetworkApiCallState<bool> apiCallState;
+    Map<String, dynamic> addToCartMap = {
+      "user_id": sharedPrefs.getUserId,
+      "product_id": productId,
+      "vendor_id": driverId,
+      "qty": quantity,
+      "delete": "",
+      "changedriver": Changedriver,
+      "sinstruction": specialInstruction,
+      "pick_address": pick_address,
+      "drop_address": drop_address,
+      "distance": distance,
+      "estimate_price": estimate_price,
+    };
+    try {
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiAddToCartRide, addToCartMap);
 
       print(responseList.toString());
       if (responseList["status"].toString() == "1") {
@@ -1341,7 +1409,8 @@ class UserRepository {
       String driverId,
       int decrease,
       String Changedriver,
-      String specialInstruction) async {
+      String specialInstruction,
+      String psType) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> addToCartMap = {
       "user_id": sharedPrefs.getUserId,
@@ -1351,7 +1420,8 @@ class UserRepository {
       "delete": "",
       "decrease": decrease,
       "changedriver": Changedriver,
-      "sinstruction": specialInstruction
+      "sinstruction": specialInstruction,
+      "ps_type": psType
     };
 
     try {
@@ -1363,6 +1433,65 @@ class UserRepository {
         print("Sucess==>");
         sharedPrefs.setUserId = responseList["user_id"];
         print("complet");
+        isNewdriver = responseList["newdriver"].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      } else {
+        isNewdriver = "";
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      }
+    } catch (Excep) {
+      print('Exception  Call ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState = NetworkApiCallState.error(
+          Excep.message,
+          "",
+          Excep.errorType,
+        );
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> AddToCartRide(
+    int quantity,
+    int productId,
+    String driverId,
+    String Changedriver,
+    String specialInstruction,
+    String pick_address,
+    String drop_address,
+    String distance,
+    String estimate_price,
+  ) async {
+    NetworkApiCallState<bool> apiCallState;
+    Map<String, dynamic> addToCartMap = {
+      "user_id": sharedPrefs.getUserId,
+
+      // "user_id": "83",
+      "product_id": productId,
+      "vendor_id": driverId,
+      "qty": quantity,
+      "delete": "",
+      "changedriver": Changedriver,
+      "sinstruction": specialInstruction,
+      "pick_address": pick_address,
+      "drop_address": drop_address,
+      "distance": distance,
+      "estimate_price": estimate_price,
+    };
+    try {
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiAddToCartRide, addToCartMap);
+
+      print(responseList.toString());
+      if (responseList["status"].toString() == "1") {
+        sharedPrefs.setUserId = responseList["user_id"];
         isNewdriver = responseList["newdriver"].toString();
         apiCallState = NetworkApiCallState.completed(
             true, responseList["message"], responseList["status"].toString());
@@ -1587,31 +1716,38 @@ class UserRepository {
     return apiCallState;
   }
 
-  Future<NetworkApiCallState<bool>> postSubmitPaymentApiCall(
-      {required String payMethod,
-      required String mobile,
-      required String address,
-      required String city,
-      required String state,
-      required String zip,
-      required String comment,
-      required String cc_name,
-      required String creditcardtype,
-      required String cc_number,
-      required String cc_expiration,
-      required String cc_cvv,
-      required String cc_expire_month,
-      required String cc_expire_year,
-      required String promo_amount,
-      required String saletax,
-      required String excisetax,
-      required String citytax,
-      required String vendorId,
-      required String final_amount,
-      required String subTotal,
-      required String coupon_id,
-      required String device_type,
-      required String device_os_name}) async {
+  Future<NetworkApiCallState<bool>> postSubmitPaymentApiCall({
+    required String payMethod,
+    required String mobile,
+    required String address,
+    required String city,
+    required String state,
+    required String zip,
+    required String comment,
+    required String cc_name,
+    required String creditcardtype,
+    required String cc_number,
+    required String cc_expiration,
+    required String cc_cvv,
+    required String cc_expire_month,
+    required String cc_expire_year,
+    required String promo_amount,
+    required String saletax,
+    required String excisetax,
+    required String citytax,
+    required String vendorId,
+    required String final_amount,
+    required String subTotal,
+    required String coupon_id,
+    required String device_type,
+    required String device_os_name,
+    required String ticket_service_fee,
+    required String ticket_fee,
+    required String lastNameT,
+    required String firstNameT,
+    required String delivery_fee,
+    required String ps_type,
+  }) async {
     NetworkApiCallState<bool> apiCallState;
 
     Map<String, dynamic> paymentParam = {
@@ -1639,7 +1775,13 @@ class UserRepository {
       "coupon_id": coupon_id,
       "sub_total": subTotal,
       "device_type": device_type,
-      "device_os_name": device_os_name
+      "device_os_name": device_os_name,
+      "ticket_service_fee": ticket_service_fee,
+      "ticket_fee": ticket_fee,
+      "lastNameT": lastNameT,
+      "firstNameT": firstNameT,
+      "delivery_fee": delivery_fee,
+      "ps_type": ps_type
     };
 
     String jsonStr = jsonEncode(paymentParam);
@@ -1650,6 +1792,110 @@ class UserRepository {
 
       //  print(responseList["status"]);
       if (responseList["status"].toString() == "1") {
+        orderId = responseList["order_id"].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      } else {
+        apiCallState = NetworkApiCallState.completed(
+            true, responseList["message"], responseList["status"].toString());
+      }
+    } catch (Excep) {
+      print('Exception  Call ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState = NetworkApiCallState.error(
+          Excep.message,
+          "",
+          Excep.errorType,
+        );
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> postRideSubmitOrderApiCall(
+      {required String payMethod,
+      required String mobile,
+      required String address,
+      required String city,
+      required String state,
+      required String zip,
+      required String comment,
+      required String cc_name,
+      required String creditcardtype,
+      required String cc_number,
+      required String cc_expiration,
+      required String cc_cvv,
+      required String cc_expire_month,
+      required String cc_expire_year,
+      required String promo_amount,
+      required String saletax,
+      required String excisetax,
+      required String citytax,
+      required String vendorId,
+      required String final_amount,
+      required String subTotal,
+      required String coupon_id,
+      required String device_type,
+      required String device_os_name,
+      required String ticket_service_fee,
+      required String ticket_fee,
+      required String lastNameT,
+      required String firstNameT,
+      required String delivery_fee,
+      required String ps_type,
+      required String country,
+      required String total}) async {
+    NetworkApiCallState<bool> apiCallState;
+
+    Map<String, dynamic> paymentParam = {
+      "pmethodc": payMethod,
+      "user_mob": mobile,
+      "address": address,
+      "city": city,
+      "state": state,
+      "zip": zip,
+      "comment": comment,
+      "cc_name": cc_name,
+      "creditcardtype": creditcardtype,
+      "cc_number": cc_number,
+      "cc_expiration": cc_expiration,
+      "cc_cvv": cc_cvv,
+      "cc_expire_month": cc_expire_month,
+      "cc_expire_year": cc_expire_year,
+      "promo_amount": promo_amount,
+      "saletax": saletax,
+      "excisetax": excisetax,
+      "citytax": citytax,
+      "vendor_id": vendorId,
+      "user_id": sharedPrefs.getUserId,
+      "final_amount": final_amount,
+      "coupon_id": coupon_id,
+      "sub_total": subTotal,
+      "device_type": device_type,
+      "device_os_name": device_os_name,
+      "ticket_service_fee": ticket_service_fee,
+      "ticket_fee": ticket_fee,
+      "lastNameT": lastNameT,
+      "firstNameT": firstNameT,
+      "delivery_fee": delivery_fee,
+      "ps_type": ps_type,
+      "country": country,
+      "total": total
+    };
+
+    String jsonStr = jsonEncode(paymentParam);
+    print('jsonMap = $jsonStr');
+    try {
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiSubmitOrder, paymentParam);
+
+      //  print(responseList["status"]);
+      if (responseList["status"].toString() == "1") {
+        print("SUccessfll===>");
         orderId = responseList["order_id"].toString();
         apiCallState = NetworkApiCallState.completed(
             true, responseList["message"], responseList["status"].toString());
@@ -1784,8 +2030,8 @@ class UserRepository {
     String massage;
     try {
       Map<String, dynamic> requestParams = {
-        // "user_id": sharedPrefs.getUserId,
-        "user_id": "6",
+        "user_id": sharedPrefs.getUserId,
+        // "user_id": "6",
         "current_page": pageNumber
       };
       var responseList = await _vdApiProvider.post(
@@ -1845,6 +2091,94 @@ class UserRepository {
         eventDetail = eventdetailmodel.data?.eventDetail ?? [];
         eventItems = eventdetailmodel.data?.eventItems ?? [];
         eventmultipleDetail = eventdetailmodel.data?.eventmultipleDetail ?? [];
+        print("Status====> true");
+        apiCallState = NetworkApiCallState.completed(true, "", massage);
+      } else {
+        apiCallState =
+            NetworkApiCallState.error(massage, "", NetworkErrorType.OTHER);
+      }
+    } catch (Excep) {
+      print('Exception Auth ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState =
+            NetworkApiCallState.error(Excep.message, "", Excep.errorType);
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> getRideHistoryApi(String pageNumber) async {
+    NetworkApiCallState<bool> apiCallState;
+    var response;
+    String status;
+    String massage;
+    try {
+      Map<String, dynamic> requestParams = {
+        "user_id": sharedPrefs.getUserId,
+        // "user_id": "6",
+        "current_page": pageNumber
+      };
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiRideHistory, requestParams);
+      status = responseList['status'].toString();
+      massage = responseList['message'].toString();
+      print(
+          "Ride=====>>>>" + status + "response==>>" + responseList.toString());
+      if (responseList["status"] == 1) {
+        RideHistoryModel rideModel = RideHistoryModel.fromJson(responseList);
+        rideHistoryList = rideModel.items?.rideHistoryList ?? [];
+        print("ride=====>>>>" + "success");
+        status = responseList['status'].toString();
+        apiCallState = NetworkApiCallState.completed(
+            true,
+            responseList["message"].toString(),
+            responseList['status'].toString());
+      } else {
+        apiCallState = NetworkApiCallState.completed(
+            true,
+            responseList["message"].toString(),
+            responseList["status"].toString());
+      }
+    } catch (Excep) {
+      print('Exception Auth ${Excep.toString()}');
+      if (Excep is CustomNetworkException) {
+        apiCallState =
+            NetworkApiCallState.error(Excep.message, "", Excep.errorType);
+      } else {
+        apiCallState = NetworkApiCallState.error(
+            "Unknown Error", "", NetworkErrorType.OTHER);
+      }
+    }
+    return apiCallState;
+  }
+
+  Future<NetworkApiCallState<bool>> RideDetailAPi(
+      String orderID, String vendorId) async {
+    NetworkApiCallState<bool> apiCallState;
+    var response;
+    String status;
+    String massage;
+    try {
+      Map<String, dynamic> requestParams = {
+        "user_id": sharedPrefs.getUserId,
+        "vendor_id": vendorId,
+        "order_id": "1580"
+      };
+      var responseList = await _vdApiProvider.post(
+          herberiumUrlCall + apiRideDetails, requestParams);
+      status = responseList['status'].toString();
+      massage = responseList['message'].toString();
+      print(
+          "ridee=====>>>>" + status + "response==>>" + responseList.toString());
+      if (responseList["status"] == 1) {
+        ridedetailmodel = RideDetailResponseModel.fromJson(responseList);
+        rideDetail = ridedetailmodel?.data?.rideDetail ?? [];
+        rideItems = ridedetailmodel?.data?.rideItems ?? [];
+        timeresponse = ridedetailmodel?.data?.currentTime;
+        print("timeresponse====>${timeresponse}");
         print("Status====> true");
         apiCallState = NetworkApiCallState.completed(true, "", massage);
       } else {
@@ -1988,5 +2322,9 @@ class UserRepository {
 
   List<EventHistoryListData>? getEventHistoryData() {
     return eventHistoryList == [] ? [] : eventHistoryList;
+  }
+
+  List<RideHistoryListData>? getRideHistoryData() {
+    return rideHistoryList == [] ? [] : rideHistoryList;
   }
 }

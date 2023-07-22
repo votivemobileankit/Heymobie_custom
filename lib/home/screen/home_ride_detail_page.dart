@@ -14,6 +14,8 @@ import '../../components/a_rounded_buttonimage.dart';
 import '../../components/a_vertical_space.dart';
 import '../../orderhistory/components/my_order_list_item.dart';
 import '../../services/herbarium_cust_shared_preferences.dart';
+import '../../side_navigation/bloc/side_navigat_bloc.dart';
+import '../../side_navigation/bloc/side_navigat_event.dart';
 import '../../theme/ft_theme_colors.dart';
 import '../../theme/ft_theme_size_const.dart';
 import '../../theme/ft_theme_styles.dart';
@@ -21,7 +23,12 @@ import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
 import '../home_navigator.dart';
+import '../model/driver_list_model.dart';
+import '../model/product_list_model.dart';
 import '../model/ps_list_model.dart';
+import '../model/rating_review_list_model.dart';
+import '../model/related_product_model.dart';
+import '../model/statelist_reponse_model.dart';
 
 bool timerOnListener = true;
 BuildContext? _contextLoad;
@@ -41,6 +48,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
   List<dynamic> _placeList = [];
   String? _cartCount;
   List<EventDetailsList> eventdetaillist = [];
+
   Position? _currentPosition;
   Position? _previousPosition;
   double? firstlat;
@@ -49,25 +57,189 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
   double? secondlong;
   double? _totalDistance;
   double? metertomile;
+  double? meter1 = 0;
+  int? meter2 = 0;
+  int? estimatedPrice1 = 0;
+
   double? estimatedPrice = 0;
   bool eventSelect = false;
-
+  String distance = "";
   List<Position> locations = <Position>[];
+  ProductListDriver? _productListDriverModel;
+  Vendor? _vendorDetails;
+  String? strScreen;
+  String? vendorId;
+  late List<AddonProductList> _addOnProductList;
+  List<StatesList> stateArrayList = [];
+  late List<RelatedProductList> _relatedProductList;
+
+  String? _driverId;
+  List<RatingReviewData>? ratingReviewList;
+  DriverList? _driverDetail;
+  String? name;
+  int? productID;
+  ProductListMenu? _productListModel;
+  double _price = 0;
+  String pick_address = "";
+  String drop_address = "";
+
+  String estimate_price = "";
+  int qty = 1;
+
+  int pageCount = 1;
+
+  void showHideProgress(bool show) {
+    BlocProvider.of<SideNavigatBloc>(context)
+        .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
+  }
 
   @override
   void initState() {
     print("TicketPrice===>");
+    //
+    // sharedPrefs.searchLocation = "";
+    // sharedPrefs.searchDropLocation = "";
     // TODO: implement initState
     HomeState state = BlocProvider.of<HomeBloc>(context).state;
     if (state is HomeEventDriverRideListClickPageState) {
       eventdetaillist = state.eventdetaillist!;
+      _driverId = eventdetaillist[0].vendorId;
+      pick_address = sharedPrefs.searchLocation;
+      drop_address = sharedPrefs.searchDropLocation;
+
+      print("PicAdd===>${pick_address}");
+      print("dropAdd===>${drop_address}");
+
       print("rateMile====>${eventdetaillist[0].rateMile}");
       print("price====>${eventdetaillist[0].price}");
 
-      //  print('_positionStream===> $_positionStream');
+      _productListDriverModel = state.driverProductList;
+      _vendorDetails = state.vendor;
+      strScreen = state.screen;
+      _addOnProductList = state.addonProductlist;
+      _relatedProductList = state.relatedproductList;
+      _driverId = "${_vendorDetails?.vendorId}";
+      ratingReviewList = state.ratingList;
+      _driverDetail = DriverList(
+        state: _vendorDetails!.state,
+        city: _vendorDetails!.city,
+        address: _vendorDetails!.address,
+        vendorId: "${_vendorDetails!.vendorId}",
+        type: _vendorDetails!.type,
+        subCategoryId: _vendorDetails!.subCategoryId,
+        categoryId: _vendorDetails!.categoryId,
+        zipcode: _vendorDetails!.zipcode,
+        profileImg1: _vendorDetails!.profileImg1,
+        description: _vendorDetails!.description,
+        address1: _vendorDetails!.address,
+        mobNo: _vendorDetails!.mobNo,
+        avgRating: _vendorDetails!.avgRating,
+        deviceid: _vendorDetails!.deviceid,
+        email: _vendorDetails!.email,
+        username: _vendorDetails!.username,
+        name: _vendorDetails!.name,
+        lastName: _vendorDetails!.lastName,
+        marketArea: _vendorDetails!.marketArea,
+        vendorStatus: _vendorDetails!.vendorStatus,
+        uniqueId: '',
+        loginStatus: "",
+        updatedAt: "",
+        createdAt: "",
+        devicetype: "",
+        year: "",
+        walletAmount: "",
+        views: "",
+        suburb: "",
+        stripeId: "",
+        ssn: "",
+        serviceRadius: "",
+        service: "",
+        rememberToken: "",
+        profileImg4: "",
+        profileImg3: "",
+        profileImg2: "",
+        planPurchased: "",
+        planId: "",
+        planExpiry: "",
+        permitType: "",
+        permitNumber: "",
+        permitExpiry: "",
+        password: "",
+        otp: "",
+        model: "",
+        map_icon: "",
+        make: "",
+        mailingAddress: "",
+        licensePlate: "",
+        licenseFront: "",
+        licenseExpiry: "",
+        licenseBack: "",
+        forgetpassRequestStatus: "",
+        forgetpassRequest: "",
+        driverLicense: "",
+        distance: "",
+        vendorType: "",
+        salesTax: "",
+        ratingCount: "",
+        exciseTax: "",
+        dob: "",
+        deliveryFee: "",
+        commissionRate: "",
+        color: "",
+        cityTax: "",
+        businessName: "",
+        lat: "",
+        lng: "",
+        txnId: '',
+        type_of_merchant: '',
+      );
+      name = _driverDetail!.name + " " + _driverDetail!.lastName;
+      productID = _productListDriverModel!.id;
+      _productListModel = ProductListMenu(
+          name: _productListDriverModel!.name,
+          avgRating: _productListDriverModel!.avgRating,
+          description: _productListDriverModel!.description,
+          categoryId: _productListDriverModel!.categoryId,
+          subCategoryId: _productListDriverModel!.subCategoryId,
+          vendorId: _productListDriverModel!.vendorId,
+          id: _productListDriverModel!.id,
+          status: _productListDriverModel!.status,
+          type: _productListDriverModel!.type,
+          potencyThc: _productListDriverModel!.potencyThc,
+          potencyCbd: _productListDriverModel!.potencyCbd,
+          brands: _productListDriverModel!.brands,
+          categoryname: _productListDriverModel!.categoryname,
+          image: _productListDriverModel!.image,
+          imageURL: _productListDriverModel!.imageURL,
+          price: _productListDriverModel!.price,
+          productCode: _productListDriverModel!.productCode,
+          quantity: _productListDriverModel!.quantity,
+          ratingCount: _productListDriverModel!.ratingCount,
+          types: _productListDriverModel!.types,
+          subcategoryname: _productListDriverModel!.subcategoryname,
+          unit: _productListDriverModel!.unit,
+          slug: '',
+          createdAt: "",
+          updatedAt: "",
+          loginStatus: "",
+          images: [],
+          keyword: "",
+          stock: "");
+      _price = double.parse(_productListModel?.price ?? "");
     }
 
     super.initState();
+  }
+
+  callLoadMore() {
+    showHideProgress(true);
+    pageCount = pageCount + 1;
+    BlocProvider.of<HomeBloc>(context).add(HomeEventLoadMoreBtnClick(
+        '$pageCount',
+        '$productID',
+        _productListDriverModel,
+        strScreen,
+        _vendorDetails));
   }
 
   Future _calculateDistance() async {
@@ -100,12 +272,22 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
       );
       _totalDistance = _distanceBetweenLastTwoLocations;
       print('Total Distance===> $_totalDistance');
+
       metertomile = _totalDistance! * 0.000621;
-      String meter = metertomile!.toStringAsFixed(2);
+      String meter = metertomile!.toStringAsFixed(0);
+      meter1 = double.parse(meter);
+      meter2 = meter1?.round();
+      print('Total Distance in int ===> $meter2');
+      print('Total Distance in miles ===> $meter1');
       print('Total Distance in miles ===> $meter');
+      distance = "${meter2}";
+      estimate_price = "${estimatedPrice}";
       setState(() {
         estimatedPrice = double.parse(eventdetaillist[0].price!) +
             (double.parse(eventdetaillist[0].rateMile!) * double.parse(meter));
+
+        estimatedPrice1 = estimatedPrice?.round();
+        print("estimate price=====>${estimatedPrice1}");
       });
 
       print('Estimated price ===> $estimatedPrice');
@@ -122,8 +304,35 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
     return BlocListener<HomeBloc, HomeState>(
       listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
       listener: (context, state) {
-        if (state is HomeRideLocationSeatchPageState) {
+        if (state is HomeCategoryProductPageState) {
+          Navigator.of(context).pop(true);
+        } else if (state is HomeInitial) {
+          Navigator.of(context).pop(true);
+        } else if (state is HomeMenuItemDetailsPageState) {
+          _productListModel = state.productListModel;
+          _driverId = state.driverId;
+          print("driver Id ${_driverId}");
+          _price = double.parse(_productListModel?.price ?? "");
+          _driverDetail = state.driverDetail;
+          name = _driverDetail!.name + " " + _driverDetail!.lastName;
+        } else if (state is HomeFromDriverProductListDetailsPageState) {
+          showHideProgress(false);
+          setState(() {
+            List<RatingReviewData> ratingReviewListData =
+                state.ratingReviewList!;
+            ratingReviewList!.addAll(ratingReviewListData);
+            //ratingReviewList = state.ratingReviewList;
+          });
+          print("driver Id ${_driverId}");
+          BlocProvider.of<HomeBloc>(context).add(
+              HomeEventProductDetailPageReset(
+                  _productListModel!, _driverId!, _driverDetail!));
+        }
+        if (state is HomeRideCheckOutPageState) {
           //showHideProgress(false);
+          Navigator.of(context).pushNamed(HomeNavigator.homeRideCheckoutPage);
+        }
+        if (state is HomeRideLocationSearchPageState) {
           Navigator.of(context).pushNamed(HomeNavigator.homeRidelocationPage);
         }
       },
@@ -142,7 +351,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                     Navigator.pop(context);
                   },
                   strBtnRightImageName: 'ic_cart_white.png',
-                  rightEditButtonVisibility: true,
+                  rightEditButtonVisibility: false,
                   headerSigninText: _cartCount!,
                   btnEditOnPressed: () {}),
               Column(
@@ -232,9 +441,12 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                         ),
                                         child: InkWell(
                                           onTap: () {
+                                            print("pickup====?");
                                             BlocProvider.of<HomeBloc>(context).add(
                                                 HomeEventRideSearchTextFieldClick(
                                                     "Pickup"));
+                                            // BlocProvider.of<HomeBloc>(context).add(
+                                            //     HomeEevntLoctionSearchPageBtnClick());
                                           },
                                           child: Text(
                                             sharedPrefs.searchLocation,
@@ -277,6 +489,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                         ),
                                         child: InkWell(
                                           onTap: () {
+                                            print("Droplocation====?");
                                             BlocProvider.of<HomeBloc>(context).add(
                                                 HomeEventRideSearchTextFieldClick(
                                                     "Drop"));
@@ -329,13 +542,14 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                               ),
                                               AHorizontalSpace(5.0.scale()),
                                               Expanded(
-                                                child: Text("${estimatedPrice}",
+                                                child: Text(
+                                                    "\$${estimatedPrice1}",
                                                     maxLines: 5,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                         color: Colors.black54,
-                                                        fontSize: 10,
+                                                        fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.bold)),
                                               )
@@ -432,84 +646,84 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                     ],
                                   )),
                               AHorizontalSpace(10.0.scale()),
-                              Container(
-                                  height: 70,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.grey),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        offset: const Offset(
-                                          0.0,
-                                          0.0,
-                                        ),
-                                        blurRadius: 1.0,
-                                        spreadRadius: 1.0,
-                                      ), //BoxShadow
-                                      BoxShadow(
-                                        color: Colors.white,
-                                        offset: const Offset(0.0, 0.0),
-                                        blurRadius: 1.0,
-                                        spreadRadius: 1.0,
-                                      ), //BoxShadow
-                                    ],
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Rate/Minute",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                          .leftPadding(5.0.scale())
-                                          .topPadding(10.0.scale()),
-                                      AVerticalSpace(5.0.scale()),
-                                      Container(
-                                        height: 30,
-                                        width: 60,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          border: Border.all(
-                                              width: 1, color: Colors.grey),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              offset: const Offset(
-                                                0.0,
-                                                0.0,
-                                              ),
-                                              blurRadius: 2.0,
-                                              spreadRadius: 0.0,
-                                            ), //BoxShadow
-                                            BoxShadow(
-                                              color: Colors.white,
-                                              offset: const Offset(0.0, 0.0),
-                                              blurRadius: 1.0,
-                                              spreadRadius: 0.0,
-                                            ), //BoxShadow
-                                          ],
-                                        ),
-                                        child: Text(
-                                                "\$${eventdetaillist[0].rateMinute}",
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                    color: Colors.black54,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.bold))
-                                            .align(Alignment.center),
-                                      ),
-                                    ],
-                                  )),
+                              // Container(
+                              //     height: 70,
+                              //     width: 100,
+                              //     decoration: BoxDecoration(
+                              //       color: Colors.white,
+                              //       borderRadius: BorderRadius.circular(10),
+                              //       border: Border.all(color: Colors.grey),
+                              //       boxShadow: [
+                              //         BoxShadow(
+                              //           color: Colors.grey,
+                              //           offset: const Offset(
+                              //             0.0,
+                              //             0.0,
+                              //           ),
+                              //           blurRadius: 1.0,
+                              //           spreadRadius: 1.0,
+                              //         ), //BoxShadow
+                              //         BoxShadow(
+                              //           color: Colors.white,
+                              //           offset: const Offset(0.0, 0.0),
+                              //           blurRadius: 1.0,
+                              //           spreadRadius: 1.0,
+                              //         ), //BoxShadow
+                              //       ],
+                              //     ),
+                              //     child: Column(
+                              //       children: [
+                              //         Text(
+                              //           "Rate/Minute",
+                              //           overflow: TextOverflow.ellipsis,
+                              //           style: TextStyle(
+                              //               color: Colors.black,
+                              //               fontSize: 14,
+                              //               fontWeight: FontWeight.bold),
+                              //         )
+                              //             .leftPadding(5.0.scale())
+                              //             .topPadding(10.0.scale()),
+                              //         AVerticalSpace(5.0.scale()),
+                              //         Container(
+                              //           height: 30,
+                              //           width: 60,
+                              //           decoration: BoxDecoration(
+                              //             color: Colors.white,
+                              //             borderRadius:
+                              //                 BorderRadius.circular(15),
+                              //             border: Border.all(
+                              //                 width: 1, color: Colors.grey),
+                              //             boxShadow: [
+                              //               BoxShadow(
+                              //                 color: Colors.grey,
+                              //                 offset: const Offset(
+                              //                   0.0,
+                              //                   0.0,
+                              //                 ),
+                              //                 blurRadius: 2.0,
+                              //                 spreadRadius: 0.0,
+                              //               ), //BoxShadow
+                              //               BoxShadow(
+                              //                 color: Colors.white,
+                              //                 offset: const Offset(0.0, 0.0),
+                              //                 blurRadius: 1.0,
+                              //                 spreadRadius: 0.0,
+                              //               ), //BoxShadow
+                              //             ],
+                              //           ),
+                              //           child: Text(
+                              //                   "\$${eventdetaillist[0].rateMinute}",
+                              //                   maxLines: 1,
+                              //                   overflow: TextOverflow.ellipsis,
+                              //                   style: TextStyle(
+                              //                       color: Colors.black54,
+                              //                       fontSize: 10,
+                              //                       fontWeight:
+                              //                           FontWeight.bold))
+                              //               .align(Alignment.center),
+                              //         ),
+                              //       ],
+                              //     )),
                               AHorizontalSpace(10.0.scale()),
                               Container(
                                   height: 70,
@@ -593,6 +807,15 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                             .leftPadding(10.0.scale())
                             .rightPadding(10.0.scale())
                             .topPadding(5.0.scale()),
+                        AVerticalSpace(10.0.scale()),
+                        Text(
+                          "Distance:  ${meter2} (Miles)",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ).align(Alignment.centerLeft).leftPadding(10.0.scale()),
                         AVerticalSpace(15.0.scale()),
                         Container(
                                 height: 30,
@@ -942,7 +1165,24 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                   ARoundedButtonImage(
                     btnBgColor: kColorCommonButton,
                     btnTextColor: Colors.white,
-                    btnOnPressed: () {},
+                    btnOnPressed: () {
+                      print("Distance===>${distance}");
+                      print("Price===>${estimate_price}");
+                      BlocProvider.of<HomeBloc>(context)
+                          .add(HomeEventRideBookRideNowBtnClick(
+                        qty,
+                        eventdetaillist[0].id,
+                        eventdetaillist[0].vendorId!,
+                        "0",
+                        _textFiledUserSpecialInstruction.text,
+                        pick_address,
+                        drop_address,
+                        distance,
+                        estimate_price,
+                        _driverDetail!,
+                        _productListModel!,
+                      ));
+                    },
                     btnText: "Book Ride Now",
                     btnHeight: kHeightBtnAddToCart.scale(),
                     btnWidth: 160.0.scale(),

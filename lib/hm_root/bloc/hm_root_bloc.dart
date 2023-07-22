@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:grambunny_customer/hm_root/bloc/bloc.dart';
 import 'package:grambunny_customer/hm_root/hm_root.dart';
 
@@ -21,6 +20,10 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
     on<HmRootEventBackButtonOrderHistory>(mapHmRootEventBackButtonOrderHistory);
     on<HmRootEventBackButtonOrderHistoryReset>(
         mapHmRootEventBackButtonOrderHistoryReset);
+
+    on<HmRootEventBackButtonEventOrderHistoryReset>(
+        mapHmRootEventBackButtonEventOrderHistoryReset);
+
     on<HmRootEventBackButtonProfile>(mapHmRootEventBackButtonProfile);
     on<HmRootEventBackButtonProfileReset>(mapHmRootEventBackButtonProfileReset);
     on<HmRootEventBackButtonHome>(mapHmRootHmRootEventBackButtonHome);
@@ -35,22 +38,26 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
       HmRootEventPushReceived event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: false,
-        isBackProfile: false,
-        isBackHome: false,
-        isPushNotificationSending: true));
+      isBackOrderHistory: false,
+      isFromSetting: false,
+      isBackProfile: false,
+      isBackHome: false,
+      isPushNotificationSending: true,
+      isbackeventHistory: false,
+    ));
   }
 
   mapRootEventPushHandeled(
       HmRootEventPushHandeled event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: false,
-        isBackProfile: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackOrderHistory: false,
+      isFromSetting: false,
+      isBackProfile: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventLogoutClick(
@@ -69,44 +76,52 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
       Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: false,
-        isBackProfile: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackOrderHistory: false,
+      isFromSetting: false,
+      isBackProfile: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootHmRootEventBackButtonHome(
       HmRootEventBackButtonHome event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: false,
-        isBackProfile: false,
-        isBackHome: true,
-        isPushNotificationSending: false));
+      isBackOrderHistory: false,
+      isFromSetting: false,
+      isBackProfile: false,
+      isBackHome: true,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventBackButtonProfile(
       HmRootEventBackButtonProfile event, Emitter<HmRootState> emitter) async {
     print("call home root from profile ");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: false,
-        isBackProfile: true,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackOrderHistory: false,
+      isFromSetting: false,
+      isBackProfile: true,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventBackButtonProfileReset(HmRootEventBackButtonProfileReset event,
       Emitter<HmRootState> emitter) async {
     print("call home root ");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: false,
-        isBackProfile: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackOrderHistory: false,
+      isFromSetting: false,
+      isBackProfile: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventBackButtonOrderHistoryReset(
@@ -114,22 +129,40 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
       Emitter<HmRootState> emitter) async {
     print("call home root");
     emitter(HmRootHomeState(
-        isBackProfile: false,
-        isFromSetting: false,
-        isBackOrderHistory: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackProfile: false,
+      isFromSetting: false,
+      isBackOrderHistory: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
+  }
+
+  mapHmRootEventBackButtonEventOrderHistoryReset(
+      HmRootEventBackButtonEventOrderHistoryReset event,
+      Emitter<HmRootState> emitter) async {
+    print("call home root");
+    emitter(HmRootHomeState(
+      isBackProfile: false,
+      isFromSetting: false,
+      isBackOrderHistory: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventBackButtonOrderHistory(HmRootEventBackButtonOrderHistory event,
       Emitter<HmRootState> emitter) async {
     //print("call home root for history");
     emitter(HmRootHomeState(
-        isBackProfile: false,
-        isBackOrderHistory: true,
-        isFromSetting: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackProfile: false,
+      isBackOrderHistory: true,
+      isFromSetting: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventSettingScreenSelectFromRoot(
@@ -137,11 +170,13 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
       Emitter<HmRootState> emitter) async {
     print("call home for cart root");
     emitter(HmRootHomeState(
-        isBackOrderHistory: false,
-        isFromSetting: true,
-        isBackProfile: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isBackOrderHistory: false,
+      isFromSetting: true,
+      isBackProfile: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapHmRootEventSettingScreenUnSelectFromRoot(
@@ -149,11 +184,13 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
       Emitter<HmRootState> emitter) async {
     // print("setting un select home root");
     emitter(HmRootHomeState(
-        isFromSetting: false,
-        isBackOrderHistory: false,
-        isBackProfile: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isFromSetting: false,
+      isBackOrderHistory: false,
+      isBackProfile: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   mapLoadingCompletedEvent(
@@ -164,11 +201,13 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
   mapRootEventLoginLoadingComplete(HmRootEventLoginLoadingComplete event,
       Emitter<HmRootState> emitter) async {
     emitter(HmRootHomeState(
-        isFromSetting: false,
-        isBackProfile: false,
-        isBackOrderHistory: false,
-        isBackHome: false,
-        isPushNotificationSending: false));
+      isFromSetting: false,
+      isBackProfile: false,
+      isBackOrderHistory: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
   }
 
   Stream<HmRootState> mapEventFtBackPressed() async* {

@@ -30,6 +30,7 @@ class EventHistoryBloc extends Bloc<EventHistoryEvent, EventHistoryState> {
     on<EventListDetailEventForViewDetail>(mapEventListDetailEventForViewDetail);
 
     on<EventDetailStateReset>(mapEventDetailStateReset);
+    on<EventHistoryBackBtnClicked>(mapEventHistoryBackBtnClicked);
   }
 
   mapEventHistoryEventReset(
@@ -82,5 +83,14 @@ class EventHistoryBloc extends Bloc<EventHistoryEvent, EventHistoryState> {
   mapEventDetailStateReset(
       EventDetailStateReset event, Emitter<EventHistoryState> emitter) async {
     emitter(EventHistoryInitial());
+  }
+
+  mapEventHistoryBackBtnClicked(EventHistoryBackBtnClicked event,
+      Emitter<EventHistoryState> emitter) async {
+    if (state is EventHistoryInitial) {
+      print("back call");
+
+      emitter(EventHistoryToNavigateHomeResetPageState());
+    }
   }
 }

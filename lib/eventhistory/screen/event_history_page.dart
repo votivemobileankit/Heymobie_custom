@@ -119,6 +119,13 @@ class _EventHistoryPageState extends State<EventHistoryPage> {
                 .add(EventHistoryStateReset());
             showSnackBar(state.message, context);
           }
+          if (state is EventHistoryToNavigateHomeResetPageState) {
+            print("In blocListener");
+            BlocProvider.of<EventHistoryBloc>(context)
+                .add(EventHistoryEventReset());
+            BlocProvider.of<SideNavigatBloc>(context)
+                .add(SideNavigationEventGoToHomePageFromHistory());
+          }
         },
         child: SafeArea(
             bottom: false,
@@ -131,7 +138,9 @@ class _EventHistoryPageState extends State<EventHistoryPage> {
                 backBtnVisibility: true,
                 btnBackOnPressed: () {
                   print("back");
-                  Navigator.pop(context);
+
+                  BlocProvider.of<EventHistoryBloc>(context)
+                      .add(EventHistoryBackBtnClicked());
                 },
                 strBtnRightImageName: 'ic_search_logo.png',
                 rightEditButtonVisibility: false,

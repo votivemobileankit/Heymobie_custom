@@ -21,6 +21,8 @@ class HmRootEventBackButtonOrderHistory extends HmRootEvent {}
 
 class HmRootEventBackButtonOrderHistoryReset extends HmRootEvent {}
 
+class HmRootEventBackButtonEventOrderHistoryReset extends HmRootEvent {}
+
 class HmRootEventBackButtonProfile extends HmRootEvent {}
 
 class HmRootEventBackButtonHome extends HmRootEvent {}

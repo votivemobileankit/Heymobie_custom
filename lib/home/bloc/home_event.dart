@@ -6,6 +6,8 @@ import 'package:grambunny_customer/home/model/product_list_model.dart';
 import 'package:grambunny_customer/home/model/statelist_reponse_model.dart';
 
 import '../model/ps_list_model.dart';
+import '../model/rating_review_list_model.dart';
+import '../model/related_product_model.dart';
 
 abstract class HomeEvent extends Equatable {
   const HomeEvent();
@@ -254,12 +256,22 @@ class HomeEventCouponListbtnClick extends HomeEvent {
   ProductListMenu productListModel;
   String couponCode;
 
-  HomeEventCouponListbtnClick(this.vendorId, this.strScreen, this.driverDetail,
-      this.productListModel, this.couponCode);
+  HomeEventCouponListbtnClick(
+    this.vendorId,
+    this.strScreen,
+    this.driverDetail,
+    this.productListModel,
+    this.couponCode,
+  );
 
   @override
-  List<Object> get props =>
-      [vendorId, strScreen, driverDetail, productListModel, couponCode];
+  List<Object> get props => [
+        vendorId,
+        strScreen,
+        driverDetail,
+        productListModel,
+        couponCode,
+      ];
 }
 
 class HomeEventCouponListbtnApply extends HomeEvent {
@@ -271,8 +283,15 @@ class HomeEventCouponListbtnApply extends HomeEvent {
   String couponId;
   String couponAmount;
 
-  HomeEventCouponListbtnApply(this.vendorId, this.strScreen, this.driverDetail,
-      this.productListModel, this.couponCode, this.couponAmount, this.couponId);
+  HomeEventCouponListbtnApply(
+    this.vendorId,
+    this.strScreen,
+    this.driverDetail,
+    this.productListModel,
+    this.couponCode,
+    this.couponAmount,
+    this.couponId,
+  );
 
   @override
   List<Object> get props => [
@@ -282,7 +301,7 @@ class HomeEventCouponListbtnApply extends HomeEvent {
         productListModel,
         couponCode,
         couponAmount,
-        couponId
+        couponId,
       ];
 }
 
@@ -495,17 +514,263 @@ class HomeEventDriverProductListClick extends HomeEvent {
 //       [driverProductList, driverDetail, screen, productId];
 // }
 
+class HomeEventSubmitRideOrderBtnClick extends HomeEvent {
+  late String payMethod;
+  late String mobile;
+  late String address;
+  late String city;
+  late String zip;
+  late String state;
+  late String comment;
+  late String cc_name;
+  late String creditcardtype;
+  late String cc_number;
+  late String cc_expiration;
+  late String cc_cvv;
+  late String cc_expire_month;
+  late String cc_expire_year;
+  late String promo_amount;
+  late String saletax;
+  late String excisetax;
+  late String citytax;
+  late String vendorId;
+  late String final_amount;
+  late String sub_total;
+  late String coupon_id;
+  late String osName;
+  late String deviceType;
+  late String ticket_service_fee;
+  late String ticket_fee;
+  late String delivery_fee;
+  late String firstNameT;
+  late String lastNameT;
+  late String ps_type;
+  String? country;
+  String? total;
+
+  HomeEventSubmitRideOrderBtnClick(
+      {required this.payMethod,
+      required this.mobile,
+      required this.address,
+      required this.city,
+      required this.state,
+      required this.zip,
+      required this.comment,
+      required this.cc_name,
+      required this.creditcardtype,
+      required this.cc_number,
+      required this.cc_expiration,
+      required this.cc_cvv,
+      required this.cc_expire_month,
+      required this.cc_expire_year,
+      required this.saletax,
+      required this.promo_amount,
+      required this.excisetax,
+      required this.citytax,
+      required this.vendorId,
+      required this.final_amount,
+      required this.sub_total,
+      required this.coupon_id,
+      required this.osName,
+      required this.deviceType,
+      required this.firstNameT,
+      required this.lastNameT,
+      required this.ticket_service_fee,
+      required this.ticket_fee,
+      required this.delivery_fee,
+      required this.ps_type,
+      required this.country,
+      required this.total});
+
+  @override
+  List<Object> get props => [
+        payMethod,
+        mobile,
+        address,
+        city,
+        state,
+        zip,
+        comment,
+        cc_name,
+        creditcardtype,
+        cc_number,
+        creditcardtype,
+        cc_expiration,
+        cc_cvv,
+        cc_expire_month,
+        cc_expire_year,
+        saletax,
+        promo_amount,
+        excisetax,
+        citytax,
+        vendorId,
+        final_amount,
+        sub_total,
+        coupon_id,
+        osName,
+        deviceType,
+        firstNameT,
+        lastNameT,
+        ticket_service_fee,
+        ticket_fee,
+        delivery_fee,
+        ps_type,
+        country!,
+        total!
+      ];
+}
+
+class HomeEventSubmitTicketOrderBtnClick extends HomeEvent {
+  late String payMethod;
+  late String mobile;
+  late String address;
+  late String city;
+  late String zip;
+  late String state;
+  late String comment;
+  late String cc_name;
+  late String creditcardtype;
+  late String cc_number;
+  late String cc_expiration;
+  late String cc_cvv;
+  late String cc_expire_month;
+  late String cc_expire_year;
+  late String promo_amount;
+  late String saletax;
+  late String excisetax;
+  late String citytax;
+  late String vendorId;
+  late String final_amount;
+  late String sub_total;
+  late String coupon_id;
+  late String osName;
+  late String deviceType;
+  late String ticket_service_fee;
+  late String ticket_fee;
+  late String delivery_fee;
+  late String firstNameT;
+  late String lastNameT;
+  late String ps_type;
+
+  HomeEventSubmitTicketOrderBtnClick(
+      {required this.payMethod,
+      required this.mobile,
+      required this.address,
+      required this.city,
+      required this.state,
+      required this.zip,
+      required this.comment,
+      required this.cc_name,
+      required this.creditcardtype,
+      required this.cc_number,
+      required this.cc_expiration,
+      required this.cc_cvv,
+      required this.cc_expire_month,
+      required this.cc_expire_year,
+      required this.saletax,
+      required this.promo_amount,
+      required this.excisetax,
+      required this.citytax,
+      required this.vendorId,
+      required this.final_amount,
+      required this.sub_total,
+      required this.coupon_id,
+      required this.osName,
+      required this.deviceType,
+      required this.firstNameT,
+      required this.lastNameT,
+      required this.ticket_service_fee,
+      required this.ticket_fee,
+      required this.delivery_fee,
+      required this.ps_type});
+
+  @override
+  List<Object> get props => [
+        payMethod,
+        mobile,
+        address,
+        city,
+        state,
+        zip,
+        comment,
+        cc_name,
+        creditcardtype,
+        cc_number,
+        creditcardtype,
+        cc_expiration,
+        cc_cvv,
+        cc_expire_month,
+        cc_expire_year,
+        saletax,
+        promo_amount,
+        excisetax,
+        citytax,
+        vendorId,
+        final_amount,
+        sub_total,
+        coupon_id,
+        osName,
+        deviceType,
+        firstNameT,
+        lastNameT,
+        ticket_service_fee,
+        ticket_fee,
+        delivery_fee,
+        ps_type
+      ];
+}
+
 class HomeEventDriverTicketListClick extends HomeEvent {
   String merchant_id;
   String ps_id;
   String type;
   ProductListDriver driverProductList;
+  Vendor vendor;
+  String screen;
 
-  HomeEventDriverTicketListClick(
-      this.merchant_id, this.ps_id, this.type, this.driverProductList);
+  HomeEventDriverTicketListClick(this.merchant_id, this.ps_id, this.type,
+      this.driverProductList, this.vendor, this.screen);
 
   @override
-  List<Object> get props => [merchant_id, ps_id, type, driverProductList];
+  List<Object> get props =>
+      [merchant_id, ps_id, type, driverProductList, vendor, screen];
+}
+
+class HomeEventBackForTicketDetailEvent extends HomeEvent {
+  DriverList driverDetail;
+  ProductListMenu productListModel;
+  List<EventDetailsList> eventdetaillist;
+  List<ProductListDriver> driverProductList;
+  String screen;
+  List<RelatedProductList> relatedProductList;
+  List<AddonProductList> addOnProductList;
+  Vendor? vendorDetails;
+  ProductListDriver? productListDriverModel;
+
+  HomeEventBackForTicketDetailEvent(
+      this.driverDetail,
+      this.productListModel,
+      this.eventdetaillist,
+      this.driverProductList,
+      this.screen,
+      this.relatedProductList,
+      this.addOnProductList,
+      this.vendorDetails,
+      this.productListDriverModel);
+
+  // TODO: implement props
+  @override
+  List<Object> get props => [
+        driverDetail,
+        productListModel,
+        eventdetaillist,
+        driverProductList,
+        screen,
+        relatedProductList,
+        addOnProductList,
+        vendorDetails!,
+        productListDriverModel!
+      ];
 }
 
 class HomeEventDriverRideListClick extends HomeEvent {
@@ -513,12 +778,15 @@ class HomeEventDriverRideListClick extends HomeEvent {
   String ps_id;
   String type;
   ProductListDriver driverProductList;
+  Vendor vendor;
+  String screen;
 
-  HomeEventDriverRideListClick(
-      this.merchant_id, this.ps_id, this.type, this.driverProductList);
+  HomeEventDriverRideListClick(this.merchant_id, this.ps_id, this.type,
+      this.driverProductList, this.vendor, this.screen);
 
   @override
-  List<Object> get props => [merchant_id, ps_id, type, driverProductList];
+  List<Object> get props =>
+      [merchant_id, ps_id, type, driverProductList, vendor, screen];
 }
 
 class HomeEventProductItemDetailPageReset extends HomeEvent {
@@ -701,6 +969,7 @@ class HomeEventAddToCartBtnClick extends HomeEvent {
   DriverList driverDetail;
   String isNewDriver;
   String specialInstruction;
+  String psType;
 
   HomeEventAddToCartBtnClick(
       this.quantity,
@@ -709,7 +978,8 @@ class HomeEventAddToCartBtnClick extends HomeEvent {
       this.decrease,
       this.driverDetail,
       this.isNewDriver,
-      this.specialInstruction);
+      this.specialInstruction,
+      this.psType);
 
   @override
   List<Object> get props => [
@@ -719,7 +989,8 @@ class HomeEventAddToCartBtnClick extends HomeEvent {
         decrease,
         driverDetail,
         isNewDriver,
-        specialInstruction
+        specialInstruction,
+        psType
       ];
 }
 
@@ -732,6 +1003,7 @@ class HomeEventTicketItemClickPurchaseTicketBtnClick extends HomeEvent {
   //DriverList driverDetail;
   String newDriver;
   String specialInstruction;
+  String psType;
 
   HomeEventTicketItemClickPurchaseTicketBtnClick(
       // this.quantity,
@@ -741,7 +1013,8 @@ class HomeEventTicketItemClickPurchaseTicketBtnClick extends HomeEvent {
       this.decrease,
       //  this.driverDetail,
       this.newDriver,
-      this.specialInstruction);
+      this.specialInstruction,
+      this.psType);
 
   @override
   List<Object> get props => [
@@ -751,7 +1024,137 @@ class HomeEventTicketItemClickPurchaseTicketBtnClick extends HomeEvent {
         decrease,
         //driverDetail,
         newDriver,
-        specialInstruction
+        specialInstruction, psType
+      ];
+}
+
+class HomeEventRideBookRideNowBtnClick extends HomeEvent {
+  int quantity;
+  int productId;
+  String? driverId;
+  String? newDriver;
+  String? specialInstruction;
+  String? pickaddress;
+  String? dropaddress;
+  String? distance;
+  String? estimateprice;
+  String? strScreen;
+
+  DriverList driverDetail;
+  ProductListMenu productListModel;
+
+  HomeEventRideBookRideNowBtnClick(
+    this.quantity,
+    this.productId,
+    this.driverId,
+    this.newDriver,
+    this.specialInstruction,
+    this.pickaddress,
+    this.dropaddress,
+    this.distance,
+    this.estimateprice,
+    this.driverDetail,
+    this.productListModel,
+  );
+
+  @override
+  List<Object> get props => [
+        quantity,
+        productId,
+        driverId!,
+        newDriver!,
+        specialInstruction!,
+        pickaddress!,
+        dropaddress!,
+        distance!,
+        estimateprice!,
+        driverDetail,
+        productListModel,
+      ];
+}
+
+class HomeEventEventDetailPageReset extends HomeEvent {
+  List<EventDetailsList>? eventdetaillist;
+
+  String driverId;
+  DriverList driverDetail;
+
+  HomeEventEventDetailPageReset(
+      this.eventdetaillist, this.driverId, this.driverDetail);
+
+  @override
+  List<Object> get props => [eventdetaillist!, driverId, driverDetail];
+}
+
+class HomeEventTicketDetailPageCartBtnClick extends HomeEvent {
+  Vendor? vendorDetails;
+  ProductListDriver? productListDriverModel;
+  String strScreen;
+  List<RatingReviewData> ratingReviewList;
+  List<RelatedProductList> relatedProductList;
+  List<AddonProductList> addOnProductList;
+  List<EventDetailsList> eventdetaillist;
+  ProductListMenu productListModel;
+  DriverList? driverDetail;
+
+  HomeEventTicketDetailPageCartBtnClick(
+      this.vendorDetails,
+      this.productListDriverModel,
+      this.strScreen,
+      this.ratingReviewList,
+      this.relatedProductList,
+      this.addOnProductList,
+      this.eventdetaillist,
+      this.productListModel,
+      this.driverDetail);
+
+  @override
+  List<Object> get props => [
+        vendorDetails!,
+        productListDriverModel!,
+        strScreen,
+        ratingReviewList,
+        relatedProductList,
+        addOnProductList,
+        eventdetaillist,
+        productListModel,
+        driverDetail!
+      ];
+}
+
+class HomeEventRideDetailPageCartBtnClick extends HomeEvent {
+  Vendor? vendorDetails;
+  ProductListDriver? productListDriverModel;
+  String strScreen;
+  List<RatingReviewData> ratingReviewList;
+  List<RelatedProductList> relatedProductList;
+  List<AddonProductList> addOnProductList;
+  List<EventDetailsList> eventdetaillist;
+  ProductListMenu productListModel;
+  DriverList? driverDetail;
+
+  HomeEventRideDetailPageCartBtnClick(
+      this.vendorDetails,
+      this.productListDriverModel,
+      this.strScreen,
+      this.ratingReviewList,
+      this.relatedProductList,
+      this.addOnProductList,
+      this.eventdetaillist,
+      this.productListModel,
+      this.driverDetail);
+
+  @override
+  List<Object> get props => [
+        vendorDetails!,
+        productListDriverModel!,
+        strScreen,
+        ratingReviewList,
+        relatedProductList,
+        addOnProductList,
+        eventdetaillist,
+        productListModel,
+        driverDetail!
       ];
 }
 
@@ -763,6 +1166,7 @@ class HomeEventItemClickAddToCartBtnClick extends HomeEvent {
   DriverList driverDetail;
   String newDriver;
   String specialInstruction;
+  String psType;
 
   HomeEventItemClickAddToCartBtnClick(
       this.quantity,
@@ -771,7 +1175,8 @@ class HomeEventItemClickAddToCartBtnClick extends HomeEvent {
       this.decrease,
       this.driverDetail,
       this.newDriver,
-      this.specialInstruction);
+      this.specialInstruction,
+      this.psType);
 
   @override
   List<Object> get props => [
@@ -781,7 +1186,47 @@ class HomeEventItemClickAddToCartBtnClick extends HomeEvent {
         decrease,
         driverDetail,
         newDriver,
-        specialInstruction
+        specialInstruction,
+        psType
+      ];
+}
+
+class HomeEventItemClickAddToCartRideBtnClick extends HomeEvent {
+  int quantity;
+  int productId;
+  String driverId;
+  DriverList driverDetail;
+  String newDriver;
+  String specialInstruction;
+  String pickaddress;
+  String dropaddress;
+  String distance;
+  String estimateprice;
+
+  HomeEventItemClickAddToCartRideBtnClick(
+      this.quantity,
+      this.productId,
+      this.driverId,
+      this.driverDetail,
+      this.newDriver,
+      this.specialInstruction,
+      this.pickaddress,
+      this.dropaddress,
+      this.distance,
+      this.estimateprice);
+
+  @override
+  List<Object> get props => [
+        quantity,
+        productId,
+        driverId,
+        driverDetail,
+        newDriver,
+        specialInstruction,
+        pickaddress,
+        dropaddress,
+        distance,
+        estimateprice,
       ];
 }
 
@@ -827,6 +1272,7 @@ class HomeEventItemAddMinusToCartBtnClick extends HomeEvent {
   DriverList driverDetail;
   String strScreen;
   ProductListMenu productListModel;
+  String psType;
 
   HomeEventItemAddMinusToCartBtnClick(
       this.quantity,
@@ -835,7 +1281,8 @@ class HomeEventItemAddMinusToCartBtnClick extends HomeEvent {
       this.decrease,
       this.driverDetail,
       this.strScreen,
-      this.productListModel);
+      this.productListModel,
+      this.psType);
 
   @override
   List<Object> get props => [
@@ -845,7 +1292,8 @@ class HomeEventItemAddMinusToCartBtnClick extends HomeEvent {
         decrease,
         driverDetail,
         strScreen,
-        productListModel
+        productListModel,
+        psType
       ];
 }
 
@@ -891,12 +1339,41 @@ class HomeEventViewCartButtonClick extends HomeEvent {
 }
 
 class HomeEventRideSearchTextFieldClick extends HomeEvent {
-  String type;
+  String Valuetype;
 
-  HomeEventRideSearchTextFieldClick(this.type);
+  HomeEventRideSearchTextFieldClick(this.Valuetype);
 
   @override
-  List<Object> get props => [type];
+  List<Object> get props => [Valuetype];
 }
 
-class HomeEventRideBackBtnClicked extends HomeEvent {}
+class HomeEventRideBackBtnClicked extends HomeEvent {
+  List<EventDetailsList>? eventdetaillist;
+  ProductListDriver driverProductList;
+  String? screen;
+  List<RatingReviewData>? ratingList;
+  List<RelatedProductList>? relatedproductList;
+  List<AddonProductList>? addonProductlist;
+  Vendor? vendor;
+
+  HomeEventRideBackBtnClicked(
+      this.eventdetaillist,
+      this.driverProductList,
+      this.screen,
+      this.ratingList,
+      this.relatedproductList,
+      this.addonProductlist,
+      this.vendor);
+
+  List<Object> get props => [
+        eventdetaillist!,
+        driverProductList,
+        screen!,
+        ratingList!,
+        relatedproductList!,
+        addonProductlist!,
+        vendor!
+      ];
+}
+
+class HomeEevntLoctionSearchPageBtnClick extends HomeEvent {}

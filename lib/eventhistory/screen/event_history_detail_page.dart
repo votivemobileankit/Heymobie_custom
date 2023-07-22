@@ -27,7 +27,6 @@ class _EventHistoryDetailsPageState extends State<EventHistoryDetailsPage> {
 
   // List<EventViewItems> eventItems = [];
   String orderId = "";
-
   String vendorId = "";
 
   void showHideProgress(bool show) {

@@ -421,7 +421,8 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                             0,
                             widget.driverDetail,
                             "0",
-                            ""));
+                            "",
+                            "1"));
                   },
                   btnText: "Add to Cart",
                   btnHeight: kHeightBtnAddToCart.scale(),

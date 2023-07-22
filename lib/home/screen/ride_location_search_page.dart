@@ -14,6 +14,10 @@ import '../../utils/image_paths.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
+import '../model/driver_list_model.dart';
+import '../model/ps_list_model.dart';
+import '../model/rating_review_list_model.dart';
+import '../model/related_product_model.dart';
 
 class RidelocationSearchPage extends StatefulWidget {
   const RidelocationSearchPage({Key? key}) : super(key: key);
@@ -27,20 +31,26 @@ class _RidelocationSearchPageState extends State<RidelocationSearchPage> {
   late String _sessionToken;
 
   List<dynamic> _placeList = [];
-  String? type;
+  String? Valuetype;
+  List<EventDetailsList>? eventdetaillist;
+  ProductListDriver? driverProductList;
+  String? screen;
+  List<RatingReviewData>? ratingList;
+  List<RelatedProductList>? relatedproductList;
+  List<AddonProductList>? addonProductlist;
+  Vendor? vendor;
 
   @override
   void initState() {
-    super.initState();
-
     HomeState state = BlocProvider.of<HomeBloc>(context).state;
 
-    if (state is HomeRideLocationSeatchPageState) {
-      type = state.type;
+    if (state is HomeRideLocationSearchPageState) {
+      Valuetype = state.Valuetype;
     }
     _controller.addListener(() {
       _onChanged();
     });
+    super.initState();
   }
 
   _onChanged() {
@@ -77,14 +87,21 @@ class _RidelocationSearchPageState extends State<RidelocationSearchPage> {
         var first = value.first;
         sharedPrefs.keyLatitude = first.latitude;
         sharedPrefs.keyLongitude = first.longitude;
-        if (type == "Pickup") {
+        if (Valuetype == "Pickup") {
           sharedPrefs.searchLocation = location;
         } else {
           sharedPrefs.searchDropLocation = location;
         }
 
         print(location);
-        BlocProvider.of<HomeBloc>(context).add(HomeEventRideBackBtnClicked());
+        BlocProvider.of<HomeBloc>(context).add(HomeEventRideBackBtnClicked(
+            eventdetaillist,
+            driverProductList!,
+            screen,
+            ratingList,
+            relatedproductList,
+            addonProductlist,
+            vendor));
         return value;
       });
     } catch (e) {
@@ -106,8 +123,16 @@ class _RidelocationSearchPageState extends State<RidelocationSearchPage> {
             AVerticalSpace(5.0.scale()),
             InkWell(
               onTap: () {
-                BlocProvider.of<HomeBloc>(context)
-                    .add(HomeEventRideBackBtnClicked());
+                Navigator.pop(context);
+                // BlocProvider.of<HomeBloc>(context).add(
+                //     HomeEventRideBackBtnClicked(
+                //         eventdetaillist,
+                //         driverProductList,
+                //         screen,
+                //         ratingList,
+                //         relatedproductList,
+                //         addonProductlist,
+                //         vendor));
               },
               child: Image(
                 fit: BoxFit.fill,

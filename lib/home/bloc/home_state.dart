@@ -20,6 +20,45 @@ abstract class HomeState extends Equatable {
   List<Object> get props => [];
 }
 
+class CartpageFromTicketDetailState extends HomeState {
+  List<ItemsCart> cartlist;
+  DataCart? cartDataModel;
+  String strScreen;
+  List<AddonProductList> addOnProductList;
+  List<RelatedProductList> relatedProductList;
+  List<EventDetailsList> eventdetaillist;
+  ProductListDriver? productListDriverModel;
+  ProductListMenu productListModel;
+  DriverList? driverDetail;
+  Vendor? vendorDetails;
+
+  CartpageFromTicketDetailState(
+      this.cartlist,
+      this.cartDataModel,
+      this.strScreen,
+      this.addOnProductList,
+      this.relatedProductList,
+      this.eventdetaillist,
+      this.productListDriverModel,
+      this.productListModel,
+      this.driverDetail,
+      this.vendorDetails);
+
+  @override
+  List<Object> get props => [
+        cartlist,
+        cartDataModel!,
+        strScreen,
+        addOnProductList,
+        relatedProductList,
+        eventdetaillist,
+        productListDriverModel!,
+        productListModel,
+        driverDetail!,
+        vendorDetails!
+      ];
+}
+
 class LoginPageState extends HomeState {
   String? strScreen;
 
@@ -329,12 +368,30 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
 class HomeEventDriverTicketListClickPageState extends HomeState {
   List<EventDetailsList>? eventdetaillist;
 
+  ProductListDriver driverProductList;
+  String screen;
+  List<RatingReviewData> ratingList;
+  List<RelatedProductList> relatedproductList;
+  List<AddonProductList> addonProductlist;
+  Vendor vendor;
+
   HomeEventDriverTicketListClickPageState(
-    this.eventdetaillist,
-  );
+      this.eventdetaillist,
+      this.driverProductList,
+      this.screen,
+      this.ratingList,
+      this.relatedproductList,
+      this.addonProductlist,
+      this.vendor);
 
   List<Object> get props => [
         eventdetaillist!,
+        driverProductList,
+        screen,
+        ratingList,
+        relatedproductList,
+        addonProductlist,
+        vendor
       ];
 }
 
@@ -347,15 +404,64 @@ class HomeTicketEventErrorHandelState extends HomeState {
   List<Object> get props => [message];
 }
 
+class HomeEventDriverRideListClickResetPageState extends HomeState {}
+
 class HomeEventDriverRideListClickPageState extends HomeState {
   List<EventDetailsList>? eventdetaillist;
+  ProductListDriver driverProductList;
+  String screen;
+  List<RatingReviewData> ratingList;
+  List<RelatedProductList> relatedproductList;
+  List<AddonProductList> addonProductlist;
+  Vendor vendor;
 
   HomeEventDriverRideListClickPageState(
-    this.eventdetaillist,
-  );
+      this.eventdetaillist,
+      this.driverProductList,
+      this.screen,
+      this.ratingList,
+      this.relatedproductList,
+      this.addonProductlist,
+      this.vendor);
 
   List<Object> get props => [
         eventdetaillist!,
+        driverProductList,
+        screen,
+        ratingList,
+        relatedproductList,
+        addonProductlist,
+        vendor
+      ];
+}
+
+class HomeRideCheckOutPageState extends HomeState {
+  List<EventDetailsList>? eventdetaillist;
+  String strScreen;
+  DriverList driverDetail;
+  ProductListMenu productListModel;
+  List<StatesList> stateArrayList;
+  String vendorId;
+  String distance;
+
+  HomeRideCheckOutPageState(
+      this.eventdetaillist,
+      this.strScreen,
+      this.driverDetail,
+      this.productListModel,
+      this.stateArrayList,
+      this.vendorId,
+      this.distance);
+
+  @override
+  List<Object> get props => [
+        eventdetaillist!,
+        strScreen,
+        driverDetail,
+        productListModel,
+        stateArrayList,
+        vendorId,
+        distance
       ];
 }
 
@@ -388,6 +494,21 @@ class HomeCheckOutPageState extends HomeState {
   String vendorId;
 
   HomeCheckOutPageState(this.strScreen, this.driverDetail,
+      this.productListModel, this.stateArrayList, this.vendorId);
+
+  @override
+  List<Object> get props =>
+      [strScreen, driverDetail, productListModel, stateArrayList, vendorId];
+}
+
+class HomeTicketCheckOutPageState extends HomeState {
+  String strScreen;
+  DriverList driverDetail;
+  ProductListMenu productListModel;
+  List<StatesList> stateArrayList;
+  String vendorId;
+
+  HomeTicketCheckOutPageState(this.strScreen, this.driverDetail,
       this.productListModel, this.stateArrayList, this.vendorId);
 
   @override
@@ -469,6 +590,8 @@ class HomeCartPageState extends HomeState {
   List<Object> get props => [cartDataListArray, vendor, cartDataModel];
 }
 
+class HomeCartPageResetState extends HomeState {}
+
 class HomeFromProductDetailCartPageState extends HomeState {
   List<ItemsCart> cartDataListArray;
   DriverList driverDetail;
@@ -534,13 +657,13 @@ class HomeEventDataNotFoundState extends HomeState {
 }
 
 class HomeEventMessageShowState extends HomeState {
-  late final String message;
-  late String updatedCartCount;
+  final String? message;
+  String? updatedCartCount;
 
   HomeEventMessageShowState(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message!];
 }
 
 class HomeEventAfterDeleteMessageShowState extends HomeState {
@@ -594,12 +717,20 @@ class HomeEventErrorHandelCategorypageState extends HomeState {
   List<Object> get props => [message, driverDetail];
 }
 
-class HomeRideLocationSeatchPageState extends HomeState {
+class HomeRideLocationPageState extends HomeState {
   String type;
 
-  HomeRideLocationSeatchPageState(this.type);
+  HomeRideLocationPageState(this.type);
 
   List<Object> get props => [type];
+}
+
+class HomeRideLocationSearchPageState extends HomeState {
+  String Valuetype;
+
+  HomeRideLocationSearchPageState(this.Valuetype);
+
+  List<Object> get props => [Valuetype];
 }
 
 class HomeRideLocationSeatchResetPageState extends HomeState {

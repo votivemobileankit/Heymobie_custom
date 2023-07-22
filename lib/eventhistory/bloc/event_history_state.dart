@@ -59,3 +59,5 @@ class EventListDetailLoadingErrorState extends EventHistoryState {
 
   List<Object> get props => [message];
 }
+
+class EventHistoryToNavigateHomeResetPageState extends EventHistoryState {}

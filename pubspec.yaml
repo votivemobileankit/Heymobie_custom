@@ -63,7 +63,6 @@ dependencies:
   webview_flutter: 3.0.4
   url_launcher:
   get_it:
-
   firebase_messaging:
   firebase_core:
   flutter_local_notifications:
@@ -78,8 +77,16 @@ dependencies:
   flutter_sliding_up_panel: ^2.0.1
   stopper: ^1.0.1
   flutter_datetime_picker: ^1.5.1
+  flutter_dash:
+  http:
+  map_launcher:
+  majascan:
+  stop_watch_timer:
+
+
   #  sliding_up_panel: ^2.0.0+1
   otp_text_field:
+
 
 dev_dependencies:
   flutter_test:

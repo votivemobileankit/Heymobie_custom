@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grambunny_customer/components/components.dart';
@@ -10,6 +11,7 @@ import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
 import '../model/driver_list_model.dart';
+import '../model/ps_list_model.dart';
 
 const kHeightBtnCheckout = 50.0;
 
@@ -25,6 +27,15 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
   late ProductListMenu productListModel;
   late String strScreen;
   late DataCart _cartDataModel;
+
+  DataCart? cartDataModel;
+  Vendor? _vendorDetails;
+  late List<AddonProductList> addOnProductList;
+  late List<RelatedProductList> relatedProductList;
+  late List<EventDetailsList> eventdetaillist;
+  ProductListDriver? productListDriverModel;
+  String psType = "";
+  DriverList? driverDetail;
 
   void showHideProgress(bool show) {
     BlocProvider.of<SideNavigatBloc>(context)
@@ -110,7 +121,8 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
           updatedAt: "",
           views: "",
           walletAmount: "",
-          year: "", type_of_merchant: '');
+          year: "",
+          type_of_merchant: '');
       _cartDataModel = homeState.cartDataModel;
     } else if (homeState is HomeFromCategoryCartPageState) {
       strScreen = "CategoryPage";
@@ -125,12 +137,37 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
     } else if (homeState is HomeFromProductDetailCartPageState) {
       // print(_driverDetail.vendorId);
       strScreen = homeState.strScreen;
-      print(strScreen);
+      if (kDebugMode) {
+        print(strScreen);
+      }
       _productList = homeState.cartDataListArray;
       _driverDetail = homeState.driverDetail;
 
       productListModel = homeState.productListModel;
       _cartDataModel = homeState.cartDataModel;
+    } else if (homeState is CartpageFromTicketDetailState) {
+      strScreen = homeState.strScreen;
+      if (kDebugMode) {
+        print(strScreen);
+      }
+
+      _productList = homeState.cartlist;
+      _driverDetail = homeState.driverDetail!;
+      addOnProductList = homeState.addOnProductList;
+      _vendorDetails = homeState.vendorDetails;
+      relatedProductList = homeState.relatedProductList;
+      eventdetaillist = homeState.eventdetaillist;
+      productListDriverModel = homeState.productListDriverModel;
+      productListModel = homeState.productListModel;
+      _cartDataModel = homeState.cartDataModel!;
+    }
+    if (kDebugMode) {
+      print(strScreen);
+    }
+    if (strScreen == "EventTicket") {
+      psType = "3";
+    } else {
+      psType = "1";
     }
     super.initState();
   }
@@ -141,7 +178,9 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
     return BlocListener<HomeBloc, HomeState>(
         listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
-          print(state.toString());
+          if (kDebugMode) {
+            print(state.toString());
+          }
           if (state is HomeCartPageState) {
             showHideProgress(false);
             _productList = [];
@@ -218,7 +257,8 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                     driverLicense: "",
                     distance: "",
                     devicetype: "",
-                    createdAt: "", type_of_merchant: '');
+                    createdAt: "",
+                    type_of_merchant: '');
               }
 
               _cartDataModel = state.cartDataModel;
@@ -249,10 +289,20 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
               productListModel = state.productListModel;
               _cartDataModel = state.cartDataModel;
             });
+          } else if (state is CartpageFromTicketDetailState) {
+            showHideProgress(false);
+            strScreen = "EventTicket";
+            setState(() {
+              _productList = state.cartlist;
+              _driverDetail = state.driverDetail!;
+              productListModel = state.productListModel;
+              _cartDataModel = state.cartDataModel!;
+            });
           }
+
           if (state is HomeEventMessageShowState) {
             showHideProgress(false);
-            showSnackBar(state.message, context);
+            showSnackBar(state.message!, context);
             BlocProvider.of<HomeBloc>(context).add(HomeEventCartPageReset(
                 _driverDetail, strScreen, productListModel, _cartDataModel));
           }
@@ -270,15 +320,22 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
           }
 
           if (state is HomeCategoryProductPageState) {
-            print("call state");
+            if (kDebugMode) {
+              print("call state");
+            }
             Navigator.of(context).pop();
           } else if (state is HomeCategoryListPageState) {
-            print("call state");
+            if (kDebugMode) {
+              print("call state");
+            }
             Navigator.of(context).pop();
           } else if (state is HomeInitial) {
             Navigator.of(context).pop();
           } else if (state is HomeCheckOutPageState) {
             Navigator.of(context).pushNamed(HomeNavigator.homeCheckoutPage);
+          } else if (state is HomeTicketCheckOutPageState) {
+            Navigator.of(context)
+                .pushNamed(HomeNavigator.homeTicketCheckoutPage);
           } else if (state is LoginPageStateFromCheckOut) {
             showHideProgress(false);
             Navigator.of(context).pushNamed(HomeNavigator.loginPage);
@@ -294,6 +351,8 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                     state.stateArrayList,
                     state.driverDetail,
                     state.productListModel));
+          } else if (state is HomeEventDriverTicketListClickPageState) {
+            Navigator.of(context).pop();
           }
         },
         child: SafeArea(
@@ -305,7 +364,9 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                 strBackbuttonName: 'ic_red_btn_back.png',
                 backBtnVisibility: true,
                 btnBackOnPressed: () {
-                  print(strScreen);
+                  if (kDebugMode) {
+                    print(strScreen);
+                  }
                   if (strScreen == "ProductDetail") {
                     BlocProvider.of<HomeBloc>(context).add(
                         HomeEventBackForProductDetailPage(
@@ -320,6 +381,18 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                   } else if (strScreen == "HomeCartpage") {
                     BlocProvider.of<HomeBloc>(context)
                         .add(HomeEventBackForProductListpage());
+                  } else if (strScreen == "EventTicket") {
+                    BlocProvider.of<HomeBloc>(context).add(
+                        HomeEventBackForTicketDetailEvent(
+                            _driverDetail,
+                            productListModel,
+                            eventdetaillist,
+                            driverProductList,
+                            strScreen,
+                            relatedProductList,
+                            addOnProductList,
+                            _vendorDetails,
+                            productListDriverModel));
                   }
                 },
                 strBtnRightImageName: 'ic_search_logo.png',
@@ -336,7 +409,8 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                             showHideProgress,
                             strScreen,
                             productListModel,
-                            _cartDataModel.vendor_id)
+                            _cartDataModel.vendor_id,
+                            psType)
                         .expand(),
                   if (_productList != null && _productList.length > 0)
                     Column(
@@ -390,6 +464,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                                       sharedPrefs.setUserComment =
                                           _textFiledUserComment.text;
                                     }
+
                                     showHideProgress(true);
                                     BlocProvider.of<HomeBloc>(context).add(
                                         HomeEventCheckOutButtonClick(
@@ -458,9 +533,10 @@ class _CartMenuList extends StatelessWidget {
   String strScreen;
   ProductListMenu productListModel;
   String vendor_id;
+  String psType;
 
   _CartMenuList(this.productList, this.driverDetail, this.showHideProgress,
-      this.strScreen, this.productListModel, this.vendor_id);
+      this.strScreen, this.productListModel, this.vendor_id, this.psType);
 
   @override
   Widget build(BuildContext context) {
@@ -473,8 +549,14 @@ class _CartMenuList extends StatelessWidget {
           itemCount: productList.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
-              child: HomeCartMenuListRowItem(productList[index], driverDetail,
-                  showHideProgress, strScreen, productListModel, vendor_id),
+              child: HomeCartMenuListRowItem(
+                  productList[index],
+                  driverDetail,
+                  showHideProgress,
+                  strScreen,
+                  productListModel,
+                  vendor_id,
+                  psType),
               onTap: () {},
             );
           },

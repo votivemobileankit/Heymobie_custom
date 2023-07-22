@@ -46,8 +46,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventTicketItemClickPurchaseTicketBtnClick>(
         mapHomeEventTicketItemClickPurchaseTicketBtnClick);
 
+    on<HomeEventRideBookRideNowBtnClick>(mapHomeEventRideBookRideNowBtnClick);
+
     on<HomeEventItemClickAddToCartBtnClick>(
         mapHomeEventItemClickAddToCartBtnClick);
+
+    on<HomeEventItemClickAddToCartRideBtnClick>(
+        mapHomeEventItemClickAddToCartRideBtnClick);
+
     on<HomeEventItemAddMinusToCartBtnClick>(
         mapHomeEventItemAddMinusToCartBtnClick);
     on<HomeEventCartDeleteItemClick>(mapHomeEventCartDeleteItemClick);
@@ -55,7 +61,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventProductDetailPageReset>(mapHomeEventProductDetailPageReset);
     on<HomeEventProductDetailPageCartBtnClick>(
         mapHomeEventProductDetailPageCartBtnClick);
+    on<HomeEventTicketDetailPageCartBtnClick>(
+        mapHomeEventTicketDetailPageCartBtnClick);
+
+    on<HomeEventRideDetailPageCartBtnClick>(
+        mapHomeEventRideDetailPageCartBtnClick);
+
     on<HomeEventBackForProductDetailPage>(mapHomeEventBackForProductDetailPage);
+    on<HomeEventBackForTicketDetailEvent>(mapHomeEventBackForTicketDetailEvent);
     on<HomeEventBackForCategoryPage>(mapHomeEventBackForCategoryPage);
     on<LoginEventBtnLoginClicked>(mapLoginEventBtnLoginClicked);
     on<HomeEventBackForProductListpage>(mapHomeEventBackForProductListpage);
@@ -70,6 +83,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEventDriverProductListClick>(mapHomeEventDriverProductListClick);
 
     on<HomeEventDriverTicketListClick>(mapHomeEventDriverTicketListClick);
+
     on<HomeEventDriverRideListClick>(mapHomeEventDriverRideListClick);
 
     on<LoginEventLoginStateReset>(mapLoginEventLoginStateReset);
@@ -78,13 +92,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<SignUpEventSignUpBtnClick>(mapSignUpEventSignUpBtnClick);
     on<HomeEventSubmitOrderBtnClick>(mapHomeEventSubmitOrderBtnClick);
+    on<HomeEventSubmitTicketOrderBtnClick>(
+        mapHomeEventSubmitTicketOrderBtnClick);
+
+    on<HomeEventSubmitRideOrderBtnClick>(mapHomeEventSubmitRideOrderBtnClick);
+
     on<HomeEventSubmitRatingBtnClick>(mapHomeEventSubmitRatingBtnClick);
     on<HomeEventLoadMoreBtnClick>(mapHomeEventLoadMoreBtnClick);
     on<HomeEventCartPageReset>(mapHomeEventCartBeforeCheckout);
     on<HomeEventCategoryCartBtnClick>(mapHomeEventCategoryCartBtnClick);
 
     on<HomeEventRideSearchTextFieldClick>(mapHomeEventRideSearchTextFieldClick);
-
     on<HomeEventRideBackBtnClicked>(mapHomeEventRideBackBtnClicked);
   }
 
@@ -136,7 +154,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             creditcardtype: event.creditcardtype,
             comment: event.comment,
             device_os_name: event.osName,
-            device_type: event.deviceType);
+            device_type: event.deviceType,
+            ticket_service_fee: "",
+            ticket_fee: "",
+            lastNameT: "",
+            firstNameT: "",
+            delivery_fee: "",
+            ps_type: "");
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       _userRepository!.ScreenName = ScreenNavigation.CheckOutPageScreen;
@@ -151,10 +175,115 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  mapHomeEventSubmitTicketOrderBtnClick(
+      HomeEventSubmitTicketOrderBtnClick event,
+      Emitter<HomeState> emitter) async {
+    print("Zip in block " + event.zip);
+    NetworkApiCallState<bool> apiCallState =
+        await _userRepository!.postSubmitPaymentApiCall(
+      vendorId: event.vendorId,
+      payMethod: event.payMethod,
+      address: event.address,
+      city: event.city,
+      state: event.state,
+      zip: event.zip,
+      mobile: event.mobile,
+      saletax: event.saletax,
+      excisetax: event.excisetax,
+      citytax: event.citytax,
+      final_amount: event.final_amount,
+      subTotal: event.sub_total,
+      promo_amount: event.promo_amount,
+      coupon_id: event.coupon_id,
+      cc_name: event.cc_name,
+      cc_number: event.cc_number,
+      cc_expire_year: event.cc_expire_year,
+      cc_expire_month: event.cc_expire_month,
+      cc_expiration: event.cc_expiration,
+      cc_cvv: event.cc_cvv,
+      creditcardtype: event.creditcardtype,
+      comment: event.comment,
+      device_os_name: event.osName,
+      device_type: event.deviceType,
+      delivery_fee: event.delivery_fee,
+      firstNameT: event.firstNameT,
+      lastNameT: event.lastNameT,
+      ticket_fee: event.ticket_fee,
+      ticket_service_fee: event.ticket_service_fee,
+      ps_type: event.ps_type,
+    );
+
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      _userRepository!.ScreenName = ScreenNavigation.CheckOutPageScreen;
+      if (apiCallState.statusValue == "1") {
+        sharedPrefs.setCartCount = "0";
+        emitter(HomeCheckOutOrderCompleteState());
+      } else {
+        emitter(HomeCheckOutOrderErrorState(apiCallState.message!));
+      }
+    } else {
+      emitter(HomeCheckOutOrderErrorState(apiCallState.message!));
+    }
+  }
+
+  mapHomeEventSubmitRideOrderBtnClick(HomeEventSubmitRideOrderBtnClick event,
+      Emitter<HomeState> emitter) async {
+    print("Zip in block " + event.zip);
+    NetworkApiCallState<bool> apiCallState = await _userRepository!
+        .postRideSubmitOrderApiCall(
+            vendorId: event.vendorId,
+            payMethod: event.payMethod,
+            address: event.address,
+            city: event.city,
+            state: event.state,
+            zip: event.zip,
+            mobile: event.mobile,
+            saletax: event.saletax,
+            excisetax: event.excisetax,
+            citytax: event.citytax,
+            final_amount: event.final_amount,
+            subTotal: event.sub_total,
+            promo_amount: event.promo_amount,
+            coupon_id: event.coupon_id,
+            cc_name: event.cc_name,
+            cc_number: event.cc_number,
+            cc_expire_year: event.cc_expire_year,
+            cc_expire_month: event.cc_expire_month,
+            cc_expiration: event.cc_expiration,
+            cc_cvv: event.cc_cvv,
+            creditcardtype: event.creditcardtype,
+            comment: event.comment,
+            device_os_name: event.osName,
+            device_type: event.deviceType,
+            delivery_fee: event.delivery_fee,
+            firstNameT: event.firstNameT,
+            lastNameT: event.lastNameT,
+            ticket_fee: event.ticket_fee,
+            ticket_service_fee: event.ticket_service_fee,
+            ps_type: event.ps_type,
+            country: event.country!,
+            total: event.total!);
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      _userRepository!.ScreenName = ScreenNavigation.CheckOutPageScreen;
+      if (apiCallState.statusValue == "1") {
+        print("Booking Successfull===>");
+        sharedPrefs.setCartCount = "0";
+        emitter(HomeCheckOutOrderCompleteState());
+      } else {
+        emitter(HomeCheckOutOrderErrorState(apiCallState.message!));
+      }
+    } else {
+      emitter(HomeCheckOutOrderErrorState(apiCallState.message!));
+    }
+  }
+
   mapHomeEventCouponListbtnApply(
       HomeEventCouponListbtnApply event, Emitter<HomeState> emitter) async {
-    NetworkApiCallState<bool> apiCallState = await _userRepository!
-        .getCheckOutCalculationApi(event.vendorId, event.couponCode);
+    NetworkApiCallState<bool> apiCallState =
+        await _userRepository!.getCheckOutCalculationApi(
+      event.vendorId,
+      event.couponCode,
+    );
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       _userRepository!.ScreenName = ScreenNavigation.CheckOutPageScreen;
@@ -183,7 +312,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
-        print("complete State====>");
         emitter(HomeCustomerRatingReviewSubmitState(apiCallState.message!));
       } else {
         emitter(HomeEventErrorHandelState(apiCallState.message!));
@@ -195,14 +323,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   mapHomeEventCouponListbtnClick(
       HomeEventCouponListbtnClick event, Emitter<HomeState> emitter) async {
-    NetworkApiCallState<bool> apiCallState = await _userRepository!
-        .getCheckOutCalculationApi(event.vendorId, event.couponCode);
+    NetworkApiCallState<bool> apiCallState =
+        await _userRepository!.getCheckOutCalculationApi(
+      event.vendorId,
+      event.couponCode,
+    );
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       _userRepository!.ScreenName = ScreenNavigation.CheckOutPageScreen;
       NetworkApiCallState<bool> apiCallState1 =
           await _userRepository!.getViewCouponCodeApiCall(event.vendorId);
       if (apiCallState.statusValue == "1") {
+        print("complete state");
         emitter(HomeCheckOutCalculateState(
             _userRepository!.getCheckOutCalculation()!,
             _userRepository!.getCouponArrayList()!));
@@ -245,19 +377,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (apiCallState.statusValue == "1") {
         print("login success" + apiCallState.message!);
 
-        emitter(HomeCheckOutPageState(
-            event.strScreen,
-            event.driverDetail,
-            event.productListModel,
-            _userRepository!.getStateArrayList()!,
-            event.vendorId));
+        if (event.strScreen == "EventTicket") {
+          emitter(HomeTicketCheckOutPageState(
+              event.strScreen,
+              event.driverDetail,
+              event.productListModel,
+              _userRepository!.getStateArrayList()!,
+              event.vendorId));
+        } else {
+          emitter(HomeCheckOutPageState(
+              event.strScreen,
+              event.driverDetail,
+              event.productListModel,
+              _userRepository!.getStateArrayList()!,
+              event.vendorId));
+        }
       } else {
-        emitter(HomeCheckOutPageState(
-            event.strScreen,
-            event.driverDetail,
-            event.productListModel,
-            _userRepository!.getStateArrayList()!,
-            event.vendorId));
+        if (event.strScreen == "EventTicket") {
+          emitter(HomeTicketCheckOutPageState(
+              event.strScreen,
+              event.driverDetail,
+              event.productListModel,
+              _userRepository!.getStateArrayList()!,
+              event.vendorId));
+        } else {
+          emitter(HomeCheckOutPageState(
+              event.strScreen,
+              event.driverDetail,
+              event.productListModel,
+              _userRepository!.getStateArrayList()!,
+              event.vendorId));
+        }
       }
     } else {
       emitter(SignUpLoadingErrorState("Server Error"));
@@ -274,12 +424,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         print("login success" + apiCallState.message!);
+        NetworkApiCallState<bool> apiCallState1 =
+            await _userRepository!.getCartCountApiCall();
         emitter(HomeBeforeCheckOutPageState(
             event.strScreen,
             event.driverDetail,
             event.productListModel,
             _userRepository!.getStateArrayList()!,
             event.vendorId));
+
         // yield HomeCheckOutPageState(
         //     event.strScreen,
         //     event.driverDetail,
@@ -287,12 +440,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         //     _userRepository.getStateArrayList(),
         //     event.vendorId);
       } else {
+        // if(event.strScreen=="EventTicket"){
+        //
+        // }else{
         emitter(HomeBeforeCheckOutPageState(
             event.strScreen,
             event.driverDetail,
             event.productListModel,
             _userRepository!.getStateArrayList()!,
             event.vendorId));
+        //  }
+
       }
     } else {
       emitter(SignUpLoadingErrorState("Server Error"));
@@ -529,7 +687,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _userRepository!.ScreenName = ScreenNavigation.HomeMyCartScreen;
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .getCartDeleteSingleItemApiCall(
-            event.productId, event.driverDetail!.vendorId!);
+            event.productId, event.driverDetail.vendorId);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         NetworkApiCallState<bool> apiCallState1 =
@@ -576,11 +734,84 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           await _userRepository!.getCartCountApiCall();
       if (apiCallState.statusValue == "1") {
         emitter(HomeFromProductDetailCartPageState(
+          _userRepository!.getCartDataListArray()!,
+          event.driverDetail,
+          event.productListModel,
+          _userRepository!.getCartDataModel()!,
+          event.strScreen,
+        ));
+      } else {
+        emitter(HomeEventErrorHandelState(apiCallState.message!));
+        if (apiCallState.message == "Cart empty") {
+          sharedPrefs.setCartCount = "0";
+        }
+      }
+    } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
+      if (apiCallState.message == "Unknown Error") {
+        emitter(HomeEventErrorHandelState("Something went wrong"));
+      } else {
+        emitter(HomeEventErrorHandelState("Something went wrong"));
+      }
+    }
+  }
+
+  mapHomeEventTicketDetailPageCartBtnClick(
+      HomeEventTicketDetailPageCartBtnClick event,
+      Emitter<HomeState> emitter) async {
+    _userRepository!.ScreenName = ScreenNavigation.HomeMyCartScreen;
+    NetworkApiCallState<bool> apiCallState =
+        await _userRepository!.getViewCartListApiCall();
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      NetworkApiCallState<bool> apiCallState1 =
+          await _userRepository!.getCartCountApiCall();
+      if (apiCallState.statusValue == "1") {
+        emitter(CartpageFromTicketDetailState(
             _userRepository!.getCartDataListArray()!,
-            event.driverDetail,
+            _userRepository!.getCartDataModel(),
+            event.strScreen,
+            event.addOnProductList,
+            event.relatedProductList,
+            event.eventdetaillist,
+            event.productListDriverModel,
             event.productListModel,
-            _userRepository!.getCartDataModel()!,
-            event.strScreen));
+            event.driverDetail,
+            event.vendorDetails));
+      } else {
+        emitter(HomeEventErrorHandelState(apiCallState.message!));
+        if (apiCallState.message == "Cart empty") {
+          sharedPrefs.setCartCount = "0";
+        }
+      }
+    } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
+      if (apiCallState.message == "Unknown Error") {
+        emitter(HomeEventErrorHandelState("Something went wrong"));
+      } else {
+        emitter(HomeEventErrorHandelState("Something went wrong"));
+      }
+    }
+  }
+
+  mapHomeEventRideDetailPageCartBtnClick(
+      HomeEventRideDetailPageCartBtnClick event,
+      Emitter<HomeState> emitter) async {
+    _userRepository!.ScreenName = ScreenNavigation.HomeMyCartScreen;
+    NetworkApiCallState<bool> apiCallState =
+        await _userRepository!.getViewCartListApiCall();
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      NetworkApiCallState<bool> apiCallState1 =
+          await _userRepository!.getCartCountApiCall();
+      if (apiCallState.statusValue == "1") {
+        emitter(CartpageFromTicketDetailState(
+            _userRepository!.getCartDataListArray()!,
+            _userRepository!.getCartDataModel(),
+            event.strScreen,
+            event.addOnProductList,
+            event.relatedProductList,
+            event.eventdetaillist,
+            event.productListDriverModel,
+            event.productListModel,
+            event.driverDetail,
+            event.vendorDetails));
       } else {
         emitter(HomeEventErrorHandelState(apiCallState.message!));
         if (apiCallState.message == "Cart empty") {
@@ -768,7 +999,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeEventProductItemDetailPageReset event,
       Emitter<HomeState> emitter) async {
     emitter(HomeMenuItemDetailsPageState(event.productListModel,
-        event.driverDetail.vendorId!, event.driverDetail));
+        event.driverDetail.vendorId, event.driverDetail));
+  }
+
+  mapHomeEventBackForTicketDetailEvent(HomeEventBackForTicketDetailEvent event,
+      Emitter<HomeState> emitter) async {
+    print("Here=====");
+    emitter(HomeInitialReset());
+
+    emitter(HomeEventDriverTicketListClickPageState(
+        _userRepository?.getTicketList()!,
+        event.productListDriverModel!,
+        event.screen,
+        _userRepository!.getRatingReviewList()!,
+        event.relatedProductList,
+        event.addOnProductList,
+        event.vendorDetails!));
   }
 
   mapHomeEventBackForProductDetailPage(HomeEventBackForProductDetailPage event,
@@ -936,8 +1182,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     // yield HomeMenuItemDetailsPageState();
 
     NetworkApiCallState<bool> apiCallState = await _userRepository!
-        .postAddToCartApi(event.quantity, event.productId, event.driverId,
-            event.decrease, event.isNewDriver, event.specialInstruction);
+        .postAddToCartApi(
+            event.quantity,
+            event.productId,
+            event.driverId,
+            event.decrease,
+            event.isNewDriver,
+            event.specialInstruction,
+            event.psType);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         NetworkApiCallState<bool> apiCallState1 =
@@ -973,7 +1225,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     print("driverId" + event.driverId);
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .postAddToCartApi(event.quantity, event.productId, event.driverId,
-            event.decrease, "0", "");
+            event.decrease, "0", "", event.psType);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         NetworkApiCallState<bool> apiCallState1 =
@@ -1031,8 +1283,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     // yield HomeInitial();
     // yield HomeMenuItemDetailsPageState();
     NetworkApiCallState<bool> apiCallState = await _userRepository!
-        .getPurchaseTicketApi(event.quantity, event.productId, event.driverId,
-            event.decrease, event.newDriver, event.specialInstruction);
+        .getPurchaseTicketApi(
+            event.quantity,
+            event.productId,
+            event.driverId,
+            event.decrease,
+            event.newDriver,
+            event.specialInstruction,
+            event.psType);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         print("list==>");
@@ -1060,6 +1318,40 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  mapHomeEventRideBookRideNowBtnClick(HomeEventRideBookRideNowBtnClick event,
+      Emitter<HomeState> emitter) async {
+    print("In bloc setting");
+    // yield HomeInitial();
+    // yield HomeMenuItemDetailsPageState();
+    NetworkApiCallState<bool> apiCallState =
+        await _userRepository!.getStateListApi();
+    NetworkApiCallState<bool> apiCallState1 =
+        await _userRepository!.AddToCartRide(
+      event.quantity,
+      event.productId,
+      event.driverId!,
+      event.newDriver!,
+      event.specialInstruction!,
+      event.pickaddress!,
+      event.dropaddress!,
+      event.distance!,
+      event.estimateprice!,
+    );
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      print("Complete State");
+      emit(HomeRideCheckOutPageState(
+          _userRepository!.getRideList()!,
+          event.strScreen ?? "",
+          event.driverDetail,
+          event.productListModel,
+          _userRepository!.getStateArrayList()!,
+          event.driverId!,
+          event.distance!));
+    } else {
+      emit(HomeEventRideErrorHandelState(apiCallState.message!));
+    }
+  }
+
   mapHomeEventItemClickAddToCartBtnClick(
       HomeEventItemClickAddToCartBtnClick event,
       Emitter<HomeState> emitter) async {
@@ -1067,8 +1359,55 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     // yield HomeInitial();
     // yield HomeMenuItemDetailsPageState();
     NetworkApiCallState<bool> apiCallState = await _userRepository!
-        .postAddToCartApi(event.quantity, event.productId, event.driverId,
-            event.decrease, event.newDriver, event.specialInstruction);
+        .postAddToCartApi(
+            event.quantity,
+            event.productId,
+            event.driverId,
+            event.decrease,
+            event.newDriver,
+            event.specialInstruction,
+            event.psType);
+    if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+      if (apiCallState.statusValue == "1") {
+        NetworkApiCallState<bool> apiCallState1 =
+            await _userRepository!.getCartCountApiCall();
+        if (_userRepository!.isNewdriver == "1") {
+          emitter(HomeEventAddtocartSuccessState(
+              apiCallState.message!,
+              _userRepository!.isNewdriver,
+              event.productId,
+              event.specialInstruction));
+        } else {
+          emitter(HomeEventMessageShowState(apiCallState.message!));
+        }
+      } else {
+        emitter(HomeEventMessageShowState(apiCallState.message!));
+      }
+    } else if (apiCallState.status == NetworkRequestStatus.ERROR) {
+      if (apiCallState.message == "Unknown Error") {
+        emitter(HomeEventMessageShowState("Something went wrong"));
+      } else {
+        emitter(HomeEventMessageShowState("Something went wrong"));
+      }
+    }
+  }
+
+  mapHomeEventItemClickAddToCartRideBtnClick(
+      HomeEventItemClickAddToCartRideBtnClick event,
+      Emitter<HomeState> emitter) async {
+    print("In bloc setting");
+
+    NetworkApiCallState<bool> apiCallState = await _userRepository!
+        .postAddToCartRideApi(
+            event.quantity,
+            event.productId,
+            event.driverId,
+            event.newDriver,
+            event.specialInstruction,
+            event.pickaddress,
+            event.dropaddress,
+            event.distance,
+            event.estimateprice);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         NetworkApiCallState<bool> apiCallState1 =
@@ -1192,13 +1531,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .getTicketListApi(event.merchant_id, event.ps_id, event.type);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
-      print("Complete state===>");
-      print("${_userRepository?.getTicketList()?.length}");
-      emit(HomeEventDriverTicketListClickPageState(
-        _userRepository?.getTicketList()!,
-      ));
+      NetworkApiCallState<bool> apiCallState =
+          await _userRepository!.postReviewUserList('${event.ps_id}', "1");
+      if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+        _userRepository!.ScreenName = ScreenNavigation.HomeMenuItemDetailScreen;
+        NetworkApiCallState<bool> apiCallState =
+            await _userRepository!.getCartCountApiCall();
+        NetworkApiCallState<bool> apiCallState1 = await _userRepository!
+            .postRelatedProductApi(
+                '${event.ps_id}',
+                event.driverProductList.vendorId,
+                event.driverProductList.categoryId);
+
+        driverProductList = event.driverProductList;
+
+        print("Complete state===>");
+        print("${_userRepository?.getTicketList()?.length}");
+        emit(HomeEventDriverTicketListClickPageState(
+            _userRepository?.getTicketList()!,
+            event.driverProductList,
+            event.screen,
+            _userRepository!.getRatingReviewList()!,
+            _userRepository!.getRelatedProductList()!,
+            _userRepository!.getAddOnProductList()!,
+            event.vendor));
+      }
     } else {
-      print("EventTicketListstate===>");
+      print("EventListstate===>");
       emit(HomeTicketEventErrorHandelState(apiCallState.message!));
     }
   }
@@ -1208,16 +1567,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .getRideListApi(event.merchant_id, event.ps_id, event.type);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
-      print("Complete state===>");
-      print("${_userRepository?.getRideList()?.length}");
-      emit(HomeEventDriverRideListClickPageState(
-        _userRepository?.getRideList()!,
-      ));
+      NetworkApiCallState<bool> apiCallState =
+          await _userRepository!.postReviewUserList('${event.ps_id}', "1");
+      if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
+        //_userRepository!.ScreenName = ScreenNavigation.HomeMenuItemDetailScreen;
+        NetworkApiCallState<bool> apiCallState =
+            await _userRepository!.getCartCountApiCall();
+        NetworkApiCallState<bool> apiCallState1 = await _userRepository!
+            .postRelatedProductApi(
+                '${event.ps_id}',
+                event.driverProductList.vendorId,
+                event.driverProductList.categoryId);
+
+        driverProductList = event.driverProductList;
+
+        print("Complete state===>");
+        print("${_userRepository?.getRideList()?.length}");
+
+        emit(HomeEventDriverRideListClickPageState(
+            _userRepository?.getRideList()!,
+            event.driverProductList,
+            event.screen,
+            _userRepository!.getRatingReviewList()!,
+            _userRepository!.getRelatedProductList()!,
+            _userRepository!.getAddOnProductList()!,
+            event.vendor));
+      }
     } else {
-      print("EventRideListstate===>");
+      print("RideListstate===>");
       emit(HomeEventRideErrorHandelState(apiCallState.message!));
     }
-    //emitter(HomeEventDriverRideListClickPageState(_userRepository?.getRideList()!));
   }
 
   mapHomeEventMenuListItemClick(
@@ -1235,7 +1614,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late DriverList driverDetails;
 
   mapHomeEventCatgoryDetailClick(
-      HomeEventCatgoryDetailClick event, Emitter<HomeState> emitter) async* {
+      HomeEventCatgoryDetailClick event, Emitter<HomeState> emitter) async {
     print("In bloc");
     categoryList = event.categoryListModel;
     vendorId = event.driverDetail.vendorId!;
@@ -1346,12 +1725,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   mapHomeEventBackBtnClick(
-      HomeEventBackBtnClick event, Emitter<HomeState> emitter) async* {
+      HomeEventBackBtnClick event, Emitter<HomeState> emitter) async {
     // _userRepository.ScreenName = "CategoryDetailPage";
     // print(state.toString());
-    if (state is HomeEventDriverTicketListClickPageState) {
-      emitter(HomeInitial());
-    }
     if (state is SignUpPageState) {
       _userRepository!.ScreenName = ScreenNavigation.Loginpage;
       emit((LoginPageState("")));
@@ -1364,7 +1740,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } else if (state is LoginLoadingCompleteState) {
       _userRepository!.ScreenName = ScreenNavigation.HomeMainPageScreen;
       emitter(HomeInitial());
-      emitter(HomeInitialReset());
     } else if (state is OtpApiLoadingCompleteState) {
       _userRepository!.ScreenName = ScreenNavigation.OTPpage;
       emitter(HomeInitial());
@@ -1424,14 +1799,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   mapHomeEventRideSearchTextFieldClick(HomeEventRideSearchTextFieldClick event,
       Emitter<HomeState> emitter) async {
-    emitter(HomeRideLocationSeatchResetPageState());
-    emitter(HomeRideLocationSeatchPageState(event.type));
+    print(state);
+    print(event.Valuetype);
+    emitter(HomeRideLocationSearchPageState(event.Valuetype));
   }
 
   mapHomeEventRideBackBtnClicked(
       HomeEventRideBackBtnClicked event, Emitter<HomeState> emitter) async {
-    emitter(
-        HomeEventDriverRideListClickPageState(_userRepository?.getRideList()!));
-    print("State===>${state}");
+    emitter(HomeEventDriverRideListClickPageState(
+        _userRepository?.getRideList()!,
+        event.driverProductList!,
+        event.screen!,
+        _userRepository!.getRatingReviewList()!,
+        _userRepository!.getRelatedProductList()!,
+        _userRepository!.getAddOnProductList()!,
+        event.vendor!));
   }
 }

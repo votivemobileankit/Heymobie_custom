@@ -26,25 +26,29 @@ const double _kHeightTextFieldState = 55.0;
 const double _kHeightBtnCheckout = 45.0;
 
 const double _kTextBirthdateField = 327.0;
-String strSubtotal = "";
-String strFinaltotal = "";
-String strCitytax = "";
-String strSalestax = "";
-String strExcisetax = "";
-String strDeliveryfee = "";
-String strCouponAmount = "";
+String _strSubtotal = "";
+String _strFinaltotal = "";
+String _strCitytax = "";
+String _strSalestax = "";
+String _strExcisetax = "";
+String _strDeliveryfee = "";
+String _strTicketFee = "";
+String _strTicketServiceFee = "";
+String _strCouponAmount = "";
 
-class HomeCheckOutPage extends StatefulWidget {
+class HomeTicketCheckOutPage extends StatefulWidget {
   @override
-  _HomeCheckOutPageState createState() => _HomeCheckOutPageState();
+  _HomeTicketCheckOutPageState createState() => _HomeTicketCheckOutPageState();
 }
 
-class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
+class _HomeTicketCheckOutPageState extends State<HomeTicketCheckOutPage> {
+  final _formKey = GlobalKey();
+  final List _userList = [''];
   late TextEditingController _textFiledAddressaprtment;
   late TextEditingController _textFiledCity;
-
   late TextEditingController _textFiledZip;
   late TextEditingController _textFiledMobile;
+
   late String strPaymentType = '';
   late String strState = '';
   late String strApartment = '';
@@ -94,10 +98,30 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
   }
 
   late CreditCardValidator _ccValidator;
+  final _formKeydynamic = GlobalKey();
+  List<TextEditingController> _controllersname = [];
+  List<TextEditingController> _controllLastsname = [];
+  List<TextField> _fieldsName = [];
+  List<TextField> _fieldsLastName = [];
+  List<String> firstName = [];
+  List<String> lastName = [];
+  String serverStrFirstName = "";
+  String serverStrLastName = "";
+  String strdeliveryFee = "";
+  String strticketFee = "";
+  String strticketServiceFee = "";
+  int cartCount = 0;
+
+  // String psType = "";
 
   @override
   void initState() {
     getDeviceVersion();
+    cartCount = int.parse(sharedPrefs.getCartCount);
+    for (int i = 0; i < cartCount; i++) {
+      _addTile();
+    }
+
     couponArrayList = [];
     _ccValidator = CreditCardValidator();
     // TODO: implement initState
@@ -116,6 +140,12 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
 
     HomeState homeState = BlocProvider.of<HomeBloc>(context).state;
     if (homeState is HomeCheckOutPageState) {
+      _strScreen = homeState.strScreen;
+      _productListModel = homeState.productListModel;
+      _vendorId = homeState.vendorId;
+      _driverDetail = homeState.driverDetail;
+      _stateArrayList = homeState.stateArrayList;
+    } else if (homeState is HomeTicketCheckOutPageState) {
       _strScreen = homeState.strScreen;
       _productListModel = homeState.productListModel;
       _vendorId = homeState.vendorId;
@@ -188,6 +218,62 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
     }
   }
 
+  _addTile() {
+    final controllername = TextEditingController();
+    final fieldFirst = TextField(
+      controller: controllername,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "name${_controllersname.length + 1}",
+      ),
+    );
+    final controllerLastname = TextEditingController();
+    final fieldLastName = TextField(
+      controller: controllerLastname,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "name${_controllLastsname.length + 1}",
+      ),
+    );
+    setState(() {
+      _controllersname.add(controllername);
+      _controllLastsname.add(controllerLastname);
+      _fieldsName.add(fieldFirst);
+      _fieldsLastName.add(fieldLastName);
+    });
+  }
+
+  getValue() {
+    print("value ====");
+    String text = _controllersname
+        .where((element) => element.text != "")
+        .fold("", (acc, element) => acc += "${element.text}");
+
+    // _controllersname
+    //     .where((element) => element.text != "")
+    _controllersname.forEach((element) {
+      if (element.text != "") {
+        String nameValue = element.text;
+        //print(nameValue);
+        firstName.add(nameValue);
+      }
+    });
+    serverStrFirstName = firstName.join(",");
+    print("[$serverStrFirstName]");
+    String textLastname = _controllLastsname
+        .where((element) => element.text != "")
+        .fold("", (acc, element) => acc += "${element.text}");
+    _controllLastsname.forEach((element) {
+      if (element.text != "") {
+        String lastnameValue = element.text;
+
+        lastName.add(lastnameValue);
+      }
+    });
+    serverStrLastName = lastName.join(",");
+    print("[$serverStrLastName]");
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -210,6 +296,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
           setState(() {
             _strScreen = state.strScreen;
             _productListModel = state.productListModel;
+
             _driverDetail = state.driverDetail;
             _stateArrayList = state.stateArrayList;
           });
@@ -218,15 +305,21 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
 
           setState(() {
             _checkOutCalculation = state.checkOutCalculation;
-            strSubtotal = _checkOutCalculation!.subtotal;
-            strFinaltotal = _checkOutCalculation!.grandtotal;
-            strCitytax = _checkOutCalculation!.cityTax;
-            strSalestax = _checkOutCalculation!.salesTax;
-            strExcisetax = _checkOutCalculation!.exciseTax;
-            strDeliveryfee = _checkOutCalculation!.delivery_fee;
-            strCouponAmount = _checkOutCalculation!.couponAmount;
-            couponCodeId = "";
-            couponAmount = "";
+            _strSubtotal = _checkOutCalculation!.subtotal;
+            _strFinaltotal = _checkOutCalculation!.grandtotal;
+            _strCitytax = _checkOutCalculation!.cityTax;
+            _strSalestax = _checkOutCalculation!.salesTax;
+            _strExcisetax = _checkOutCalculation!.exciseTax;
+            _strDeliveryfee = _checkOutCalculation!.delivery_fee;
+            print("fee=====${_strDeliveryfee}");
+            _strTicketFee = _checkOutCalculation!.ticket_fee ?? "";
+            print("TicketFee=====${_strTicketFee}");
+            _strTicketServiceFee =
+                _checkOutCalculation!.ticket_service_fee ?? "";
+            print("TicketServiceFee=====${_strTicketServiceFee}");
+            _strCouponAmount = _checkOutCalculation!.couponAmount;
+            _couponCodeId = "";
+            _couponAmount = "";
             couponArrayList = state.couponArrayList;
             _isCouponApplied = false;
           });
@@ -239,16 +332,19 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
 
           setState(() {
             _checkOutCalculation = state.checkOutCalculation;
-            strSubtotal = _checkOutCalculation!.subtotal;
-            strFinaltotal = _checkOutCalculation!.grandtotal;
-            strCitytax = _checkOutCalculation!.cityTax;
-            strSalestax = _checkOutCalculation!.salesTax;
-            strExcisetax = _checkOutCalculation!.exciseTax;
-            strDeliveryfee = _checkOutCalculation!.delivery_fee;
-            strCouponAmount = _checkOutCalculation!.couponAmount;
-            couponCodeId = state.couponId;
-            couponAmount = state.couponAmount;
-            print("coupon amount" + couponAmount);
+            _strSubtotal = _checkOutCalculation!.subtotal;
+            _strFinaltotal = _checkOutCalculation!.grandtotal;
+            _strCitytax = _checkOutCalculation!.cityTax;
+            _strSalestax = _checkOutCalculation!.salesTax;
+            _strExcisetax = _checkOutCalculation!.exciseTax;
+            _strDeliveryfee = _checkOutCalculation!.delivery_fee;
+            _strTicketFee = _checkOutCalculation!.ticket_fee ?? "";
+            _strTicketServiceFee =
+                _checkOutCalculation!.ticket_service_fee ?? "";
+            _strCouponAmount = _checkOutCalculation!.couponAmount;
+            _couponCodeId = state.couponId;
+            _couponAmount = state.couponAmount;
+            print("coupon amount" + _couponAmount);
             couponArrayList = state.couponArrayList;
           });
           if (state.message == "Invalid Coupon code or expired") {
@@ -272,7 +368,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
               },
               btnOrderHistory: () {
                 BlocProvider.of<SideNavigatBloc>(context)
-                    .add(SideNavigationEventGoToOrderHistoryList(true));
+                    .add(SideNavigationEventGoToEventOrderHistoryList(true));
               },
               titleText: '',
               descText: "",
@@ -341,6 +437,90 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                         ],
                                       ),
                                       child: Column(children: [
+                                        Form(
+                                          key: _formKeydynamic,
+                                          child: Column(
+                                            children: [
+                                              for (int i = 0;
+                                                  i < _controllersname.length;
+                                                  i++)
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                      "First Name ${i + 1}",
+                                                      style: textStyleBoldCustomColor(
+                                                          _kFontSizeEditFieldHint,
+                                                          KColorTextGrey),
+                                                    ).align(
+                                                        Alignment.centerLeft),
+                                                    AVerticalSpace(5.0.scale()),
+                                                    TextField(
+                                                      controller:
+                                                          _controllersname[i],
+                                                      autofocus: false,
+                                                      cursorColor:
+                                                          KColorTextFieldCommonHint,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText: "",
+                                                        hintStyle:
+                                                            textStyleCustomColor(
+                                                                _kFontSizeEditFieldHint
+                                                                    .scale(),
+                                                                KColorTextGrey),
+                                                        fillColor: Colors.white,
+                                                        filled: true,
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    AVerticalSpace(
+                                                        10.0.scale()),
+                                                    Text(
+                                                      "Last Name ${i + 1}",
+                                                      style: textStyleBoldCustomColor(
+                                                          _kFontSizeEditFieldHint,
+                                                          KColorTextGrey),
+                                                    ).align(
+                                                        Alignment.centerLeft),
+                                                    AVerticalSpace(5.0.scale()),
+                                                    TextField(
+                                                      controller:
+                                                          _controllLastsname[i],
+                                                      autofocus: false,
+                                                      cursorColor:
+                                                          KColorTextFieldCommonHint,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText: "",
+                                                        hintStyle:
+                                                            textStyleCustomColor(
+                                                                _kFontSizeEditFieldHint
+                                                                    .scale(),
+                                                                KColorTextGrey),
+                                                        fillColor: Colors.white,
+                                                        filled: true,
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    AVerticalSpace(
+                                                        10.0.scale()),
+                                                  ],
+                                                )
+                                            ],
+                                          ),
+                                        ),
                                         Text(
                                           "Delivery Address",
                                           style: textStyleBoldCustomColor(
@@ -683,6 +863,7 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                     btnBgColor: kColorCommonButton,
                                     btnTextColor: Colors.white,
                                     btnOnPressed: () {
+                                      getValue();
                                       if (_textFiledAddressaprtment
                                           .text.isEmpty) {
                                         showSnackBar(
@@ -730,34 +911,54 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                               _textFiledAddressaprtment.text;
                                           print("=======" +
                                               _checkOutCalculation!.salesTax);
-                                          BlocProvider.of<HomeBloc>(context)
-                                              .add(HomeEventSubmitOrderBtnClick(
-                                            payMethod: strPaymentType,
-                                            address: strApartment,
-                                            city: strCity,
-                                            state: strState,
-                                            mobile: strMobile,
-                                            zip: strZipCode,
-                                            comment: sharedPrefs.getUserComment,
-                                            saletax:
-                                                _checkOutCalculation!.salesTax,
-                                            citytax: "0",
-                                            excisetax: "0",
-                                            sub_total: strSubtotal,
-                                            final_amount: strFinaltotal,
-                                            cc_number: "",
-                                            creditcardtype: "",
-                                            cc_cvv: "",
-                                            cc_expiration: "",
-                                            cc_expire_month: "",
-                                            cc_expire_year: "",
-                                            cc_name: "",
-                                            coupon_id: couponCodeId,
-                                            promo_amount: couponAmount,
-                                            vendorId: _vendorId,
-                                            deviceType: _deviceType,
-                                            osName: _osName,
-                                          ));
+                                          print(
+                                              "fname====>${serverStrFirstName}");
+                                          print(
+                                              "lname===>${serverStrLastName}");
+                                          print(
+                                              "deliveryFee====>${_strDeliveryfee}");
+                                          print(
+                                              "ticketServiceFee==>${_strTicketFee}");
+                                          print(
+                                              "ticketFee===>${_strTicketServiceFee}");
+                                          print("Zipcode====>${strZipCode}");
+                                          //print("pstype===>${psType}");
+                                          BlocProvider.of<HomeBloc>(context).add(
+                                              HomeEventSubmitTicketOrderBtnClick(
+                                                  payMethod: strPaymentType,
+                                                  address: strApartment,
+                                                  city: strCity,
+                                                  state: strState,
+                                                  mobile: strMobile,
+                                                  zip: strZipCode,
+                                                  comment: sharedPrefs
+                                                      .getUserComment,
+                                                  saletax: _checkOutCalculation!
+                                                      .salesTax,
+                                                  citytax: "0",
+                                                  excisetax: "0",
+                                                  sub_total: _strSubtotal,
+                                                  final_amount: _strFinaltotal,
+                                                  cc_number: "",
+                                                  creditcardtype: "",
+                                                  cc_cvv: "",
+                                                  cc_expiration: "",
+                                                  cc_expire_month: "",
+                                                  cc_expire_year: "",
+                                                  cc_name: "",
+                                                  coupon_id: _couponCodeId,
+                                                  promo_amount: _couponAmount,
+                                                  vendorId: _vendorId,
+                                                  deviceType: _deviceType,
+                                                  osName: _osName,
+                                                  delivery_fee: _strDeliveryfee,
+                                                  firstNameT:
+                                                      serverStrFirstName,
+                                                  lastNameT: serverStrLastName,
+                                                  ticket_fee: _strTicketFee,
+                                                  ticket_service_fee:
+                                                      _strTicketServiceFee,
+                                                  ps_type: "3"));
                                         } else {
                                           if (formKey.currentState!
                                               .validate()) {
@@ -771,40 +972,44 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
                                             strApartment =
                                                 _textFiledAddressaprtment.text;
 
-                                            BlocProvider.of<HomeBloc>(context)
-                                                .add(
-                                                    HomeEventSubmitOrderBtnClick(
-                                                        payMethod:
-                                                            strPaymentType,
-                                                        address: strApartment,
-                                                        city: strCity,
-                                                        state: strState,
-                                                        mobile: strMobile,
-                                                        zip: strZipCode,
-                                                        comment: "",
-                                                        saletax: strSalestax,
-                                                        citytax: strCitytax,
-                                                        excisetax: strExcisetax,
-                                                        sub_total: strSubtotal,
-                                                        final_amount:
-                                                            strFinaltotal,
-                                                        cc_number: cardNumber,
-                                                        creditcardtype:
-                                                            cardType,
-                                                        cc_cvv: cvvCode,
-                                                        cc_expiration:
-                                                            expiryDate,
-                                                        cc_expire_month:
-                                                            expiryMonth,
-                                                        cc_expire_year:
-                                                            expiryYear,
-                                                        cc_name: cardHolderName,
-                                                        coupon_id: couponCodeId,
-                                                        promo_amount:
-                                                            couponAmount,
-                                                        vendorId: _vendorId,
-                                                        deviceType: _deviceType,
-                                                        osName: _osName));
+                                            BlocProvider.of<HomeBloc>(context).add(
+                                                HomeEventSubmitTicketOrderBtnClick(
+                                                    payMethod: strPaymentType,
+                                                    address: strApartment,
+                                                    city: strCity,
+                                                    state: strState,
+                                                    mobile: strMobile,
+                                                    zip: strZipCode,
+                                                    comment: "",
+                                                    saletax: _strSalestax,
+                                                    citytax: _strCitytax,
+                                                    excisetax: _strExcisetax,
+                                                    sub_total: _strSubtotal,
+                                                    final_amount:
+                                                        _strFinaltotal,
+                                                    cc_number: cardNumber,
+                                                    creditcardtype: cardType,
+                                                    cc_cvv: cvvCode,
+                                                    cc_expiration: expiryDate,
+                                                    cc_expire_month:
+                                                        expiryMonth,
+                                                    cc_expire_year: expiryYear,
+                                                    cc_name: cardHolderName,
+                                                    coupon_id: _couponCodeId,
+                                                    promo_amount: _couponAmount,
+                                                    vendorId: _vendorId,
+                                                    deviceType: _deviceType,
+                                                    osName: _osName,
+                                                    ticket_service_fee:
+                                                        strticketServiceFee,
+                                                    ticket_fee: strticketFee,
+                                                    lastNameT:
+                                                        serverStrLastName,
+                                                    firstNameT:
+                                                        serverStrFirstName,
+                                                    delivery_fee:
+                                                        strdeliveryFee,
+                                                    ps_type: "3"));
                                           } else {
                                             showSnackBar(
                                                 "Please enter valid card info ",
@@ -840,6 +1045,87 @@ class _HomeCheckOutPageState extends State<HomeCheckOutPage> {
   }
 }
 
+class _DynamicTextfieldsAppState extends StatefulWidget {
+  @override
+  State<_DynamicTextfieldsAppState> createState() =>
+      _DynamicTextfieldsAppStateState();
+}
+
+class _DynamicTextfieldsAppStateState
+    extends State<_DynamicTextfieldsAppState> {
+  final _formKey = GlobalKey();
+  List<TextEditingController> _controllers = [];
+  List<TextField> _fields = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    for (int i = 0; i < 3; i++) _addTile();
+    // listeditTextDynamic();
+  }
+
+  _addTile() {
+    final controller = TextEditingController();
+    final field = TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "name${_controllers.length + 1}",
+      ),
+    );
+
+    setState(() {
+      _controllers.add(controller);
+      _fields.add(field);
+    });
+  }
+
+  getValue() {
+    String text = _controllers
+        .where((element) => element.text != "")
+        .fold("", (acc, element) => acc += "${element.text}\n");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          for (int i = 0; i < _controllers.length; i++)
+            Column(
+              children: [
+                Text(
+                  "First Name ${i + 1}",
+                  style: textStyleBoldCustomColor(
+                      _kFontSizeEditFieldHint, KColorTextGrey),
+                ).align(Alignment.centerLeft),
+                AVerticalSpace(5.0.scale()),
+                TextField(
+                  controller: _controllers[i],
+                  autofocus: false,
+                  cursorColor: KColorTextFieldCommonHint,
+                  decoration: InputDecoration(
+                    hintText: "",
+                    hintStyle: textStyleCustomColor(
+                        _kFontSizeEditFieldHint.scale(), KColorTextGrey),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                AVerticalSpace(10.0.scale()),
+              ],
+            )
+        ],
+      ),
+    );
+  }
+}
+
 class _OrderDetailWidget extends StatelessWidget {
   SlidingUpPanelController panelController;
   String strScreen;
@@ -866,13 +1152,16 @@ class _OrderDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    strSubtotal = checkOutCalculation.subtotal;
-    strFinaltotal = checkOutCalculation.grandtotal;
-    strCitytax = checkOutCalculation.cityTax;
-    strSalestax = checkOutCalculation.salesTax;
-    strExcisetax = checkOutCalculation.exciseTax;
-    strDeliveryfee = checkOutCalculation.delivery_fee;
-    strCouponAmount = checkOutCalculation.couponAmount;
+    _strSubtotal = checkOutCalculation.subtotal;
+    print(_strSubtotal);
+    _strFinaltotal = checkOutCalculation.grandtotal;
+    _strCitytax = checkOutCalculation.cityTax;
+    _strSalestax = checkOutCalculation.salesTax;
+    _strExcisetax = checkOutCalculation.exciseTax;
+    _strDeliveryfee = checkOutCalculation.delivery_fee;
+    _strTicketFee = checkOutCalculation.ticket_fee ?? "";
+    _strTicketServiceFee = checkOutCalculation.ticket_service_fee ?? "";
+    _strCouponAmount = checkOutCalculation.couponAmount;
     return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 2.0),
@@ -905,7 +1194,7 @@ class _OrderDetailWidget extends StatelessWidget {
                       _kFontSizeMedium, KColorCommonText),
                 ),
                 Text(
-                  '\$' + strSubtotal,
+                  '\$' + _strSubtotal,
                   style: textStyleBoldCustomColor(
                       _kFontSizeMedium, KColorCommonText),
                 )
@@ -921,7 +1210,7 @@ class _OrderDetailWidget extends StatelessWidget {
                       _kFontSizeMedium, KColorCommonText),
                 ),
                 Text(
-                  '\$ ' + strSalestax,
+                  '\$ ' + _strSalestax,
                   style: textStyleBoldCustomColor(
                       _kFontSizeMedium, KColorCommonText),
                 )
@@ -969,7 +1258,7 @@ class _OrderDetailWidget extends StatelessWidget {
                       _kFontSizeMedium, KColorCommonText),
                 ),
                 Text(
-                  '\$ ' + strDeliveryfee,
+                  '\$ ' + _strDeliveryfee,
                   style: textStyleBoldCustomColor(
                       _kFontSizeMedium, KColorCommonText),
                 )
@@ -1078,7 +1367,7 @@ class _OrderDetailWidget extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '\$ ' + strCouponAmount,
+                  '\$ ' + _strCouponAmount,
                   style: textStyleBoldCustomColor(
                       _kFontSizeMedium, KColorCommonText),
                 )
@@ -1096,7 +1385,7 @@ class _OrderDetailWidget extends StatelessWidget {
                       _kFontSizeHeadingText, KColorCommonText),
                 ),
                 Text(
-                  '\$ ' + strFinaltotal,
+                  '\$ ' + _strFinaltotal,
                   style: textStyleBoldCustomLargeColor(
                       _kFontSizeHeadingText, KColorCommonText),
                 )
@@ -1114,17 +1403,17 @@ class _OrderDetailWidget extends StatelessWidget {
 
 const double _kButtonNextWidth = 102;
 const double _kHeightBtnAddToCart = 35.0;
-String couponCodeId = "";
-String couponAmount = "";
+String _couponCodeId = "";
+String _couponAmount = "";
 
-class CouponCodeRowItemListModelNew extends StatefulWidget {
+class _CouponCodeRowItemListModelNew extends StatefulWidget {
   Couponlist couponArrayList;
   Function showHideProgress;
   DriverList driverDetail;
   String strScreen;
   ProductListMenu productListModel;
 
-  CouponCodeRowItemListModelNew(this.couponArrayList, this.showHideProgress,
+  _CouponCodeRowItemListModelNew(this.couponArrayList, this.showHideProgress,
       this.driverDetail, this.strScreen, this.productListModel);
 
   @override
@@ -1133,7 +1422,7 @@ class CouponCodeRowItemListModelNew extends StatefulWidget {
 }
 
 class _CouponCodeRowItemListModelNewState
-    extends State<CouponCodeRowItemListModelNew> {
+    extends State<_CouponCodeRowItemListModelNew> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -1175,7 +1464,7 @@ class _CouponCodeRowItemListModelNewState
                 widget.showHideProgress(true);
                 BlocProvider.of<HomeBloc>(context)
                     .add(HomeEventCouponListbtnApply(
-                  widget.driverDetail.vendorId!,
+                  widget.driverDetail.vendorId,
                   widget.strScreen,
                   widget.driverDetail,
                   widget.productListModel,

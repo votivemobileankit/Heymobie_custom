@@ -20,19 +20,22 @@ class HmRootHomeState extends HmRootState {
   bool isBackProfile = false;
   bool isBackHome = false;
   bool isPushNotificationSending = false;
+  bool isbackeventHistory = false;
 
   HmRootHomeState(
       {required this.isFromSetting,
-        required this.isBackOrderHistory,
-        required  this.isBackProfile,
-        required this.isBackHome,
-        required  this.isPushNotificationSending});
+      required this.isBackOrderHistory,
+      required this.isBackProfile,
+      required this.isBackHome,
+      required this.isPushNotificationSending,
+      required this.isbackeventHistory});
 
   List<Object> get props => [
         isFromSetting,
         isBackOrderHistory,
         isBackProfile,
         isBackHome,
-        isPushNotificationSending
+        isPushNotificationSending,
+        isbackeventHistory
       ];
 }

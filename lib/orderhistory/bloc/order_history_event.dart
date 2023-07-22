@@ -43,13 +43,13 @@ class OrderHistoryEventRefreshOrderList extends OrderHistoryEvent {
 }
 
 class OrderHistoryEventForOrderDeatil extends OrderHistoryEvent {
-  String orderID;
+  String order_id;
   String vendorId;
 
-  OrderHistoryEventForOrderDeatil(this.orderID, this.vendorId);
+  OrderHistoryEventForOrderDeatil(this.order_id, this.vendorId);
 
   @override
-  List<Object> get props => [orderID, vendorId];
+  List<Object> get props => [order_id, vendorId];
 }
 
 class OrderHistoryEventNavigateFromNoticationToOrderDetail

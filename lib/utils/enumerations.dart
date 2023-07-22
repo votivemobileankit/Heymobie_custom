@@ -11,7 +11,8 @@ enum SideNavigationTab {
   SETTING,
   ABOUTUS,
   PRIVACYPOLICY,
-  EventHistory
+  EventHistory,
+  RideHistory,
 }
 
 enum ScreenNavigation {
@@ -28,6 +29,7 @@ enum ScreenNavigation {
   OrderHistoryPageScreen,
   OrderHistoryDetailPageScreen,
   EventHistoryPage,
+  RideHistoryPage,
   HomeProductListScreen,
   CheckOutPageScreen,
   MapOrderTrackScreen

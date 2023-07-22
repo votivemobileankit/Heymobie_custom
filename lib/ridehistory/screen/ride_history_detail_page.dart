@@ -30,6 +30,9 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
   RideDetailResponseModel? ridedetailmodel;
   double? totalTime;
 
+  Duration? duration;
+  Timer? timer;
+
   String getRideDetailHistoryStatus(String str) {
     String status = "";
     if (str == "0") {
@@ -65,6 +68,44 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    void addTime() {
+      final addSeconds = 1;
+      setState(() {
+        final seconds = duration!.inSeconds + addSeconds;
+          duration = Duration(seconds: seconds);
+      });
+    }
+
+    void startTimer() {
+      Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+    }
+
+
+    Widget buildTime() {
+      if (duration != null){
+        String twoDigits(int n) => n.toString().padLeft(2, '0');
+        final hours = twoDigits(duration!.inHours);
+        final minutes = twoDigits(duration!.inMinutes.remainder(60));
+        final seconds = twoDigits(duration!.inSeconds.remainder(60));
+        return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(hours, style: const TextStyle(fontWeight: FontWeight.bold,
+              color: Colors.black, fontSize: 15),),
+          Text(":", style: const TextStyle(fontWeight: FontWeight.bold,
+              color: Colors.black, fontSize: 15),),
+          Text(minutes, style: const TextStyle(fontWeight: FontWeight.bold,
+              color: Colors.black, fontSize: 15),),
+          Text(":", style: const TextStyle(fontWeight: FontWeight.bold,
+              color: Colors.black, fontSize: 15),),
+          Text(seconds, style: const TextStyle(fontWeight: FontWeight.bold,
+              color: Colors.black, fontSize: 15),),
+        ]);
+      }else{
+        return Text("");
+      }
+    }
+
+
     return BlocListener<RideHistoryBloc, RideHistoryState>(
         listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
         listener: (context, state) {
@@ -76,6 +117,14 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
               print("id=====>${rideDetail!.orderId}");
               rideItems = state.rideItems?[0];
               timeresponse = state.ridedetailmodel!.data!.currentTime!;
+              var splited = timeresponse.split(':');
+              int hour = int.parse(splited[0]);
+              int minute = int.parse(splited[1]);
+              int second = int.parse(splited[2]);
+              duration = Duration(hours: hour, minutes: minute, seconds: second);
+              if(rideDetail?.status == "3") {
+                startTimer();
+              }
               print("timeresponse===>${timeresponse}");
             });
           }
@@ -441,27 +490,24 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             AVerticalSpace(10.0.scale()),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            if(rideDetail?.status == "3" || rideDetail?.status == "4")
+                            Column(
                               children: [
-                                Text(
-                                  "Ride Time:",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 14),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Ride Time:",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 14),
+                                    ),
+                                    AHorizontalSpace(10.0.scale()),
+                                    buildTime()
+                                  ],
                                 ),
-                                AHorizontalSpace(10.0.scale()),
-                                // Text(
-                                //   "${timeresponse}",
-                                //   style: TextStyle(
-                                //       color: Colors.black,
-                                //       fontSize: 14,
-                                //       fontWeight: FontWeight.bold),
-                                // )
-                                //  if (timeresponse.isNotEmpty)
-                                //_TimerCountWidget(timeresponse),
+                                AVerticalSpace(10.0.scale()),
                               ],
                             ),
-                            AVerticalSpace(10.0.scale()),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -572,109 +618,109 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
   }
 }
 
-class _CountdownTimerDemoState extends StatefulWidget {
-  @override
-  __CountdownTimerDemoStateState createState() =>
-      __CountdownTimerDemoStateState();
-}
-
-class __CountdownTimerDemoStateState extends State<_CountdownTimerDemoState> {
-  Timer? countdownTimer;
-  Duration myDuration = Duration(days: 5);
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void startTimer() {
-    countdownTimer =
-        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
-  }
-
-  void stopTimer() {
-    setState(() => countdownTimer!.cancel());
-  }
-
-  void resetTimer() {
-    stopTimer();
-    setState(() => myDuration = Duration(days: 5));
-  }
-
-  void setCountDown() {
-    final reduceSecondsBy = 1;
-    setState(() {
-      final seconds = myDuration.inSeconds - reduceSecondsBy;
-      if (seconds < 0) {
-        countdownTimer!.cancel();
-      } else {
-        myDuration = Duration(seconds: seconds);
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-    final days = strDigits(myDuration.inDays);
-    // Step 7
-    final hours = strDigits(myDuration.inHours.remainder(24));
-    final minutes = strDigits(myDuration.inMinutes.remainder(60));
-    final seconds = strDigits(myDuration.inSeconds.remainder(60));
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            // Step 8
-            Text(
-              '$hours:$minutes:$seconds',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 50),
-            ),
-            SizedBox(height: 20),
-            // Step 9
-            ElevatedButton(
-              onPressed: startTimer,
-              child: Text(
-                'Start',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            // Step 10
-            ElevatedButton(
-              onPressed: () {
-                if (countdownTimer == null || countdownTimer!.isActive) {
-                  stopTimer();
-                }
-              },
-              child: Text(
-                'Stop',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            // Step 11
-            ElevatedButton(
-                onPressed: () {
-                  resetTimer();
-                },
-                child: Text(
-                  'Reset',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ))
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class _CountdownTimerDemoState extends StatefulWidget {
+//   @override
+//   __CountdownTimerDemoStateState createState() =>
+//       __CountdownTimerDemoStateState();
+// }
+//
+// class __CountdownTimerDemoStateState extends State<_CountdownTimerDemoState> {
+//   Timer? countdownTimer;
+//   Duration myDuration = Duration(days: 5);
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+//
+//   void startTimer() {
+//     countdownTimer =
+//         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+//   }
+//
+//   void stopTimer() {
+//     setState(() => countdownTimer!.cancel());
+//   }
+//
+//   void resetTimer() {
+//     stopTimer();
+//     setState(() => myDuration = Duration(days: 5));
+//   }
+//
+//   void setCountDown() {
+//     final reduceSecondsBy = 1;
+//     setState(() {
+//       final seconds = myDuration.inSeconds - reduceSecondsBy;
+//       if (seconds < 0) {
+//         countdownTimer!.cancel();
+//       } else {
+//         myDuration = Duration(seconds: seconds);
+//       }
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     String strDigits(int n) => n.toString().padLeft(2, '0');
+//     final days = strDigits(myDuration.inDays);
+//     // Step 7
+//     final hours = strDigits(myDuration.inHours.remainder(24));
+//     final minutes = strDigits(myDuration.inMinutes.remainder(60));
+//     final seconds = strDigits(myDuration.inSeconds.remainder(60));
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           children: [
+//             SizedBox(
+//               height: 50,
+//             ),
+//             // Step 8
+//             Text(
+//               '$hours:$minutes:$seconds',
+//               style: TextStyle(
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.black,
+//                   fontSize: 50),
+//             ),
+//             SizedBox(height: 20),
+//             // Step 9
+//             ElevatedButton(
+//               onPressed: startTimer,
+//               child: Text(
+//                 'Start',
+//                 style: TextStyle(
+//                   fontSize: 30,
+//                 ),
+//               ),
+//             ),
+//             // Step 10
+//             ElevatedButton(
+//               onPressed: () {
+//                 if (countdownTimer == null || countdownTimer!.isActive) {
+//                   stopTimer();
+//                 }
+//               },
+//               child: Text(
+//                 'Stop',
+//                 style: TextStyle(
+//                   fontSize: 30,
+//                 ),
+//               ),
+//             ),
+//             // Step 11
+//             ElevatedButton(
+//                 onPressed: () {
+//                   resetTimer();
+//                 },
+//                 child: Text(
+//                   'Reset',
+//                   style: TextStyle(
+//                     fontSize: 30,
+//                   ),
+//                 ))
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

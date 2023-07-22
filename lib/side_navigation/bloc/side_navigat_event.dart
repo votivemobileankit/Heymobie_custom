@@ -64,6 +64,24 @@ class SideNavigationEventGoToOrderHistoryList extends SideNavigatEvent {
   List<Object> get props => [isOrderHistory];
 }
 
+class SideNavigationEventGoToEventOrderHistoryList extends SideNavigatEvent {
+  bool isEventOrderHistory;
+
+  SideNavigationEventGoToEventOrderHistoryList(this.isEventOrderHistory);
+
+  @override
+  List<Object> get props => [isEventOrderHistory];
+}
+
+class SideNavigationEventGoToRideOrderHistoryList extends SideNavigatEvent {
+  bool isRideOrderHistory;
+
+  SideNavigationEventGoToRideOrderHistoryList(this.isRideOrderHistory);
+
+  @override
+  List<Object> get props => [isRideOrderHistory];
+}
+
 class SideNavigationEventGoToOrderDetailPage extends SideNavigatEvent {
   bool isFromNotification;
   String orderId;

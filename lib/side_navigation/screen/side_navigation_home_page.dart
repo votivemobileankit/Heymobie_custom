@@ -4,11 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grambunny_customer/aboutus/aboutus.dart';
 import 'package:grambunny_customer/aboutus/aboutus_navigator.dart';
 import 'package:grambunny_customer/components/components.dart';
+import 'package:grambunny_customer/eventhistory/bloc/event_history_bloc.dart';
+import 'package:grambunny_customer/eventhistory/eventhistory_navigator.dart';
 import 'package:grambunny_customer/hm_root/hm_root.dart';
 import 'package:grambunny_customer/home/home.dart';
 import 'package:grambunny_customer/orderhistory/orderhistory.dart';
 import 'package:grambunny_customer/privacy_policy/privacy_policy.dart';
 import 'package:grambunny_customer/profile/profile.dart';
+import 'package:grambunny_customer/ridehistory/bloc/ride_history_bloc.dart';
+import 'package:grambunny_customer/ridehistory/ridehistory_navigator.dart';
 import 'package:grambunny_customer/services/services.dart';
 import 'package:grambunny_customer/setting/setting.dart';
 import 'package:grambunny_customer/theme/theme.dart';
@@ -26,20 +30,29 @@ class SideNavigationHomeTab extends StatefulWidget {
 }
 
 class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
- late SideNavigationTab _selectedTab;
- late bool _showLoadingAnimation;
- late ProfileBloc profileBloc;
- late  HomeBloc homeBloc;
- late  SettingBloc settingBloc;
- late  AboutBloc aboutusBloc;
- late PrivacyPolicyBloc privacyPolicyBloc;
- late  OrderHistoryBloc orderHistoryBloc;
- late  BlocProvider<ProfileBloc> profileProvider;
- late BlocProvider<HomeBloc> homeProvider;
- late BlocProvider<OrderHistoryBloc> orderHistoryProvider;
- late  BlocProvider<SettingBloc> settingProvider;
- late BlocProvider<AboutBloc> aboutUsProvider;
- late BlocProvider<PrivacyPolicyBloc> privacyPolicyProvider;
+  late SideNavigationTab _selectedTab;
+  late bool _showLoadingAnimation;
+  late ProfileBloc profileBloc;
+  late HomeBloc homeBloc;
+  late SettingBloc settingBloc;
+  late AboutBloc aboutusBloc;
+  late PrivacyPolicyBloc privacyPolicyBloc;
+  late OrderHistoryBloc orderHistoryBloc;
+  EventHistoryBloc? eventHistoryBloc;
+  RideHistoryBloc? rideHistoryBloc;
+  late BlocProvider<ProfileBloc> profileProvider;
+  late BlocProvider<HomeBloc> homeProvider;
+  late BlocProvider<OrderHistoryBloc> orderHistoryProvider;
+  late BlocProvider<SettingBloc> settingProvider;
+  late BlocProvider<AboutBloc> aboutUsProvider;
+  late BlocProvider<PrivacyPolicyBloc> privacyPolicyProvider;
+  BlocProvider<EventHistoryBloc>? eventHistoryProvider;
+  BlocProvider<RideHistoryBloc>? rideHistoryProvider;
+
+  void showHideProgress(bool show) {
+    BlocProvider.of<SideNavigatBloc>(context)
+        .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
+  }
 
   @override
   void initState() {
@@ -59,13 +72,19 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
     aboutusBloc = new AboutBloc(userRepository: widget.userRepository!);
     privacyPolicyBloc =
         new PrivacyPolicyBloc(userRepository: widget.userRepository!);
+    eventHistoryBloc =
+        new EventHistoryBloc(userRepository: widget.userRepository!);
+    rideHistoryBloc =
+        new RideHistoryBloc(userRepository: widget.userRepository!);
+
     initializeProviders();
   }
 
   void initializeProviders() {
     print("Initialize provider");
-    profileProvider =
-        BlocProvider.value(value: profileBloc, child: ProfileNavigator(userRepository: widget.userRepository!));
+    profileProvider = BlocProvider.value(
+        value: profileBloc,
+        child: ProfileNavigator(userRepository: widget.userRepository!));
     homeProvider = BlocProvider.value(
         value: homeBloc,
         child: HomeNavigator(userRepository: widget.userRepository!));
@@ -81,6 +100,14 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
     privacyPolicyProvider = BlocProvider.value(
         value: privacyPolicyBloc,
         child: PrivacyPolicyNavigator(userRepository: widget.userRepository!));
+
+    eventHistoryProvider = BlocProvider.value(
+        value: eventHistoryBloc!,
+        child: EventHistoryNavigator(userRepository: widget.userRepository!));
+
+    rideHistoryProvider = BlocProvider.value(
+        value: rideHistoryBloc!,
+        child: RideHistoryNavigator(userRepository: widget.userRepository!));
   }
 
   void onTabTapped(int index) {
@@ -97,6 +124,8 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
     settingBloc.close();
     aboutusBloc.close();
     privacyPolicyBloc.close();
+    eventHistoryBloc!.close();
+    rideHistoryBloc!.close();
     super.dispose();
   }
 
@@ -119,6 +148,14 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
               orderHistoryBloc.add(OrderEventBackBtnClicked());
               BlocProvider.of<HmRootBloc>(context)
                   .add(HmRootEventBackButtonOrderHistoryReset());
+            }
+          } else if (state.isbackeventHistory) {
+            print("in homepage back from Event");
+            if (widget.userRepository!.ScreenName ==
+                ScreenNavigation.EventHistoryPage) {
+              eventHistoryBloc?.add(EventHistoryBackBtnClicked());
+              BlocProvider.of<HmRootBloc>(context)
+                  .add(HmRootEventBackButtonEventOrderHistoryReset());
             }
           } else if (state.isBackProfile) {
             print("in homepage back from profile");
@@ -281,6 +318,44 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                               AVerticalSpace(10.0.scale()),
                               if (sharedPrefs.isLogin == true)
                                 ListTile(
+                                  focusColor: KColorSelectorList,
+                                  selectedTileColor: KColorSelectorList,
+                                  title: Text(
+                                    'My Events',
+                                    style: textStyleCustomColor(
+                                        18.0.scale(), kColorAppBgColor),
+                                  ).align(Alignment.centerLeft),
+                                  onTap: () {
+                                    showHideProgress(true);
+                                    widget.userRepository!.ScreenName =
+                                        ScreenNavigation.OrderHistoryPageScreen;
+                                    Navigator.pop(context);
+
+                                    onTabTapped(6);
+                                  },
+                                ),
+                              AVerticalSpace(10.0.scale()),
+                              if (sharedPrefs.isLogin == true)
+                                ListTile(
+                                  focusColor: KColorSelectorList,
+                                  selectedTileColor: KColorSelectorList,
+                                  title: Text(
+                                    'My Ride',
+                                    style: textStyleCustomColor(
+                                        18.0.scale(), kColorAppBgColor),
+                                  ).align(Alignment.centerLeft),
+                                  onTap: () {
+                                    //  showHideProgress(true);
+                                    widget.userRepository!.ScreenName =
+                                        ScreenNavigation.OrderHistoryPageScreen;
+                                    Navigator.pop(context);
+
+                                    onTabTapped(7);
+                                  },
+                                ),
+                              AVerticalSpace(10.0.scale()),
+                              if (sharedPrefs.isLogin == true)
+                                ListTile(
                                   title: Text(
                                     'Notification Setting',
                                     style: textStyleCustomColor(
@@ -386,6 +461,14 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
       case SideNavigationTab.PRIVACYPOLICY:
         print("profile");
         tabContentView = privacyPolicyProvider;
+        break;
+      case SideNavigationTab.EventHistory:
+        print("EventHistory");
+        tabContentView = eventHistoryProvider!;
+        break;
+      case SideNavigationTab.RideHistory:
+        print("RideHistory");
+        tabContentView = rideHistoryProvider!;
         break;
     }
     return tabContentView;

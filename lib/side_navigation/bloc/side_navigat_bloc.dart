@@ -9,7 +9,8 @@ class SideNavigatBloc extends Bloc<SideNavigatEvent, SideNavigatState> {
   UserRepository? _userRepository;
 
   SideNavigatBloc({required UserRepository userRepository})
-      : super(SideNavigationDefaultState(selectedTab: SideNavigationTab.HOME,orderId: "0",driverId: "0")) {
+      : super(SideNavigationDefaultState(
+            selectedTab: SideNavigationTab.HOME, orderId: "0", driverId: "0")) {
     _userRepository = userRepository;
 
     on<SideNavigationEventTabChanged>(mapTabChangedToState);
@@ -22,6 +23,13 @@ class SideNavigatBloc extends Bloc<SideNavigatEvent, SideNavigatState> {
         mapSideNavigationEventSettingPageReset);
     on<SideNavigationEventGoToOrderHistoryList>(
         mapSideNavigationEventGoToOrderHistoryList);
+
+    on<SideNavigationEventGoToEventOrderHistoryList>(
+        mapSideNavigationEventGoToEventOrderHistoryList);
+
+    on<SideNavigationEventGoToRideOrderHistoryList>(
+        mapSideNavigationEventGoToRideOrderHistoryList);
+
     on<SideNavigationEventGoToOrderDetailPage>(
         mapSideNavigationEventGoToOrderDetailPage);
     on<SideNavigationEventGoToOrderDetailPageHandel>(
@@ -63,6 +71,22 @@ class SideNavigatBloc extends Bloc<SideNavigatEvent, SideNavigatState> {
       Emitter<SideNavigatState> emitter) async {
     emitter((state as SideNavigationDefaultState).copyWith(
       selectedTab: SideNavigationTab.ORDERHISTORY,
+    ));
+  }
+
+  Future<void> mapSideNavigationEventGoToEventOrderHistoryList(
+      SideNavigationEventGoToEventOrderHistoryList event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState).copyWith(
+      selectedTab: SideNavigationTab.EventHistory,
+    ));
+  }
+
+  Future<void> mapSideNavigationEventGoToRideOrderHistoryList(
+      SideNavigationEventGoToRideOrderHistoryList event,
+      Emitter<SideNavigatState> emitter) async {
+    emitter((state as SideNavigationDefaultState).copyWith(
+      selectedTab: SideNavigationTab.RideHistory,
     ));
   }
 

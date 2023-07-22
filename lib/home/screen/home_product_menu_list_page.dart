@@ -176,7 +176,7 @@ class _ProductMenuListPageState extends State<ProductMenuListPage>
                     driverDetail: _driverDetail));
           } else if (state is HomeEventMessageShowState) {
             showHideProgress(false);
-            showSnackBar(state.message, context);
+            showSnackBar(state.message!, context);
             String subCateg = "",
                 strWeight = "",
                 strBrand = "",
@@ -252,7 +252,7 @@ class _ProductMenuListPageState extends State<ProductMenuListPage>
                 btn1OnPressed: () {
                   BlocProvider.of<HomeBloc>(context).add(
                       HomeEventAddToCartBtnClick(1, state.productId, _driverId,
-                          0, _driverDetail, "1", ""));
+                          0, _driverDetail, "1", "", "1"));
                 });
           }
           if (state is HomeMenuItemDetailsPageState) {
@@ -434,7 +434,7 @@ class _DriverDetailWidget extends StatelessWidget {
 
   _DriverDetailWidget(
       this.driverDetail, this.showHideProgress, this.cartCountValue) {
-    initialRat = double.parse(driverDetail.avgRating);
+    initialRat = double.parse(driverDetail.avgRating!);
   }
 
   void _callNumber(String phonenumber) async {
@@ -483,7 +483,7 @@ class _DriverDetailWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
                   imageUrl: UserRepository.getProfileUrl()! +
-                      driverDetail.profileImg1,
+                      driverDetail.profileImg1!,
                   fit: BoxFit.cover,
                   placeholder: (context, url) {
                     return Image(
@@ -503,7 +503,7 @@ class _DriverDetailWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      driverDetail.name + " " + driverDetail.lastName,
+                      driverDetail.name! + " " + driverDetail.lastName!,
                       style: textStyleBoldCustomLargeColor(
                           18.0.scale(), KColorCommonText),
                     ).leftPadding(5.0.scale()),
@@ -542,7 +542,7 @@ class _DriverDetailWidget extends StatelessWidget {
                 ),
                 AVerticalSpace(5.0.scale()),
                 Text(
-                  driverDetail.marketArea,
+                  driverDetail.marketArea!,
                   style: textStyleBoldCustomColor(
                       12.0.scale(), kColorTextFieldText),
                 ).leftPadding(5.0.scale()),
@@ -573,12 +573,12 @@ class _DriverDetailWidget extends StatelessWidget {
                         if (driverDetail.mobNo != null)
                           GestureDetector(
                             child: Text(
-                              driverDetail.mobNo,
+                              driverDetail.mobNo!,
                               style: textStyleBoldCustomColor(
                                   12.0.scale(), kColorTextFieldText),
                             ),
                             onTap: () {
-                              _callNumber(driverDetail.mobNo);
+                              _callNumber(driverDetail.mobNo!);
                             },
                           )
                       ],
@@ -975,7 +975,7 @@ class _TabDetailScreen extends StatelessWidget {
                   ),
                   AHorizontalSpace(5.0.scale()),
                   Text(
-                    driverDetail.email,
+                    driverDetail.email!,
                     style: textStyleCustomColor(
                         _kCommonFontSize.scale(), KColorCommonText),
                   ),
@@ -1038,8 +1038,8 @@ class __MapWidgetState extends State<_MapWidget> {
         markers.add(Marker(
             markerId: MarkerId("1"),
             onTap: () {},
-            position: LatLng(double.parse(widget.driverDetail.lat),
-                double.parse(widget.driverDetail.lng)),
+            position: LatLng(double.parse(widget.driverDetail.lat!),
+                double.parse(widget.driverDetail.lng!)),
             icon: pinLocationIcon));
       }
     });
@@ -1086,8 +1086,8 @@ class __MapWidgetState extends State<_MapWidget> {
         cameraController = controller;
         // markerCenterPointCall(
         //     driverInfoList[0].driverLat, driverInfoList[0].driverLong);
-        markerCenterPoint(double.parse(widget.driverDetail.lat),
-            double.parse(widget.driverDetail.lng));
+        markerCenterPoint(double.parse(widget.driverDetail.lat!),
+            double.parse(widget.driverDetail.lng!));
         _markerPositionWidget();
       },
     );

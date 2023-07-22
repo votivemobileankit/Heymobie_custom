@@ -218,7 +218,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           print("driver Id ${_driverId}");
           _price = double.parse(_productListModel.price ?? "");
           _driverDetail = state.driverDetail;
-          name = _driverDetail.name + " " + _driverDetail.lastName;
+          name = _driverDetail.name! + " " + _driverDetail.lastName!;
         } else if (state is HomeFromDriverProductListDetailsPageState) {
           showHideProgress(false);
           setState(() {
@@ -242,7 +242,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           }
           _textFiledUserSpecialInstruction.text = "";
           showHideProgress(false);
-          showSnackBar(state.message, context);
+          showSnackBar(state.message!, context);
           print("driver Id ${_driverId}");
           BlocProvider.of<HomeBloc>(context).add(
               HomeEventProductDetailPageReset(
@@ -260,7 +260,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
           print("driver Id ${_driverId}");
           _price = double.parse(_productListModel.price ?? "");
           _driverDetail = state.driverDetail;
-          name = _driverDetail.name + " " + _driverDetail.lastName;
+          name = _driverDetail.name! + " " + _driverDetail.lastName!;
           setState(() {
             _counter = 1;
           });
@@ -296,7 +296,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                         0,
                         _driverDetail,
                         "1",
-                        state.specialInstruction));
+                        state.specialInstruction,
+                        "1"));
               });
         } else if (state is HomeInitial) {
           Navigator.of(context).pop(true);
@@ -360,7 +361,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                   AVerticalSpace(5.0.scale()),
                   Text(
                     _productListModel == null
-                        ? "UPC#" + _productListDriverModel.productCode
+                        ? "UPC#" + _productListDriverModel.productCode!
                         : "UPC#" + "${_productListModel.productCode}",
                     style: textStyleBoldCustomLargeColor(
                         _kCommonFontSize, KColorCommonText),
@@ -411,7 +412,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                             ),
                             Text(
                               _productListModel == null
-                                  ? ", (" + _productListDriverModel.unit + ")"
+                                  ? ", (" + _productListDriverModel.unit! + ")"
                                   : ", (" + _productListModel.unit! + ")",
                               style: textStyleBoldCustomLargeColor(
                                   _kCommonFontSize.scale(), KColorCommonText),
@@ -576,7 +577,8 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
                                     0,
                                     _driverDetail,
                                     "0",
-                                    _textFiledUserSpecialInstruction.text));
+                                    _textFiledUserSpecialInstruction.text,
+                                    "1"));
                           } else {
                             showSnackBar("Product is out of stock!", context);
                           }
@@ -915,7 +917,7 @@ class _AddonProductListWidgetState extends State<_AddonProductListWidget> {
               showSnackBar("Please wait....", context);
               BlocProvider.of<HomeBloc>(widget.context1).add(
                   HomeEventItemClickAddToCartBtnClick(1, productId,
-                      widget.vendorId, 0, widget.driverDetail, "0", ""));
+                      widget.vendorId, 0, widget.driverDetail, "0", "", "1"));
             }
           },
           btnHeight: 40.0.scale(),
@@ -1320,7 +1322,8 @@ class __AddToCartWidgetState extends State<_AddToCartWidget> {
                             0,
                             widget.driverDetail,
                             "0",
-                            ""));
+                            "",
+                            "1"));
                   },
                   btnText: "Add to Cart",
                   btnHeight: kHeightBtnAddToCart.scale(),

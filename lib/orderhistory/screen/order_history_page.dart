@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +17,7 @@ class OrderHistoryPage extends StatefulWidget {
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
   List<HistoryList>? _historyListArray;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  late final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   late ScrollController _scrollController;
@@ -26,8 +28,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   void initState() {
     // TODO: implement initState
     _historyListArray = [];
-    //showHideProgress(true);
-
+    showHideProgress(true);
+    print("====");
     BlocProvider.of<OrderHistoryBloc>(context)
         .add(OrderHistoryEventForOrderList('${pageCount}'));
     // WidgetsBinding.instance
@@ -35,6 +37,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     _scrollController = ScrollController()..addListener(_scrollListener);
 
     super.initState();
+    print("data=====>");
   }
 
   _scrollListener() {
@@ -48,17 +51,17 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
   void startLoader() {
     setState(() {
       isLoading = !isLoading;
-      // showHideProgress(false);
+      showHideProgress(true);
       pageCount = pageCount + 1;
       BlocProvider.of<OrderHistoryBloc>(context)
           .add(OrderHistoryEventForOrderList('${pageCount}'));
     });
   }
 
-  // void showHideProgress(bool show) {
-  //   BlocProvider.of<SideNavigatBloc>(context)
-  //       .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
-  // }
+  void showHideProgress(bool show) {
+    BlocProvider.of<SideNavigatBloc>(context)
+        .add(SideNavigationEventToggleLoadingAnimation(needToShow: show));
+  }
 
   Future<Null> _refresh() async {
     pageCount = 1;
@@ -85,14 +88,14 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 //     .add(SideNavigationEventGoToHomePage(true));
               }
               if (state is OrderHistoryListApiLoadingCompleteState) {
-                // showHideProgress(false);
-
+                showHideProgress(false);
+                print("suseccs====");
                 setState(() {
                   if (state.refresh == 1) {
                     _historyListArray!.clear();
                     List<HistoryList> historyListArray = state.historyList;
-
                     _historyListArray!.addAll(historyListArray);
+                    print("list==${historyListArray}");
                   } else {
                     List<HistoryList> historyListArray = state.historyList;
 
@@ -103,7 +106,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                     .add(OrderHistoryEventReset());
               }
               if (state is OrderHistoryListLoadingErrorState) {
-                // showHideProgress(false);
+                showHideProgress(false);
                 BlocProvider.of<OrderHistoryBloc>(context)
                     .add(OrderHistoryEventReset());
                 // BlocProvider.of<SideNavigatBloc>(context)
@@ -123,20 +126,17 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
               child: Column(
                 children: [
                   AHeaderWidget(
-                    headerSigninText: "",
-                    headerText: "",
-                    btnEditOnPressed: () {},
-                    strBackbuttonName: 'ic_red_btn_back.png',
+                    strBackbuttonName: 'ic_slide_menu_icon.png',
                     backBtnVisibility: true,
                     btnBackOnPressed: () {
-                      //Scaffold.of(context).openDrawer();
-                      //  timerOnListener = true;
-                      print("back");
-                      BlocProvider.of<OrderHistoryBloc>(context)
-                          .add(OrderEventBackBtnClicked());
+                      if (_timer != null) {
+                        _timer?.cancel();
+                      }
+                      Scaffold.of(context).openDrawer();
                     },
                     strBtnRightImageName: 'ic_search_logo.png',
                     rightEditButtonVisibility: false,
+                    btnEditOnPressed: () {},
                   ),
                   Column(
                     children: [
@@ -201,3 +201,9 @@ class _HistoryListContainer extends StatelessWidget {
         });
   }
 }
+
+const double _kTextBirthdateField = 128.0;
+String strCity = "";
+Timer? _timer;
+bool isTimerOn = false;
+String strProduct = "";

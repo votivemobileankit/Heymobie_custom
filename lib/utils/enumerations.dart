@@ -5,14 +5,14 @@ enum NetworkRequestStatus { LOADING, COMPLETED, ERROR, PENDING }
 enum NetworkErrorType { NO_INTERNET, BAD_REQUEST, UNAUTHORIZED, OTHER, PENDING }
 
 enum SideNavigationTab {
+  PROFILE,
   HOME,
   ORDERHISTORY,
-  PROFILE,
+  EventHistory,
+  RideHistory,
   SETTING,
   ABOUTUS,
   PRIVACYPOLICY,
-  EventHistory,
-  RideHistory,
 }
 
 enum ScreenNavigation {

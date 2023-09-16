@@ -357,7 +357,7 @@ class HomeFromDriverProductListDetailsPageState extends HomeState {
   @override
   List<Object> get props => [
         driverProductList,
-        //driverDetail,
+        driverDetail,
         screen,
         ratingReviewList!,
         relatedProductList!,

@@ -20,13 +20,13 @@ class OrderHistoryDetailsPage extends StatefulWidget {
 }
 
 class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
-  late String orderId;
-  late String vendorId;
-  late String vendorName;
-  late String vendorLastName;
-  late List<OrderDetail> orderDetailData;
-  late List<OrderItems> orderDetailMenuItem;
-  late List<Vendor1> vendorDetailData;
+  String? orderId;
+  String? vendorId;
+  String? vendorName;
+  String? vendorLastName;
+  List<OrderDetail>? orderDetailData;
+  List<OrderItems>? orderDetailMenuItem;
+  List<Vendor1>? vendorDetailData;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -45,7 +45,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
     }
     showHideProgress(true);
     BlocProvider.of<OrderHistoryBloc>(context)
-        .add(OrderHistoryEventForOrderDeatil(orderId, vendorId));
+        .add(OrderHistoryEventForOrderDeatil(orderId!, vendorId!));
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState!.show());
     super.initState();
@@ -58,7 +58,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
 
   Future<Null> _refresh() async {
     BlocProvider.of<OrderHistoryBloc>(context)
-        .add(OrderHistoryEventForOrderDeatil(orderId, vendorId));
+        .add(OrderHistoryEventForOrderDeatil(orderId!, vendorId!));
     _refreshIndicatorKey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 2));
     return null;
@@ -94,14 +94,14 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                             needToShow: false));
                     showSnackBar(state.message, context);
                     BlocProvider.of<OrderHistoryBloc>(context).add(
-                        OrderHistoryEventForOrderDeatil(orderId, vendorId));
+                        OrderHistoryEventForOrderDeatil(orderId!, vendorId!));
                   } else if (state is OrderDetailLoadingErrorState) {
                     BlocProvider.of<SideNavigatBloc>(context).add(
                         SideNavigationEventToggleLoadingAnimation(
                             needToShow: false));
                     showSnackBar(state.message, context);
                     BlocProvider.of<OrderHistoryBloc>(context).add(
-                        OrderHistoryEventForOrderDeatil(orderId, vendorId));
+                        OrderHistoryEventForOrderDeatil(orderId!, vendorId!));
                   } else if (state is MapOrderTrackPageState) {
                     Navigator.of(context)
                         .pushNamed(OrderHistoryNavigator.mapOrderTrackPage);
@@ -113,9 +113,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       AHeaderWidget(
-                        btnEditOnPressed: () {
-
-                        },
+                        btnEditOnPressed: () {},
                         strBackbuttonName: 'ic_red_btn_back.png',
                         backBtnVisibility: true,
                         btnBackOnPressed: () {
@@ -142,7 +140,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                               AVerticalSpace(12.0.scale()),
                               if (vendorDetailData != null)
                                 if (vendorDetailData != null)
-                                  _DriverDetail(vendorDetailData[0])
+                                  _DriverDetail(vendorDetailData![0])
                                       .leftPadding(14.0.scale())
                                       .rightPadding(14.0.scale()),
                               AVerticalSpace(12.0.scale()),
@@ -163,21 +161,21 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                         18.0.scale(), KColorCommonText),
                                   ),
                                   if (orderDetailData != null)
-                                    if (orderDetailData[0].status == "0")
+                                    if (orderDetailData![0].status == "0")
                                       Text(
                                         "Pending",
                                         style: textStyleCustomColor(
                                             18.0.scale(), KColorPending),
                                         textAlign: TextAlign.left,
                                       )
-                                    else if (orderDetailData[0].status == "1")
+                                    else if (orderDetailData![0].status == "1")
                                       Text(
                                         "Accept",
                                         style: textStyleCustomColor(
                                             18.0.scale(), KColorCommonText),
                                         textAlign: TextAlign.left,
                                       )
-                                    else if (orderDetailData[0].status == "2")
+                                    else if (orderDetailData![0].status == "2")
                                       Text(
                                         "Cancelled",
                                         style: textStyleCustomColor(
@@ -185,14 +183,14 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                             KColorCancelledStatus),
                                         textAlign: TextAlign.left,
                                       )
-                                    else if (orderDetailData[0].status == "3")
+                                    else if (orderDetailData![0].status == "3")
                                       Text(
                                         "on the way",
                                         style: textStyleCustomColor(
                                             18.0.scale(), KColorOnTheWay),
                                         textAlign: TextAlign.left,
                                       )
-                                    else if (orderDetailData[0].status == "4")
+                                    else if (orderDetailData![0].status == "4")
                                       Text(
                                         "Delivered",
                                         style: textStyleCustomColor(
@@ -200,17 +198,18 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                         textAlign: TextAlign.left,
                                       ),
                                   if (orderDetailData != null)
-                                    if (orderDetailData[0].status != "0")
+                                    if (orderDetailData![0].status != "0")
                                       OutlinedButton(
                                         onPressed: () {
                                           BlocProvider.of<OrderHistoryBloc>(
                                                   context)
                                               .add(OrderTrackEventForMapScreen(
-                                                  vendorDetailData[0].lat,
-                                                  vendorDetailData[0].lng,
-                                                  orderDetailData[0].latitude,
-                                                  orderDetailData[0].longitude,
-                                                  vendorDetailData[0]
+                                                  vendorDetailData![0].lat!,
+                                                  vendorDetailData![0].lng!,
+                                                  orderDetailData![0].latitude!,
+                                                  orderDetailData![0]
+                                                      .longitude!,
+                                                  vendorDetailData![0]
                                                       .vendorId
                                                       .toString()));
                                         },
@@ -242,7 +241,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                     children: [
                                       Text(
                                         "Sub total: \$" +
-                                            orderDetailData[0].subTotal,
+                                            orderDetailData![0].subTotal!,
                                         style: textStyleCustomColor(
                                             14.0.scale(), KColorCommonText),
                                       ).align(Alignment.centerLeft),
@@ -250,7 +249,7 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                       if (vendorDetailData != null)
                                         Text(
                                           "Sales tax: \$" +
-                                              orderDetailData[0].serviceTax,
+                                              orderDetailData![0].serviceTax!,
                                           style: textStyleCustomColor(
                                               14.0.scale(), KColorCommonText),
                                         ).align(Alignment.centerLeft),
@@ -273,25 +272,25 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                       // AVerticalSpace(3.0.scale()),
                                       Text(
                                         "Coupon discount amount: \$" +
-                                            orderDetailData[0].promoAmount,
+                                            orderDetailData![0].promoAmount!,
                                         style: textStyleCustomColor(
                                             14.0.scale(), KColorCommonText),
                                       ).align(Alignment.centerLeft),
-                                      if (orderDetailData[0].deliveryFee !=
+                                      if (orderDetailData![0].deliveryFee !=
                                           null)
                                         AVerticalSpace(3.0.scale()),
-                                      if (orderDetailData[0].deliveryFee !=
+                                      if (orderDetailData![0].deliveryFee !=
                                           null)
                                         Text(
                                           "Delivery fee: \$" +
-                                              orderDetailData[0].deliveryFee,
+                                              orderDetailData![0].deliveryFee!,
                                           style: textStyleCustomColor(
                                               14.0.scale(), KColorCommonText),
                                         ).align(Alignment.centerLeft),
                                       AVerticalSpace(3.0.scale()),
                                       Text(
                                         "Grand total: \$" +
-                                            orderDetailData[0].total,
+                                            orderDetailData![0].total!,
                                         style: textStyleBoldCustomColor(
                                             18.0.scale(), KColorCommonText),
                                       ).align(Alignment.centerLeft),
@@ -319,12 +318,12 @@ class _OrderHistoryDetailsPageState extends State<OrderHistoryDetailsPage> {
                                 ListView.builder(
                                   shrinkWrap: true,
                                   physics: new ScrollPhysics(),
-                                  itemCount: orderDetailMenuItem.length,
+                                  itemCount: orderDetailMenuItem!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return InkWell(
                                       child: MyOrderListRow(
-                                          orderDetailMenuItem[index]),
+                                          orderDetailMenuItem![index]),
                                       onTap: () {},
                                     );
                                   },
@@ -344,7 +343,7 @@ class _DriverDetail extends StatelessWidget {
   Vendor1 vendorDetailData;
 
   _DriverDetail(this.vendorDetailData) {
-    initialRat = double.parse(vendorDetailData.avgRating);
+    initialRat = double.parse(vendorDetailData.avgRating!);
   }
 
   void _callNumber(String phonenumber) async {
@@ -374,7 +373,7 @@ class _DriverDetail extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
-                  imageUrl: vendorDetailData.profileURL,
+                  imageUrl: vendorDetailData.profileImg1!,
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                 ),
@@ -387,7 +386,7 @@ class _DriverDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  vendorDetailData.username + " " + vendorDetailData.lastName,
+                  vendorDetailData.username! + " " + vendorDetailData.lastName!,
                   style: textStyleBoldCustomLargeColor(
                       18.0.scale(), KColorCommonText),
                 ),
@@ -454,10 +453,10 @@ class _DriverDetail extends StatelessWidget {
                     if (vendorDetailData.mobNo != null)
                       GestureDetector(
                         onTap: () {
-                          _callNumber(vendorDetailData.mobNo);
+                          _callNumber(vendorDetailData.mobNo!);
                         },
                         child: Text(
-                          vendorDetailData.mobNo,
+                          vendorDetailData.mobNo!,
                           style: textStyleBoldCustomColor(
                               12.0.scale(), kColorTextFieldText),
                         ),
@@ -490,7 +489,7 @@ Dialog _getRatingReviewToMerchant(BuildContext context1, Vendor1 vendorDetail) {
 }
 
 class _AddRatingReview extends StatelessWidget {
-  Vendor1 vendorDetail;
+  Vendor1? vendorDetail;
   BuildContext context1;
 
   _AddRatingReview(this.context1, this.vendorDetail);
@@ -563,8 +562,10 @@ class _AddRatingReview extends StatelessWidget {
           ).leftPadding(15.0.scale()).rightPadding(15.0.scale()),
           AVerticalSpace(15.0.scale()),
           ARoundedButton(
-            btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-            btnDisabledTextColor:Color(0xFFFFFFFF) ,
+            btnBorderSideColor: kColorCommonButton,
+            btnDisabledColor: Color(0xFF5e6163),
+            btnIconSize: 15,
+            btnDisabledTextColor: Color(0xFFFFFFFF),
             btnFontWeight: FontWeight.normal,
             btnBgColor: kColorCommonButtonBackGround,
             btnTextColor: kColorAppBgColor,
@@ -578,15 +579,14 @@ class _AddRatingReview extends StatelessWidget {
                     SideNavigationEventToggleLoadingAnimation(
                         needToShow: true));
                 BlocProvider.of<OrderHistoryBloc>(context1).add(
-                    OrderHistoryRatingButtonClick(
-                        _textReview.text, ratingCount, vendorDetail.vendorId));
+                    OrderHistoryRatingButtonClick(_textReview.text, ratingCount,
+                        vendorDetail!.vendorId!));
               }
             },
             btnHeight: 40.0.scale(),
             btnWidth: 150.0.scale(),
             btnFontSize: kFontSizeBtnLarge.scale(),
             btnElevation: 0,
-
           ),
         ],
       ),

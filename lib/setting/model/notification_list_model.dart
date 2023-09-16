@@ -1,9 +1,10 @@
 class NotificationListModel {
   late String userId;
- late  NotificationDetail notificationDetail;
- late int status;
+  late NotificationDetail notificationDetail;
+  late int status;
 
-  NotificationListModel({required this.userId,required this.notificationDetail,required this.status});
+  NotificationListModel(
+      {required this.userId, required this.notificationDetail, required this.status});
 
   NotificationListModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -25,14 +26,14 @@ class NotificationListModel {
 }
 
 class NotificationDetail {
- late int total;
- late int perPage;
-late  int currentPage;
-late  int lastPage;
- late List<Data> data;
+  late int total;
+  late int perPage;
+  late int currentPage;
+  late int lastPage;
+  late List<Data> data;
 
   NotificationDetail(
-      {required this.total,required this.perPage,required this.currentPage,required this.lastPage,required this.data});
+      {required this.total, required this.perPage, required this.currentPage, required this.lastPage, required this.data});
 
   NotificationDetail.fromJson(Map<String, dynamic> json) {
     total = json['total'];
@@ -61,32 +62,31 @@ late  int lastPage;
 }
 
 class Data {
- late String notiId;
- late String notiUserid;
- late String notiTitle;
- late String notiDesc;
- late String notiDeviceid;
- late String notiRead;
- late  String agoTime;
- late  String createdAt;
- late String updatedAt;
- late String order_id;
- late String orderid;
- late String vendorId;
+  late String notiId;
+  late String notiUserid;
+  late String notiTitle;
+  late String notiDesc;
+  late String notiDeviceid;
+  late String notiRead;
+  late String agoTime;
+  late String createdAt;
+  late String updatedAt;
+  late String order_id;
+  late String orderid;
+  late String vendorId;
 
-  Data(
-      {required this.notiId,
-        required this.notiUserid,
-        required this.notiTitle,
-        required  this.notiDesc,
-        required  this.notiDeviceid,
-        required this.notiRead,
-        required this.agoTime,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.order_id,
-        required   this.orderid,
-        required  this.vendorId});
+  Data({required this.notiId,
+    required this.notiUserid,
+    required this.notiTitle,
+    required this.notiDesc,
+    required this.notiDeviceid,
+    required this.notiRead,
+    required this.agoTime,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.order_id,
+    required this.orderid,
+    required this.vendorId});
 
   Data.fromJson(Map<String, dynamic> json) {
     notiId = json['noti_id'];

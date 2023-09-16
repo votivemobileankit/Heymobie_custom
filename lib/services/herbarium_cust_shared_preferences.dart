@@ -5,6 +5,7 @@ const String _keyisAgeAbove21 = "_keyisAgeAbove21";
 const String _keyLatitude = "_keyLatitude";
 const String _keyLongitude = "_keyLongitude";
 const String _keyUserId = "_keyUserId";
+const String _settimeresponse = "_settimeresponse";
 const String _keyCartCount = "_keyCartCount";
 const String _keyIsLogin = "_keyIsLogin";
 const String _keyUserName = "_keyUserName";
@@ -40,6 +41,14 @@ class HerbariumCustSharedPreference {
     _sharedPrefs?.setString(_keyUserId, UserId);
   }
 
+  String get getUserId => _sharedPrefs?.getString(_keyUserId) ?? "";
+
+  // set settimeresponse(String s, String? iso8601string) {
+  //   _sharedPrefs?.setString(_settimeresponse, settime);
+  // }
+
+  // String get gettimeresponse => _sharedPrefs?.getString(_settimeresponse) ?? "";
+
   String get getUserProfileImage =>
       _sharedPrefs?.getString(_keyUserProfileImage) ?? "";
 
@@ -58,8 +67,6 @@ class HerbariumCustSharedPreference {
   set setUserComment(String userComment) {
     _sharedPrefs?.setString(_keyUserComment, userComment);
   }
-
-  String get getUserId => _sharedPrefs?.getString(_keyUserId) ?? "";
 
   // set isAgeAbove21(bool isAgeAbove21) {
   //   _sharedPrefs?.setBool(_keyisAgeAbove21, isAgeAbove21);
@@ -99,5 +106,13 @@ class HerbariumCustSharedPreference {
     _sharedPrefs?.remove(_keyIsLogin);
     _sharedPrefs?.remove(_keyUserName);
     _sharedPrefs?.remove(_keyUserProfileImage);
+  }
+
+  void settimeresponse(String settime, String? iso8601string) {
+    _sharedPrefs?.setString(_settimeresponse, settime);
+  }
+
+  getString(String settime) {
+    _sharedPrefs?.getString(_settimeresponse) ?? "";
   }
 }

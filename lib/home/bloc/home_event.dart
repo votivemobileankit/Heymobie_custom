@@ -808,6 +808,18 @@ class HomeEventBackBtnClick extends HomeEvent {
   List<Object> get props => [];
 }
 
+class HomeTicketEventBackBtnClick extends HomeEvent {
+  // TODO: implement props
+  @override
+  List<Object> get props => [];
+}
+
+class HomeRideEventBackBtnClick extends HomeEvent {
+  // TODO: implement props
+  @override
+  List<Object> get props => [];
+}
+
 class HomeEventBackForCheckOutScreen extends HomeEvent {
   HomeEventBackForCheckOutScreen();
 

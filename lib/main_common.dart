@@ -1,12 +1,9 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -102,16 +99,16 @@ void initializeCommon() {
         //     print('on messge vId ${notificationDetailsMap["vid"]}');
         //   });
 
-         //userRepository.getToken();
-          runApp(
-            BlocProvider.value(
-              value: rootBloc,
-              child: App(
-                userRepository: userRepository,
-                rootBloc: rootBloc,
-              ),
+        //userRepository.getToken();
+        runApp(
+          BlocProvider.value(
+            value: rootBloc,
+            child: App(
+              userRepository: userRepository,
+              rootBloc: rootBloc,
             ),
-          );
+          ),
+        );
         // });
       });
     });
@@ -165,7 +162,7 @@ class App extends StatefulWidget {
 
   final HmRootBloc rootBloc;
 
-  const App({ required this.userRepository, required this.rootBloc});
+  const App({required this.userRepository, required this.rootBloc});
 
   @override
   _AppState createState() => _AppState();
@@ -215,9 +212,7 @@ class HomeWidget extends StatefulWidget {
   final UserRepository userRepository;
   final HmRootBloc rootBloc;
 
-  const HomeWidget(
-      { required this.userRepository, required this.rootBloc})
-      ;
+  const HomeWidget({required this.userRepository, required this.rootBloc});
 
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
@@ -248,6 +243,10 @@ class _HomeWidgetState extends State<HomeWidget> with WidgetsBindingObserver {
         } else if (widget.userRepository.ScreenName ==
             ScreenNavigation.ProfileMainPageScreen) {
           widget.rootBloc.add(HmRootEventBackButtonProfile());
+          return Future<bool>.value(false);
+        } else if (widget.userRepository.ScreenName ==
+            ScreenNavigation.EventHistoryPage) {
+          widget.rootBloc.add(HmRootEventHistoryBackButtonHome());
           return Future<bool>.value(false);
         } else if (widget.userRepository.ScreenName ==
             ScreenNavigation.HomeMenuItemDetailScreen) {

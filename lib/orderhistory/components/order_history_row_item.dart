@@ -57,7 +57,7 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                           ).align(Alignment.centerLeft),
                           AHorizontalSpace(4.0.scale()),
                           Text(
-                            widget._historyItemModel.createdAt!,
+                            widget._historyItemModel.createdAt ?? "",
                             style: textStyleCustomColor(
                                 _kTextCommonFontSize.scale(), KColorCommonText),
                             textAlign: TextAlign.left,
@@ -222,11 +222,6 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                 ],
               ).leftPadding(5.0.scale()).rightPadding(5.0.scale()),
               ARoundedButton(
-                btnBorderSideColor: kColorCommonButton,
-                btnDisabledColor: Color(0xFF5e6163),
-                btnIconSize: 15,
-                btnDisabledTextColor: Color(0xFFFFFFFF),
-                btnFontWeight: FontWeight.normal,
                 btnBgColor: KColorAppThemeColor,
                 btnTextColor: Colors.white,
                 btnOnPressed: () {
@@ -241,6 +236,7 @@ class _OrderHistoryRowItemState extends State<OrderHistoryRowItem> {
                 btnHeight: kHeightBtnAddToCart.scale(),
                 btnWidth: _kButtonNextWidth.scale(),
                 btnFontSize: kFontSizeBtnLarge.scale(),
+                btnBorderSideColor: kColorAppBgColor,
               ),
             ],
           ).width(double.infinity),

@@ -125,12 +125,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/general/
-    - assets/images/general/1.5x/
-    - assets/images/general/2.0x/
-    - assets/images/general/3.0x/
     - assets/fonts/Quicksand/
-
-
 flutter_intl:
   enabled: true
   class_name: Stringss

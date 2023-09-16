@@ -117,7 +117,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
         loginStatus: "",
         mailingAddress: "",
         make: "",
-        map_icon: "",
+        mapIcon: "",
         marketArea: "",
         mobNo: "",
         model: "",
@@ -153,7 +153,7 @@ class _HomeDriverListPageState extends State<HomeDriverListPage>
         walletAmount: "",
         year: "",
         zipcode: "",
-        type_of_merchant: ''));
+        typeOfMerchant: ''));
 
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1044,59 +1044,39 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
 
                 //_timer!.cancel();
                 widget.showHideProgress(true);
-                print(widget._driverProductList[i].producttype);
-                if (widget._driverProductList[i].producttype == "1" ||
-                    widget._driverProductList[i].producttype == "0") {
+                print(widget._driverProductList[i].type);
+                if (widget._driverProductList[i].type == "1" ||
+                    widget._driverProductList[i].type == "0") {
                   print("id=====${widget._driverProductList[i].id}");
                   BlocProvider.of<HomeBloc>(context).add(
                       HomeEventDriverProductListClick(
                           widget._driverProductList[i],
-                          widget._driverProductList[i].vendor,
+                          widget._driverProductList[i].vendor!,
                           "DriverList",
-                          widget._driverProductList[i].id));
-                } else if (widget._driverProductList[i].producttype == "2") {
+                          widget._driverProductList[i].id!));
+                } else if (widget._driverProductList[i].type == "2") {
                   print("id=====${widget._driverProductList[i].id}");
-                  BlocProvider.of<HomeBloc>(context)
-                      .add(HomeEventDriverRideListClick(
-                    widget._driverProductList[i].vendorId,
-                    widget._driverProductList[i].id.toString(),
-                    widget._driverProductList[i].type,
-                    widget._driverProductList[i],
-                    widget._driverProductList[i].vendor,
-                    "DriverList",
-                  ));
-                } else if (widget._driverProductList[i].producttype == "3") {
+                  print("ride===");
+                  BlocProvider.of<HomeBloc>(context).add(
+                      HomeEventDriverRideListClick(
+                          widget._driverProductList[i].vendorId!,
+                          widget._driverProductList[i].id.toString(),
+                          widget._driverProductList[i].type!,
+                          widget._driverProductList[i],
+                          widget._driverProductList[i].vendor!,
+                          "DriverList"));
+                } else if (widget._driverProductList[i].type == "3") {
                   print("No condition======");
                   BlocProvider.of<HomeBloc>(context)
                       .add(HomeEventDriverTicketListClick(
-                    widget._driverProductList[i].vendorId,
+                    widget._driverProductList[i].vendorId!,
                     widget._driverProductList[i].id.toString(),
-                    widget._driverProductList[i].type,
+                    widget._driverProductList[i].type!,
                     widget._driverProductList[i],
-                    widget._driverProductList[i].vendor,
+                    widget._driverProductList[i].vendor!,
                     "DriverList",
                   ));
                 }
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverProductListClick(
-                //         widget._driverProductList[i],
-                //         widget._driverProductList[i].vendor!,
-                //         "DriverList",
-                //         widget._driverProductList[i].id!));
-
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverTicketListClick(
-                //         widget._driverProductList[i],
-                //         widget._driverProductList[i].vendor!,
-                //         "DriverList",
-                //         widget._driverProductList[i].id!));
-
-                // BlocProvider.of<HomeBloc>(context).add(
-                //     HomeEventDriverTicketListClick(
-                //         widget._driverProductList[i].vendorId!,
-                //         widget._driverProductList[i].id!.toString(),
-                //         widget._driverProductList[i].type!,
-                //         driverProductList[i]));
               },
               child: Container(
                 height: 210.0.scale(),
@@ -1119,65 +1099,41 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (widget._driverProductList[i].producttype == "0")
+                        if (widget._driverProductList[i].type == "0")
                           Image.asset(
                             "${imgPathGeneral}ic_product.png",
                             height: 15,
                             width: 15,
                           ),
-                        if (widget._driverProductList[i].producttype == "1")
+                        if (widget._driverProductList[i].type == "1")
                           Image.asset(
                             "${imgPathGeneral}ic_product.png",
                             height: 15,
                             width: 15,
                           ),
-                        if (widget._driverProductList[i].producttype == "2")
+                        if (widget._driverProductList[i].type == "2")
                           Image.asset(
                             "${imgPathGeneral}ic_ride.png",
                             height: 18,
                             width: 18,
                           ),
-                        if (widget._driverProductList[i].producttype == "3")
+                        if (widget._driverProductList[i].type == "3")
                           Image.asset(
                             "${imgPathGeneral}ic_ticket.png",
                             height: 15,
                             width: 15,
                           ),
-                        AHorizontalSpace(7.0.scale()),
-
-                        // if (widget._driverProductList[i].categoryname == "0")
-                        //   Text(
-                        //     "Product",
-                        //     style: textStyleCustomColor(
-                        //         14.0.scale(), KColorTextGrey),
-                        //   ),
-                        // if (widget._driverProductList[i].categoryname == "1")
-                        //   Text(
-                        //     "Product",
-                        //     style: textStyleCustomColor(
-                        //         14.0.scale(), KColorTextGrey),
-                        //   ),
-                        // if (widget._driverProductList[i].categoryname == "2")
-                        //   Text(
-                        //     "Ride",
-                        //     style: textStyleCustomColor(
-                        //         14.0.scale(), KColorTextGrey),
-                        //   ),
-                        // if (widget._driverProductList[i].categoryname  == "3")
-                        //   Text(
-                        //     "Event",
-                        //     style: textStyleCustomColor(
-                        //         14.0.scale(), KColorTextGrey),
-                        //   )
-
+                        //  AHorizontalSpace(7.0.scale()),
                         Text(
                           widget._driverProductList[i].categoryname! == null
                               ? ""
                               : widget._driverProductList[i].categoryname!,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: textStyleCustomColor(
                               14.0.scale(), KColorTextGrey),
-                        ),
+                        ).expand(),
                       ],
                     ),
                     AVerticalSpace(4.0.scale()),
@@ -1199,13 +1155,13 @@ class _GridProductListWidgetState extends State<_GridProductListWidget> {
                         ),
                         AHorizontalSpace(3.0.scale()),
                         Text(
-                          widget._driverProductList[i].vendorname! +
-                              " " +
-                              widget._driverProductList[i].lastName!,
+                          widget._driverProductList[i].name! + " ",
+                          // widget._driverProductList[i].last_name!,
+                          maxLines: 5,
                           overflow: TextOverflow.ellipsis,
                           style: textStyleBoldCustomColor(
                               12.0.scale(), KColorCommonText),
-                        ),
+                        ).expand(),
                       ],
                     ).leftPadding(35.0.scale()),
                     AVerticalSpace(3.0.scale()),

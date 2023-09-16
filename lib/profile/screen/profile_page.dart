@@ -29,7 +29,7 @@ class ProfileMainPage extends StatefulWidget {
 }
 
 class _ProfileMainPageState extends State<ProfileMainPage> {
-late  UserDetailResponseModel userDetailInfo1;
+  UserDetailResponseModel? userDetailInfo1;
   double average_rating = 1;
   double rating_count = 1;
   TextEditingController _textFiledCity = TextEditingController();
@@ -39,14 +39,14 @@ late  UserDetailResponseModel userDetailInfo1;
   TextEditingController _textFiledlastName = TextEditingController();
   TextEditingController _textFiledMobileNumber = TextEditingController();
   TextEditingController _textFiledAddress = TextEditingController();
-late List<StatesList> _stateArrayList;
+  List<StatesList>? _stateArrayList;
   String strState = "";
   double _currentLat = 0.0;
   double _currentLong = 0.0;
-late  File _userImage;
-late File _licenseImageBack;
-late File _licenseImageFront;
-late  File _mariyunaImage;
+  File? _userImage;
+  File? _licenseImageBack;
+  File? _licenseImageFront;
+  File? _mariyunaImage;
   String strServerProfiImage = "";
   String strServerLicenseFront = "";
   String strServerLicenseBack = "";
@@ -55,7 +55,7 @@ late  File _mariyunaImage;
   String strPathLicenseBack = "Select license image copy back";
   String strPathMarijuanaId = "Select Marijuana id";
   String _strServerPathMarijuana = "";
-late String type;
+  String? type;
   String _customerType = "Recreational Customer";
 
   @override
@@ -283,25 +283,27 @@ late String type;
             //avrage_rating= userDetailInfo1.data.userInfo.avgRating;
             userDetailInfo1 = state.userDetailInfo;
             rating_count =
-                double.parse(userDetailInfo1.data.userInfo.ratingCount);
+                double.parse(userDetailInfo1!.data.userInfo.ratingCount);
             average_rating =
-                double.parse(userDetailInfo1.data.userInfo.avgRating);
-            _textFiledCity.text = userDetailInfo1.data.userInfo.userCity;
-            strState = userDetailInfo1.data.userInfo.userStates;
-            _textFiledZipCode.text = userDetailInfo1.data.userInfo.userZipcode;
-            _textFiledUserName.text = userDetailInfo1.data.userInfo.name;
-            _textFiledlastName.text = userDetailInfo1.data.userInfo.lname;
-            strDateofBirth = userDetailInfo1.data.userInfo.dob;
-            _textFiledMobileNumber.text = userDetailInfo1.data.userInfo.userMob;
-            _textFiledAddress.text = userDetailInfo1.data.userInfo.userAddress;
-            strServerProfiImage = userDetailInfo1.data.userInfo.profileURL;
+                double.parse(userDetailInfo1!.data.userInfo.avgRating);
+            _textFiledCity.text = userDetailInfo1!.data.userInfo.userCity;
+            strState = userDetailInfo1!.data.userInfo.userStates;
+            _textFiledZipCode.text = userDetailInfo1!.data.userInfo.userZipcode;
+            _textFiledUserName.text = userDetailInfo1!.data.userInfo.name;
+            _textFiledlastName.text = userDetailInfo1!.data.userInfo.lname;
+            strDateofBirth = userDetailInfo1!.data.userInfo.dob;
+            _textFiledMobileNumber.text =
+                userDetailInfo1!.data.userInfo.userMob;
+            _textFiledAddress.text = userDetailInfo1!.data.userInfo.userAddress;
+            strServerProfiImage = userDetailInfo1!.data.userInfo.profileURL;
             strServerLicenseFront =
-                userDetailInfo1.data.userInfo.licenseFrontURL;
-            strServerLicenseBack = userDetailInfo1.data.userInfo.licenseBackURL;
+                userDetailInfo1!.data.userInfo.licenseFrontURL;
+            strServerLicenseBack =
+                userDetailInfo1!.data.userInfo.licenseBackURL;
             _strServerPathMarijuana =
-                userDetailInfo1.data.userInfo.marijuanaCardURL;
+                userDetailInfo1!.data.userInfo.marijuanaCardURL;
 
-            _customerType = userDetailInfo1.data.userInfo.customerType;
+            _customerType = userDetailInfo1!.data.userInfo.customerType;
             print("" + _customerType);
             _stateArrayList = state.stateArrayList;
           });
@@ -312,24 +314,26 @@ late String type;
           setState(() {
             userDetailInfo1 = state.userDetailInfo;
             rating_count =
-                double.parse(userDetailInfo1.data.userInfo.ratingCount);
+                double.parse(userDetailInfo1!.data.userInfo.ratingCount);
             average_rating =
-                double.parse(userDetailInfo1.data.userInfo.avgRating);
-            _textFiledCity.text = userDetailInfo1.data.userInfo.userCity;
-            strState = userDetailInfo1.data.userInfo.userStates;
-            _textFiledZipCode.text = userDetailInfo1.data.userInfo.userZipcode;
-            _textFiledUserName.text = userDetailInfo1.data.userInfo.name;
-            _textFiledlastName.text = userDetailInfo1.data.userInfo.lname;
-            strDateofBirth = userDetailInfo1.data.userInfo.dob;
-            _textFiledMobileNumber.text = userDetailInfo1.data.userInfo.userMob;
-            _textFiledAddress.text = userDetailInfo1.data.userInfo.userAddress;
-            strServerProfiImage = userDetailInfo1.data.userInfo.profileURL;
+                double.parse(userDetailInfo1!.data.userInfo.avgRating);
+            _textFiledCity.text = userDetailInfo1!.data.userInfo.userCity;
+            strState = userDetailInfo1!.data.userInfo.userStates;
+            _textFiledZipCode.text = userDetailInfo1!.data.userInfo.userZipcode;
+            _textFiledUserName.text = userDetailInfo1!.data.userInfo.name;
+            _textFiledlastName.text = userDetailInfo1!.data.userInfo.lname;
+            strDateofBirth = userDetailInfo1!.data.userInfo.dob;
+            _textFiledMobileNumber.text =
+                userDetailInfo1!.data.userInfo.userMob;
+            _textFiledAddress.text = userDetailInfo1!.data.userInfo.userAddress;
+            strServerProfiImage = userDetailInfo1!.data.userInfo.profileURL;
             strServerLicenseFront =
-                userDetailInfo1.data.userInfo.licenseFrontURL;
-            strServerLicenseBack = userDetailInfo1.data.userInfo.licenseBackURL;
+                userDetailInfo1!.data.userInfo.licenseFrontURL;
+            strServerLicenseBack =
+                userDetailInfo1!.data.userInfo.licenseBackURL;
             _strServerPathMarijuana =
-                userDetailInfo1.data.userInfo.marijuanaCardURL;
-            _customerType = userDetailInfo1.data.userInfo.customerType;
+                userDetailInfo1!.data.userInfo.marijuanaCardURL;
+            _customerType = userDetailInfo1!.data.userInfo.customerType;
             _stateArrayList = state.stateArrayList;
           });
           showSnackBar("Profile update successfully! ", context);
@@ -357,9 +361,7 @@ late String type;
             AHeaderWidget(
               headerText: "",
               headerSigninText: "",
-              btnEditOnPressed: () {
-
-              },
+              btnEditOnPressed: () {},
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
@@ -386,7 +388,7 @@ late String type;
                 GestureDetector(
                   onTap: () {
                     type = "UserProfile";
-                    _showPicker(context, type);
+                    _showPicker(context, type!);
                   },
                   child: CircleAvatar(
                       radius: 55,
@@ -401,7 +403,7 @@ late String type;
                                     ? ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
                                         child: Image.file(
-                                          _userImage,
+                                          _userImage!,
                                           width: 100,
                                           height: 100,
                                           fit: BoxFit.cover,
@@ -458,7 +460,7 @@ late String type;
                 ),
                 AVerticalSpace(_kCommonSpaceBetweenTextField.scale()),
                 if (userDetailInfo1 != null)
-                  _EmailWidget(userDetailInfo1.data.userInfo.email)
+                  _EmailWidget(userDetailInfo1!.data.userInfo.email)
                       .leftPadding(14.0.scale())
                       .rightPadding(14.0.scale()),
                 AVerticalSpace(_kCommonSpaceBetweenTextField.scale()),
@@ -691,7 +693,7 @@ late String type;
                         InkWell(
                             splashColor: Colors.transparent,
                             onTap: () {
-                              if (_stateArrayList.length > 0) {
+                              if (_stateArrayList!.length > 0) {
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext bc) {
@@ -707,7 +709,7 @@ late String type;
                                                     ClampingScrollPhysics(),
                                                 shrinkWrap: true,
                                                 itemCount:
-                                                    _stateArrayList.length,
+                                                    _stateArrayList!.length,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -715,7 +717,7 @@ late String type;
                                                       onTap: () {
                                                         setState(() {
                                                           strState =
-                                                              _stateArrayList[
+                                                              _stateArrayList![
                                                                       index]
                                                                   .name;
                                                         });
@@ -728,7 +730,7 @@ late String type;
                                                           AVerticalSpace(
                                                               15.0.scale()),
                                                           Text(
-                                                              _stateArrayList[
+                                                              _stateArrayList![
                                                                       index]
                                                                   .name,
                                                               style: textStyleCustomColor(
@@ -826,14 +828,14 @@ late String type;
                 GestureDetector(
                   onTap: () {
                     type = "LicenseFront";
-                    _showPicker(context, type);
+                    _showPicker(context, type!);
                   },
                   child: Container(
                       height: 120.0.scale(),
                       child: Row(children: [
                         if (_licenseImageFront != null)
                           Image.file(
-                            _licenseImageFront,
+                            _licenseImageFront!,
                             width: 100,
                             height: 100,
                             fit: BoxFit.cover,
@@ -871,14 +873,16 @@ late String type;
                             ),
                             AVerticalSpace(5.0.scale()),
                             ARoundedButton(
-                              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                              btnBorderSideColor: kColorCommonButton,
+                              btnDisabledColor: Color(0xFF5e6163),
+                              btnIconSize: 15,
+                              btnDisabledTextColor: Color(0xFFFFFFFF),
                               btnFontWeight: FontWeight.normal,
                               btnBgColor: kColorCommonButton,
                               btnTextColor: Colors.white,
                               btnOnPressed: () {
                                 type = "LicenseFront";
-                                _showPicker(context, type);
+                                _showPicker(context, type!);
                               },
                               btnText: "Update",
                               btnHeight: kHeightBtnSplashNormal.scale(),
@@ -893,14 +897,14 @@ late String type;
                 GestureDetector(
                   onTap: () {
                     type = "Licenseback";
-                    _showPicker(context, type);
+                    _showPicker(context, type!);
                   },
                   child: Container(
                       height: 120.0.scale(),
                       child: Row(children: [
                         if (_licenseImageBack != null)
                           Image.file(
-                            _licenseImageBack,
+                            _licenseImageBack!,
                             width: 100,
                             height: 100,
                             fit: BoxFit.cover,
@@ -938,14 +942,16 @@ late String type;
                             ),
                             AVerticalSpace(5.0.scale()),
                             ARoundedButton(
-                              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                              btnBorderSideColor: kColorCommonButton,
+                              btnDisabledColor: Color(0xFF5e6163),
+                              btnIconSize: 15,
+                              btnDisabledTextColor: Color(0xFFFFFFFF),
                               btnFontWeight: FontWeight.normal,
                               btnBgColor: kColorCommonButton,
                               btnTextColor: Colors.white,
                               btnOnPressed: () {
                                 type = "Licenseback";
-                                _showPicker(context, type);
+                                _showPicker(context, type!);
                               },
                               btnText: "Update",
                               btnHeight: kHeightBtnSplashNormal.scale(),
@@ -960,14 +966,14 @@ late String type;
                 GestureDetector(
                   onTap: () {
                     type = "MarijuanaId";
-                    _showPicker(context, type);
+                    _showPicker(context, type!);
                   },
                   child: Container(
                       height: 120.0.scale(),
                       child: Row(children: [
                         if (_mariyunaImage != null)
                           Image.file(
-                            _mariyunaImage,
+                            _mariyunaImage!,
                             width: 100,
                             height: 100,
                             fit: BoxFit.cover,
@@ -1002,14 +1008,16 @@ late String type;
                             ),
                             AVerticalSpace(5.0.scale()),
                             ARoundedButton(
-                              btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                              btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                              btnBorderSideColor: kColorCommonButton,
+                              btnDisabledColor: Color(0xFF5e6163),
+                              btnIconSize: 15,
+                              btnDisabledTextColor: Color(0xFFFFFFFF),
                               btnFontWeight: FontWeight.normal,
                               btnBgColor: kColorCommonButton,
                               btnTextColor: Colors.white,
                               btnOnPressed: () {
                                 type = "MarijuanaId";
-                                _showPicker(context, type);
+                                _showPicker(context, type!);
                               },
                               btnText: "Update",
                               btnHeight: kHeightBtnSplashNormal.scale(),
@@ -1023,8 +1031,10 @@ late String type;
                 ).leftPadding(18.0.scale()).rightPadding(18.0.scale()),
                 AVerticalSpace(_kCommonSpaceBetweenTextField.scale()),
                 ARoundedButton(
-                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnBorderSideColor: kColorCommonButton,
+                  btnDisabledColor: Color(0xFF5e6163),
+                  btnIconSize: 15,
+                  btnDisabledTextColor: Color(0xFFFFFFFF),
                   btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorCommonButton,
                   btnTextColor: Colors.white,

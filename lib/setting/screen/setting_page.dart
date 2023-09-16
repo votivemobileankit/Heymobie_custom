@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,6 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/ui_utils.dart';
 import 'package:grambunny_customer/utils/utils.dart';
-
 import 'package:permission_handler/permission_handler.dart';
 
 const double _kNormalFontSize = 14.0;
@@ -22,8 +22,8 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  late bool emailReminderCheck;
-  late UserDetailResponseModel userDetailInfo;
+  bool? emailReminderCheck;
+  UserDetailResponseModel? userDetailInfo;
 
   @override
   void initState() {
@@ -71,16 +71,18 @@ class _SettingPageState extends State<SettingPage> {
             AHeaderWidget(
               headerSigninText: "",
               headerText: "",
-              btnEditOnPressed: () {
-
-              },
-              strBackbuttonName: 'ic_red_btn_back.png',
+              btnEditOnPressed: () {},
+              strBackbuttonName: 'ic_slide_menu_icon.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
+                if (_timer != null) {
+                  _timer?.cancel();
+                }
+                Scaffold.of(context).openDrawer();
                 //Scaffold.of(context).openDrawer();
-
-                BlocProvider.of<SettingBloc>(context)
-                    .add(SettingEventBackBtnClick());
+                //
+                // BlocProvider.of<SettingBloc>(context)
+                //     .add(SettingEventBackBtnClick());
               },
               strBtnRightImageName: 'ic_search_logo.png',
               rightEditButtonVisibility: false,
@@ -110,7 +112,7 @@ class _SettingPageState extends State<SettingPage> {
                             _kNormalFontSize, KColorCommonText),
                       ),
                       _SwitchWidgetPushNotification(
-                          userDetailInfo.data.userInfo.notification)
+                          userDetailInfo!.data.userInfo.notification)
                     ],
                   ),
                 AVerticalSpace(15.0.scale()),
@@ -165,8 +167,8 @@ class _SettingPageState extends State<SettingPage> {
 }
 
 class _SwitchWidgetPushNotification extends StatefulWidget {
- late bool _pushReminderCheck = false;
- late String notification;
+  late bool _pushReminderCheck = false;
+  late String notification;
 
   _SwitchWidgetPushNotification(String notification) {
     if (notification == "1") {
@@ -378,8 +380,8 @@ class SwitchWidgetClass extends State<_SwitchWidgetPushNotification>
 }
 
 class _SwitchWidgetEmailNotification extends StatefulWidget {
- late bool _emailReminderCheck = false;
- late String notification;
+  late bool _emailReminderCheck = false;
+  late String notification;
 
   _SwitchWidgetEmailNotification(String notification) {
     this.notification = notification;
@@ -531,3 +533,9 @@ class SwitchWidgetSmsClass extends State<_SwitchWidgetSmsNotification> {
     ]);
   }
 }
+
+const double _kTextBirthdateField = 128.0;
+String strCity = "";
+Timer? _timer;
+bool isTimerOn = false;
+String strProduct = "";

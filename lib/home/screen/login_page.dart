@@ -31,6 +31,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _textFiledUserName;
   late TextEditingController _textFiledPassword;
+  final FocusNode _focusNodePwd = FocusNode();
+  final FocusNode _focusNodeUserName = FocusNode();
   String? _deviceType;
   String? _osName;
   String? _card_id;
@@ -42,6 +44,13 @@ class _LoginPageState extends State<LoginPage> {
   late ProductListMenu productListModel;
 
   late DataCart _cartDataModel;
+
+  @override
+  void dispose() {
+    _focusNodePwd.dispose();
+    _focusNodeUserName.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -190,37 +199,22 @@ class _LoginPageState extends State<LoginPage> {
                     height: 120.0.scale(),
                   ).align(Alignment.center),
                   AVerticalSpace(_kVerticalSpaceBeforeUserNameField.scale()),
-                  TextField(
-                    controller: _textFiledUserName,
-                    keyboardType: TextInputType.emailAddress,
-                    inputFormatters: [
-                      NoLeadingSpaceFormatter(),
-                    ],
-                    autofocus: false,
-                    cursorColor: KColorTextFieldCommonHint,
-                    decoration: InputDecoration(
-                      hintText: Stringss.current.txtHintUserName,
-                      hintStyle: textStyleCustomColor(
-                          _kCommonHintTextFieldFontSize.scale(),
-                          KColorTextFieldCommonHint),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                  AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
-                  TextField(
-                      controller: _textFiledPassword,
+                  GestureDetector(
+                    onTap: () {
+                      print("=========");
+                      FocusScope.of(context).requestFocus(_focusNodeUserName);
+                    },
+                    child: TextField(
+                      focusNode: _focusNodeUserName,
+                      controller: _textFiledUserName,
+                      keyboardType: TextInputType.emailAddress,
                       inputFormatters: [
                         NoLeadingSpaceFormatter(),
                       ],
                       autofocus: false,
-                      obscureText: true,
                       cursorColor: KColorTextFieldCommonHint,
                       decoration: InputDecoration(
-                        hintText: Stringss.current.txtHintPassword,
+                        hintText: Stringss.current.txtHintUserName,
                         hintStyle: textStyleCustomColor(
                             _kCommonHintTextFieldFontSize.scale(),
                             KColorTextFieldCommonHint),
@@ -229,7 +223,35 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
+                  AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
+                  GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(_focusNodePwd);
+                    },
+                    child: TextField(
+                        focusNode: _focusNodePwd,
+                        controller: _textFiledPassword,
+                        inputFormatters: [
+                          NoLeadingSpaceFormatter(),
+                        ],
+                        autofocus: false,
+                        obscureText: true,
+                        cursorColor: KColorTextFieldCommonHint,
+                        decoration: InputDecoration(
+                          hintText: Stringss.current.txtHintPassword,
+                          hintStyle: textStyleCustomColor(
+                              _kCommonHintTextFieldFontSize.scale(),
+                              KColorTextFieldCommonHint),
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        )),
+                  ),
                   AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                   ARoundedButton(
                     btnBorderSideColor: kColorCommonButton,

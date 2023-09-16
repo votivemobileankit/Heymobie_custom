@@ -60,7 +60,7 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
     RideHistoryState rideState =
         BlocProvider.of<RideHistoryBloc>(context).state;
     if (rideState is RideListDatailPageState) {
-      showHideProgress(false);
+      showHideProgress(true);
       BlocProvider.of<RideHistoryBloc>(context)
           .add(RideListDetailEventForViewDetail(rideState.order_id, vendorId));
     }
@@ -68,12 +68,11 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     void addTime() {
       final addSeconds = 1;
       setState(() {
         final seconds = duration!.inSeconds + addSeconds;
-          duration = Duration(seconds: seconds);
+        duration = Duration(seconds: seconds);
       });
     }
 
@@ -81,30 +80,43 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
       Timer.periodic(const Duration(seconds: 1), (_) => addTime());
     }
 
-
     Widget buildTime() {
-      if (duration != null){
+      if (duration != null) {
         String twoDigits(int n) => n.toString().padLeft(2, '0');
         final hours = twoDigits(duration!.inHours);
         final minutes = twoDigits(duration!.inMinutes.remainder(60));
         final seconds = twoDigits(duration!.inSeconds.remainder(60));
         return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(hours, style: const TextStyle(fontWeight: FontWeight.bold,
-              color: Colors.black, fontSize: 15),),
-          Text(":", style: const TextStyle(fontWeight: FontWeight.bold,
-              color: Colors.black, fontSize: 15),),
-          Text(minutes, style: const TextStyle(fontWeight: FontWeight.bold,
-              color: Colors.black, fontSize: 15),),
-          Text(":", style: const TextStyle(fontWeight: FontWeight.bold,
-              color: Colors.black, fontSize: 15),),
-          Text(seconds, style: const TextStyle(fontWeight: FontWeight.bold,
-              color: Colors.black, fontSize: 15),),
+          Text(
+            hours,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 15),
+          ),
+          Text(
+            ":",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 15),
+          ),
+          Text(
+            minutes,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 15),
+          ),
+          Text(
+            ":",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 15),
+          ),
+          Text(
+            seconds,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 15),
+          ),
         ]);
-      }else{
+      } else {
         return Text("");
       }
     }
-
 
     return BlocListener<RideHistoryBloc, RideHistoryState>(
         listenWhen: (prevState, curState) => ModalRoute.of(context)!.isCurrent,
@@ -121,8 +133,9 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
               int hour = int.parse(splited[0]);
               int minute = int.parse(splited[1]);
               int second = int.parse(splited[2]);
-              duration = Duration(hours: hour, minutes: minute, seconds: second);
-              if(rideDetail?.status == "3") {
+              duration =
+                  Duration(hours: hour, minutes: minute, seconds: second);
+              if (rideDetail?.status == "3") {
                 startTimer();
               }
               print("timeresponse===>${timeresponse}");
@@ -490,24 +503,26 @@ class _RideHistoryDetailsPageState extends State<RideHistoryDetailsPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             AVerticalSpace(10.0.scale()),
-                            if(rideDetail?.status == "3" || rideDetail?.status == "4")
-                            Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Ride Time:",
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 14),
-                                    ),
-                                    AHorizontalSpace(10.0.scale()),
-                                    buildTime()
-                                  ],
-                                ),
-                                AVerticalSpace(10.0.scale()),
-                              ],
-                            ),
+                            if (rideDetail?.status == "3" ||
+                                rideDetail?.status == "4")
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Ride Time:",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                      AHorizontalSpace(10.0.scale()),
+                                      buildTime()
+                                    ],
+                                  ),
+                                  AVerticalSpace(10.0.scale()),
+                                ],
+                              ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

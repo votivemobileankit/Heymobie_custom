@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,11 +57,15 @@ class _AboutUsPageState extends State<AboutUsPage> {
               headerSigninText: "",
               headerText: "",
               strBtnRightImageName: "",
-              strBackbuttonName: 'ic_red_btn_back.png',
+              strBackbuttonName: 'ic_slide_menu_icon.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
-                BlocProvider.of<AboutBloc>(context)
-                    .add(AboutEventBackBtnClick());
+                if (_timer != null) {
+                  _timer?.cancel();
+                }
+                Scaffold.of(context).openDrawer();
+                // BlocProvider.of<AboutBloc>(context)
+                //     .add(AboutEventBackBtnClick());
               },
               rightEditButtonVisibility: false,
               btnEditOnPressed: () {},
@@ -101,3 +107,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
     );
   }
 }
+
+const double _kTextBirthdateField = 128.0;
+String strCity = "";
+Timer? _timer;
+bool isTimerOn = false;
+String strProduct = "";

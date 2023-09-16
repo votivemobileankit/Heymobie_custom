@@ -89,7 +89,7 @@ class EventHistoryBloc extends Bloc<EventHistoryEvent, EventHistoryState> {
       Emitter<EventHistoryState> emitter) async {
     if (state is EventHistoryInitial) {
       print("back call");
-
+      print(state);
       emitter(EventHistoryToNavigateHomeResetPageState());
     }
   }

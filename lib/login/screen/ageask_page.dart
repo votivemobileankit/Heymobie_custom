@@ -66,8 +66,10 @@ class AgeAskToUserPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ARoundedButton(
-                        btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                        btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                        btnBorderSideColor: kColorCommonButton,
+                        btnDisabledColor: Color(0xFF5e6163),
+                        btnIconSize: 15,
+                        btnDisabledTextColor: Color(0xFFFFFFFF),
                         btnFontWeight: FontWeight.normal,
                         btnBgColor: kColorAppBgColor,
                         btnTextColor: Colors.white,
@@ -84,8 +86,10 @@ class AgeAskToUserPage extends StatelessWidget {
                       ),
                       AHorizontalSpace(15.0.scale()),
                       ARoundedButton(
-                        btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                        btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                        btnBorderSideColor: kColorCommonButton,
+                        btnDisabledColor: Color(0xFF5e6163),
+                        btnIconSize: 15,
+                        btnDisabledTextColor: Color(0xFFFFFFFF),
                         btnFontWeight: FontWeight.normal,
                         btnBgColor: kColorAppBgColor,
                         btnTextColor: Colors.white,

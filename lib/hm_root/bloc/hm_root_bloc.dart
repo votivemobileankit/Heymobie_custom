@@ -21,8 +21,10 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
     on<HmRootEventBackButtonOrderHistoryReset>(
         mapHmRootEventBackButtonOrderHistoryReset);
 
-    on<HmRootEventBackButtonEventOrderHistoryReset>(
-        mapHmRootEventBackButtonEventOrderHistoryReset);
+    on<HmRootEventHistoryBackButtonHome>(mapHmRootEventHistoryBackButtonHome);
+
+    on<HmRootEventBackButtonEventOrderHistory>(
+        mapHmRootEventBackButtonEventOrderHistory);
 
     on<HmRootEventBackButtonProfile>(mapHmRootEventBackButtonProfile);
     on<HmRootEventBackButtonProfileReset>(mapHmRootEventBackButtonProfileReset);
@@ -138,8 +140,21 @@ class HmRootBloc extends Bloc<HmRootEvent, HmRootState> {
     ));
   }
 
-  mapHmRootEventBackButtonEventOrderHistoryReset(
-      HmRootEventBackButtonEventOrderHistoryReset event,
+  mapHmRootEventHistoryBackButtonHome(HmRootEventHistoryBackButtonHome event,
+      Emitter<HmRootState> emitter) async {
+    print("call home root");
+    emitter(HmRootHomeState(
+      isBackProfile: false,
+      isFromSetting: false,
+      isBackOrderHistory: false,
+      isBackHome: false,
+      isPushNotificationSending: false,
+      isbackeventHistory: false,
+    ));
+  }
+
+  mapHmRootEventBackButtonEventOrderHistory(
+      HmRootEventBackButtonEventOrderHistory event,
       Emitter<HmRootState> emitter) async {
     print("call home root");
     emitter(HmRootHomeState(

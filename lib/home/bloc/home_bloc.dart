@@ -25,6 +25,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<OTPEventOTPVerifyButton>(mapOTPEventOTPVerifyButton);
     on<OTPEventOTPResendButton>(mapOTPEventOTPResendButton);
     on<HomeEventBackBtnClick>(mapHomeEventBackBtnClick);
+
+    on<HomeTicketEventBackBtnClick>(mapHomeTicketEventBackBtnClick);
+
+    on<HomeRideEventBackBtnClick>(mapHomeRideEventBackBtnClick);
+
     on<ForgotPasswordEventVerifyBtnClick>(mapForgotPasswordEventVerifyBtnClick);
     on<ResetPasswordPageEvent>(mapResetPasswordPageEvent);
     on<ResetPasswordEventResetBtnClick>(mapResetPasswordEventResetBtnClick);
@@ -687,7 +692,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _userRepository!.ScreenName = ScreenNavigation.HomeMyCartScreen;
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .getCartDeleteSingleItemApiCall(
-            event.productId, event.driverDetail.vendorId);
+            event.productId, event.driverDetail.vendorId!);
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       if (apiCallState.statusValue == "1") {
         NetworkApiCallState<bool> apiCallState1 =
@@ -850,87 +855,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           _userRepository!.getCartDataModel()!));
     } else if (event.strScreen == "HomeCartpage") {
       if (_userRepository!.getCartDataListArray()!.isEmpty) {
-        emitter(HomeCartPageState(
-            _userRepository!.getCartDataListArray()!,
-            new VendorDetailCart(
-                vendorId: 0,
-                lng: "0",
-                lat: "0",
-                businessName: ","
-                    "",
-                cityTax: "",
-                color: "",
-                commissionRate: "",
-                deliveryFee: "",
-                dob: "",
-                exciseTax: "",
-                ratingCount: "",
-                salesTax: ""
-                    "",
-                vendorType: "",
-                driverLicense: "",
-                forgetpassRequest: "",
-                forgetpassRequestStatus: "",
-                licenseBack: "",
-                licenseExpiry: "",
-                licenseFront: "",
-                licensePlate: "",
-                mailingAddress: "",
-                make: "",
-                model: "",
-                otp: "",
-                permitExpiry: "",
-                permitNumber: "",
-                permitType: "",
-                planExpiry: "",
-                planId: "",
-                planPurchased: "",
-                profileImg2: "",
-                profileImg3: "",
-                profileImg4: "",
-                service: "",
-                serviceRadius: "",
-                ssn: "",
-                stripeId: "",
-                suburb: "",
-                txnId: "",
-                views: "",
-                walletAmount: "",
-                year: "",
-                devicetype: "",
-                createdAt: "",
-                updatedAt: ""
-                    "",
-                loginStatus: "",
-                uniqueId: "",
-                zipcode: "",
-                vendorStatus: "",
-                type: "",
-                subCategoryId: "",
-                state: "",
-                mobNo: "",
-                marketArea: "",
-                email: "",
-                deviceid: "",
-                description: "",
-                city: "",
-                categoryId: "",
-                avgRating: "",
-                address: "",
-                address1: "",
-                category: "",
-                fullname: "",
-                lastName: "",
-                licensebackURL: "",
-                licensefrontURL: "",
-                name: "",
-                profile2URL: "",
-                profile4URL: "",
-                profileImg1: "",
-                profileURL: "",
-                username: "",
-                profile3URL: "",
-                membership: new Membership(remainingDays: 0, status: 0)),
+        emit(HomeCartPageState(_userRepository!.getCartDataListArray()!, null!,
             _userRepository!.getCartDataModel()!));
       } else {
         emitter(HomeCartPageState(
@@ -999,7 +924,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeEventProductItemDetailPageReset event,
       Emitter<HomeState> emitter) async {
     emitter(HomeMenuItemDetailsPageState(event.productListModel,
-        event.driverDetail.vendorId, event.driverDetail));
+        event.driverDetail.vendorId!, event.driverDetail));
   }
 
   mapHomeEventBackForTicketDetailEvent(HomeEventBackForTicketDetailEvent event,
@@ -1022,7 +947,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     print("Here=====");
     emitter(HomeInitialReset());
     emitter(HomeMenuItemDetailsPageState(event.productListModel,
-        event.driverDetail.vendorId, event.driverDetail));
+        event.driverDetail.vendorId!, event.driverDetail));
   }
 
   mapHomeEventDriverListCartBtnClick(
@@ -1137,9 +1062,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     NetworkApiCallState<bool> apiCallState = await _userRepository!
         .getDriverApiListCall(
             event.currentLat, event.currentLong, event.keyword, event.searchBy);
+    print("currentLat===${event.currentLat}");
+    print("currentLong===${event.currentLong}");
+    print("Keyword===${event.keyword}");
+    print("Search===${event.searchBy}");
 
     if (apiCallState.status == NetworkRequestStatus.COMPLETED) {
       print("call api driver list 1 =======");
+
       if (apiCallState.statusValue == "1") {
         print("call api driver list 2 =======");
 
@@ -1149,7 +1079,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           try {
             NetworkApiCallState<bool>? apiCallState1 = await _userRepository!
                 .getMapImage(
-                    url: _userRepository!.getDriverListArray()![i].map_icon!);
+                    url: _userRepository!.getDriverListArray()![i].mapIcon!);
           } catch (e) {
             print(e.toString());
           }
@@ -1508,8 +1438,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       NetworkApiCallState<bool> apiCallState1 = await _userRepository!
           .postRelatedProductApi(
               '${event.productId}',
-              event.driverProductList.vendorId,
-              event.driverProductList.categoryId);
+              event.driverProductList.vendorId!,
+              event.driverProductList.categoryId!);
 
       driverProductList = event.driverProductList;
 
@@ -1540,8 +1470,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         NetworkApiCallState<bool> apiCallState1 = await _userRepository!
             .postRelatedProductApi(
                 '${event.ps_id}',
-                event.driverProductList.vendorId,
-                event.driverProductList.categoryId);
+                event.driverProductList.vendorId!,
+                event.driverProductList.categoryId!);
 
         driverProductList = event.driverProductList;
 
@@ -1576,8 +1506,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         NetworkApiCallState<bool> apiCallState1 = await _userRepository!
             .postRelatedProductApi(
                 '${event.ps_id}',
-                event.driverProductList.vendorId,
-                event.driverProductList.categoryId);
+                event.driverProductList.vendorId!,
+                event.driverProductList.categoryId!);
 
         driverProductList = event.driverProductList;
 
@@ -1724,6 +1654,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  mapHomeTicketEventBackBtnClick(
+      HomeTicketEventBackBtnClick event, Emitter<HomeState> emitter) async {
+    if (state is HomeEventDriverTicketListClickPageState) {
+      print("ticket=======");
+      print(state);
+      emit(HomeInitial());
+    }
+  }
+
+  mapHomeRideEventBackBtnClick(
+      HomeRideEventBackBtnClick event, Emitter<HomeState> emitter) async {
+    emit(HomeEventDriverRideListClickResetPageState());
+    if (state is HomeEventDriverRideListClickPageState) {
+      print("Ride=======");
+      print(state);
+      emit(HomeInitial());
+    }
+  }
+
   mapHomeEventBackBtnClick(
       HomeEventBackBtnClick event, Emitter<HomeState> emitter) async {
     // _userRepository.ScreenName = "CategoryDetailPage";
@@ -1808,7 +1757,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeEventRideBackBtnClicked event, Emitter<HomeState> emitter) async {
     emitter(HomeEventDriverRideListClickPageState(
         _userRepository?.getRideList()!,
-        event.driverProductList!,
+        event.driverProductList,
         event.screen!,
         _userRepository!.getRatingReviewList()!,
         _userRepository!.getRelatedProductList()!,

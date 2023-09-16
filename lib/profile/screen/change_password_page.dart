@@ -6,7 +6,6 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
-
 const double _kVerticalSpaceAfterHeartLogo = 35.0;
 const double _kVerticalSpaceAfterUserNameField = 25.0;
 const double _kCommonPadding = 14.0;
@@ -69,9 +68,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             AHeaderWidget(
               headerSigninText: "",
               headerText: "",
-              btnEditOnPressed: () {
-
-              },
+              btnEditOnPressed: () {},
               strBackbuttonName: 'ic_red_btn_back.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
@@ -150,8 +147,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                 ARoundedButton(
-                  btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                  btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                  btnBorderSideColor: kColorCommonButton,
+                  btnDisabledColor: Color(0xFF5e6163),
+                  btnIconSize: 15,
+                  btnDisabledTextColor: Color(0xFFFFFFFF),
                   btnFontWeight: FontWeight.normal,
                   btnBgColor: kColorCommonButton,
                   btnTextColor: Colors.white,

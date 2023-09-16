@@ -6,7 +6,6 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/utils.dart';
 
-
 const double _kVerticalSpaceTopHeartLogo = 40.0;
 const double _kVerticalSpaceAfterHeartLogo = 35.0;
 const double _kVerticalSpaceAfterUserNameField = 25.0;
@@ -21,6 +20,9 @@ class ResetPasswordPage extends StatefulWidget {
 
 late TextEditingController _textFiledPassword;
 late TextEditingController _textFiledConfirmPassword;
+final focusPassword = FocusNode();
+final focusConfirmPassword = FocusNode();
+
 late String email;
 
 class _ResetPageState extends State<ResetPasswordPage> {
@@ -85,49 +87,66 @@ class _ResetPageState extends State<ResetPasswordPage> {
                           _kWelcomeTextFont.scale(), KColorAppThemeColor),
                     ).align(Alignment.center),
                     AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
-                    TextField(
-                      controller: _textFiledPassword,
-                      autofocus: false,
-                      obscureText: true,
-                      cursorColor: kColorDialogNameTitle,
-                      decoration: InputDecoration(
-                          hintText: "New Password",
-                          hintStyle: textStyleCustomColor(
-                              _kCommonHintTextFieldFontSize.scale(),
-                              Colors.black),
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: new OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black)),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 1.0),
-                          )),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(focusPassword);
+                      },
+                      child: TextField(
+                        focusNode: focusPassword,
+                        controller: _textFiledPassword,
+                        autofocus: false,
+                        obscureText: true,
+                        cursorColor: kColorDialogNameTitle,
+                        decoration: InputDecoration(
+                            hintText: "New Password",
+                            hintStyle: textStyleCustomColor(
+                                _kCommonHintTextFieldFontSize.scale(),
+                                Colors.black),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: new OutlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.black)),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 1.0),
+                            )),
+                      ),
                     ),
                     AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
-                    TextField(
-                      controller: _textFiledConfirmPassword,
-                      autofocus: false,
-                      obscureText: true,
-                      cursorColor: kColorDialogNameTitle,
-                      decoration: InputDecoration(
-                          hintText: "Confirm Password",
-                          hintStyle: textStyleCustomColor(
-                              _kCommonHintTextFieldFontSize.scale(),
-                              Colors.black),
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: new OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black)),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 1.0),
-                          )),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context)
+                            .requestFocus(focusConfirmPassword);
+                      },
+                      child: TextField(
+                        focusNode: focusConfirmPassword,
+                        controller: _textFiledConfirmPassword,
+                        autofocus: false,
+                        obscureText: true,
+                        cursorColor: kColorDialogNameTitle,
+                        decoration: InputDecoration(
+                            hintText: "Confirm Password",
+                            hintStyle: textStyleCustomColor(
+                                _kCommonHintTextFieldFontSize.scale(),
+                                Colors.black),
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: new OutlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.black)),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 1.0),
+                            )),
+                      ),
                     ),
                     AVerticalSpace(_kVerticalSpaceAfterUserNameField.scale()),
                     ARoundedButton(
-                      btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-                      btnDisabledTextColor:Color(0xFFFFFFFF) ,
+                      btnBorderSideColor: kColorCommonButton,
+                      btnDisabledColor: Color(0xFF5e6163),
+                      btnIconSize: 15,
+                      btnDisabledTextColor: Color(0xFFFFFFFF),
                       btnFontWeight: FontWeight.normal,
                       btnBgColor: kColorAppBgColor,
                       btnTextColor: Colors.white,

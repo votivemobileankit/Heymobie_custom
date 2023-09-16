@@ -613,6 +613,10 @@ class _HomeRideCheckOutPageState extends State<HomeRideCheckOutPage> {
                           TextField(
                             controller: _textFiledZipCode,
                             autofocus: false,
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(12)
+                            ],
                             cursorColor: KColorTextFieldCommonHint,
                             decoration: InputDecoration(
                               hintText: "",
@@ -741,7 +745,9 @@ class _HomeRideCheckOutPageState extends State<HomeRideCheckOutPage> {
                                                   KColorCommonText),
                                             ),
                                             Text(
-                                              " \$${distance} (Miles)",
+                                              " \$${distance}" != null
+                                                  ? "\$${distance}"
+                                                  : "",
                                               style: textStyleBoldCustomColor(
                                                   _kFontSizeMedium,
                                                   KColorCommonText),
@@ -749,7 +755,9 @@ class _HomeRideCheckOutPageState extends State<HomeRideCheckOutPage> {
                                           ],
                                         ),
                                         Text(
-                                          "\$${distance1}",
+                                          "\$${distance1}" != null
+                                              ? "\$${distance1}"
+                                              : "",
                                           style: textStyleBoldCustomColor(
                                               _kFontSizeMedium,
                                               KColorCommonText),

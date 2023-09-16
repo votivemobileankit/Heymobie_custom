@@ -36,6 +36,15 @@ late String _deviceType;
 late String _osName;
 late String _deviceToken;
 
+final focusUserName = FocusNode();
+final focusLastName = FocusNode();
+final focusPhone = FocusNode();
+final focusEmail = FocusNode();
+final focusAddress = FocusNode();
+final focusCity = FocusNode();
+final focusZipCode = FocusNode();
+final focusZipPassword = FocusNode();
+
 class SignupPage extends StatefulWidget {
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -323,47 +332,59 @@ class _SignupPageState extends State<SignupPage> {
                           KColorAppThemeColor),
                     ).align(Alignment.center),
                     AVerticalSpace(_kVerticalSpaceBetweenTextField.scale()),
-                    TextField(
-                      controller: _textFiledUserName,
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        NoLeadingSpaceFormatter(),
-                      ],
-                      autofocus: false,
-                      cursorColor: KColorTextFieldCommonHint,
-                      decoration: InputDecoration(
-                        hintText: Stringss.current.txtHintFirstName,
-                        hintStyle: textStyleCustomColor(
-                            _kCommonHintTextFieldFontSize.scale(),
-                            KColorTextFieldCommonHint),
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(focusUserName);
+                      },
+                      child: TextField(
+                        focusNode: focusUserName,
+                        controller: _textFiledUserName,
+                        keyboardType: TextInputType.text,
+                        inputFormatters: [
+                          NoLeadingSpaceFormatter(),
+                        ],
+                        autofocus: false,
+                        cursorColor: KColorTextFieldCommonHint,
+                        decoration: InputDecoration(
+                          hintText: Stringss.current.txtHintFirstName,
+                          hintStyle: textStyleCustomColor(
+                              _kCommonHintTextFieldFontSize.scale(),
+                              KColorTextFieldCommonHint),
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
                       ),
                     ),
                     AVerticalSpace(_kVerticalSpaceBetweenTextField.scale()),
-                    TextField(
-                      controller: _textFiledLastName,
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        NoLeadingSpaceFormatter(),
-                      ],
-                      autofocus: false,
-                      cursorColor: KColorTextFieldCommonHint,
-                      decoration: InputDecoration(
-                        hintText: Stringss.current.txtHintLastName,
-                        hintStyle: textStyleCustomColor(
-                            _kCommonHintTextFieldFontSize.scale(),
-                            KColorTextFieldCommonHint),
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(focusLastName);
+                      },
+                      child: TextField(
+                        focusNode: focusLastName,
+                        controller: _textFiledLastName,
+                        keyboardType: TextInputType.text,
+                        inputFormatters: [
+                          NoLeadingSpaceFormatter(),
+                        ],
+                        autofocus: false,
+                        cursorColor: KColorTextFieldCommonHint,
+                        decoration: InputDecoration(
+                          hintText: Stringss.current.txtHintLastName,
+                          hintStyle: textStyleCustomColor(
+                              _kCommonHintTextFieldFontSize.scale(),
+                              KColorTextFieldCommonHint),
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
+                        onTap: () {},
                       ),
-                      onTap: () {},
                     ),
                     AVerticalSpace(_kVerticalSpaceBetweenTextField.scale()),
                     InkWell(
@@ -641,23 +662,29 @@ class _EmailWidget extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: [
-        TextField(
-          controller: _textFiledEmail,
-          keyboardType: TextInputType.emailAddress,
-          inputFormatters: [
-            NoLeadingSpaceFormatter(),
-          ],
-          autofocus: false,
-          cursorColor: KColorTextFieldCommonHint,
-          decoration: InputDecoration(
-            hintText: Stringss.current.txtHintEmail,
-            hintStyle: textStyleCustomColor(
-                _kCommonHintTextFieldFontSize.scale(),
-                KColorTextFieldCommonHint),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(focusEmail);
+          },
+          child: TextField(
+            focusNode: focusEmail,
+            controller: _textFiledEmail,
+            keyboardType: TextInputType.emailAddress,
+            inputFormatters: [
+              NoLeadingSpaceFormatter(),
+            ],
+            autofocus: false,
+            cursorColor: KColorTextFieldCommonHint,
+            decoration: InputDecoration(
+              hintText: Stringss.current.txtHintEmail,
+              hintStyle: textStyleCustomColor(
+                  _kCommonHintTextFieldFontSize.scale(),
+                  KColorTextFieldCommonHint),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
         ),
@@ -673,21 +700,27 @@ class _PhoneWidget extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: [
-        TextField(
-          controller: _textFiledPhone,
-          keyboardType: TextInputType.phone,
-          inputFormatters: [LengthLimitingTextInputFormatter(12)],
-          autofocus: false,
-          cursorColor: KColorTextFieldCommonHint,
-          decoration: InputDecoration(
-            hintText: Stringss.current.txtHintPhone,
-            hintStyle: textStyleCustomColor(
-                _kCommonHintTextFieldFontSize.scale(),
-                KColorTextFieldCommonHint),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(focusPhone);
+          },
+          child: TextField(
+            focusNode: focusPhone,
+            controller: _textFiledPhone,
+            keyboardType: TextInputType.phone,
+            inputFormatters: [LengthLimitingTextInputFormatter(12)],
+            autofocus: false,
+            cursorColor: KColorTextFieldCommonHint,
+            decoration: InputDecoration(
+              hintText: Stringss.current.txtHintPhone,
+              hintStyle: textStyleCustomColor(
+                  _kCommonHintTextFieldFontSize.scale(),
+                  KColorTextFieldCommonHint),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
         ),
@@ -703,23 +736,29 @@ class _AddressWidget extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: [
-        TextField(
-          controller: _textFiledAddress,
-          keyboardType: TextInputType.text,
-          inputFormatters: [
-            NoLeadingSpaceFormatter(),
-          ],
-          autofocus: false,
-          cursorColor: KColorTextFieldCommonHint,
-          decoration: InputDecoration(
-            hintText: Stringss.current.txtHintAddress,
-            hintStyle: textStyleCustomColor(
-                _kCommonHintTextFieldFontSize.scale(),
-                KColorTextFieldCommonHint),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(focusAddress);
+          },
+          child: TextField(
+            focusNode: focusAddress,
+            controller: _textFiledAddress,
+            keyboardType: TextInputType.text,
+            inputFormatters: [
+              NoLeadingSpaceFormatter(),
+            ],
+            autofocus: false,
+            cursorColor: KColorTextFieldCommonHint,
+            decoration: InputDecoration(
+              hintText: Stringss.current.txtHintAddress,
+              hintStyle: textStyleCustomColor(
+                  _kCommonHintTextFieldFontSize.scale(),
+                  KColorTextFieldCommonHint),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
         ),
@@ -735,23 +774,29 @@ class _CityWidget extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: [
-        TextField(
-          controller: _textFiledCity,
-          keyboardType: TextInputType.text,
-          inputFormatters: [
-            NoLeadingSpaceFormatter(),
-          ],
-          autofocus: false,
-          cursorColor: KColorTextFieldCommonHint,
-          decoration: InputDecoration(
-            hintText: Stringss.current.txtHintCity,
-            hintStyle: textStyleCustomColor(
-                _kCommonHintTextFieldFontSize.scale(),
-                KColorTextFieldCommonHint),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(focusCity);
+          },
+          child: TextField(
+            focusNode: focusCity,
+            controller: _textFiledCity,
+            keyboardType: TextInputType.text,
+            inputFormatters: [
+              NoLeadingSpaceFormatter(),
+            ],
+            autofocus: false,
+            cursorColor: KColorTextFieldCommonHint,
+            decoration: InputDecoration(
+              hintText: Stringss.current.txtHintCity,
+              hintStyle: textStyleCustomColor(
+                  _kCommonHintTextFieldFontSize.scale(),
+                  KColorTextFieldCommonHint),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
         ),
@@ -799,21 +844,27 @@ class _ZipWidget extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: [
-        TextField(
-          controller: _textFiledZipCode,
-          keyboardType: TextInputType.number,
-          inputFormatters: [LengthLimitingTextInputFormatter(7)],
-          autofocus: false,
-          cursorColor: KColorTextFieldCommonHint,
-          decoration: InputDecoration(
-            hintText: Stringss.current.txtHintZipCode,
-            hintStyle: textStyleCustomColor(
-                _kCommonHintTextFieldFontSize.scale(),
-                KColorTextFieldCommonHint),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(focusZipCode);
+          },
+          child: TextField(
+            focusNode: focusZipCode,
+            controller: _textFiledZipCode,
+            keyboardType: TextInputType.number,
+            inputFormatters: [LengthLimitingTextInputFormatter(7)],
+            autofocus: false,
+            cursorColor: KColorTextFieldCommonHint,
+            decoration: InputDecoration(
+              hintText: Stringss.current.txtHintZipCode,
+              hintStyle: textStyleCustomColor(
+                  _kCommonHintTextFieldFontSize.scale(),
+                  KColorTextFieldCommonHint),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
         ),
@@ -829,24 +880,30 @@ class _PasswordWidget extends StatelessWidget {
     // TODO: implement build
     return Column(
       children: [
-        TextField(
-          controller: _textFiledZipPassword,
-          keyboardType: TextInputType.visiblePassword,
-          autofocus: false,
-          inputFormatters: [
-            NoLeadingSpaceFormatter(),
-          ],
-          obscureText: true,
-          cursorColor: KColorTextFieldCommonHint,
-          decoration: InputDecoration(
-            hintText: Stringss.current.txtHintPassWord,
-            hintStyle: textStyleCustomColor(
-                _kCommonHintTextFieldFontSize.scale(),
-                KColorTextFieldCommonHint),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(focusZipPassword);
+          },
+          child: TextField(
+            focusNode: focusZipPassword,
+            controller: _textFiledZipPassword,
+            keyboardType: TextInputType.visiblePassword,
+            autofocus: false,
+            inputFormatters: [
+              NoLeadingSpaceFormatter(),
+            ],
+            obscureText: true,
+            cursorColor: KColorTextFieldCommonHint,
+            decoration: InputDecoration(
+              hintText: Stringss.current.txtHintPassWord,
+              hintStyle: textStyleCustomColor(
+                  _kCommonHintTextFieldFontSize.scale(),
+                  KColorTextFieldCommonHint),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
             ),
           ),
         ),

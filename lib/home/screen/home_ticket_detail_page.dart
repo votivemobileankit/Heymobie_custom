@@ -47,7 +47,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
   String? _cartCount;
   String? strScreen;
 
-  late ProductListMenu _productListModel;
+  ProductListMenu? _productListModel;
 
   String? _driverId;
   double _price = 0;
@@ -83,14 +83,23 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
     print("TicketPrice===>");
     // TODO: implement initState
     HomeState state = BlocProvider.of<HomeBloc>(context).state;
-
-    if (state is HomeEventDriverTicketListClickPageState) {
+    if (state is HomeMenuItemDetailsPageState) {
+      _productListModel = state.productListModel;
+      _driverId = state.driverId;
+      _price = double.parse(_productListModel?.price ?? "");
+      _driverDetail = state.driverDetail;
+      _productListModel?.brands ?? "";
+      name = _driverDetail?.name ?? "" + " " + _driverDetail!.lastName!;
+      strScreen = "";
+    } else if (state is HomeEventDriverTicketListClickPageState) {
       eventdetaillist = state.eventdetaillist!;
       _driverId = eventdetaillist[0].vendorId;
 
       print("price====>${eventdetaillist[0].price}");
+      print("Eventid====${eventdetaillist[0].id}");
 
       _productListDriverModel = state.driverProductList;
+      //  print("productid=====${_productListModel!.id}");
       _vendorDetails = state.vendor;
       strScreen = state.screen;
       _addOnProductList = state.addonProductlist;
@@ -144,7 +153,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
         password: "",
         otp: "",
         model: "",
-        map_icon: "",
+        mapIcon: "",
         make: "",
         mailingAddress: "",
         licensePlate: "",
@@ -168,9 +177,9 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
         lat: "",
         lng: "",
         txnId: '',
-        type_of_merchant: '',
+        typeOfMerchant: '',
       );
-      name = _driverDetail!.name + " " + _driverDetail!.lastName;
+      name = _driverDetail!.name! + " " + _driverDetail!.lastName!;
       productID = _productListDriverModel!.id;
       _productListModel = ProductListMenu(
           name: _productListDriverModel!.name,
@@ -202,7 +211,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
           images: [],
           keyword: "",
           stock: "");
-      _price = double.parse(_productListModel.price ?? "");
+      _price = double.parse(_productListModel!.price ?? "");
     }
 
     super.initState();
@@ -236,21 +245,21 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
           _productListModel = state.productListModel;
           _driverId = state.driverId;
           print("driver Id ${_driverId}");
-          _price = double.parse(_productListModel.price ?? "");
+          _price = double.parse(_productListModel!.price ?? "");
           _driverDetail = state.driverDetail;
-          name = _driverDetail!.name + " " + _driverDetail!.lastName;
+          name = _driverDetail!.name! + " " + _driverDetail!.lastName!;
         } else if (state is HomeFromDriverProductListDetailsPageState) {
           showHideProgress(false);
           setState(() {
             List<RatingReviewData> ratingReviewListData =
                 state.ratingReviewList!;
-            ratingReviewList!.addAll(ratingReviewListData);
+            ratingReviewList?.addAll(ratingReviewListData);
             //ratingReviewList = state.ratingReviewList;
           });
           print("driver Id ${_driverId}");
           BlocProvider.of<HomeBloc>(context).add(
               HomeEventProductDetailPageReset(
-                  _productListModel, _driverId!, _driverDetail!));
+                  _productListModel!, _driverId!, _driverDetail!));
         } else if (state is CartpageFromTicketDetailState) {
           showHideProgress(false);
           Navigator.of(context).pushNamed(HomeNavigator.homeShowCartPage);
@@ -269,9 +278,10 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
           _textFiledUserSpecialInstruction.text = "";
           showHideProgress(false);
           showSnackBar(state.message!, context);
-          //print("driver Id ${_driverId}");
-          BlocProvider.of<HomeBloc>(context).add(HomeEventEventDetailPageReset(
-              eventdetaillist, _driverId!, _driverDetail!));
+          print("driver Id ${_driverId}");
+          BlocProvider.of<HomeBloc>(context).add(
+              HomeEventProductDetailPageReset(
+                  _productListModel!, _driverId!, _driverDetail!));
         } else if (state is HomeEventAddtocartSuccessState) {
           showHideProgress(false);
           showTwoButtonDialog(
@@ -284,20 +294,33 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
               btn2OnPressed: () {
                 BlocProvider.of<HomeBloc>(context).add(
                     HomeEventProductItemDetailPageReset(
-                        _productListModel, _driverDetail!));
+                        _productListModel!, _driverDetail!));
               },
               btn1OnPressed: () {
                 BlocProvider.of<HomeBloc>(context).add(
                     HomeEventItemClickAddToCartBtnClick(
                         qty,
                         state.productId,
-                        _productListModel.vendorId!,
+                        _productListModel!.vendorId!,
                         0,
                         _driverDetail!,
                         "1",
                         state.specialInstruction,
                         "3"));
               });
+        } else if (state is HomeCustomerRatingReviewSubmitState) {
+          showHideProgress(false);
+          showSnackBar(state.message, context);
+          print("driver Id ==${_driverId}");
+          BlocProvider.of<HomeBloc>(context).add(
+              HomeEventProductDetailPageReset(
+                  _productListModel!, _driverId!, _driverDetail!));
+        } else if (state is HomeEventErrorHandelState) {
+          showHideProgress(false);
+          showSnackBar(state.message, context);
+          BlocProvider.of<HomeBloc>(context).add(
+              HomeEventProductItemDetailPageReset(
+                  _productListModel!, _driverDetail!));
         } else if (state is HomeInitial) {
           Navigator.of(context).pop(true);
         }
@@ -314,7 +337,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                     timerOnListener = false;
                     _contextLoad = null;
                     BlocProvider.of<HomeBloc>(context)
-                        .add(HomeEventBackBtnClick());
+                        .add(HomeTicketEventBackBtnClick());
                   },
                   strBtnRightImageName: 'ic_cart_white.png',
                   rightEditButtonVisibility: true,
@@ -334,7 +357,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                 _relatedProductList,
                                 _addOnProductList,
                                 eventdetaillist,
-                                _productListModel,
+                                _productListModel!,
                                 _driverDetail));
                       } else {
                         BlocProvider.of<HomeBloc>(context).add(
@@ -346,18 +369,18 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                 _relatedProductList,
                                 _addOnProductList,
                                 eventdetaillist,
-                                _productListModel,
+                                _productListModel!,
                                 _driverDetail));
                       }
                     }
                   }),
               Column(mainAxisSize: MainAxisSize.max, children: [
                 CachedNetworkImage(
-                  imageUrl: 'https://picsum.photos/200?image=9',
+                  imageUrl: eventdetaillist[0].imageURL!,
                   width: MediaQuery.of(context).size.width,
                   height: 200.0.scale(),
                   fit: BoxFit.cover,
-                  // errorWidget: (context, url, error) => new Icon(Icons.error),
+                  errorWidget: (context, url, error) => new Icon(Icons.error),
                 ).topPadding(2.0.scale()),
                 AVerticalSpace(5.0.scale()),
                 Container(
@@ -570,14 +593,17 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ).leftPadding(10.0.scale()),
-                            Text(
-                              "${eventdetaillist[0].venueAddress}",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ).rightPadding(10.0.scale()),
+                            Expanded(
+                              child: Text(
+                                "${eventdetaillist[0].venueAddress}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 5,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ).rightPadding(10.0.scale()),
+                            ),
                           ],
                         ),
                         AVerticalSpace(10.0.scale()),
@@ -813,8 +839,8 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                         color: KColorAppThemeColor,
                       ),
                       child: Text(
-                        // "${_productListModel?.avgRating}/5",
-                        "3/5",
+                        "${eventdetaillist[0].avgRating}/5",
+                        //"3/5",
                         style: textStyleBoldCustomColor(
                             18.0.scale(), Colors.white),
                       ),
@@ -889,7 +915,7 @@ class _MenuTicketDetailPageState extends State<MenuTicketDetailPage> {
                       showHideProgress(true);
                       BlocProvider.of<HomeBloc>(context).add(
                           HomeEventSubmitRatingBtnClick("${ratingCountSend}",
-                              _textReview.text, _productListModel?.id));
+                              _textReview.text, _productListModel!.id));
                     }
                   },
                   btnHeight: 40.0.scale(),

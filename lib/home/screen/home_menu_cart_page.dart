@@ -97,7 +97,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
           loginStatus: "",
           mailingAddress: "",
           make: "",
-          map_icon: "",
+          mapIcon: "",
           model: "",
           otp: "",
           password: "",
@@ -122,7 +122,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
           views: "",
           walletAmount: "",
           year: "",
-          type_of_merchant: '');
+          typeOfMerchant: '');
       _cartDataModel = homeState.cartDataModel;
     } else if (homeState is HomeFromCategoryCartPageState) {
       strScreen = "CategoryPage";
@@ -244,7 +244,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                     password: "",
                     otp: "",
                     model: "",
-                    map_icon: "",
+                    mapIcon: "",
                     make: "",
                     mailingAddress: "",
                     loginStatus: "",
@@ -258,7 +258,7 @@ class _HomeMenuCartPageState extends State<HomeMenuCartPage> {
                     distance: "",
                     devicetype: "",
                     createdAt: "",
-                    type_of_merchant: '');
+                    typeOfMerchant: '');
               }
 
               _cartDataModel = state.cartDataModel;

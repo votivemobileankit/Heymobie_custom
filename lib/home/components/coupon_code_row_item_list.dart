@@ -45,7 +45,7 @@ class CouponCodeRowItemListModel extends StatelessWidget {
                 showHideProgress(true);
                 BlocProvider.of<HomeBloc>(context)
                     .add(HomeEventCouponListbtnClick(
-                  driverDetail.vendorId,
+                  driverDetail.vendorId!,
                   strScreen,
                   driverDetail,
                   productListModel,

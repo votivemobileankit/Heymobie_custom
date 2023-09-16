@@ -1464,7 +1464,7 @@ class _CouponCodeRowItemListModelNewState
                 widget.showHideProgress(true);
                 BlocProvider.of<HomeBloc>(context)
                     .add(HomeEventCouponListbtnApply(
-                  widget.driverDetail.vendorId,
+                  widget.driverDetail.vendorId!,
                   widget.strScreen,
                   widget.driverDetail,
                   widget.productListModel,

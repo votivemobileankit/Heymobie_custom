@@ -184,9 +184,9 @@ class UserRepository {
 
         OrderDetailResponseModel orderDetailModel =
             OrderDetailResponseModel.fromJson(responseList);
-        orderDetail = orderDetailModel.data.orderDetail;
-        orderItems = orderDetailModel.data.orderItems;
-        vendorData = orderDetailModel.data.vendor;
+        orderDetail = orderDetailModel.data!.orderDetail!;
+        orderItems = orderDetailModel.data!.orderItems!;
+        vendorData = orderDetailModel.data!.vendor!;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -219,7 +219,8 @@ class UserRepository {
     String massage;
     try {
       Map<String, dynamic> requestParams = {
-        "user_id": sharedPrefs.getUserId,
+        "user_id": "6",
+        //"user_id": sharedPrefs.getUserId,
         "current_page": pageNumber
       };
       _orderHistoryItem = [];
@@ -563,15 +564,16 @@ class UserRepository {
       // print("response ======= " + responseList.toString());
       // print(responseList["status"]);
       if (responseList["status"].toString() == "1") {
+        print("Sucess====");
         profileMerchantUrl = responseList["img_url"];
         DriverListModel driverListModel =
             DriverListModel.fromJson(responseList);
         print(driverListModel.status);
-        strBannerImage = driverListModel.banner_image;
-        _driverList = driverListModel.data.driverList;
+        strBannerImage = driverListModel.bannerImage!;
+        _driverList = driverListModel.data!.driverList!;
 
-        _driverProductList = driverListModel.data.productList;
-        _advertisement = driverListModel.data.advertisement;
+        _driverProductList = driverListModel.data!.productList!;
+        _advertisement = driverListModel.data!.advertisement!;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -584,7 +586,7 @@ class UserRepository {
             DriverListModel.fromJson(responseList);
         //  print(driverListModel.status);
 
-        _advertisement = driverListModel.data.advertisement;
+        _advertisement = driverListModel.data!.advertisement!;
 
         apiCallState = NetworkApiCallState.completed(
             true,
@@ -1521,6 +1523,7 @@ class UserRepository {
       String productId, String ratingCount, String reviewText) async {
     NetworkApiCallState<bool> apiCallState;
     Map<String, dynamic> addToCartMap = {
+      /// "user_id": "6",
       "user_id": sharedPrefs.getUserId,
       "rating": ratingCount,
       "comment": reviewText,
@@ -2165,7 +2168,7 @@ class UserRepository {
       Map<String, dynamic> requestParams = {
         "user_id": sharedPrefs.getUserId,
         "vendor_id": vendorId,
-        "order_id": "1580"
+        "order_id": orderID
       };
       var responseList = await _vdApiProvider.post(
           herberiumUrlCall + apiRideDetails, requestParams);

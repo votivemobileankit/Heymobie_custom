@@ -7,7 +7,6 @@ import 'package:grambunny_customer/orderhistory/orderhistory.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:grambunny_customer/utils/ui_utils.dart';
 
-
 const double _kMenuImageWidthSize = 100.0;
 const double _kMenuImageHeightSize = 100.0;
 const double _kMenuitemNameTextFontSize = 16.0;
@@ -39,7 +38,7 @@ class MyOrderListRow extends StatelessWidget {
                   child: CachedNetworkImage(
                     width: _kMenuImageHeightSize.scale(),
                     height: _kMenuImageHeightSize.scale() - 10.0.scale(),
-                    imageUrl: orderDetailMenuItem.imageURL,
+                    imageUrl: orderDetailMenuItem.imageURL!,
                     fit: BoxFit.fill,
                     errorWidget: (context, url, error) => new Icon(Icons.error),
                   ),
@@ -50,13 +49,13 @@ class MyOrderListRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      orderDetailMenuItem.name,
+                      orderDetailMenuItem.name!,
                       style: textStyleBoldCustomColor(
                           _kMenuitemNameTextFontSize.scale(), KColorCommonText),
                     ),
                     AVerticalSpace(3.0.scale()),
                     Text(
-                      orderDetailMenuItem.types,
+                      orderDetailMenuItem.types!,
                       style: textStyleBoldCustomLargeColor(
                           _kMenuTypeTextFontSize.scale(),
                           KColorClosedTextCategoryDetailPage),

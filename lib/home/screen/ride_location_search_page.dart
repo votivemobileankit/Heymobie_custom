@@ -12,7 +12,6 @@ import '../../services/herbarium_cust_shared_preferences.dart';
 import '../../theme/ft_theme_styles.dart';
 import '../../utils/image_paths.dart';
 import '../bloc/home_bloc.dart';
-import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
 import '../model/driver_list_model.dart';
 import '../model/ps_list_model.dart';
@@ -94,14 +93,15 @@ class _RidelocationSearchPageState extends State<RidelocationSearchPage> {
         }
 
         print(location);
-        BlocProvider.of<HomeBloc>(context).add(HomeEventRideBackBtnClicked(
-            eventdetaillist,
-            driverProductList!,
-            screen,
-            ratingList,
-            relatedproductList,
-            addonProductlist,
-            vendor));
+        Navigator.pop(context);
+        // BlocProvider.of<HomeBloc>(context).add(HomeEventRideBackBtnClicked(
+        //     eventdetaillist,
+        //     driverProductList!,
+        //     screen,
+        //     ratingList,
+        //     relatedproductList,
+        //     addonProductlist,
+        //     vendor));
         return value;
       });
     } catch (e) {

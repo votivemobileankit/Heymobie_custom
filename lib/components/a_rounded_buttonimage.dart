@@ -22,8 +22,7 @@ class ARoundedButtonImage extends StatelessWidget {
   final Color btnDisabledTextColor;
   final String btnIconImagePath;
 
-   ARoundedButtonImage({
-
+  ARoundedButtonImage({
     required this.btnBgColor,
     required this.btnTextColor,
     required this.btnText,
@@ -34,13 +33,13 @@ class ARoundedButtonImage extends StatelessWidget {
     required this.btnBorderSideColor,
     required this.btnIconData,
     required this.btnIconImagePath,
-     this.btnIconColor=Colors.black26,
+    this.btnIconColor = Colors.black26,
     this.btnIconSize = 24,
     this.btnElevation = 2,
     this.btnFontWeight = FontWeight.normal,
     required this.btnDisabledColor,
     required this.btnDisabledTextColor,
-  }) ;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +66,7 @@ class ARoundedButtonImage extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Align(
-              alignment: Alignment.center,
+              alignment: Alignment.centerRight,
               child: Text(
                 this.btnText,
                 style: TextStyle(
@@ -80,7 +79,7 @@ class ARoundedButtonImage extends StatelessWidget {
               ),
             ),
             Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: Image(
                 image: AssetImage(btnIconImagePath),
                 // White Color. You can ommit it too if you use textColor property on RaisedButton.

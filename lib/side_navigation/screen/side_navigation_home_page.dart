@@ -155,7 +155,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                 ScreenNavigation.EventHistoryPage) {
               eventHistoryBloc?.add(EventHistoryBackBtnClicked());
               BlocProvider.of<HmRootBloc>(context)
-                  .add(HmRootEventBackButtonEventOrderHistoryReset());
+                  .add(HmRootEventBackButtonEventOrderHistory());
             }
           } else if (state.isBackProfile) {
             print("in homepage back from profile");
@@ -275,7 +275,7 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                     widget.userRepository!.ScreenName =
                                         ScreenNavigation.ProfileMainPageScreen;
                                     Navigator.pop(context);
-                                    onTabTapped(2);
+                                    onTabTapped(0);
                                   },
                                   child: Column(
                                     mainAxisAlignment:
@@ -303,16 +303,36 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                   focusColor: KColorSelectorList,
                                   selectedTileColor: KColorSelectorList,
                                   title: Text(
+                                    'Home',
+                                    style: textStyleCustomColor(
+                                        18.0.scale(), kColorAppBgColor),
+                                  ).align(Alignment.centerLeft),
+                                  onTap: () {
+                                    print("Home==");
+                                    widget.userRepository!.ScreenName =
+                                        ScreenNavigation.HomeMainPageScreen;
+                                    Navigator.pop(context);
+
+                                    onTabTapped(1);
+                                  },
+                                ),
+                              AVerticalSpace(10.0.scale()),
+                              if (sharedPrefs.isLogin == true)
+                                ListTile(
+                                  focusColor: KColorSelectorList,
+                                  selectedTileColor: KColorSelectorList,
+                                  title: Text(
                                     'My Orders',
                                     style: textStyleCustomColor(
                                         18.0.scale(), kColorAppBgColor),
                                   ).align(Alignment.centerLeft),
                                   onTap: () {
+                                    print("Orders==");
                                     widget.userRepository!.ScreenName =
                                         ScreenNavigation.OrderHistoryPageScreen;
                                     Navigator.pop(context);
 
-                                    onTabTapped(1);
+                                    onTabTapped(2);
                                   },
                                 ),
                               AVerticalSpace(10.0.scale()),
@@ -326,12 +346,13 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                         18.0.scale(), kColorAppBgColor),
                                   ).align(Alignment.centerLeft),
                                   onTap: () {
+                                    print("Events==");
                                     showHideProgress(true);
                                     widget.userRepository!.ScreenName =
-                                        ScreenNavigation.OrderHistoryPageScreen;
+                                        ScreenNavigation.EventHistoryPage;
                                     Navigator.pop(context);
 
-                                    onTabTapped(6);
+                                    onTabTapped(3);
                                   },
                                 ),
                               AVerticalSpace(10.0.scale()),
@@ -345,12 +366,13 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                         18.0.scale(), kColorAppBgColor),
                                   ).align(Alignment.centerLeft),
                                   onTap: () {
+                                    print("Ride==");
                                     //  showHideProgress(true);
                                     widget.userRepository!.ScreenName =
-                                        ScreenNavigation.OrderHistoryPageScreen;
+                                        ScreenNavigation.RideHistoryPage;
                                     Navigator.pop(context);
 
-                                    onTabTapped(7);
+                                    onTabTapped(4);
                                   },
                                 ),
                               AVerticalSpace(10.0.scale()),
@@ -362,8 +384,9 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                         18.0.scale(), kColorAppBgColor),
                                   ).align(Alignment.centerLeft),
                                   onTap: () {
+                                    print("Setting==");
                                     Navigator.pop(context);
-                                    onTabTapped(3);
+                                    onTabTapped(5);
                                   },
                                 ),
                               AVerticalSpace(10.0.scale()),
@@ -374,8 +397,9 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                       18.0.scale(), kColorAppBgColor),
                                 ).align(Alignment.centerLeft),
                                 onTap: () {
+                                  print("About us==");
                                   Navigator.pop(context);
-                                  onTabTapped(4);
+                                  onTabTapped(6);
                                 },
                               ),
                               AVerticalSpace(10.0.scale()),
@@ -386,8 +410,9 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
                                       18.0.scale(), kColorAppBgColor),
                                 ).align(Alignment.centerLeft),
                                 onTap: () {
+                                  print("Privacy Policy==");
                                   Navigator.pop(context);
-                                  onTabTapped(5);
+                                  onTabTapped(7);
                                 },
                               ),
                               AVerticalSpace(10.0.scale()),
@@ -438,6 +463,10 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
   Widget _getSelectedTabContentView(SideNavigationTab selectedTab) {
     Widget tabContentView;
     switch (selectedTab) {
+      case SideNavigationTab.PROFILE:
+        print("profile");
+        tabContentView = profileProvider;
+        break;
       case SideNavigationTab.HOME:
         print("Home");
         tabContentView = homeProvider;
@@ -446,9 +475,13 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
         // TODO: Handle this case.
         tabContentView = orderHistoryProvider;
         break;
-      case SideNavigationTab.PROFILE:
-        print("profile");
-        tabContentView = profileProvider;
+      case SideNavigationTab.EventHistory:
+        print("EventHistory");
+        tabContentView = eventHistoryProvider!;
+        break;
+      case SideNavigationTab.RideHistory:
+        print("RideHistory");
+        tabContentView = rideHistoryProvider!;
         break;
       case SideNavigationTab.SETTING:
         print("profile");
@@ -461,14 +494,6 @@ class _SideNavigationHomeTabState extends State<SideNavigationHomeTab> {
       case SideNavigationTab.PRIVACYPOLICY:
         print("profile");
         tabContentView = privacyPolicyProvider;
-        break;
-      case SideNavigationTab.EventHistory:
-        print("EventHistory");
-        tabContentView = eventHistoryProvider!;
-        break;
-      case SideNavigationTab.RideHistory:
-        print("RideHistory");
-        tabContentView = rideHistoryProvider!;
         break;
     }
     return tabContentView;

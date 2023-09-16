@@ -65,9 +65,10 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
       _driverId = homeState.driverId;
       print("driver Id ${_driverId}");
       _price = double.parse(_productListModel.price ?? "");
+      print("Productid===${_productListModel.id}");
       _driverDetail = homeState.driverDetail;
       _productListModel.brands;
-      name = _driverDetail.name + " " + _driverDetail.lastName;
+      name = _driverDetail.name! + " " + _driverDetail.lastName!;
       strScreen = "";
       print("HomeMenuItemDetailsPageState");
     } else if (homeState is HomeFromDriverProductListDetailsPageState) {
@@ -125,7 +126,7 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
         password: "",
         otp: "",
         model: "",
-        map_icon: "",
+        mapIcon: "",
         make: "",
         mailingAddress: "",
         licensePlate: "",
@@ -149,10 +150,10 @@ class _MenuProductDetailPageState extends State<MenuProductDetailPage> {
         lat: "",
         lng: "",
         txnId: '',
-        type_of_merchant: '',
+        typeOfMerchant: '',
       );
-      name = _driverDetail.name + " " + _driverDetail.lastName;
-      productID = _productListDriverModel.id;
+      name = _driverDetail.name! + " " + _driverDetail.lastName!;
+      productID = _productListDriverModel.id!;
       _productListModel = ProductListMenu(
           name: _productListDriverModel.name,
           avgRating: _productListDriverModel.avgRating,

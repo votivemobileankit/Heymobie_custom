@@ -92,9 +92,7 @@ class _NotificationOrderDetailsPageState
                       AHeaderWidget(
                         headerText: "",
                         headerSigninText: "",
-                        btnEditOnPressed: () {
-
-                        },
+                        btnEditOnPressed: () {},
                         strBackbuttonName: 'ic_red_btn_back.png',
                         backBtnVisibility: true,
                         btnBackOnPressed: () {
@@ -217,7 +215,7 @@ class _NotificationOrderDetailsPageState
                                     children: [
                                       Text(
                                         "Sub total: \$" +
-                                            orderDetailData[0].subTotal,
+                                            orderDetailData[0].subTotal!,
                                         style: textStyleCustomColor(
                                             14.0.scale(), KColorCommonText),
                                       ).align(Alignment.centerLeft),
@@ -225,7 +223,7 @@ class _NotificationOrderDetailsPageState
                                       if (vendorDetailData != null)
                                         Text(
                                           "Sales tax: \$" +
-                                              orderDetailData[0].serviceTax,
+                                              orderDetailData[0].serviceTax!,
                                           style: textStyleCustomColor(
                                               14.0.scale(), KColorCommonText),
                                         ).align(Alignment.centerLeft),
@@ -233,7 +231,7 @@ class _NotificationOrderDetailsPageState
                                       if (vendorDetailData != null)
                                         Text(
                                           "City tax: \$" +
-                                              orderDetailData[0].cityTax,
+                                              orderDetailData[0].cityTax!,
                                           style: textStyleCustomColor(
                                               14.0.scale(), KColorCommonText),
                                         ).align(Alignment.centerLeft),
@@ -241,14 +239,14 @@ class _NotificationOrderDetailsPageState
                                       if (vendorDetailData[0] != null)
                                         Text(
                                           "Excise tax: \$" +
-                                              orderDetailData[0].exciseTax,
+                                              orderDetailData[0].exciseTax!,
                                           style: textStyleCustomColor(
                                               14.0.scale(), KColorCommonText),
                                         ).align(Alignment.centerLeft),
                                       AVerticalSpace(3.0.scale()),
                                       Text(
                                         "Coupon discount amount: \$" +
-                                            orderDetailData[0].promoAmount,
+                                            orderDetailData[0].promoAmount!,
                                         style: textStyleCustomColor(
                                             14.0.scale(), KColorCommonText),
                                       ).align(Alignment.centerLeft),
@@ -259,14 +257,14 @@ class _NotificationOrderDetailsPageState
                                           null)
                                         Text(
                                           "Delivery fee: \$" +
-                                              orderDetailData[0].deliveryFee,
+                                              orderDetailData[0].deliveryFee!,
                                           style: textStyleCustomColor(
                                               14.0.scale(), KColorCommonText),
                                         ).align(Alignment.centerLeft),
                                       AVerticalSpace(3.0.scale()),
                                       Text(
                                         "Grand total: \$" +
-                                            orderDetailData[0].total,
+                                            orderDetailData[0].total!,
                                         style: textStyleBoldCustomColor(
                                             18.0.scale(), KColorCommonText),
                                       ).align(Alignment.centerLeft),
@@ -329,7 +327,7 @@ class _DriverDetail extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
-                  imageUrl: vendorDetailData.profileURL,
+                  imageUrl: vendorDetailData.profileImg1!,
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                 ),
@@ -342,7 +340,7 @@ class _DriverDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  vendorDetailData.name + " " + vendorDetailData.lastName,
+                  vendorDetailData.name! + " " + vendorDetailData.lastName!,
                   style: textStyleBoldCustomLargeColor(
                       18.0.scale(), KColorCommonText),
                 ),
@@ -386,7 +384,7 @@ class _DriverDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  vendorDetailData.marketArea,
+                  vendorDetailData.marketArea!,
                   style: textStyleCustomColor(12.0.scale(), KColorCommonText),
                 ),
               ],
@@ -411,7 +409,7 @@ class _DriverDetail extends StatelessWidget {
                     ),
                     AHorizontalSpace(5.0.scale()),
                     Text(
-                      vendorDetailData.mobNo,
+                      vendorDetailData.mobNo!,
                       style: textStyleBoldCustomColor(
                           12.0.scale(), kColorTextFieldText),
                     )
@@ -431,8 +429,7 @@ const double _kAddtoCartDialogRadius = 20.0;
 const double _kCommonCartMediumFontSize = 14.0;
 const double _kCommonFontSize = 16.0;
 
-Dialog _getRatingReviewToMerchant(
- {
+Dialog _getRatingReviewToMerchant({
   required BuildContext context1,
   required Vendor1 vendorDetail,
 }) {
@@ -520,8 +517,10 @@ class _AddRatingReview extends StatelessWidget {
           ).leftPadding(15.0.scale()).rightPadding(15.0.scale()),
           AVerticalSpace(15.0.scale()),
           ARoundedButton(
-            btnBorderSideColor: kColorCommonButton,btnDisabledColor: Color(0xFF5e6163),btnIconSize:15 ,
-            btnDisabledTextColor:Color(0xFFFFFFFF) ,
+            btnBorderSideColor: kColorCommonButton,
+            btnDisabledColor: Color(0xFF5e6163),
+            btnIconSize: 15,
+            btnDisabledTextColor: Color(0xFFFFFFFF),
             btnFontWeight: FontWeight.normal,
             btnBgColor: kColorCommonButtonBackGround,
             btnTextColor: kColorCommonButton,

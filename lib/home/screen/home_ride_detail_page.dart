@@ -47,6 +47,8 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
       TextEditingController();
   List<dynamic> _placeList = [];
   String? _cartCount;
+  String? _pickupAddress;
+  String? _dropAddress;
   List<EventDetailsList> eventdetaillist = [];
 
   Position? _currentPosition;
@@ -97,8 +99,9 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
   void initState() {
     print("TicketPrice===>");
     //
-    // sharedPrefs.searchLocation = "";
-    // sharedPrefs.searchDropLocation = "";
+    sharedPrefs.searchLocation = "";
+    sharedPrefs.searchDropLocation = "";
+
     // TODO: implement initState
     HomeState state = BlocProvider.of<HomeBloc>(context).state;
     if (state is HomeEventDriverRideListClickPageState) {
@@ -167,7 +170,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
         password: "",
         otp: "",
         model: "",
-        map_icon: "",
+        mapIcon: "",
         make: "",
         mailingAddress: "",
         licensePlate: "",
@@ -191,9 +194,9 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
         lat: "",
         lng: "",
         txnId: '',
-        type_of_merchant: '',
+        typeOfMerchant: '',
       );
-      name = _driverDetail!.name + " " + _driverDetail!.lastName;
+      name = _driverDetail!.name! + " " + _driverDetail!.lastName!;
       productID = _productListDriverModel!.id;
       _productListModel = ProductListMenu(
           name: _productListDriverModel!.name,
@@ -299,6 +302,8 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
   Widget build(BuildContext context) {
     setState(() {
       _cartCount = sharedPrefs.getCartCount;
+      _pickupAddress = sharedPrefs.searchLocation;
+      _dropAddress = sharedPrefs.searchDropLocation;
     });
 
     return BlocListener<HomeBloc, HomeState>(
@@ -314,7 +319,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
           print("driver Id ${_driverId}");
           _price = double.parse(_productListModel?.price ?? "");
           _driverDetail = state.driverDetail;
-          name = _driverDetail!.name + " " + _driverDetail!.lastName;
+          name = _driverDetail!.name! + " " + _driverDetail!.lastName!;
         } else if (state is HomeFromDriverProductListDetailsPageState) {
           showHideProgress(false);
           setState(() {
@@ -346,9 +351,8 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                   btnBackOnPressed: () {
                     timerOnListener = false;
                     _contextLoad = null;
-                    // BlocProvider.of<HomeBloc>(context)
-                    //     .add(HomeEventBackBtnClick());
-                    Navigator.pop(context);
+                    BlocProvider.of<HomeBloc>(context)
+                        .add(HomeRideEventBackBtnClick());
                   },
                   strBtnRightImageName: 'ic_cart_white.png',
                   rightEditButtonVisibility: false,
@@ -449,7 +453,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                             //     HomeEevntLoctionSearchPageBtnClick());
                                           },
                                           child: Text(
-                                            sharedPrefs.searchLocation,
+                                            _pickupAddress!,
                                             maxLines: 5,
                                             overflow: TextOverflow.ellipsis,
                                             style: textStyleCustomColor(
@@ -495,7 +499,7 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                                     "Drop"));
                                           },
                                           child: Text(
-                                            sharedPrefs.searchDropLocation,
+                                            _dropAddress!,
                                             maxLines: 5,
                                             overflow: TextOverflow.ellipsis,
                                             style: textStyleCustomColor(
@@ -512,7 +516,23 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                                           btnBgColor: kColorCommonButton,
                                           btnTextColor: Colors.white,
                                           btnOnPressed: () {
-                                            _calculateDistance();
+                                            print("done===");
+                                            if (sharedPrefs.searchLocation
+                                                    .toString() ==
+                                                "") {
+                                              showSnackBar(
+                                                  "Please enter your PickUp address.",
+                                                  context);
+                                            } else if (sharedPrefs
+                                                    .searchDropLocation
+                                                    .toString() ==
+                                                "") {
+                                              showSnackBar(
+                                                  "Please enter your Drop address.",
+                                                  context);
+                                            } else {
+                                              _calculateDistance();
+                                            }
                                           },
                                           btnText: "Estimated Price",
                                           btnHeight:
@@ -1166,22 +1186,32 @@ class _MenuRideDetailPageState extends State<MenuRideDetailPage> {
                     btnBgColor: kColorCommonButton,
                     btnTextColor: Colors.white,
                     btnOnPressed: () {
-                      print("Distance===>${distance}");
-                      print("Price===>${estimate_price}");
-                      BlocProvider.of<HomeBloc>(context)
-                          .add(HomeEventRideBookRideNowBtnClick(
-                        qty,
-                        eventdetaillist[0].id,
-                        eventdetaillist[0].vendorId!,
-                        "0",
-                        _textFiledUserSpecialInstruction.text,
-                        pick_address,
-                        drop_address,
-                        distance,
-                        estimate_price,
-                        _driverDetail!,
-                        _productListModel!,
-                      ));
+                      print("done===");
+                      if (sharedPrefs.searchLocation.toString() == "") {
+                        showSnackBar(
+                            "Please enter your PickUp address.", context);
+                      } else if (sharedPrefs.searchDropLocation.toString() ==
+                          "") {
+                        showSnackBar(
+                            "Please enter your Drop address.", context);
+                      } else {
+                        print("Distance===>${distance}");
+                        print("Price===>${estimate_price}");
+                        BlocProvider.of<HomeBloc>(context)
+                            .add(HomeEventRideBookRideNowBtnClick(
+                          qty,
+                          eventdetaillist[0].id,
+                          eventdetaillist[0].vendorId!,
+                          "0",
+                          _textFiledUserSpecialInstruction.text,
+                          pick_address,
+                          drop_address,
+                          distance,
+                          estimate_price,
+                          _driverDetail!,
+                          _productListModel!,
+                        ));
+                      }
                     },
                     btnText: "Book Ride Now",
                     btnHeight: kHeightBtnAddToCart.scale(),

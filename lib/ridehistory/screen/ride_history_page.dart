@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grambunny_customer/components/a_widget_extensions.dart';
@@ -119,10 +121,13 @@ class _RideHistoryPageState extends State<RideHistoryPage> {
                   headerSigninText: "",
                   headerText: "",
                   btnEditOnPressed: () {},
-                  strBackbuttonName: 'ic_red_btn_back.png',
+                  strBackbuttonName: 'ic_slide_menu_icon.png',
                   backBtnVisibility: true,
                   btnBackOnPressed: () {
-                    print("back");
+                    if (_timer != null) {
+                      _timer?.cancel();
+                    }
+                    Scaffold.of(context).openDrawer();
                   },
                   strBtnRightImageName: 'ic_search_logo.png',
                   rightEditButtonVisibility: false,
@@ -189,3 +194,9 @@ class _RideHistoryListContainer extends StatelessWidget {
         });
   }
 }
+
+const double _kTextBirthdateField = 128.0;
+String strCity = "";
+Timer? _timer;
+bool isTimerOn = false;
+String strProduct = "";

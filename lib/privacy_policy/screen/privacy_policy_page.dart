@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grambunny_customer/components/components.dart';
@@ -7,14 +10,15 @@ import 'package:grambunny_customer/side_navigation/side_navigation.dart';
 import 'package:grambunny_customer/theme/theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+WebViewController? webViewContoller1;
+
 class PrivacyPolicyPage extends StatefulWidget {
   @override
   State<PrivacyPolicyPage> createState() => _PrivacyPolicyPageState();
 }
 
 class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
-  late String _redirectedToUrl;
-  late WebViewController _webViewContoller1;
+  String? _redirectedToUrl;
 
   void showHideProgress(bool show) {
     BlocProvider.of<SideNavigatBloc>(context)
@@ -23,33 +27,10 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
 
   @override
   void initState() {
-    _redirectedToUrl = UrlPrivacyPolicy;
-
-    super.initState();
-
     showHideProgress(true);
-    // _webViewContoller1 = WebViewController();
-    // _webViewContoller1.setJavaScriptMode(JavaScriptMode.unrestricted);
-    //
-    // _webViewContoller1.setNavigationDelegate(
-    //   NavigationDelegate(
-    //     onProgress: (int progress) {
-    //       showHideProgress(true);
-    //     },
-    //     onPageStarted: (String url) {},
-    //     onPageFinished: (String url) {
-    //       showHideProgress(false);
-    //     },
-    //     onWebResourceError: (WebResourceError error) {},
-    //     onNavigationRequest: (NavigationRequest request) {
-    //       if (request.url.startsWith('https://www.youtube.com/')) {
-    //         return NavigationDecision.prevent;
-    //       }
-    //       return NavigationDecision.navigate;
-    //     },
-    //   ),
-    // );
-    // _webViewContoller1.loadRequest(Uri.parse(_redirectedToUrl));
+    _redirectedToUrl = UrlPrivacyPolicy;
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    super.initState();
   }
 
   @override
@@ -70,26 +51,61 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         child: Column(
           children: [
             AHeaderWidget(
-              headerText: "",
-              headerSigninText: "",
-              strBtnRightImageName: "",
-              btnEditOnPressed: () {},
-              strBackbuttonName: 'ic_red_btn_back.png',
+              strBackbuttonName: 'ic_slide_menu_icon.png',
               backBtnVisibility: true,
               btnBackOnPressed: () {
-                BlocProvider.of<PrivacyPolicyBloc>(context)
-                    .add(PrivacyPolicyBackBtnClick());
+                if (_timer != null) {
+                  _timer?.cancel();
+                }
+                Scaffold.of(context).openDrawer();
+                // BlocProvider.of<PrivacyPolicyBloc>(context)
+                //     .add(PrivacyPolicyBackBtnClick());
               },
               rightEditButtonVisibility: false,
+              strBtnRightImageName: '',
+              btnEditOnPressed: () {},
             ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: (MediaQuery.of(context).size.height),
-            //   child: WebViewWidget(controller: _webViewContoller1),
-            // ).expand()
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: (MediaQuery.of(context).size.height),
+              child: WebView(
+                initialUrl: _redirectedToUrl,
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) {
+                  webViewContoller1 = webViewController;
+                },
+                javascriptChannels: <JavascriptChannel>{},
+                navigationDelegate: (NavigationRequest request) {
+                  //_redirectedToUrl = request.url;
+                  if (request.url.startsWith('https://www.youtube.com/')) {
+                    print('blocking navigation to $request}');
+
+                    return NavigationDecision.prevent;
+                  }
+
+                  print('allowing navigation to $request');
+                  return NavigationDecision.navigate;
+                },
+                onPageStarted: (String url) {
+                  // showHideProgress(false);
+                },
+                onPageFinished: (String url) {
+                  print("on page finished" + url);
+                  // readJS();
+                  showHideProgress(false);
+                },
+                gestureNavigationEnabled: true,
+              ),
+            ).expand()
           ],
         ).widgetBgColor(Colors.white),
       ).lightStatusBarText().pageBgColor(kColorAppBgColor),
     );
   }
 }
+
+const double _kTextBirthdateField = 128.0;
+String strCity = "";
+Timer? _timer;
+bool isTimerOn = false;
+String strProduct = "";
